@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- Wireframe — not production code. RestaurantOS — Product Design mockups. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RestaurantOS — макеты</title>
+<style>
+:root{--color-primary:#E85D2A;--color-primary-hover:#CF4D1D;--color-primary-subtle:#FDEEE7;--color-text:#0F172A;--color-muted:#475569;--color-border:#E2E8F0;--color-bg:#F8FAFC;--color-surface:#FFFFFF;--radius-sm:6px;--radius-md:10px;--radius-lg:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;font-size:14px;color:var(--color-text);background:var(--color-bg);padding:32px 16px}
+main{max-width:880px;margin:0 auto}
+h1{font-size:24px;margin:0 0 4px}
+p.lead{color:var(--color-muted);margin:0 0 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+a.card{display:block;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:20px;text-decoration:none;color:inherit;min-height:44px}
+a.card:hover,a.card:focus-visible{border-color:var(--color-primary);outline:none;box-shadow:0 0 0 3px var(--color-primary-subtle)}
+a.card h2{font-size:16px;margin:0 0 6px;color:var(--color-primary)}
+a.card p{margin:0;color:var(--color-muted)}
+.note{margin-top:24px;font-size:13px;color:var(--color-muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>RestaurantOS — Product Design: макеты</h1>
+  <p class="lead">Статичные wireframe-макеты на токенах из <code>DESIGN_SYSTEM.md</code>. Без внешних зависимостей.</p>
+  <div class="grid">
+    <a class="card" href="admin-dashboard.html"><h2>Admin dashboard</h2><p>Sidebar из 18 разделов, KPI за сегодня, популярные блюда, низкие остатки, статус смены.</p></a>
+    <a class="card" href="waiter-order-tablet.html"><h2>Создание заказа (планшет)</h2><p>Рабочее место официанта: категории, сетка блюд, панель заказа стола, отправка на кухню.</p></a>
+    <a class="card" href="kds.html"><h2>Kitchen Display (KDS)</h2><p>Тёмный экран кухни: колонки статусов, таймеры ожидания, крупные кнопки, индикатор связи.</p></a>
+    <a class="card" href="cashier-payment.html"><h2>Касса: оплата</h2><p>Смена, активные заказы, частичная оплата, способы оплаты, сдача, демо/нефискальные пометки.</p></a>
+    <a class="card" href="inventory-list.html"><h2>Склад: ингредиенты</h2><p>Фильтры, таблица остатков с подсветкой ниже минимума, действия, пустое состояние, модалка корректировки.</p></a>
+  </div>
+  <p class="note">Claude Design в этой сессии недоступен — макеты подготовлены вручную как HTML-wireframes (см. DESIGN_BRIEF.md).</p>
+</main>
+</body>
+</html>

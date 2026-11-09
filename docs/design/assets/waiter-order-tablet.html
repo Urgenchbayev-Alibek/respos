@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- Wireframe — not production code. Waiter workspace: order creation, tablet landscape (~1024px). -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Создание заказа — wireframe</title>
+<style>
+:root{--color-primary:#E85D2A;--color-primary-hover:#CF4D1D;--color-primary-subtle:#FDEEE7;--color-text:#0F172A;--color-muted:#475569;--color-border:#E2E8F0;--color-bg:#F8FAFC;--color-surface:#FFFFFF;--color-success:#16A34A;--color-warning:#D97706;--color-danger:#DC2626;--color-info:#2563EB;--radius-sm:6px;--radius-md:10px;--radius-lg:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;font-size:16px;color:var(--color-text);background:var(--color-bg)}
+button{font:inherit;cursor:pointer}
+.app{display:grid;grid-template-rows:auto 1fr auto;min-height:100vh}
+header{display:flex;align-items:center;gap:12px;padding:8px 16px;background:var(--color-surface);border-bottom:1px solid var(--color-border);flex-wrap:wrap}
+header .spacer{flex:1}
+.back{min-height:44px;min-width:44px;border:1px solid var(--color-border);background:var(--color-surface);border-radius:var(--radius-sm)}
+.search{flex:1;min-width:160px;max-width:360px;min-height:44px;padding:0 12px;border:1px solid var(--color-border);border-radius:var(--radius-sm);font:inherit}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.b-new{background:#E2E8F0;color:#334155}
+.b-sent{background:#DBEAFE;color:#1E40AF}
+.b-preparing{background:#FEF3C7;color:#92400E}
+.b-ready{background:#DCFCE7;color:#166534}
+.b-demo{background:#FEF3C7;color:#92400E}
+.body{display:grid;grid-template-columns:1fr 380px;min-height:0}
+.menu{display:grid;grid-template-columns:160px 1fr;min-height:0}
+.cats{display:flex;flex-direction:column;gap:4px;padding:12px 8px;border-right:1px solid var(--color-border);background:var(--color-surface);overflow-y:auto}
+.cats button{min-height:52px;text-align:left;padding:0 12px;border:0;border-radius:var(--radius-sm);background:transparent;color:var(--color-text)}
+.cats button[aria-pressed=true]{background:var(--color-primary-subtle);color:var(--color-primary-hover);font-weight:600}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:16px;align-content:start;overflow-y:auto}
+.item{min-height:104px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;padding:12px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md)}
+.item:active,.item:focus-visible{border-color:var(--color-primary);outline:none;box-shadow:0 0 0 3px var(--color-primary-subtle)}
+.item .name{font-weight:600}
+.item .price{color:var(--color-muted);font-variant-numeric:tabular-nums}
+.item.unavailable{opacity:.5}
+.item .tag{font-size:12px;color:var(--color-danger)}
+.order{display:flex;flex-direction:column;background:var(--color-surface);border-left:1px solid var(--color-border);min-height:0}
+.order-head{padding:12px 16px;border-bottom:1px solid var(--color-border)}
+.order-head h1{font-size:20px;margin:0}
+.order-head p{margin:4px 0 0;color:var(--color-muted);font-size:14px}
+.lines{flex:1;overflow-y:auto;padding:4px 16px}
+.line{padding:12px 0;border-bottom:1px solid var(--color-border)}
+.line-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.line .mods{font-size:14px;color:var(--color-muted);margin-top:2px}
+.line .comment{font-size:14px;color:var(--color-info);margin-top:2px}
+.line-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--color-border);border-radius:var(--radius-sm)}
+.stepper button{min-width:44px;min-height:44px;border:0;background:transparent;font-size:20px}
+.stepper span{min-width:32px;text-align:center;font-variant-numeric:tabular-nums}
+.sum{font-weight:600;font-variant-numeric:tabular-nums}
+.totals{padding:12px 16px;border-top:1px solid var(--color-border);font-size:15px}
+.totals div{display:flex;justify-content:space-between;padding:2px 0;font-variant-numeric:tabular-nums}
+.totals .grand{font-size:20px;font-weight:700;padding-top:8px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 16px}
+.btn{min-height:52px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);font-weight:600}
+.btn-primary{grid-column:1/-1;background:var(--color-primary);border-color:var(--color-primary);color:#fff;font-size:18px}
+.btn-primary:hover{background:var(--color-primary-hover)}
+footer{display:flex;gap:8px;padding:8px 16px;background:var(--color-surface);border-top:1px solid var(--color-border);overflow-x:auto}
+.chip{min-height:44px;min-width:64px;padding:0 12px;border-radius:999px;border:1px solid var(--color-border);background:var(--color-surface);white-space:nowrap}
+.chip.occupied{background:var(--color-primary-subtle);border-color:var(--color-primary);color:var(--color-primary-hover)}
+.chip.reserved{background:#DBEAFE;border-color:var(--color-info);color:#1E40AF}
+.chip.current{background:var(--color-primary);border-color:var(--color-primary);color:#fff;font-weight:600}
+.chip.ready{box-shadow:inset 0 0 0 2px var(--color-success)}
+.toast{position:fixed;right:16px;top:64px;background:var(--color-text);color:#fff;padding:12px 16px;border-radius:var(--radius-md);font-size:14px;max-width:300px;box-shadow:0 8px 24px rgba(15,23,42,.2)}
+.toast b{color:#86EFAC}
+@media (max-width:900px){.body{grid-template-columns:1fr}.order{border-left:0;border-top:1px solid var(--color-border)}.menu{grid-template-columns:1fr}.cats{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--color-border)}.cats button{white-space:nowrap}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <button class="back" aria-label="Назад к столикам">←</button>
+    <strong>Зал · Официант</strong>
+    <input class="search" type="search" placeholder="Поиск блюда…" aria-label="Поиск блюда">
+    <div class="spacer"></div>
+    <span class="badge b-demo">Демо-данные</span>
+    <span style="font-size:14px;color:var(--color-muted)">Шерзод · RU / UZ</span>
+  </header>
+  <div class="body">
+    <section class="menu" aria-label="Меню">
+      <div class="cats" role="group" aria-label="Категории">
+        <button aria-pressed="true">Горячие блюда</button>
+        <button aria-pressed="false">Шашлык</button>
+        <button aria-pressed="false">Супы</button>
+        <button aria-pressed="false">Салаты</button>
+        <button aria-pressed="false">Выпечка</button>
+        <button aria-pressed="false">Напитки</button>
+        <button aria-pressed="false">Десерты</button>
+      </div>
+      <div class="items">
+        <button class="item"><span class="name">Плов ташкентский</span><span class="price">45 000 сум</span></button>
+        <button class="item"><span class="name">Плов самаркандский</span><span class="price">48 000 сум</span></button>
+        <button class="item"><span class="name">Лагман</span><span class="price">35 000 сум</span></button>
+        <button class="item"><span class="name">Манты (5 шт.)</span><span class="price">38 000 сум</span></button>
+        <button class="item"><span class="name">Казан-кабоб</span><span class="price">62 000 сум</span></button>
+        <button class="item"><span class="name">Димлама</span><span class="price">42 000 сум</span></button>
+        <button class="item unavailable" disabled><span class="name">Нарын</span><span class="tag">Нет в наличии</span></button>
+        <button class="item"><span class="name">Шурпа</span><span class="price">32 000 сум</span></button>
+        <button class="item"><span class="name">Чучвара</span><span class="price">30 000 сум</span></button>
+      </div>
+    </section>
+    <aside class="order" aria-label="Заказ">
+      <div class="order-head">
+        <h1>Стол 7 · Заказ #0042</h1>
+        <p>4 гостя · открыт 12:18 · <span class="badge b-preparing">Готовится</span></p>
+      </div>
+      <div class="lines">
+        <div class="line">
+          <div class="line-top"><span>Плов ташкентский</span><span class="badge b-ready">Готово</span></div>
+          <div class="mods">+ Перепелиное яйцо (+5 000)</div>
+          <div class="line-bottom"><span style="color:var(--color-muted);font-size:14px">×2 · отправлено 12:20</span><span class="sum">100 000 сум</span></div>
+        </div>
+        <div class="line">
+          <div class="line-top"><span>Шашлык из баранины</span><span class="badge b-preparing">Готовится</span></div>
+          <div class="mods">Прожарка: medium</div>
+          <div class="line-bottom"><span style="color:var(--color-muted);font-size:14px">×2 · отправлено 12:20</span><span class="sum">110 000 сум</span></div>
+        </div>
+        <div class="line">
+          <div class="line-top"><span>Лагман</span><span class="badge b-new">Новая</span></div>
+          <div class="comment">Без острого</div>
+          <div class="line-bottom"><div class="stepper"><button aria-label="Уменьшить">−</button><span>1</span><button aria-label="Увеличить">+</button></div><span class="sum">35 000 сум</span></div>
+        </div>
+        <div class="line">
+          <div class="line-top"><span>Чай зелёный (чайник)</span><span class="badge b-new">Новая</span></div>
+          <div class="line-bottom"><div class="stepper"><button aria-label="Уменьшить">−</button><span>2</span><button aria-label="Увеличить">+</button></div><span class="sum">20 000 сум</span></div>
+        </div>
+      </div>
+      <div class="totals">
+        <div><span>Подытог</span><span>265 000 сум</span></div>
+        <div><span>Скидка</span><span>0 сум</span></div>
+        <div><span>Сервисный сбор 10%</span><span>26 500 сум</span></div>
+        <div class="grand"><span>Итого</span><span>291 500 сум</span></div>
+      </div>
+      <div class="actions">
+        <button class="btn">Комментарий</button>
+        <button class="btn">Пречек</button>
+        <button class="btn btn-primary">Отправить на кухню (2)</button>
+      </div>
+    </aside>
+  </div>
+  <footer aria-label="Столики">
+    <button class="chip">1</button><button class="chip occupied">2</button><button class="chip">3</button>
+    <button class="chip reserved">4 · 19:00</button><button class="chip occupied ready">5</button><button class="chip">6</button>
+    <button class="chip current" aria-current="true">7</button><button class="chip occupied">8</button><button class="chip">9</button>
+    <button class="chip">10</button><button class="chip">11</button><button class="chip">12</button>
+  </footer>
+</div>
+<div class="toast" role="status"><b>Готово:</b> Стол 5 — Самса с мясом ×3</div>
+</body>
+</html>

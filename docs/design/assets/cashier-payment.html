@@ -1,0 +1,126 @@
+<!doctype html>
+<!-- Wireframe — not production code. Cashier workspace: payment registration (manual/demo provider). -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Касса — оплата — wireframe</title>
+<style>
+:root{--color-primary:#E85D2A;--color-primary-hover:#CF4D1D;--color-primary-subtle:#FDEEE7;--color-text:#0F172A;--color-muted:#475569;--color-border:#E2E8F0;--color-bg:#F8FAFC;--color-surface:#FFFFFF;--color-success:#16A34A;--color-warning:#D97706;--color-danger:#DC2626;--color-info:#2563EB;--radius-sm:6px;--radius-md:10px;--radius-lg:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;font-size:15px;color:var(--color-text);background:var(--color-bg)}
+button,input{font:inherit}
+.shift{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:var(--color-surface);border-bottom:1px solid var(--color-border)}
+.shift .spacer{flex:1}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.b-success{background:#DCFCE7;color:#166534}
+.b-warning{background:#FEF3C7;color:#92400E}
+.b-info{background:#DBEAFE;color:#1E40AF}
+.b-muted{background:#E2E8F0;color:#334155}
+.muted{color:var(--color-muted)}
+.btn{min-height:44px;padding:0 16px;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface);cursor:pointer;font-weight:600}
+.btn-primary{background:var(--color-primary);border-color:var(--color-primary);color:#fff}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-lg{min-height:56px;font-size:18px;width:100%;border-radius:var(--radius-md)}
+.wrap{display:grid;grid-template-columns:340px 1fr;gap:16px;padding:16px}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:16px}
+.card h2{font-size:16px;margin:0 0 12px}
+.orders{display:grid;gap:8px}
+.order{display:grid;grid-template-columns:1fr auto;gap:2px 8px;text-align:left;padding:12px;min-height:56px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);cursor:pointer}
+.order[aria-selected=true]{border-color:var(--color-primary);background:var(--color-primary-subtle)}
+.order .amt{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.order .sub{grid-column:1/-1;font-size:13px;color:var(--color-muted);display:flex;gap:8px;align-items:center}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.detail h1{font-size:20px;margin:0 0 4px}
+table{width:100%;border-collapse:collapse}
+td{padding:6px 0;border-bottom:1px solid var(--color-border);vertical-align:top}
+td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.totals div{display:flex;justify-content:space-between;padding:3px 0;font-variant-numeric:tabular-nums}
+.totals .grand{font-size:18px;font-weight:700;border-top:1px solid var(--color-border);margin-top:6px;padding-top:8px}
+.totals .remaining{font-size:20px;font-weight:800;color:var(--color-primary-hover)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:12px}
+.seg button{min-height:52px;border:0;border-right:1px solid var(--color-border);background:var(--color-surface);cursor:pointer;font-weight:600}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--color-primary);color:#fff}
+label{display:block;font-size:13px;color:var(--color-muted);margin:8px 0 4px}
+.input{width:100%;min-height:52px;padding:0 12px;border:1px solid var(--color-border);border-radius:var(--radius-sm);font-size:22px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.input:focus{outline:none;border-color:var(--color-primary);box-shadow:0 0 0 3px var(--color-primary-subtle)}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.quick button{min-height:44px;padding:0 12px;border:1px solid var(--color-border);border-radius:999px;background:var(--color-surface);cursor:pointer}
+.info{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF;padding:10px 12px;border-radius:var(--radius-sm);font-size:14px;margin:8px 0 12px;display:flex;justify-content:space-between}
+.provider{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:12px}
+.disclaimer{margin-top:12px;font-size:12px;color:var(--color-muted);border:1px dashed var(--color-border);border-radius:var(--radius-sm);padding:8px}
+.pay-list{list-style:none;padding:0;margin:0}
+.pay-list li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--color-border);flex-wrap:wrap}
+.link{color:var(--color-danger);background:none;border:0;cursor:pointer;padding:0;min-height:44px;font-size:14px;text-decoration:underline}
+@media (max-width:1024px){.wrap{grid-template-columns:1fr}.detail{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shift" role="region" aria-label="Кассовая смена">
+  <strong>Касса</strong>
+  <span class="badge b-success">Смена открыта</span>
+  <span class="muted">с 09:02 · Дилноза Р.</span>
+  <span>Сумма открытия: <b>500 000 сум</b></span>
+  <span>Наличные по смене: <b>3 120 000 сум</b></span>
+  <div class="spacer"></div>
+  <span class="badge b-warning">Демо-данные</span>
+  <button class="btn">Закрыть смену</button>
+</div>
+<div class="wrap">
+  <section class="card" aria-label="Активные заказы">
+    <h2>К оплате (5)</h2>
+    <div class="orders" role="listbox">
+      <button class="order" role="option" aria-selected="true"><span>#0042 · Стол 7</span><span class="amt">291 500 сум</span><span class="sub"><span class="badge b-info">Подано</span> частично оплачен</span></button>
+      <button class="order" role="option" aria-selected="false"><span>#0038 · Стол 3</span><span class="amt">198 000 сум</span><span class="sub"><span class="badge b-success">Готово</span> 4 гостя</span></button>
+      <button class="order" role="option" aria-selected="false"><span>#0040 · Стол 11</span><span class="amt">146 300 сум</span><span class="sub"><span class="badge b-warning">Готовится</span></span></button>
+      <button class="order" role="option" aria-selected="false"><span>#0045 · С собой</span><span class="amt">114 000 сум</span><span class="sub"><span class="badge b-muted">Отправлен</span></span></button>
+      <button class="order" role="option" aria-selected="false"><span>#0036 · Стол 2</span><span class="amt">412 000 сум</span><span class="sub"><span class="badge b-info">Подано</span></span></button>
+    </div>
+  </section>
+  <section class="detail">
+    <div class="card">
+      <h1>Заказ #0042 · Стол 7</h1>
+      <p class="muted" style="margin:0 0 12px">Официант Шерзод · 4 гостя · 12:18</p>
+      <table>
+        <tr><td>Плов ташкентский ×2<br><span class="muted" style="font-size:13px">+ Перепелиное яйцо</span></td><td class="num">100 000 сум</td></tr>
+        <tr><td>Шашлык из баранины ×2</td><td class="num">110 000 сум</td></tr>
+        <tr><td>Лагман ×1</td><td class="num">35 000 сум</td></tr>
+        <tr><td>Чай зелёный (чайник) ×2</td><td class="num">20 000 сум</td></tr>
+      </table>
+      <div class="totals" style="margin-top:12px">
+        <div><span>Подытог</span><span>265 000 сум</span></div>
+        <div><span>Скидка</span><span>0 сум</span></div>
+        <div><span>Сервисный сбор 10%</span><span>26 500 сум</span></div>
+        <div><span>Налог 0%</span><span>0 сум</span></div>
+        <div class="grand"><span>Итого</span><span>291 500 сум</span></div>
+        <div><span>Оплачено</span><span>150 000 сум</span></div>
+        <div class="remaining"><span>Осталось</span><span>141 500 сум</span></div>
+      </div>
+      <h2 style="margin-top:16px">Платежи по заказу</h2>
+      <ul class="pay-list">
+        <li><span>12:52 · Карта · <span class="badge b-success">Проведён</span></span><span>150 000 сум</span><button class="link" title="Требуется право payments.refund">Возврат</button></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Принять оплату</h2>
+      <div class="provider"><span class="muted">Провайдер</span><span class="badge b-warning">Ручная отметка (демо)</span></div>
+      <div class="seg" role="group" aria-label="Способ оплаты">
+        <button aria-pressed="true">Наличные</button>
+        <button aria-pressed="false">Карта</button>
+        <button aria-pressed="false">Другое</button>
+      </div>
+      <label for="amount">Сумма платежа (не больше остатка)</label>
+      <input id="amount" class="input" value="141 500" inputmode="numeric">
+      <div class="quick"><button>Весь остаток</button><button>50%</button><button>100 000</button></div>
+      <label for="given">Получено наличными (для расчёта сдачи)</label>
+      <input id="given" class="input" value="200 000" inputmode="numeric">
+      <div class="info"><span>Сдача (справочно)</span><b>58 500 сум</b></div>
+      <button class="btn btn-primary btn-lg">Принять оплату 141 500 сум</button>
+      <button class="btn" style="width:100%;margin-top:8px">Печать пречека</button>
+      <div class="disclaimer">Не является фискальным чеком. Ручная отметка оплаты не заменяет онлайн-ККМ и эквайринг. Данные банковских карт не сохраняются.</div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

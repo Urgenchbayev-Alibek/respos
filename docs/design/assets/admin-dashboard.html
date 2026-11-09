@@ -1,0 +1,161 @@
+<!doctype html>
+<!-- Wireframe — not production code. Admin dashboard (Restaurant Admin Panel). -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin dashboard — wireframe</title>
+<style>
+:root{--color-primary:#E85D2A;--color-primary-hover:#CF4D1D;--color-primary-subtle:#FDEEE7;--color-text:#0F172A;--color-muted:#475569;--color-border:#E2E8F0;--color-bg:#F8FAFC;--color-surface:#FFFFFF;--color-success:#16A34A;--color-warning:#D97706;--color-danger:#DC2626;--color-info:#2563EB;--radius-sm:6px;--radius-md:10px;--radius-lg:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;font-size:14px;color:var(--color-text);background:var(--color-bg)}
+.layout{display:flex;min-height:100vh}
+aside{width:240px;flex-shrink:0;background:var(--color-surface);border-right:1px solid var(--color-border);padding:16px 12px;overflow-y:auto}
+.logo{font-weight:700;font-size:16px;padding:4px 8px 16px}
+.logo span{color:var(--color-primary)}
+.group{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--color-muted);padding:12px 8px 4px}
+nav a{display:flex;align-items:center;min-height:36px;padding:0 8px;border-radius:var(--radius-sm);color:var(--color-text);text-decoration:none}
+nav a:hover{background:var(--color-bg)}
+nav a.active{background:var(--color-primary-subtle);color:var(--color-primary-hover);font-weight:600}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 24px;background:var(--color-surface);border-bottom:1px solid var(--color-border)}
+header .spacer{flex:1}
+select,.btn{font:inherit;min-height:36px;padding:0 12px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text)}
+.lang{display:inline-flex;border:1px solid var(--color-border);border-radius:var(--radius-sm);overflow:hidden}
+.lang button{font:inherit;border:0;background:var(--color-surface);min-height:36px;padding:0 10px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--color-primary);color:#fff}
+.user{display:flex;align-items:center;gap:8px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--color-primary-subtle);color:var(--color-primary-hover);display:grid;place-items:center;font-weight:600}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.badge-warning{background:#FEF3C7;color:#92400E}
+.badge-success{background:#DCFCE7;color:#166534}
+.badge-danger{background:#FEE2E2;color:#991B1B}
+.content{padding:24px;display:grid;gap:16px}
+h1{font-size:20px;margin:0}
+.title-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.title-row p{margin:0;color:var(--color-muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.kpi .label{color:var(--color-muted);font-size:13px}
+.kpi .value{font-size:24px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .delta{font-size:12px;margin-top:4px;color:var(--color-success)}
+.bar{height:6px;background:var(--color-border);border-radius:999px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--color-primary)}
+.cols{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.card h2{font-size:15px;margin:0 0 12px;display:flex;justify-content:space-between;align-items:center}
+.card h2 a{font-size:13px;font-weight:500;color:var(--color-primary);text-decoration:none}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--color-border);white-space:nowrap}
+th{font-size:12px;color:var(--color-muted);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+ul.list{list-style:none;margin:0;padding:0}
+ul.list li{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--color-border)}
+ul.list li:last-child{border-bottom:0}
+.muted{color:var(--color-muted)}
+.shift dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0 0 12px}
+.shift dt{color:var(--color-muted)}
+.shift dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.btn-primary{background:var(--color-primary);border-color:var(--color-primary);color:#fff;font-weight:600;cursor:pointer;min-height:40px;width:100%}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.side-stack{display:grid;gap:16px;align-content:start}
+@media (max-width:1024px){aside{width:200px}.cols{grid-template-columns:1fr}}
+@media (max-width:768px){.layout{flex-direction:column}aside{width:auto;border-right:0;border-bottom:1px solid var(--color-border);max-height:220px}header{padding:12px 16px}.content{padding:16px}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside aria-label="Навигация">
+    <div class="logo">Restaurant<span>OS</span></div>
+    <nav>
+      <div class="group">Обзор</div>
+      <a class="active" href="#">Dashboard</a>
+      <a href="#">Отчёты</a>
+      <a href="#">Уведомления</a>
+      <div class="group">Зал</div>
+      <a href="#">Зоны и столики</a>
+      <a href="#">Бронирования</a>
+      <a href="#">Заказы</a>
+      <div class="group">Меню и кухня</div>
+      <a href="#">Меню</a>
+      <a href="#">Кухонные станции</a>
+      <a href="#">Рецептуры</a>
+      <div class="group">Склад и закупки</div>
+      <a href="#">Склад</a>
+      <a href="#">Поставщики</a>
+      <a href="#">Закупки</a>
+      <div class="group">Финансы</div>
+      <a href="#">Платежи</a>
+      <a href="#">Кассовые смены</a>
+      <div class="group">Администрирование</div>
+      <a href="#">Филиалы</a>
+      <a href="#">Сотрудники и роли</a>
+      <a href="#">Журнал аудита</a>
+      <a href="#">Настройки</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <header>
+      <label class="muted" for="branch">Филиал</label>
+      <select id="branch"><option>Плов Центр — Ташкент</option><option>Плов Чиланзар</option></select>
+      <div class="spacer"></div>
+      <div class="lang" role="group" aria-label="Язык"><button aria-pressed="true">RU</button><button aria-pressed="false">UZ</button></div>
+      <button class="btn" aria-label="Уведомления">🔔 3</button>
+      <div class="user"><div class="avatar">АК</div><div><div>Азиз Каримов</div><div class="muted" style="font-size:12px">Владелец</div></div></div>
+    </header>
+    <section class="content">
+      <div class="title-row">
+        <h1>Сегодня, 10 ноября</h1>
+        <span class="badge badge-warning">Демо-данные</span>
+        <p>Данные по филиалу, часовой пояс Asia/Tashkent</p>
+      </div>
+      <div class="kpis">
+        <div class="card kpi"><div class="label">Продажи сегодня</div><div class="value">8 450 000 сум</div><div class="delta">+12% к прошлому вторнику</div></div>
+        <div class="card kpi"><div class="label">Заказы</div><div class="value">64</div><div class="delta">+5</div></div>
+        <div class="card kpi"><div class="label">Средний чек</div><div class="value">132 000 сум</div><div class="delta muted">≈ как вчера</div></div>
+        <div class="card kpi"><div class="label">Активные заказы</div><div class="value">9</div><div class="delta muted">3 готовы к подаче</div></div>
+        <div class="card kpi"><div class="label">Занятость столов</div><div class="value">14 / 22</div><div class="bar"><i style="width:64%"></i></div></div>
+      </div>
+      <div class="cols">
+        <div class="card">
+          <h2>Популярные блюда <a href="#">Все отчёты</a></h2>
+          <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Блюдо</th><th class="num">Кол-во</th><th class="num">Выручка</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Плов ташкентский</td><td class="num">38</td><td class="num">1 710 000 сум</td></tr>
+              <tr><td>2</td><td>Шашлык из баранины</td><td class="num">27</td><td class="num">1 485 000 сум</td></tr>
+              <tr><td>3</td><td>Лагман</td><td class="num">22</td><td class="num">770 000 сум</td></tr>
+              <tr><td>4</td><td>Самса с мясом</td><td class="num">41</td><td class="num">492 000 сум</td></tr>
+              <tr><td>5</td><td>Чай зелёный (чайник)</td><td class="num">35</td><td class="num">350 000 сум</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <div class="side-stack">
+          <div class="card shift">
+            <h2>Кассовая смена <span class="badge badge-success">Открыта</span></h2>
+            <dl>
+              <dt>Открыл</dt><dd>Дилноза Р.</dd>
+              <dt>Открыта</dt><dd>09:02</dd>
+              <dt>Сумма открытия</dt><dd>500 000 сум</dd>
+              <dt>Наличные в кассе</dt><dd>3 120 000 сум</dd>
+            </dl>
+            <button class="btn btn-primary">Перейти в кассу</button>
+          </div>
+          <div class="card">
+            <h2>Низкие остатки <span class="badge badge-danger">4</span></h2>
+            <ul class="list">
+              <li><span>Рис девзира</span><span class="muted">3,5 / 10 кг</span></li>
+              <li><span>Баранина</span><span class="muted">4,2 / 8 кг</span></li>
+              <li><span>Масло хлопковое</span><span class="muted">2 / 5 л</span></li>
+              <li><span>Лук репчатый</span><span class="muted">−0,4 / 6 кг</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

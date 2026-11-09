@@ -1,0 +1,131 @@
+<!doctype html>
+<!-- Wireframe — not production code. Kitchen Display System (dark, large type, touch). -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDS — wireframe</title>
+<style>
+:root{--color-primary:#E85D2A;--color-primary-hover:#CF4D1D;--color-success:#16A34A;--color-warning:#D97706;--color-danger:#DC2626;--color-info:#2563EB;--kds-bg:#0B1220;--kds-card:#111A2E;--kds-border:#1E2A44;--kds-text:#F8FAFC;--kds-muted:#94A3B8;--radius-sm:6px;--radius-md:10px;--radius-lg:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;font-size:20px;color:var(--kds-text);background:var(--kds-bg)}
+button{font:inherit;cursor:pointer}
+header{display:flex;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid var(--kds-border);flex-wrap:wrap}
+header h1{font-size:22px;margin:0}
+.tabs{display:flex;gap:8px;overflow-x:auto;flex:1;min-width:0}
+.tabs button{min-height:52px;padding:0 16px;border-radius:var(--radius-md);border:1px solid var(--kds-border);background:var(--kds-card);color:var(--kds-text);white-space:nowrap}
+.tabs button[aria-pressed=true]{background:var(--color-primary);border-color:var(--color-primary);font-weight:700}
+.conn{display:flex;align-items:center;gap:8px;font-size:16px;white-space:nowrap}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--color-success);box-shadow:0 0 0 4px rgba(22,163,74,.25)}
+.clock{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700}
+.demo{font-size:14px;font-weight:700;background:#78350F;color:#FDE68A;padding:4px 10px;border-radius:999px}
+.banner{margin:12px 16px 0;padding:12px 16px;border-radius:var(--radius-md);background:#422006;border:1px solid var(--color-warning);color:#FDE68A;font-size:16px;display:flex;align-items:center;gap:12px}
+.banner .dot{background:var(--color-warning);box-shadow:0 0 0 4px rgba(217,119,6,.25)}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:16px}
+.col h2{font-size:18px;color:var(--kds-muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px;display:flex;justify-content:space-between}
+.col h2 span{color:var(--kds-text)}
+.stack{display:grid;gap:12px}
+.ticket{background:var(--kds-card);border:2px solid var(--kds-border);border-radius:var(--radius-lg);padding:16px;display:grid;gap:12px}
+.ticket.warn{border-color:var(--color-warning)}
+.ticket.late{border-color:var(--color-danger)}
+.ticket.new-flash{box-shadow:0 0 0 3px var(--color-info)}
+.t-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.t-num{font-size:26px;font-weight:800}
+.timer{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.timer.warn{color:#FBBF24}
+.timer.late{color:#F87171}
+.meta{font-size:16px;color:var(--kds-muted)}
+ul.items{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.items li{display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.qty{font-weight:800;font-size:24px;min-width:40px}
+.iname{font-weight:600}
+.mod{grid-column:2;font-size:17px;color:var(--kds-muted)}
+.cmt{grid-column:2;font-size:17px;color:#FBBF24;font-weight:600}
+li.done .iname{text-decoration:line-through;color:var(--kds-muted)}
+.btn{min-height:64px;border-radius:var(--radius-md);border:0;font-size:22px;font-weight:800;color:#fff}
+.btn-start{background:var(--color-info)}
+.btn-ready{background:var(--color-success)}
+.btn-ghost{background:transparent;border:1px solid var(--kds-border);color:var(--kds-muted);min-height:52px;font-size:18px}
+.row{display:grid;grid-template-columns:1fr auto;gap:8px}
+@media (max-width:1100px){.board{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.board{grid-template-columns:1fr}body{font-size:18px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Кухня</h1>
+  <div class="tabs" role="group" aria-label="Станции">
+    <button aria-pressed="false">Все станции</button>
+    <button aria-pressed="true">Горячий цех</button>
+    <button aria-pressed="false">Мангал</button>
+    <button aria-pressed="false">Холодный цех</button>
+    <button aria-pressed="false">Бар</button>
+  </div>
+  <span class="demo">Демо-данные</span>
+  <div class="conn" role="status"><span class="dot"></span>Подключено</div>
+  <div class="clock">12:41</div>
+</header>
+<!-- Example of the reconnect state; shown only when the SignalR connection is lost. -->
+<div class="banner" role="alert"><span class="dot"></span>Связь потеряна. Переподключение… После восстановления список заданий обновится автоматически.</div>
+<main class="board">
+  <section class="col" aria-label="Новые">
+    <h2>Новые <span>2</span></h2>
+    <div class="stack">
+      <article class="ticket new-flash">
+        <div class="t-head"><span class="t-num">#118 · Стол 7</span><span class="timer">01:12</span></div>
+        <div class="meta">Официант: Шерзод · Заказ #0042 · 12:40</div>
+        <ul class="items">
+          <li><span class="qty">1×</span><span class="iname">Лагман</span><span class="cmt">Без острого</span></li>
+          <li><span class="qty">2×</span><span class="iname">Шурпа</span></li>
+        </ul>
+        <button class="btn btn-start">Начать</button>
+      </article>
+      <article class="ticket">
+        <div class="t-head"><span class="t-num">#119 · С собой</span><span class="timer">00:20</span></div>
+        <div class="meta">Официант: Малика · Заказ #0045 · 12:41</div>
+        <ul class="items">
+          <li><span class="qty">3×</span><span class="iname">Манты (5 шт.)</span><span class="mod">+ Сметана</span></li>
+        </ul>
+        <button class="btn btn-start">Начать</button>
+      </article>
+    </div>
+  </section>
+  <section class="col" aria-label="Готовятся">
+    <h2>Готовятся <span>2</span></h2>
+    <div class="stack">
+      <article class="ticket late">
+        <div class="t-head"><span class="t-num">#112 · Стол 3</span><span class="timer late">17:45</span></div>
+        <div class="meta">Официант: Малика · Заказ #0038 · 12:23</div>
+        <ul class="items">
+          <li class="done"><span class="qty">2×</span><span class="iname">Плов ташкентский</span><span class="mod">+ Перепелиное яйцо</span></li>
+          <li><span class="qty">1×</span><span class="iname">Казан-кабоб</span><span class="cmt">Аллергия на кунжут!</span></li>
+        </ul>
+        <div class="row"><button class="btn btn-ready">Готово</button><button class="btn btn-ghost">По позициям</button></div>
+      </article>
+      <article class="ticket warn">
+        <div class="t-head"><span class="t-num">#115 · Стол 11</span><span class="timer warn">11:03</span></div>
+        <div class="meta">Официант: Шерзод · Заказ #0040 · 12:30</div>
+        <ul class="items">
+          <li><span class="qty">1×</span><span class="iname">Димлама</span></li>
+          <li><span class="qty">1×</span><span class="iname">Чучвара</span><span class="mod">Порция: большая</span></li>
+        </ul>
+        <div class="row"><button class="btn btn-ready">Готово</button><button class="btn btn-ghost">По позициям</button></div>
+      </article>
+    </div>
+  </section>
+  <section class="col" aria-label="Готовы">
+    <h2>Готовы <span>1</span></h2>
+    <div class="stack">
+      <article class="ticket" style="opacity:.85">
+        <div class="t-head"><span class="t-num">#110 · Стол 5</span><span class="timer">08:30</span></div>
+        <div class="meta">Готово в 12:35 · ждёт подачи</div>
+        <ul class="items">
+          <li class="done"><span class="qty">3×</span><span class="iname">Самса с мясом</span></li>
+        </ul>
+        <div class="row"><button class="btn btn-ghost">Вернуть в работу</button><button class="btn btn-ghost">Подано</button></div>
+      </article>
+    </div>
+  </section>
+</main>
+</body>
+</html>
