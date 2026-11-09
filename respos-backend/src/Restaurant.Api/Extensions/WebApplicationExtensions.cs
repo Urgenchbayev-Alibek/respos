@@ -13,6 +13,7 @@ public static class WebApplicationExtensions
 {
     public static WebApplication UseApiPipeline(this WebApplication app)
     {
+        app.UseApiHttpHardening();
         app.UseMiddleware<CorrelationIdMiddleware>();
         app.UseSerilogRequestLogging();
         app.UseMiddleware<ExceptionHandlingMiddleware>();

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Restaurant.Api.Errors;
 using Restaurant.Api.Filters;
 using Restaurant.Api.Hubs;
@@ -29,11 +30,12 @@ public static class ServiceCollectionExtensions
                 });
         services.ConfigureHttpJsonOptions(options => ConfigureJson(options.SerializerOptions));
 
-        services.AddSignalR().AddJsonProtocol(options => ConfigureJson(options.PayloadSerializerOptions));
+        services.AddSignalR(options => options.AddFilter<HubErrorLoggingFilter>()).AddJsonProtocol(options => ConfigureJson(options.PayloadSerializerOptions));
         services.AddScoped<SignalRRealtimeNotifier<RestaurantHub>>();
         services.AddScoped<IRealtimeNotifier>(sp => sp.GetRequiredService<SignalRRealtimeNotifier<RestaurantHub>>());
         services.AddScoped<IRealtimeFlusher>(sp => sp.GetRequiredService<SignalRRealtimeNotifier<RestaurantHub>>());
 
+        services.AddApiForwardedHeaders(configuration);
         services.AddApiAuthentication();
         services.AddApiRateLimiting(configuration);
         services.AddApiSwagger();

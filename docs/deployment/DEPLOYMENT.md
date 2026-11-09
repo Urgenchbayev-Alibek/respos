@@ -23,9 +23,24 @@ pwsh ./scripts/dev-up.ps1    # Windows PowerShell
 docker compose -f infra/docker/docker-compose.yml --profile full up -d --build
 ```
 
-Профиль `full` запускает API с `ASPNETCORE_ENVIRONMENT=Development`: `appsettings.Development.json` входит в образ, поэтому
-миграции и демо-seed выполняются при старте; строка подключения переопределена на `postgres:5432`. В production образ работает
-с `ASPNETCORE_ENVIRONMENT=Production`, и dev-значения из этого файла не применяются.
+### Профиль `full` = production-конфигурация
+
+Профиль `full` запускает API с `ASPNETCORE_ENVIRONMENT=Production` — так же, как реальный образ: `appsettings.Development.json`
+не применяется, все значения заданы явно через env в `docker-compose.yml`:
+
+| Переменная compose | По умолчанию | Что задаёт |
+|---|---|---|
+| `POSTGRES_PASSWORD` | `respos_dev` | пароль БД и `ConnectionStrings__DefaultConnection` (`postgres:5432`) |
+| `JWT_SIGNING_KEY` | локальный ключ (≥ 32 байт) | `Jwt__SigningKey` — **для любого не-локального запуска задайте свой** |
+| `DATABASE_MIGRATE_ON_STARTUP` | `true` | `Database__MigrateOnStartup` — миграции при старте |
+| `PLATFORM_ADMIN_PASSWORD` | пусто | `Seed__PlatformAdminPassword` (пусто → superadmin не создаётся) |
+| `FRONTEND_ALLOWED_ORIGINS` | `:5173,:5174` | CORS |
+| `REFRESH_COOKIE_SECURE` | `false` | `Auth__RefreshCookieSecure` (локальный HTTP) |
+| `SWAGGER_ENABLED` | `false` | Swagger |
+
+`Seed__DemoData=false`: демо-организация сидится только в Development (для демо-данных используйте `dotnet run`).
+**Fail-fast:** вне зависимости от окружения API не стартует (понятное `InvalidOperationException` в логе), если не задан
+`ConnectionStrings__DefaultConnection` или `Jwt__SigningKey` короче 32 байт.
 
 Затем:
 
@@ -137,6 +152,12 @@ Seed__PlatformAdminPassword=<секрет>                                  # б
 | `Seed__DemoPassword` | `Demo123!` | пароль демо-пользователей (Development) |
 | `Seed__PlatformAdminPassword` | — | пароль `superadmin@respos.uz` вне Development |
 | `Swagger__Enabled` | `false` | Swagger вне Development |
+| `Housekeeping__Enabled`, `Housekeeping__IntervalMinutes` | `true`, `60` | фоновая очистка устаревших строк (каждый N минут, первый проход при старте) |
+| `Housekeeping__IdempotencyRetentionHours` | `24` | удалять `idempotency_records` старше N часов |
+| `Housekeeping__RefreshTokenRetentionDays`, `__ExpiredTokenRetentionDays` | `30`, `30` | refresh-токены, истёкшие/отозванные > N дней; токены сброса пароля и приглашения, истёкшие > N дней |
+| `Housekeeping__ReadNotificationRetentionDays` | `90` | прочитанные уведомления старше N дней |
+| `Http__UseHttpsRedirection` | `false` | HSTS + HTTPS-редирект вне Development (обычно делает прокси) |
+| `Http__KnownProxies`, `Http__KnownNetworks` | пусто | доверенные прокси для `X-Forwarded-For/Proto` (IP / CIDR через запятую) |
 | `Serilog__*` | compact JSON в stdout | логирование |
 | `RESPOS_DESIGN_CONNECTION` | dev-БД `localhost:5433` | только для `dotnet ef` (design-time factory) |
 
@@ -172,8 +193,9 @@ RESPOS_DESIGN_CONNECTION="Host=...;..." dotnet ef database update -p src/Restaur
 4. Задеплоить API, проверить `/health/ready` и smoke-сценарий (вход, создание заказа на демо-организации staging).
 5. При неудаче — откат версии API; откат схемы — восстановлением из бэкапа или заранее подготовленным down-скриптом.
 
-Автоприменение миграций при старте (`Database__MigrateOnStartup=true`) включено только в `appsettings.Development.json`;
-вне Development миграции применяются отдельным шагом до старта API (User-Todo L4). Базовые сидеры (`Database__SeedOnStartup`)
+Автоприменение миграций при старте (`Database__MigrateOnStartup=true`) включено в `appsettings.Development.json` и в
+compose-профиле `full`; в production по умолчанию выключено — миграции применяются отдельным шагом до старта API (User-Todo L4).
+Флаг работает в любом окружении, если нужен auto-migrate (например, staging). Базовые сидеры (`Database__SeedOnStartup`)
 идемпотентны и выполняются при каждом старте.
 
 ## 6. Резервное копирование и восстановление
@@ -209,7 +231,14 @@ pg_restore -c -h HOST -U USER -d respos_restore respos_YYYY-MM-DD.dump
 ## 9. HTTPS
 
 - Vercel выдаёт сертификаты автоматически (в т. ч. для своего домена).
-- Backend: TLS на платформе / reverse proxy (Caddy — автоматический Let’s Encrypt; Nginx + certbot). Контейнер слушает HTTP `8080`; HTTPS-редирект, HSTS и `ForwardedHeaders` в API **не настроены** — TLS и HSTS обеспечивает прокси/платформа.
+- Backend: TLS на платформе / reverse proxy (Caddy — автоматический Let’s Encrypt; Nginx + certbot). Контейнер слушает HTTP `8080`; TLS и HSTS обычно обеспечивает прокси/платформа.
+- `ForwardedHeaders` (`X-Forwarded-For`, `X-Forwarded-Proto`) включены всегда — реальный IP клиента нужен для rate limiting и аудита.
+  Если `Http__KnownProxies`/`Http__KnownNetworks` пусты, стандартный список (только loopback) очищается и заголовки принимаются
+  от любого отправителя (берётся только последний hop, `ForwardLimit=1`) — подходит для PaaS, где API доступен **только** через прокси
+  платформы с динамическими IP. Если API доступен напрямую (VPS), укажите IP/сеть прокси.
+- `Http__UseHttpsRedirection=true` включает `UseHsts` + `UseHttpsRedirection` вне Development. По умолчанию `false`, т. к. TLS
+  терминируется на прокси и редирект внутри контейнера приводит к циклам/лишним хопам.
+- Все ответы API содержат `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`.
 - Доступ к Postgres — только по TLS (`SSL Mode=Require`) и только из сети backend.
 
 ## 10. Чек-лист перед пилотом

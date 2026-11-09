@@ -22,13 +22,20 @@ services:
     build:
       context: ../../respos-backend
       dockerfile: Dockerfile
+    # Runs like a production image (appsettings.Development.json is NOT applied); every required value is explicit.
+    # The API refuses to start without a connection string or with a Jwt signing key shorter than 32 bytes.
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: Production
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=respos;Username=respos;Password=${POSTGRES_PASSWORD:-respos_dev}
-      Jwt__Issuer: respos-dev
-      Jwt__Audience: respos-dev
-      Jwt__SigningKey: ${JWT_SIGNING_KEY:-dev-only-signing-key-change-me-at-least-32-bytes!!}
-      Frontend__AllowedOrigins: http://localhost:5173,http://localhost:5174
+      Jwt__Issuer: ${JWT_ISSUER:-respos}
+      Jwt__Audience: ${JWT_AUDIENCE:-respos}
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:-local-compose-only-signing-key-change-me-32b!!}
+      Database__MigrateOnStartup: ${DATABASE_MIGRATE_ON_STARTUP:-true}
+      Seed__DemoData: "false" # demo data is seeded only in Development
+      Seed__PlatformAdminPassword: ${PLATFORM_ADMIN_PASSWORD:-}
+      Frontend__AllowedOrigins: ${FRONTEND_ALLOWED_ORIGINS:-http://localhost:5173,http://localhost:5174}
+      Auth__RefreshCookieSecure: ${REFRESH_COOKIE_SECURE:-false} # local plain HTTP; true behind TLS
+      Swagger__Enabled: ${SWAGGER_ENABLED:-false}
       FileStorage__Provider: Local
     ports:
       - "5080:8080"

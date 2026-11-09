@@ -16,6 +16,7 @@ using Restaurant.Application.Features.Auth.Common;
 using Restaurant.Infrastructure.Audit;
 using Restaurant.Infrastructure.Context;
 using Restaurant.Infrastructure.Files;
+using Restaurant.Infrastructure.Housekeeping;
 using Restaurant.Infrastructure.Identity;
 using Restaurant.Infrastructure.Idempotency;
 using Restaurant.Infrastructure.Persistence.Context;
@@ -38,6 +39,7 @@ public static class DependencyInjection
         services.Configure<FrontendOptions>(configuration.GetSection(FrontendOptions.SectionName));
         services.Configure<FileStorageOptions>(configuration.GetSection(FileStorageOptions.SectionName));
         services.Configure<SeedOptions>(configuration.GetSection(SeedOptions.SectionName));
+        services.Configure<HousekeepingOptions>(configuration.GetSection(HousekeepingOptions.SectionName));
 
         services.AddScoped<RequestContext>();
         services.AddScoped<ITenantContext>(sp => sp.GetRequiredService<RequestContext>());
@@ -65,6 +67,9 @@ public static class DependencyInjection
         services.AddSingleton<IEmailSender, LogEmailSender>();
         services.AddScoped<IAuditLogger, AuditLogger>();
         services.AddScoped<IIdempotencyService, IdempotencyService>();
+
+        services.AddScoped<HousekeepingCleaner>();
+        services.AddHostedService<HousekeepingService>();
 
         services.AddDatabaseSeeding();
         return services;
