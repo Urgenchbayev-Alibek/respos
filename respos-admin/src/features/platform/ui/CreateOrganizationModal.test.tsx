@@ -36,13 +36,13 @@ describe('CreateOrganizationModal', () => {
     expect(screen.getByText(/Минимум 8 символов/)).toBeInTheDocument();
   });
 
-  it('suggests a slug, submits the contract body and maps server field errors', async () => {
+  it('suggests a slug, submits the contract body and maps the slug_taken code to the slug field', async () => {
     let body: Record<string, unknown> | null = null;
     server.use(
       http.get(api('/platform/plans'), () => HttpResponse.json(plans)),
       http.post(api('/platform/organizations'), async ({ request }) => {
         body = (await request.json()) as Record<string, unknown>;
-        return problem(409, 'organization.slug_taken', { errors: { slug: ['Slug already taken'] } });
+        return problem(409, 'organization.slug_taken');
       }),
     );
     const onClose = vi.fn();
@@ -52,7 +52,7 @@ describe('CreateOrganizationModal', () => {
     expect(screen.getByLabelText(/Slug/)).toHaveValue('chayxona-plov');
 
     await userEvent.click(screen.getByRole('button', { name: 'Создать организацию' }));
-    expect(await screen.findByText('Slug already taken')).toBeInTheDocument();
+    expect(await screen.findByText('Такой slug уже занят.')).toBeInTheDocument();
     await waitFor(() =>
       expect(body).toEqual({
         name: 'Chayxona Plov',

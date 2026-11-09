@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
+import { zonedToUtcIso } from '@/shared/lib/zoned-time';
 import type { PagedResult } from '@/shared/types/pagination';
 import type { AuditLogDto, AuditLogListParams } from './audit-log.types';
 
@@ -35,15 +36,22 @@ function redact(value: unknown): unknown {
  * Pretty JSON of the audit changes. The server already sanitizes; this is defence in depth so that a
  * secret-looking key is never rendered even if a backend bug lets it through.
  */
-export function formatAuditChanges(entry: Pick<AuditLogDto, 'changesJson' | 'changes'>): string | null {
-  let value: unknown = entry.changes;
-  if (value === undefined || value === null) {
-    if (!entry.changesJson) return null;
-    try {
-      value = JSON.parse(entry.changesJson);
-    } catch {
-      return entry.changesJson;
-    }
-  }
-  return JSON.stringify(redact(value), null, 2);
+export function formatAuditChanges(entry: Pick<AuditLogDto, 'changes'>): string | null {
+  if (entry.changes === undefined || entry.changes === null) return null;
+  return JSON.stringify(redact(entry.changes), null, 2);
+}
+
+const END_OF_DAY_MS = 59_999;
+
+/**
+ * `<input type="date">` values → inclusive UTC instants for `from`/`to` (the API compares `createdAt` with
+ * instants, so a bare `YYYY-MM-DD` would mean midnight UTC and drop the whole `to` day).
+ */
+export function auditDateRange(from: string, to: string, timeZone?: string): { from?: string; to?: string } {
+  const start = from ? zonedToUtcIso(from, '00:00', timeZone) : '';
+  const endMinute = to ? zonedToUtcIso(to, '23:59', timeZone) : '';
+  return {
+    from: start || undefined,
+    to: endMinute ? new Date(new Date(endMinute).getTime() + END_OF_DAY_MS).toISOString() : undefined,
+  };
 }

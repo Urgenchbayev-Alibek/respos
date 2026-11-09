@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
-import type { BranchDto, BranchInput, BranchSettingsDto } from './branch.types';
+import type { BranchDto, BranchInput, BranchSettingsDto, BranchSettingsInput } from './branch.types';
 
 /** Query keys: `[entity, scope, params]` — invalidate with `branchKeys.all`. */
 export const branchKeys = {
@@ -50,7 +50,7 @@ export function useBranchSettings(branchId: string) {
 export function useSaveBranchSettings(branchId: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (input: BranchSettingsDto) =>
+    mutationFn: (input: BranchSettingsInput) =>
       apiClient.put<BranchSettingsDto>(ENDPOINTS.branches.settings(branchId), input, ORG_LEVEL),
     onSuccess: (data) => queryClient.setQueryData(branchKeys.settings(branchId), data),
   });

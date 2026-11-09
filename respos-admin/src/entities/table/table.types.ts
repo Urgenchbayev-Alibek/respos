@@ -12,9 +12,10 @@ export interface TableDto {
   isActive: boolean;
   posX: number | null;
   posY: number | null;
-  activeOrderId?: Guid | null;
-  activeOrderTotal?: number | null;
-  nextReservation?: { id: Guid; startsAt: Iso8601; guestName: string } | null;
+  activeOrderId: Guid | null;
+  activeOrderTotal: number | null;
+  /** Next confirmed reservation today (DECISIONS_v1_1 §12). */
+  nextReservation: { id: Guid; startsAt: Iso8601; guestName: string } | null;
 }
 
 export interface TableListParams {

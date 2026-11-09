@@ -6,12 +6,14 @@ import type { PaymentDto, PaymentListParams } from '@/entities/payment/payment.t
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
-import { DEFAULT_PAGE_SIZE, toSortParam, type SortState } from '@/shared/types/pagination';
+import { DEFAULT_PAGE_SIZE } from '@/shared/types/pagination';
 import { Button, DataTable, StatusBadge, type DataTableColumn } from '@/shared/ui';
-import { formatOrderNumber, getRefundable } from '../model/payment-labels';
+import { getRefundable } from '../model/payment-labels';
 import { RefundModal } from './RefundModal';
 
 type Filters = Omit<PaymentListParams, 'page' | 'pageSize' | 'sort'>;
+
+const shortId = (value: string) => value.slice(0, 8);
 
 /** Paged payments list with refund action (payments.refund). Used by admin and cashier. */
 export function PaymentsTable({ filters, enabled = true }: { filters: Filters; enabled?: boolean }) {
@@ -20,20 +22,20 @@ export function PaymentsTable({ filters, enabled = true }: { filters: Filters; e
   const { hasPermission } = usePermissions();
   const canRefund = hasPermission(PERMISSIONS.payments.refund);
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState<SortState | null>({ field: 'createdAt', direction: 'desc' });
   const [refunding, setRefunding] = useState<PaymentDto | null>(null);
   const filterKey = JSON.stringify(filters);
 
   useEffect(() => setPage(1), [filterKey]);
 
-  const query = usePayments({ ...filters, page, pageSize: DEFAULT_PAGE_SIZE, sort: toSortParam(sort) }, { enabled });
+  const query = usePayments({ ...filters, page, pageSize: DEFAULT_PAGE_SIZE }, { enabled });
 
   const columns = useMemo<DataTableColumn<PaymentDto>[]>(
     () => [
-      { key: 'createdAt', header: t('columns.createdAt'), sortField: 'createdAt', cell: (p) => format.dateTime(p.createdAt) },
-      { key: 'order', header: t('columns.order'), cell: (p) => formatOrderNumber(p.orderNumber) },
+      { key: 'createdAt', header: t('columns.createdAt'), cell: (p) => format.dateTime(p.createdAt) },
+      // PaymentDto has no order number (backend gap): show a short order reference with the full id as a tooltip.
+      { key: 'order', header: t('columns.order'), cell: (p) => <span title={p.orderId}>{shortId(p.orderId)}</span> },
       { key: 'method', header: t('columns.method'), cell: (p) => t(`methods.${p.method}`) },
-      { key: 'amount', header: t('columns.amount'), align: 'right', sortField: 'amount', cell: (p) => format.money(p.amount) },
+      { key: 'amount', header: t('columns.amount'), align: 'right', cell: (p) => format.money(p.amount) },
       {
         key: 'refunded',
         header: t('columns.refunded'),
@@ -69,8 +71,6 @@ export function PaymentsTable({ filters, enabled = true }: { filters: Filters; e
         error={query.error}
         onRetry={() => void query.refetch()}
         emptyTitle={t('empty')}
-        sort={sort}
-        onSortChange={setSort}
         pagination={query.data && { page, pageSize: query.data.pageSize, totalCount: query.data.totalCount, onPageChange: setPage }}
       />
       {refunding && <RefundModal payment={refunding} onClose={() => setRefunding(null)} />}

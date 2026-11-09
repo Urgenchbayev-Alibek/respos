@@ -20,5 +20,10 @@ export interface BranchSettingsDto {
   serviceChargePercent: number;
   taxPercent: number;
   allowNegativeStock: boolean;
+  /** Read-only in MVP: stock is written off on payment. */
+  inventoryConsumptionTrigger: 'on_payment';
   receiptFooter: string | null;
 }
+
+/** `PUT /branches/{id}/settings` body. */
+export type BranchSettingsInput = Omit<BranchSettingsDto, 'inventoryConsumptionTrigger'>;

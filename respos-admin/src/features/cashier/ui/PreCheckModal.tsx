@@ -1,21 +1,19 @@
 import { Printer } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { PayableOrderDto } from '@/entities/payment/payable-order.types';
-import { formatOrderNumber } from '@/features/payments/model/payment-labels';
-import { useAuth } from '@/shared/hooks/use-auth';
-import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
+import { useOrderReceipt } from '@/entities/order/order.queries';
+import type { ReceiptDto } from '@/entities/order/receipt.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
-import { Button, Modal } from '@/shared/ui';
+import { Button, ErrorState, Modal, PageLoader } from '@/shared/ui';
 import { OrderSummary } from './OrderSummary';
 import styles from './PreCheckModal.module.css';
 
-/** Pre-check (guest bill) from server data. NOT a fiscal receipt (no online cash register in MVP). */
-export function PreCheckModal({ order, onClose }: { order: PayableOrderDto; onClose: () => void }) {
+/**
+ * Pre-check (guest bill) from `GET /orders/{id}/receipt` (fresh server data, cancelled items excluded).
+ * NOT a fiscal receipt (no online cash register in MVP).
+ */
+export function PreCheckModal({ orderId, onClose }: { orderId: string; onClose: () => void }) {
   const { t } = useTranslation('cashier');
-  const format = useFormatters();
-  const { user } = useAuth();
-  const { branch } = useCurrentBranch();
-  const place = order.tableNumber ? t('orders.table', { number: order.tableNumber }) : t('orders.takeaway');
+  const receipt = useOrderReceipt(orderId);
 
   return (
     <Modal
@@ -25,29 +23,48 @@ export function PreCheckModal({ order, onClose }: { order: PayableOrderDto; onCl
       footer={
         <>
           <Button onClick={onClose}>{t('common:actions.close')}</Button>
-          <Button variant="primary" icon={<Printer />} onClick={() => window.print()}>
+          <Button variant="primary" icon={<Printer />} disabled={!receipt.data} onClick={() => window.print()}>
             {t('precheck.print')}
           </Button>
         </>
       }
     >
-      <div className={styles.sheet} data-testid="precheck">
-        <div className={styles.header}>
-          <h3>{user?.currentOrganization?.name}</h3>
-          {branch && <p className={styles.meta}>{branch.name}</p>}
-        </div>
-        <p className={styles.notFiscal}>{t('precheck.notFiscal')}</p>
-        <p className={styles.meta}>
-          {t('precheck.meta', {
-            number: formatOrderNumber(order.number),
-            place,
-            waiter: order.waiterName ?? '—',
-            time: format.dateTime(order.openedAt),
-          })}
-        </p>
-        <OrderSummary order={order} />
-        <p className={styles.meta}>{t('precheck.printedAt', { time: format.dateTime(new Date()) })}</p>
-      </div>
+      {receipt.isPending ? (
+        <PageLoader />
+      ) : receipt.isError ? (
+        <ErrorState error={receipt.error} onRetry={() => void receipt.refetch()} />
+      ) : (
+        <ReceiptSheet receipt={receipt.data} />
+      )}
     </Modal>
+  );
+}
+
+function ReceiptSheet({ receipt }: { receipt: ReceiptDto }) {
+  const { t } = useTranslation('cashier');
+  const format = useFormatters();
+  const place = receipt.tableNumber ? t('orders.table', { number: receipt.tableNumber }) : t('orders.takeaway');
+  const contacts = [receipt.branchAddress, receipt.branchPhone].filter(Boolean).join(' · ');
+
+  return (
+    <div className={styles.sheet} data-testid="precheck">
+      <div className={styles.header}>
+        <h3>{receipt.organizationName}</h3>
+        <p className={styles.meta}>{receipt.branchName}</p>
+        {contacts && <p className={styles.meta}>{contacts}</p>}
+      </div>
+      <p className={styles.notFiscal}>{t('precheck.notFiscal')}</p>
+      <p className={styles.meta}>
+        {t('precheck.meta', {
+          number: receipt.displayNumber,
+          place,
+          waiter: receipt.waiterName ?? '—',
+          time: format.dateTime(receipt.openedAt),
+        })}
+      </p>
+      <OrderSummary order={receipt} />
+      {receipt.footer && <p className={styles.meta}>{receipt.footer}</p>}
+      <p className={styles.meta}>{t('precheck.printedAt', { time: format.dateTime(receipt.printedAt) })}</p>
+    </div>
   );
 }

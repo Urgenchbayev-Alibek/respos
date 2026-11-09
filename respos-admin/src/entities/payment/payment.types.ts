@@ -5,21 +5,37 @@ import type { PageParams } from '@/shared/types/pagination';
 export const PAYMENT_METHODS = ['cash', 'card', 'other'] as const;
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
-/** PaymentDto (ENDPOINTS.md "Payments & cash shifts"). `provider` is `manual` in MVP. */
+/** PaymentDto (backend `Payments/Common/PaymentDtos.cs`). `provider` is `manual` in MVP. No order number. */
 export interface PaymentDto {
   id: Guid;
   orderId: Guid;
-  /** Not in the base DTO of the contract; shown when the server includes it. */
-  orderNumber?: number;
+  cashShiftId: Guid;
   method: PaymentMethod;
   amount: number;
   refundedAmount: number;
   status: PaymentStatus;
   provider: string;
+  externalReference: string | null;
   createdAt: Iso8601;
+  createdBy: Guid | null;
   createdByName: string | null;
 }
 
+/** `POST /payments/{id}/refunds` → 201 RefundDto; `payment` is the refunded payment after the refund. */
+export interface RefundDto {
+  id: Guid;
+  paymentId: Guid;
+  orderId: Guid;
+  cashShiftId: Guid;
+  method: PaymentMethod;
+  amount: number;
+  reason: string;
+  createdAt: Iso8601;
+  createdByName: string | null;
+  payment: PaymentDto;
+}
+
+/** `sort` is ignored by the server (always createdAt desc). `from`/`to` are UTC instants. */
 export interface PaymentListParams extends PageParams {
   from?: string;
   to?: string;

@@ -4,7 +4,7 @@ import { Controller, useForm, type Resolver } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useFeatures, useSavePlan } from '@/entities/platform/platform.queries';
 import type { PlanDto } from '@/entities/platform/platform.types';
-import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
+import { applyServerCodeError, applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
 import { Alert, Button, Checkbox, FormField, FormGrid, Input, Modal, Switch, useToast } from '@/shared/ui';
 import { planSchema, type PlanOutput } from '../model/platform-schemas';
 import styles from './platform.module.css';
@@ -53,7 +53,8 @@ export function PlanFormModal({ target, onClose }: { target: { plan: PlanDto | n
       toast.success(t('plans.saved'));
       onClose();
     } catch (error) {
-      if (!applyServerFieldErrors(error, setError, ['code', 'name', 'maxBranches', 'maxUsers'])) setServerError(getErrorMessage(error, t));
+      const fieldsMatched = applyServerFieldErrors(error, setError, ['code', 'name', 'maxBranches', 'maxUsers']);
+      if (!fieldsMatched && !applyServerCodeError(error, setError, { 'plan.code_taken': 'code' }, t)) setServerError(getErrorMessage(error, t));
     }
   });
 

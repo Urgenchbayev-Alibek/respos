@@ -1,6 +1,6 @@
 import { Volume2, VolumeX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { KitchenStationDto } from '@/entities/kitchen-ticket/kitchen-ticket.types';
+import type { KitchenStationDto } from '@/entities/kitchen-station/kitchen-station.types';
 import { ALL_STATIONS } from '../model/kds-preferences';
 import styles from './KitchenToolbar.module.css';
 

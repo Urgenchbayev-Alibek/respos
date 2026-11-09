@@ -93,7 +93,7 @@ export function ReservationFormModal({ reservation, date, tables, areas, onClose
         <FormField label={t('fields.guestName')} error={errors.guestName?.message} required>
           <Input data-autofocus autoComplete="off" {...register('guestName')} />
         </FormField>
-        <FormField label={t('fields.guestPhone')} error={errors.guestPhone?.message}>
+        <FormField label={t('fields.guestPhone')} error={errors.guestPhone?.message} required>
           <Input type="tel" autoComplete="off" {...register('guestPhone')} />
         </FormField>
         <FormField label={t('fields.date')} error={errors.date?.message} required>

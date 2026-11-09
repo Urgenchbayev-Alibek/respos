@@ -7,6 +7,7 @@ import { useSavePurchase } from '@/entities/purchase/purchase.queries';
 import type { PurchaseDto } from '@/entities/purchase/purchase.types';
 import { useSupplierOptions } from '@/entities/supplier/supplier.queries';
 import { useUnits } from '@/entities/unit/unit.queries';
+import { useFormatters } from '@/shared/hooks/use-formatters';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
 import { Alert, Button, FormField, FormGrid, Input, Modal, Select, Textarea, useToast } from '@/shared/ui';
 import {
@@ -34,24 +35,25 @@ export function PurchaseFormModal({ open, purchase, onClose, onSaved }: Purchase
   const ingredients = useIngredientOptions(open);
   const units = useUnits();
   const save = useSavePurchase();
+  const { timeZone } = useFormatters();
   const [serverError, setServerError] = useState<string | null>(null);
   const form = useForm<PurchaseFormValues, unknown, PurchaseFormOutput>({
     resolver: zodResolver(purchaseSchema) as unknown as Resolver<PurchaseFormValues>,
-    defaultValues: toPurchaseFormValues(purchase),
+    defaultValues: toPurchaseFormValues(purchase, timeZone),
   });
   const { register, handleSubmit, reset, setError, setValue, getValues, control, formState } = form;
 
   useEffect(() => {
     if (open) {
-      reset(toPurchaseFormValues(purchase));
+      reset(toPurchaseFormValues(purchase, timeZone));
       setServerError(null);
     }
-  }, [open, purchase, reset]);
+  }, [open, purchase, reset, timeZone]);
 
   const onSubmit = handleSubmit(async (values) => {
     setServerError(null);
     try {
-      const saved = await save.mutateAsync({ id: purchase?.id, input: toPurchaseInput(values) });
+      const saved = await save.mutateAsync({ id: purchase?.id, input: toPurchaseInput(values, timeZone) });
       toast.success(t(purchase ? 'toast.updated' : 'toast.created'));
       onSaved?.(saved);
       onClose();

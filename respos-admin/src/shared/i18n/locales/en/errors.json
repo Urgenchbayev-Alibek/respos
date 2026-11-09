@@ -12,10 +12,14 @@
     "invalid_credentials": "Wrong email or password.",
     "account_locked": "Account temporarily locked after failed sign-in attempts.",
     "account_blocked": "Account is blocked. Contact your administrator.",
-    "account_deactivated": "Account is deactivated.",
     "invalid_token": "The link is invalid.",
     "token_expired": "The link has expired.",
-    "invalid_current_password": "Current password is incorrect."
+    "invalid_current_password": "Current password is incorrect.",
+    "invalid_refresh_token": "Your session is no longer valid. Please sign in again.",
+    "refresh_token_reused": "Your session was revoked for security reasons. Please sign in again.",
+    "no_organization": "Your account is not linked to any active organization.",
+    "organization_forbidden": "You are not a member of this organization.",
+    "weak_password": "Password must be at least 8 characters and contain a letter and a digit."
   },
   "rate_limit": {
     "exceeded": "Too many attempts. Wait a minute and try again."
@@ -27,19 +31,30 @@
     "failed": "Please check the highlighted fields."
   },
   "tenant": {
-    "branch_forbidden": "No access to the selected branch."
+    "branch_forbidden": "No access to the selected branch.",
+    "required": "Select an organization first."
   },
   "plan": {
-    "limit_exceeded": "Plan limit reached."
+    "limit_exceeded": "Plan limit reached.",
+    "code_taken": "A plan with this code already exists.",
+    "invalid_features": "Some selected features are unknown.",
+    "not_found": "Plan not found."
   },
   "user": {
-    "cannot_deactivate_self": "You cannot deactivate yourself.",
     "last_owner": "The last owner cannot be changed.",
-    "email_taken": "A user with this email already exists."
+    "email_taken": "A user with this email already exists.",
+    "cannot_modify_self": "You cannot perform this action on your own account.",
+    "invalid_branches": "Some selected branches are invalid.",
+    "invalid_roles": "Some selected roles are invalid.",
+    "not_found": "User not found.",
+    "owner_protected": "Only an owner can modify another owner."
   },
   "role": {
-    "system_readonly": "System roles cannot be changed.",
-    "in_use": "The role is assigned to users."
+    "in_use": "The role is assigned to users.",
+    "invalid_permissions": "Some permissions are unknown.",
+    "name_taken": "A role with this name already exists.",
+    "not_found": "Role not found.",
+    "system_protected": "System roles cannot be changed or deleted."
   },
   "order": {
     "invalid_status_transition": "Invalid order status change.",
@@ -49,20 +64,37 @@
     "item_not_editable": "The item can no longer be changed — it was sent to the kitchen.",
     "nothing_to_send": "No new items to send to the kitchen.",
     "table_required": "Select a table for a dine-in order.",
-    "cancel_reason_required": "Enter a cancellation reason."
+    "cancel_reason_required": "Enter a cancellation reason.",
+    "invalid_discount": "Invalid discount: it cannot exceed the subtotal.",
+    "item_not_found": "Order item not found.",
+    "menu_item_unavailable": "This dish is currently unavailable.",
+    "not_dine_in": "Only dine-in orders can be moved to another table.",
+    "not_found": "Order not found."
   },
   "reservation": {
     "time_conflict": "The table is already reserved for this time.",
-    "invalid_period": "The reservation must end after it starts."
+    "invalid_period": "The reservation must end after it starts.",
+    "invalid_status_transition": "This action is not allowed for the reservation's current status.",
+    "not_editable": "Only pending or confirmed reservations can be changed.",
+    "not_found": "Reservation not found.",
+    "table_required": "Assign a table before seating the guests."
   },
   "payment": {
-    "duplicate": "The payment is already registered."
+    "duplicate": "The payment is already registered.",
+    "exceeds_due": "The amount exceeds the remaining balance of the order.",
+    "invalid_amount": "Enter an amount greater than zero.",
+    "invalid_refund_amount": "The refund exceeds the refundable amount.",
+    "not_found": "Payment not found.",
+    "provider_failed": "The payment provider rejected the operation. Try another method.",
+    "refund_reason_required": "Specify the refund reason."
   },
   "stock": {
     "insufficient": "Insufficient stock."
   },
   "kitchen_station": {
-    "not_found": "Kitchen station not found."
+    "not_found": "Kitchen station not found.",
+    "in_use": "Menu items are still routed to this station.",
+    "not_configured": "No active kitchen station in this branch. Set one up first."
   },
   "pages": {
     "forbiddenTitle": "Access denied",
@@ -77,18 +109,118 @@
   },
   "purchase": {
     "invalid_status_transition": "Invalid purchase status change.",
-    "not_editable": "Only drafts can be edited."
+    "not_editable": "Only drafts can be edited.",
+    "invalid_receive_quantity": "Enter a valid received quantity.",
+    "item_not_found": "Purchase line not found.",
+    "not_found": "Purchase not found.",
+    "receive_exceeds_remaining": "Received quantity exceeds what remains on the line."
   },
   "organization": {
-    "slug_taken": "This slug is already taken."
+    "slug_taken": "This slug is already taken.",
+    "not_found": "Organization not found.",
+    "suspended": "The organization is suspended. Contact support."
   },
   "inventory_count": {
-    "already_completed": "The count is already completed."
+    "completed": "A completed inventory count cannot be changed.",
+    "not_found": "Inventory count not found."
   },
   "recipe": {
-    "empty": "Add at least one ingredient."
+    "empty": "Add at least one ingredient.",
+    "invalid_variant": "The variant does not belong to this dish.",
+    "not_found": "Recipe not found."
   },
   "unit": {
-    "conversion_exists": "This conversion already exists."
+    "conversion_exists": "This conversion already exists.",
+    "code_taken": "A unit with this code already exists.",
+    "conversion_missing": "No conversion from this unit to the ingredient's base unit.",
+    "not_found": "Unit not found."
+  },
+  "branch": {
+    "last_active": "You cannot deactivate the last active branch.",
+    "not_found": "Branch not found."
+  },
+  "cash_shift": {
+    "already_open": "A cash shift is already open in this branch.",
+    "closed": "The cash shift is already closed.",
+    "invalid_amount": "Enter a valid amount (zero or more).",
+    "not_found": "Cash shift not found.",
+    "not_open": "Open a cash shift first."
+  },
+  "concurrency": {
+    "conflict": "The record was changed by someone else. Reload and try again."
+  },
+  "conflict": {
+    "duplicate": "Such a record already exists."
+  },
+  "demo_request": {
+    "not_found": "Demo request not found."
+  },
+  "dining_area": {
+    "archived": "The hall is archived.",
+    "has_tables": "The hall still has tables. Move or archive them first.",
+    "not_found": "Hall not found."
+  },
+  "feature": {
+    "disabled": "This feature is not available on your plan.",
+    "not_found": "Feature not found."
+  },
+  "idempotency": {
+    "in_progress": "The previous request is still being processed. Please wait.",
+    "key_required": "Request could not be sent safely. Please retry.",
+    "key_reused": "This request was already sent with different data. Please retry."
+  },
+  "ingredient": {
+    "archived": "The ingredient is archived.",
+    "base_unit_locked": "The base unit cannot change after stock movements exist.",
+    "not_found": "Ingredient not found."
+  },
+  "ingredient_category": {
+    "not_found": "Ingredient category not found."
+  },
+  "kitchen_ticket": {
+    "invalid_status_transition": "This ticket action is not allowed in its current status.",
+    "not_found": "Kitchen ticket not found."
+  },
+  "kitchen_ticket_item": {
+    "not_found": "Ticket item not found."
+  },
+  "menu_category": {
+    "archived": "The category is archived.",
+    "has_items": "The category still has dishes. Move or archive them first.",
+    "not_found": "Category not found."
+  },
+  "menu_item": {
+    "archived": "The dish is archived.",
+    "invalid_modifier_groups": "Some modifier groups are invalid.",
+    "invalid_photo": "Photo must be JPG, PNG or WEBP up to 2 MB.",
+    "invalid_variant": "The selected variant does not belong to this dish.",
+    "not_found": "Dish not found."
+  },
+  "modifier_group": {
+    "invalid_option": "Invalid modifier option.",
+    "not_found": "Modifier group not found."
+  },
+  "notification": {
+    "not_found": "Notification not found."
+  },
+  "report": {
+    "invalid_period": "Invalid period: the end must not be before the start, max 366 days.",
+    "not_found": "Report not found.",
+    "unsupported_format": "Only CSV export is supported."
+  },
+  "request": {
+    "invalid": "The request is invalid."
+  },
+  "supplier": {
+    "archived": "The supplier is archived.",
+    "not_found": "Supplier not found."
+  },
+  "table": {
+    "archived": "The table is archived.",
+    "has_active_order": "The table has an active order.",
+    "invalid_status": "Only 'available' or 'unavailable' can be set manually.",
+    "not_found": "Table not found.",
+    "number_taken": "A table with this number already exists.",
+    "unavailable": "The table is unavailable."
   }
 }

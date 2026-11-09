@@ -13,6 +13,7 @@ import type {
   PlanInput,
   PlatformOrganizationDto,
   PlatformOrganizationListParams,
+  SetFeatureFlagInput,
   SubscriptionInput,
   SystemEventDto,
   SystemStatusDto,
@@ -105,7 +106,7 @@ export const useOrganizationStatus = () =>
 
 export const useUpdateSubscription = () =>
   usePlatformMutation(({ id, input }: { id: string; input: SubscriptionInput }) =>
-    apiClient.put<unknown>(ENDPOINTS.platform.organizationAction(id, 'subscription'), input, NO_BRANCH),
+    apiClient.put<PlatformOrganizationDto>(ENDPOINTS.platform.organizationAction(id, 'subscription'), input, NO_BRANCH),
   );
 
 export const useSavePlan = () =>
@@ -116,7 +117,7 @@ export const useSavePlan = () =>
   );
 
 export const useSetFeatureFlag = () =>
-  usePlatformMutation((input: FeatureFlagDto) => apiClient.put<unknown>(ENDPOINTS.platform.featureFlags, input, NO_BRANCH));
+  usePlatformMutation((input: SetFeatureFlagInput) => apiClient.put<FeatureFlagDto>(ENDPOINTS.platform.featureFlags, input, NO_BRANCH));
 
 export const useSetDemoRequestStatus = () =>
   usePlatformMutation(({ id, status }: { id: string; status: DemoRequestStatus }) =>

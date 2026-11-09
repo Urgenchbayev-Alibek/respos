@@ -21,7 +21,7 @@ export const posMenuKeys = {
   menu: () => [...posMenuKeys.all, 'menu'] as const,
 };
 
-function sortCategories(categories: MenuCategoryDto[]): MenuCategoryDto[] {
+function sortCategories<T extends { sortOrder: number }>(categories: T[]): T[] {
   return [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
@@ -63,7 +63,7 @@ export function useArchiveMenuCategory() {
 export function useReorderMenuCategories() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (ids: string[]) => apiClient.put<void>(ENDPOINTS.menu.categoriesReorder, { ids }, ORG_LEVEL),
+    mutationFn: (ids: string[]) => apiClient.put<MenuCategoryDto[]>(ENDPOINTS.menu.categoriesReorder, { ids }, ORG_LEVEL),
     onMutate: async (ids) => {
       await queryClient.cancelQueries({ queryKey: menuCategoryKeys.list() });
       const previous = queryClient.getQueryData<MenuCategoryDto[]>(menuCategoryKeys.list());
@@ -114,18 +114,12 @@ export function useDeleteModifierGroup() {
   });
 }
 
-/** Accepts both `PosCategoryDto[]` and `{ categories: PosCategoryDto[] }` (the contract only says "categories with items"). */
-function normalizePosMenu(data: PosCategoryDto[] | { categories: PosCategoryDto[] } | undefined): PosCategoryDto[] {
-  const categories = Array.isArray(data) ? data : (data?.categories ?? []);
-  return [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
-}
-
-/** Waiter POS menu (branch-scoped single call). */
+/** Waiter POS menu (branch-scoped single call, plain `PosCategoryDto[]` already sorted by sortOrder). */
 export function usePosMenu() {
   return useQuery({
     queryKey: posMenuKeys.menu(),
-    queryFn: async ({ signal }) =>
-      normalizePosMenu(await apiClient.get<PosCategoryDto[] | { categories: PosCategoryDto[] }>(ENDPOINTS.menu.pos, { signal })),
+    queryFn: ({ signal }) => apiClient.get<PosCategoryDto[]>(ENDPOINTS.menu.pos, { signal }),
+    select: sortCategories,
     staleTime: 60_000,
   });
 }

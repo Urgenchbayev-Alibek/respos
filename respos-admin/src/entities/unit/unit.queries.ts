@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
-import type { UnitConversionInput, UnitDto, UnitInput } from './unit.types';
+import type { UnitConversionDto, UnitConversionInput, UnitDto, UnitInput } from './unit.types';
 
 export const unitKeys = { all: ['units'] as const };
 
@@ -28,7 +28,7 @@ export function useCreateUnitConversion() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (input: UnitConversionInput) =>
-      apiClient.post<unknown>(ENDPOINTS.inventory.unitConversions, input, ORG_LEVEL),
+      apiClient.post<UnitConversionDto>(ENDPOINTS.inventory.unitConversions, input, ORG_LEVEL),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: unitKeys.all }),
   });
 }

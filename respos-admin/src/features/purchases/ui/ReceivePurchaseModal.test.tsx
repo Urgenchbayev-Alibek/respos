@@ -9,13 +9,14 @@ import { ReceivePurchaseModal } from './ReceivePurchaseModal';
 
 const purchase: PurchaseDto = {
   id: 'po-1',
-  number: 'П-0015',
+  number: 15,
   supplierId: 'sup-1',
   supplierName: 'ООО «Агро»',
   status: 'submitted',
   expectedAt: null,
   total: 1080000,
   comment: null,
+  createdAt: '2026-11-09T08:00:00Z',
   items: [
     { id: 'li-1', ingredientId: 'ing-1', ingredientName: 'Рис девзира', quantity: 50, unitId: 'kg', unitCode: 'kg', unitPrice: 18000, receivedQuantity: 0, lineTotal: 900000 },
     { id: 'li-2', ingredientId: 'ing-2', ingredientName: 'Морковь', quantity: 30, unitId: 'kg', unitCode: 'kg', unitPrice: 6000, receivedQuantity: 10, lineTotal: 180000 },

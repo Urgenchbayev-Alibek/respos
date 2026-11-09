@@ -6,7 +6,7 @@ import { useBranches } from '@/entities/branch/branch.queries';
 import { useRoles } from '@/entities/role/role.queries';
 import { useCreateUser, useInviteUser, useUpdateUser } from '@/entities/user/user.queries';
 import type { InvitationResult, UserDto } from '@/entities/user/user.types';
-import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
+import { applyServerCodeError, applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
 import { Alert, Button, FormField, FormGrid, Input, Modal, useToast } from '@/shared/ui';
 import { schemaForMode, type UserFormMode, type UserFormValues } from '../model/user-schemas';
 import { CheckboxGroup } from './CheckboxGroup';
@@ -20,6 +20,7 @@ export interface UserFormModalProps {
 }
 
 const FIELDS = ['email', 'fullName', 'phone', 'password', 'roleIds', 'branchIds'] as const;
+const CODE_FIELDS = { 'user.email_taken': 'email', 'user.invalid_roles': 'roleIds', 'user.invalid_branches': 'branchIds' } as const;
 
 function initialValues(user?: UserDto | null): UserFormValues {
   return {
@@ -71,7 +72,9 @@ export function UserFormModal({ open, mode, user, onClose }: UserFormModalProps)
       toast.success(t(mode === 'create' ? 'toast.created' : 'toast.updated'));
       onClose();
     } catch (error) {
-      if (!applyServerFieldErrors(error, setError, FIELDS)) setServerError(getErrorMessage(error, t));
+      if (!applyServerFieldErrors(error, setError, FIELDS) && !applyServerCodeError(error, setError, CODE_FIELDS, t)) {
+        setServerError(getErrorMessage(error, t));
+      }
     }
   });
 

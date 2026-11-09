@@ -65,7 +65,8 @@ export function useExportReport() {
         headers: { Accept: 'text/csv' },
       });
       const suffix = period ? `_${period.from}_${period.to}` : '';
-      saveBlob(new Blob([csv ?? ''], { type: 'text/csv;charset=utf-8' }), `${name}${suffix}.csv`);
+      // response.text() strips the server's UTF-8 BOM; restore it so Excel reads Cyrillic correctly.
+      saveBlob(new Blob(['﻿', csv ?? ''], { type: 'text/csv;charset=utf-8' }), `${name}${suffix}.csv`);
     },
   });
 }

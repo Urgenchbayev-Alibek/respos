@@ -5,6 +5,7 @@ import { useStockMovements } from '@/entities/stock/stock.queries';
 import { MOVEMENT_TYPES, type MovementType, type StockMovementDto } from '@/entities/stock/stock.types';
 import styles from '@/features/stock/ui/stock.module.css';
 import { useFormatters } from '@/shared/hooks/use-formatters';
+import { dateRangeToUtc } from '@/shared/lib/zoned-time';
 import { DEFAULT_PAGE_SIZE } from '@/shared/types/pagination';
 import { Button, DataTable, Input, Select, StatusBadge, Toolbar, type DataTableColumn } from '@/shared/ui';
 
@@ -39,8 +40,7 @@ export function MovementsSection() {
     sort: 'createdAt:desc',
     ingredientId: filters.ingredientId || undefined,
     type: filters.type || undefined,
-    from: filters.from || undefined,
-    to: filters.to || undefined,
+    ...dateRangeToUtc(filters.from || undefined, filters.to || undefined, format.timeZone),
   });
   const update = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     setFilters((current) => ({ ...current, [key]: value }));
@@ -63,7 +63,7 @@ export function MovementsSection() {
         cell: (row) => (
           <span className={row.quantity < 0 ? styles.negative : styles.num}>
             {row.quantity > 0 ? '+' : ''}
-            {format.number(row.quantity)} {row.baseUnitCode ?? ''}
+            {format.number(row.quantity)} {row.baseUnitCode}
           </span>
         ),
       },

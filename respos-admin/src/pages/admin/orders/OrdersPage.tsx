@@ -10,8 +10,10 @@ import { WaiterFilter } from '@/features/orders/ui/WaiterFilter';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import type { OrderStatus } from '@/shared/constants/statuses';
 import { useDebouncedValue } from '@/shared/hooks/use-debounced-value';
+import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
+import { dateRangeToUtc } from '@/shared/lib/zoned-time';
 import { useRealtimeEvent } from '@/shared/realtime';
 import { DEFAULT_PAGE_SIZE, toSortParam, type SortState } from '@/shared/types/pagination';
 import { DataTable, Input, PageHeader, SearchInput, Select, StatusBadge, Toolbar, type DataTableColumn } from '@/shared/ui';
@@ -41,6 +43,7 @@ export function OrdersPage() {
   const search = useDebouncedValue(filters.search.trim());
   const tables = useTables();
   const canReadUsers = hasPermission(PERMISSIONS.users.read);
+  const { branch } = useCurrentBranch();
 
   const query = useOrders({
     page,
@@ -50,8 +53,7 @@ export function OrdersPage() {
     type: filters.type || undefined,
     tableId: filters.tableId || undefined,
     waiterId: filters.waiterId || undefined,
-    from: filters.from || undefined,
-    to: filters.to || undefined,
+    ...dateRangeToUtc(filters.from, filters.to, branch?.timezone),
     search: search || undefined,
   });
 

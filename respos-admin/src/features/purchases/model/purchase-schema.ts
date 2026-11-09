@@ -1,7 +1,9 @@
 import { z } from 'zod';
 import type { PurchaseDto, PurchaseInput } from '@/entities/purchase/purchase.types';
+import { toBranchDateString } from '@/shared/lib/format-date';
 import { parseDecimal, quantitySchema } from '@/shared/lib/quantity';
 import { optionalString, V } from '@/shared/lib/validation';
+import { zonedToUtcIso } from '@/shared/lib/zoned-time';
 
 const priceSchema = z.preprocess(
   (value) => (value === '' ? undefined : (parseDecimal(value) ?? Number.NaN)),
@@ -45,10 +47,11 @@ export interface PurchaseFormValues {
 
 export const EMPTY_PURCHASE_LINE: PurchaseLineValues = { ingredientId: '', quantity: '', unitId: '', unitPrice: '' };
 
-export function toPurchaseFormValues(purchase?: PurchaseDto | null): PurchaseFormValues {
+/** `expectedAt` is a backend DateTime: the date input (branch timezone) ↔ UTC instant at local midnight. */
+export function toPurchaseFormValues(purchase: PurchaseDto | null | undefined, timeZone: string): PurchaseFormValues {
   return {
     supplierId: purchase?.supplierId ?? '',
-    expectedAt: purchase?.expectedAt ? purchase.expectedAt.slice(0, 10) : '',
+    expectedAt: purchase?.expectedAt ? toBranchDateString(purchase.expectedAt, timeZone) : '',
     comment: purchase?.comment ?? '',
     items: purchase?.items?.length
       ? purchase.items.map((item) => ({
@@ -61,10 +64,10 @@ export function toPurchaseFormValues(purchase?: PurchaseDto | null): PurchaseFor
   };
 }
 
-export function toPurchaseInput(values: PurchaseFormOutput): PurchaseInput {
+export function toPurchaseInput(values: PurchaseFormOutput, timeZone: string): PurchaseInput {
   return {
     supplierId: values.supplierId,
-    expectedAt: values.expectedAt || undefined,
+    expectedAt: values.expectedAt ? zonedToUtcIso(values.expectedAt, '00:00', timeZone) || undefined : undefined,
     comment: values.comment,
     items: values.items,
   };

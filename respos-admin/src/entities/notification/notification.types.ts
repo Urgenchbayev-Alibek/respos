@@ -13,14 +13,18 @@ export interface NotificationDto {
   body: string | null;
   /** In-app path (e.g. `/admin/orders`); external links are ignored by the UI. */
   link: string | null;
+  /** null = organization-wide. */
+  branchId: Guid | null;
   isRead: boolean;
   createdAt: Iso8601;
+  readAt: Iso8601 | null;
 }
 
 export interface NotificationListParams extends PageParams {
   unreadOnly?: boolean;
 }
 
-export interface UnreadCountDto {
+/** `GET /notifications/unread-count` and `POST /notifications/read-all` (number marked read). */
+export interface CountDto {
   count: number;
 }

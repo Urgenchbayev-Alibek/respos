@@ -1,11 +1,17 @@
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import type { PayableOrderDto } from '@/entities/payment/payable-order.types';
+import type { OrderDto } from '@/entities/order/order.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import styles from './OrderSummary.module.css';
 
 /** Order lines and SERVER totals (subtotal, discount, service, tax, total, paid, remaining). */
-export function OrderSummary({ order }: { order: PayableOrderDto }) {
+/** Shared by the payment panel (OrderDto) and the pre-check (ReceiptDto). */
+export type OrderSummaryData = Pick<
+  OrderDto,
+  'items' | 'subtotal' | 'discountAmount' | 'serviceChargeAmount' | 'taxAmount' | 'total' | 'paidAmount' | 'remainingAmount'
+>;
+
+export function OrderSummary({ order }: { order: OrderSummaryData }) {
   const { t } = useTranslation('cashier');
   const format = useFormatters();
   const rows: { key: string; label: string; value: number; className?: string }[] = [

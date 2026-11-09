@@ -58,13 +58,20 @@
     "minQuantity": "Minimum",
     "status": "Status",
     "type": "Type",
-    "totalCost": "Total at cost",
     "openedAt": "Opened",
     "closedAt": "Closed",
     "cashier": "Cashier",
     "expected": "Expected",
     "actual": "Actual",
-    "difference": "Difference"
+    "difference": "Difference",
+    "refunded": "Refunds",
+    "stockValue": "Stock value",
+    "cashPayments": "Cash",
+    "cardPayments": "Card",
+    "otherPayments": "Other",
+    "refunds": "Refunds",
+    "closedBy": "Closed by",
+    "sku": "SKU"
   },
   "export": {
     "csv": "Export CSV",

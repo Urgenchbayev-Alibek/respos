@@ -25,7 +25,8 @@ export function SubscriptionModal({ organization, onClose }: { organization: Pla
     reset({
       planCode: organization.planCode ?? '',
       status: organization.subscriptionStatus ?? 'active',
-      endsAt: organization.subscriptionEndsAt?.slice(0, 10) ?? '',
+      // PlatformOrganizationDto carries no subscription end date: the field starts empty.
+      endsAt: '',
     });
     setServerError(null);
   }, [organization, reset]);

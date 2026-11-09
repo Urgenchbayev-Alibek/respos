@@ -4,8 +4,10 @@ import { useCashShifts } from '@/entities/cash-shift/cash-shift.queries';
 import type { CashShiftDto } from '@/entities/cash-shift/cash-shift.types';
 import { formatSignedMoney } from '@/features/cash-shifts/model/shift-format';
 import { CASH_SHIFT_STATUSES, type CashShiftStatus } from '@/shared/constants/statuses';
+import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useFormatters } from '@/shared/hooks/use-formatters';
-import { DEFAULT_PAGE_SIZE, toSortParam, type SortState } from '@/shared/types/pagination';
+import { dateRangeToUtc } from '@/shared/lib/zoned-time';
+import { DEFAULT_PAGE_SIZE } from '@/shared/types/pagination';
 import { DataTable, Input, PageHeader, Select, StatusBadge, Toolbar, type DataTableColumn } from '@/shared/ui';
 import { CashShiftDetailDrawer } from './CashShiftDetailDrawer';
 
@@ -21,7 +23,7 @@ export function CashShiftsPage() {
   const format = useFormatters();
   const [filters, setFilters] = useState<Filters>({ status: '', from: '', to: '' });
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState<SortState | null>({ field: 'openedAt', direction: 'desc' });
+  const { branch } = useCurrentBranch();
   const [selected, setSelected] = useState<string | null>(null);
   const update = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     setFilters((current) => ({ ...current, [key]: value }));
@@ -31,10 +33,8 @@ export function CashShiftsPage() {
   const query = useCashShifts({
     page,
     pageSize: DEFAULT_PAGE_SIZE,
-    sort: toSortParam(sort),
     status: filters.status || undefined,
-    from: filters.from || undefined,
-    to: filters.to || undefined,
+    ...dateRangeToUtc(filters.from, filters.to, branch?.timezone),
   });
 
   const columns = useMemo<DataTableColumn<CashShiftDto>[]>(
@@ -42,7 +42,6 @@ export function CashShiftsPage() {
       {
         key: 'openedAt',
         header: t('shifts.columns.openedAt'),
-        sortField: 'openedAt',
         cell: (shift) => format.dateTime(shift.openedAt),
       },
       { key: 'openedBy', header: t('shifts.columns.openedBy'), hideOnMobile: true, cell: (shift) => shift.openedByName ?? '—' },
@@ -115,8 +114,6 @@ export function CashShiftsPage() {
         error={query.error}
         onRetry={() => void query.refetch()}
         emptyTitle={t('shifts.empty')}
-        sort={sort}
-        onSortChange={setSort}
         onRowClick={(shift) => setSelected(shift.id)}
         pagination={
           query.data && { page, pageSize: query.data.pageSize, totalCount: query.data.totalCount, onPageChange: setPage }

@@ -8,12 +8,16 @@ export interface MenuCategoryDto {
   nameUz: string | null;
   sortOrder: number;
   isActive: boolean;
-  isArchived?: boolean;
+  isArchived: boolean;
+  /** Non-archived items in the category. */
+  itemCount: number;
 }
 
+/** `sortOrder` omitted = keep (update) / append (create). */
 export interface MenuCategoryInput {
   name: string;
   nameUz?: string;
+  sortOrder?: number;
   isActive: boolean;
 }
 
@@ -48,6 +52,16 @@ export interface MenuItemVariantDto {
   isDefault: boolean;
 }
 
+/** .NET `DayOfWeek` serialized snake_case. */
+export type DayOfWeekName = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
+
+/** Orderable window in branch time; `dayOfWeek` null = every day; `endTime <= startTime` = overnight. Times `HH:mm:ss`. */
+export interface MenuAvailabilityDto {
+  dayOfWeek: DayOfWeekName | null;
+  startTime: string;
+  endTime: string;
+}
+
 export interface MenuItemDto {
   id: Guid;
   categoryId: Guid;
@@ -57,13 +71,14 @@ export interface MenuItemDto {
   description: string | null;
   photoUrl: string | null;
   price: number;
-  prepTimeMinutes: number | null;
+  prepTimeMinutes: number;
   kitchenStationId: Guid | null;
   isAvailable: boolean;
   isArchived: boolean;
-  sku?: string | null;
+  sku: string | null;
   variants: MenuItemVariantDto[];
   modifierGroups: ModifierGroupDto[];
+  availability: MenuAvailabilityDto[];
 }
 
 export interface MenuItemListParams extends PageParams {
@@ -79,14 +94,17 @@ export interface MenuItemInput {
   description?: string;
   sku?: string;
   price: number;
-  prepTimeMinutes: number | null;
+  /** Backend `int` (not nullable): 0 = not set. */
+  prepTimeMinutes: number;
   kitchenStationId: string | null;
   isAvailable: boolean;
+  /** Lists replace the item's children; omitted (undefined) = keep as is. */
   variants: { id?: string; name: string; price: number; isDefault: boolean }[];
   modifierGroupIds: string[];
+  availability?: MenuAvailabilityDto[];
 }
 
-/** `GET /menu/pos`: categories with available, non-archived items (one call for the waiter screen). */
+/** `GET /menu/pos` returns a plain array: active categories with items orderable now (available, not archived, inside an availability window); empty categories omitted. */
 export interface PosCategoryDto {
   id: Guid;
   name: string;

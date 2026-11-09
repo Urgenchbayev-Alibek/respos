@@ -78,3 +78,18 @@ export function addMinutesToTime(time: string, minutes: number): string {
   const total = Math.min(23 * 60 + 59, Math.max(0, (hh ?? 0) * 60 + (mm ?? 0) + minutes));
   return `${pad(Math.floor(total / 60))}:${pad(total % 60)}`;
 }
+
+/**
+ * `<input type="date">` range (branch timezone, both ends inclusive) → UTC instants for list filters
+ * that take DateTime `from`/`to` (orders, payments, cash shifts): `from` = start of day, `to` = start of the next day.
+ */
+export function dateRangeToUtc(
+  from: string | undefined,
+  to: string | undefined,
+  timeZone: string = DEFAULT_TIMEZONE,
+): { from?: string; to?: string } {
+  return {
+    from: from ? zonedToUtcIso(from, '00:00', timeZone) || undefined : undefined,
+    to: to ? zonedToUtcIso(addDaysToDateString(to, 1), '00:00', timeZone) || undefined : undefined,
+  };
+}

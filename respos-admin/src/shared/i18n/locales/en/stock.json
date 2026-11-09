@@ -26,7 +26,9 @@
     "completedAt": "Completed",
     "expected": "Expected",
     "counted": "Counted",
-    "difference": "Difference"
+    "difference": "Difference",
+    "lineCount": "Items",
+    "comment": "Comment"
   },
   "fields": {
     "ingredient": "Ingredient",

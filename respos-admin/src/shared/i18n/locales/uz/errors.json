@@ -12,10 +12,14 @@
     "invalid_credentials": "Email yoki parol notoʻgʻri.",
     "account_locked": "Muvaffaqiyatsiz urinishlardan soʻng akkaunt vaqtincha bloklandi.",
     "account_blocked": "Akkaunt bloklangan. Administratorga murojaat qiling.",
-    "account_deactivated": "Akkaunt faolsizlantirilgan.",
     "invalid_token": "Havola yaroqsiz.",
     "token_expired": "Havolaning muddati tugagan.",
-    "invalid_current_password": "Joriy parol notoʻgʻri."
+    "invalid_current_password": "Joriy parol notoʻgʻri.",
+    "invalid_refresh_token": "Sessiya yaroqsiz. Qaytadan kiring.",
+    "refresh_token_reused": "Xavfsizlik uchun sessiya bekor qilindi. Qaytadan kiring.",
+    "no_organization": "Hisob hech qaysi faol tashkilotga bog'lanmagan.",
+    "organization_forbidden": "Siz bu tashkilot a'zosi emassiz.",
+    "weak_password": "Parol kamida 8 belgidan iborat bo'lib, harf va raqamni o'z ichiga olishi kerak."
   },
   "rate_limit": {
     "exceeded": "Juda koʻp urinish. Bir daqiqa kutib, qayta urinib koʻring."
@@ -27,19 +31,30 @@
     "failed": "Maydonlar toʻgʻri toʻldirilganini tekshiring."
   },
   "tenant": {
-    "branch_forbidden": "Tanlangan filialga ruxsat yoʻq."
+    "branch_forbidden": "Tanlangan filialga ruxsat yoʻq.",
+    "required": "Avval tashkilotni tanlang."
   },
   "plan": {
-    "limit_exceeded": "Tarif limiti tugadi."
+    "limit_exceeded": "Tarif limiti tugadi.",
+    "code_taken": "Bunday kodli tarif allaqachon mavjud.",
+    "invalid_features": "Tanlangan ba'zi funksiyalar noma'lum.",
+    "not_found": "Tarif topilmadi."
   },
   "user": {
-    "cannot_deactivate_self": "Oʻzingizni faolsizlantira olmaysiz.",
     "last_owner": "Oxirgi egasini oʻzgartirib boʻlmaydi.",
-    "email_taken": "Bu email bilan foydalanuvchi allaqachon mavjud."
+    "email_taken": "Bu email bilan foydalanuvchi allaqachon mavjud.",
+    "cannot_modify_self": "Bu amalni o'z hisobingizda bajarib bo'lmaydi.",
+    "invalid_branches": "Tanlangan ba'zi filiallar yaroqsiz.",
+    "invalid_roles": "Tanlangan ba'zi rollar yaroqsiz.",
+    "not_found": "Foydalanuvchi topilmadi.",
+    "owner_protected": "Egani faqat ega o'zgartira oladi."
   },
   "role": {
-    "system_readonly": "Tizim rolini oʻzgartirib boʻlmaydi.",
-    "in_use": "Rol xodimlarga biriktirilgan."
+    "in_use": "Rol xodimlarga biriktirilgan.",
+    "invalid_permissions": "Ba'zi huquqlar noma'lum.",
+    "name_taken": "Bunday nomli rol allaqachon mavjud.",
+    "not_found": "Rol topilmadi.",
+    "system_protected": "Tizim rollarini o'zgartirib yoki o'chirib bo'lmaydi."
   },
   "order": {
     "invalid_status_transition": "Buyurtma holatini bunday oʻzgartirib boʻlmaydi.",
@@ -49,20 +64,37 @@
     "item_not_editable": "Pozitsiyani oʻzgartirib boʻlmaydi — u oshxonaga yuborilgan.",
     "nothing_to_send": "Oshxonaga yuborish uchun yangi pozitsiyalar yoʻq.",
     "table_required": "Zaldagi buyurtma uchun stolni tanlang.",
-    "cancel_reason_required": "Bekor qilish sababini kiriting."
+    "cancel_reason_required": "Bekor qilish sababini kiriting.",
+    "invalid_discount": "Chegirma yaroqsiz: u buyurtma summasidan oshmasligi kerak.",
+    "item_not_found": "Buyurtma pozitsiyasi topilmadi.",
+    "menu_item_unavailable": "Bu taom hozir mavjud emas.",
+    "not_dine_in": "Faqat zaldagi buyurtmani boshqa stolga o'tkazish mumkin.",
+    "not_found": "Buyurtma topilmadi."
   },
   "reservation": {
     "time_conflict": "Stol bu vaqtga allaqachon bron qilingan.",
-    "invalid_period": "Bron tugashi boshlanishidan keyin boʻlishi kerak."
+    "invalid_period": "Bron tugashi boshlanishidan keyin boʻlishi kerak.",
+    "invalid_status_transition": "Bu amal bronning joriy holatida mumkin emas.",
+    "not_editable": "Faqat kutilayotgan yoki tasdiqlangan bronlarni o'zgartirish mumkin.",
+    "not_found": "Bron topilmadi.",
+    "table_required": "Mehmonlarni o'tqazishdan oldin stol belgilang."
   },
   "payment": {
-    "duplicate": "Toʻlov allaqachon roʻyxatga olingan."
+    "duplicate": "Toʻlov allaqachon roʻyxatga olingan.",
+    "exceeds_due": "Summa buyurtmaning qolgan qarzidan oshib ketdi.",
+    "invalid_amount": "Noldan katta summani kiriting.",
+    "invalid_refund_amount": "Qaytarish summasi qaytarish mumkin bo'lgan summadan oshib ketdi.",
+    "not_found": "To'lov topilmadi.",
+    "provider_failed": "To'lov provayderi amalni rad etdi. Boshqa usulni sinab ko'ring.",
+    "refund_reason_required": "Qaytarish sababini ko'rsating."
   },
   "stock": {
     "insufficient": "Omborda qoldiq yetarli emas."
   },
   "kitchen_station": {
-    "not_found": "Oshxona stansiyasi topilmadi."
+    "not_found": "Oshxona stansiyasi topilmadi.",
+    "in_use": "Bu sexga menyu taomlari biriktirilgan.",
+    "not_configured": "Filialda faol oshxona sexi yo'q. Avval uni sozlang."
   },
   "pages": {
     "forbiddenTitle": "Ruxsat yoʻq",
@@ -77,18 +109,118 @@
   },
   "purchase": {
     "invalid_status_transition": "Xarid holatini bunday o‘zgartirib bo‘lmaydi.",
-    "not_editable": "Faqat qoralamani tahrirlash mumkin."
+    "not_editable": "Faqat qoralamani tahrirlash mumkin.",
+    "invalid_receive_quantity": "Qabul qilingan to'g'ri miqdorni kiriting.",
+    "item_not_found": "Xarid qatori topilmadi.",
+    "not_found": "Xarid topilmadi.",
+    "receive_exceeds_remaining": "Qabul qilingan miqdor qator qoldig'idan oshib ketdi."
   },
   "organization": {
-    "slug_taken": "Bu slug band."
+    "slug_taken": "Bu slug band.",
+    "not_found": "Tashkilot topilmadi.",
+    "suspended": "Tashkilot to'xtatilgan. Qo'llab-quvvatlash xizmatiga murojaat qiling."
   },
   "inventory_count": {
-    "already_completed": "Inventarizatsiya allaqachon yakunlangan."
+    "completed": "Yakunlangan inventarizatsiyani o'zgartirib bo'lmaydi.",
+    "not_found": "Inventarizatsiya topilmadi."
   },
   "recipe": {
-    "empty": "Kamida bitta ingredient qo‘shing."
+    "empty": "Kamida bitta ingredient qo‘shing.",
+    "invalid_variant": "Variant bu taomga tegishli emas.",
+    "not_found": "Texkarta topilmadi."
   },
   "unit": {
-    "conversion_exists": "Bunday konversiya mavjud."
+    "conversion_exists": "Bunday konversiya mavjud.",
+    "code_taken": "Bunday kodli birlik allaqachon mavjud.",
+    "conversion_missing": "Bu birlikdan ingredientning asosiy birligiga o'tkazish yo'q.",
+    "not_found": "O'lchov birligi topilmadi."
+  },
+  "branch": {
+    "last_active": "Oxirgi faol filialni o'chirib bo'lmaydi.",
+    "not_found": "Filial topilmadi."
+  },
+  "cash_shift": {
+    "already_open": "Bu filialda kassa smenasi allaqachon ochilgan.",
+    "closed": "Kassa smenasi allaqachon yopilgan.",
+    "invalid_amount": "To'g'ri summani kiriting (nol yoki undan katta).",
+    "not_found": "Kassa smenasi topilmadi.",
+    "not_open": "Avval kassa smenasini oching."
+  },
+  "concurrency": {
+    "conflict": "Yozuv boshqa foydalanuvchi tomonidan o'zgartirildi. Yangilang va qayta urinib ko'ring."
+  },
+  "conflict": {
+    "duplicate": "Bunday yozuv allaqachon mavjud."
+  },
+  "demo_request": {
+    "not_found": "Demo so'rovi topilmadi."
+  },
+  "dining_area": {
+    "archived": "Zal arxivda.",
+    "has_tables": "Zalda stollar bor. Avval ularni ko'chiring yoki arxivlang.",
+    "not_found": "Zal topilmadi."
+  },
+  "feature": {
+    "disabled": "Bu funksiya tarifingizda mavjud emas.",
+    "not_found": "Funksiya topilmadi."
+  },
+  "idempotency": {
+    "in_progress": "Oldingi so'rov hali bajarilmoqda. Kuting.",
+    "key_required": "So'rovni xavfsiz yuborib bo'lmadi. Qayta urinib ko'ring.",
+    "key_reused": "Bu so'rov boshqa ma'lumotlar bilan yuborilgan. Qayta urinib ko'ring."
+  },
+  "ingredient": {
+    "archived": "Ingredient arxivda.",
+    "base_unit_locked": "Ombor harakatlari bo'lgandan keyin asosiy birlikni o'zgartirib bo'lmaydi.",
+    "not_found": "Ingredient topilmadi."
+  },
+  "ingredient_category": {
+    "not_found": "Ingredient toifasi topilmadi."
+  },
+  "kitchen_ticket": {
+    "invalid_status_transition": "Bu amal tiketning joriy holatida mumkin emas.",
+    "not_found": "Oshxona tiketi topilmadi."
+  },
+  "kitchen_ticket_item": {
+    "not_found": "Tiket pozitsiyasi topilmadi."
+  },
+  "menu_category": {
+    "archived": "Toifa arxivda.",
+    "has_items": "Toifada taomlar bor. Avval ularni ko'chiring yoki arxivlang.",
+    "not_found": "Toifa topilmadi."
+  },
+  "menu_item": {
+    "archived": "Taom arxivda.",
+    "invalid_modifier_groups": "Ba'zi modifikator guruhlari yaroqsiz.",
+    "invalid_photo": "Rasm: JPG, PNG yoki WEBP, 2 MB gacha.",
+    "invalid_variant": "Tanlangan variant bu taomga tegishli emas.",
+    "not_found": "Taom topilmadi."
+  },
+  "modifier_group": {
+    "invalid_option": "Modifikator varianti yaroqsiz.",
+    "not_found": "Modifikator guruhi topilmadi."
+  },
+  "notification": {
+    "not_found": "Bildirishnoma topilmadi."
+  },
+  "report": {
+    "invalid_period": "Davr noto'g'ri: oxiri boshidan oldin bo'lmasin, ko'pi bilan 366 kun.",
+    "not_found": "Hisobot topilmadi.",
+    "unsupported_format": "Faqat CSV eksport qo'llab-quvvatlanadi."
+  },
+  "request": {
+    "invalid": "So'rov noto'g'ri."
+  },
+  "supplier": {
+    "archived": "Yetkazib beruvchi arxivda.",
+    "not_found": "Yetkazib beruvchi topilmadi."
+  },
+  "table": {
+    "archived": "Stol arxivda.",
+    "has_active_order": "Stolda faol buyurtma bor.",
+    "invalid_status": "Qo'lda faqat «bo'sh» yoki «mavjud emas» holatini o'rnatish mumkin.",
+    "not_found": "Stol topilmadi.",
+    "number_taken": "Bunday raqamli stol allaqachon mavjud.",
+    "unavailable": "Stol mavjud emas."
   }
 }

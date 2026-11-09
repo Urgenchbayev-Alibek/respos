@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type {
-  KitchenStationDto,
   KitchenTicketDto,
   KitchenTicketParams,
   TicketAction,
@@ -14,21 +13,8 @@ export const kitchenTicketKeys = {
   list: (params: KitchenTicketParams) => [...kitchenTicketKeys.all, 'list', params] as const,
 };
 
-export const kitchenStationKeys = {
-  all: ['kitchen-stations'] as const,
-  list: () => [...kitchenStationKeys.all, 'list'] as const,
-};
-
 /** Fallback polling while the realtime connection is down (events are hints; REST is the truth). */
 const OFFLINE_POLL_MS = 30_000;
-
-export function useKitchenStations() {
-  return useQuery({
-    queryKey: kitchenStationKeys.list(),
-    queryFn: ({ signal }) => apiClient.get<KitchenStationDto[]>(ENDPOINTS.kitchenStations.list, { signal }),
-    staleTime: 5 * 60_000,
-  });
-}
 
 export function useKitchenTickets(params: KitchenTicketParams, options: { poll?: boolean } = {}) {
   return useQuery({

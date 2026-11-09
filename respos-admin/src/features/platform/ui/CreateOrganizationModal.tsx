@@ -4,11 +4,13 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useCreateOrganization, usePlans } from '@/entities/platform/platform.queries';
 import { DEFAULT_CURRENCY } from '@/shared/constants/locale';
-import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
+import { applyServerCodeError, applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
 import { Alert, Button, FormField, FormGrid, Input, Modal, Select, useToast } from '@/shared/ui';
 import { createOrganizationSchema, slugify, type CreateOrganizationValues } from '../model/platform-schemas';
 
 const FIELDS = ['name', 'slug', 'currency', 'branchName', 'planCode', 'ownerFullName', 'ownerEmail', 'ownerPassword'] as const;
+/** Domain errors without field `errors` → the field they are about. */
+const CODE_FIELDS = { 'organization.slug_taken': 'slug', 'user.email_taken': 'ownerEmail', 'plan.not_found': 'planCode' } as const;
 const EMPTY: CreateOrganizationValues = {
   name: '',
   slug: '',
@@ -46,7 +48,9 @@ export function CreateOrganizationModal({ open, onClose }: { open: boolean; onCl
       toast.success(t('organizations.created', { name: values.name }));
       onClose();
     } catch (error) {
-      if (!applyServerFieldErrors(error, setError, FIELDS)) setServerError(getErrorMessage(error, t));
+      if (!applyServerFieldErrors(error, setError, FIELDS) && !applyServerCodeError(error, setError, CODE_FIELDS, t)) {
+        setServerError(getErrorMessage(error, t));
+      }
     }
   });
 

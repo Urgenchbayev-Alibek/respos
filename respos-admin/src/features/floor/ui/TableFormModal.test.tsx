@@ -2,12 +2,13 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { PERMISSIONS } from '@/shared/constants/permissions';
+import { makeTable } from '@/test/fixtures/floor-orders';
 import { api, http, HttpResponse, server } from '@/test/msw-server';
 import { makeAuth, makeUser, renderWithProviders } from '@/test/test-utils';
 import { TableFormModal } from './TableFormModal';
 
 const auth = makeAuth(makeUser({ permissions: [PERMISSIONS.tables.read, PERMISSIONS.tables.manage] }));
-const areas = [{ id: 'a1', name: 'Основной', sortOrder: 1, isActive: true }];
+const areas = [{ id: 'a1', name: 'Основной', sortOrder: 1, isActive: true, tableCount: 0 }];
 
 describe('TableFormModal', () => {
   it('validates capacity and sends grid position as numbers', async () => {
@@ -15,7 +16,7 @@ describe('TableFormModal', () => {
     server.use(
       http.post(api('/tables'), async ({ request }) => {
         body = await request.json();
-        return HttpResponse.json({ id: 't9' }, { status: 201 });
+        return HttpResponse.json(makeTable({ id: 't9', number: '12' }), { status: 201 });
       }),
     );
     const onClose = vi.fn();

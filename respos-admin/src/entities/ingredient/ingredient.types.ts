@@ -10,7 +10,7 @@ export interface IngredientDto {
   categoryName: string | null;
   baseUnitId: Guid;
   baseUnitCode: string;
-  costPrice: number | null;
+  costPrice: number;
   quantity: number;
   minQuantity: number;
   isLow: boolean;
@@ -27,10 +27,13 @@ export interface IngredientInput {
   sku?: string;
   categoryId?: string | null;
   baseUnitId: string;
-  costPrice?: number;
+  costPrice: number;
+  /** Current-branch minimum; omitted = unchanged. */
+  minQuantity?: number | null;
 }
 
 export interface IngredientCategoryDto {
   id: Guid;
   name: string;
+  isArchived: boolean;
 }

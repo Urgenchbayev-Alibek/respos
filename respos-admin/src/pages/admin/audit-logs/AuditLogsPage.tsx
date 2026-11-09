@@ -1,12 +1,13 @@
 import { ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuditLogs } from '@/entities/audit-log/audit-log.queries';
+import { auditDateRange, useAuditLogs } from '@/entities/audit-log/audit-log.queries';
 import type { AuditLogDto } from '@/entities/audit-log/audit-log.types';
 import { useUsers } from '@/entities/user/user.queries';
 import { AuditLogDrawer } from '@/features/audit/ui/AuditLogDrawer';
 import styles from '@/features/audit/ui/audit.module.css';
 import { PERMISSIONS } from '@/shared/constants/permissions';
+import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useDebouncedValue } from '@/shared/hooks/use-debounced-value';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
@@ -44,6 +45,7 @@ export function AuditLogsPage() {
   const { t } = useTranslation('audit');
   const format = useFormatters();
   const { hasPermission } = usePermissions();
+  const { branch } = useCurrentBranch();
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<AuditLogDto | null>(null);
@@ -54,8 +56,7 @@ export function AuditLogsPage() {
     page,
     pageSize: DEFAULT_PAGE_SIZE,
     sort: 'createdAt:desc',
-    from: filters.from || undefined,
-    to: filters.to || undefined,
+    ...auditDateRange(filters.from, filters.to, branch?.timezone),
     userId: filters.userId || undefined,
     action: text.action || undefined,
     entityType: text.entityType || undefined,

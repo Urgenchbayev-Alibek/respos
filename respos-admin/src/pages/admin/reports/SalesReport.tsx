@@ -5,7 +5,7 @@ import { ExportButton } from '@/features/reports/ui/ExportButton';
 import styles from '@/features/reports/ui/reports.module.css';
 import { RevenueByDayChart } from '@/features/reports/ui/RevenueByDayChart';
 import { useFormatters } from '@/shared/hooks/use-formatters';
-import { Card, DemoBadge, EmptyState, ErrorState, StatCard } from '@/shared/ui';
+import { Card, EmptyState, ErrorState, StatCard } from '@/shared/ui';
 
 /** KPIs + revenue by day. */
 export function SalesReport({ period }: { period: ReportPeriod }) {
@@ -26,12 +26,7 @@ export function SalesReport({ period }: { period: ReportPeriod }) {
       </div>
       <Card
         title={t('sales.byDay')}
-        actions={
-          <>
-            {data?.isDemoData && <DemoBadge />}
-            <ExportButton name="sales" period={period} />
-          </>
-        }
+        actions={<ExportButton name="sales" period={period} />}
       >
         {isEmpty ? <EmptyState compact title={t('emptyPeriod')} /> : data && <RevenueByDayChart days={data.byDay} />}
       </Card>

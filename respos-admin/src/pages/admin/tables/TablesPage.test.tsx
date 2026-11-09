@@ -23,8 +23,8 @@ function mockFloor() {
   server.use(
     http.get(api('/dining-areas'), () =>
       HttpResponse.json([
-        { id: 'a2', name: 'Терраса', sortOrder: 2, isActive: true },
-        { id: 'a1', name: 'Основной', sortOrder: 1, isActive: true },
+        { id: 'a2', name: 'Терраса', sortOrder: 2, isActive: true, tableCount: 0 },
+        { id: 'a1', name: 'Основной', sortOrder: 1, isActive: true, tableCount: 1 },
       ]),
     ),
     http.get(api('/tables'), () => HttpResponse.json(tables)),

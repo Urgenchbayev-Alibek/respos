@@ -3,7 +3,7 @@ import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import { useRealtimeEvent } from '@/shared/realtime';
 import type { PagedResult } from '@/shared/types/pagination';
-import type { NotificationDto, NotificationListParams, UnreadCountDto } from './notification.types';
+import type { CountDto, NotificationDto, NotificationListParams } from './notification.types';
 
 export const notificationKeys = {
   all: ['notifications'] as const,
@@ -17,20 +17,18 @@ export function useNotifications(params: NotificationListParams, options: { enab
   return useQuery({
     queryKey: notificationKeys.list(params),
     queryFn: ({ signal }) =>
-      apiClient.get<PagedResult<NotificationDto>>(ENDPOINTS.notifications.list, { params: { ...params }, signal }),
+      apiClient.get<PagedResult<NotificationDto>>(ENDPOINTS.notifications.list, { params: { ...params }, signal, branchId: null }),
     placeholderData: keepPreviousData,
     enabled: options.enabled ?? true,
   });
 }
 
-/** Accepts `{ count }` (contract) or a bare number. */
+/** `GET /notifications/unread-count` → `{ count }`. */
 export function useUnreadNotificationCount(enabled = true) {
   return useQuery({
     queryKey: notificationKeys.unreadCount(),
-    queryFn: async ({ signal }) => {
-      const data = await apiClient.get<UnreadCountDto | number>(ENDPOINTS.notifications.unreadCount, { signal });
-      return typeof data === 'number' ? data : (data?.count ?? 0);
-    },
+    queryFn: async ({ signal }) =>
+      (await apiClient.get<CountDto>(ENDPOINTS.notifications.unreadCount, { signal, branchId: null })).count,
     refetchInterval: UNREAD_POLL_MS,
     enabled,
   });
@@ -52,7 +50,7 @@ function useInvalidateNotifications() {
 export function useMarkNotificationRead() {
   const invalidate = useInvalidateNotifications();
   return useMutation({
-    mutationFn: (id: string) => apiClient.post<void>(ENDPOINTS.notifications.read(id)),
+    mutationFn: (id: string) => apiClient.post<NotificationDto>(ENDPOINTS.notifications.read(id), undefined, { branchId: null }),
     onSuccess: invalidate,
   });
 }
@@ -60,7 +58,7 @@ export function useMarkNotificationRead() {
 export function useMarkAllNotificationsRead() {
   const invalidate = useInvalidateNotifications();
   return useMutation({
-    mutationFn: () => apiClient.post<void>(ENDPOINTS.notifications.readAll),
+    mutationFn: () => apiClient.post<CountDto>(ENDPOINTS.notifications.readAll, undefined, { branchId: null }),
     onSuccess: invalidate,
   });
 }

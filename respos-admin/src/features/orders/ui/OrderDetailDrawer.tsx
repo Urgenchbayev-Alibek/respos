@@ -62,6 +62,12 @@ export function OrderDetailDrawer({ orderId, onClose }: OrderDetailDrawerProps) 
             <dd>{format.dateTime(value.closedAt)}</dd>
           </div>
         )}
+        {value.cancelReason && (
+          <div>
+            <dt>{t('cancelReason')}</dt>
+            <dd>{value.cancelReason}</dd>
+          </div>
+        )}
         {value.comment && (
           <div>
             <dt>{t('comment')}</dt>

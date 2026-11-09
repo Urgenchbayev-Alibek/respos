@@ -25,7 +25,7 @@ function toValues(count: InventoryCountDto | undefined): Values {
   return {
     lines: (count?.lines ?? []).map((line) => ({
       ingredientId: line.ingredientId,
-      countedQty: line.countedQty === null || line.countedQty === undefined ? '' : String(line.countedQty),
+      countedQty: line.countedQty === null ? '' : String(line.countedQty),
     })),
   };
 }
@@ -56,8 +56,7 @@ export function CountEditorModal({ countId, onClose }: { countId: string | null;
   const save = async (values: Values) => {
     if (!countId) return;
     const lines = values.lines
-      .map((line) => ({ ingredientId: line.ingredientId, countedQty: parseDecimal(line.countedQty) }))
-      .filter((line): line is { ingredientId: string; countedQty: number } => line.countedQty !== undefined);
+      .map((line) => ({ ingredientId: line.ingredientId, countedQty: parseDecimal(line.countedQty) ?? null }));
     await update.mutateAsync({ id: countId, lines });
   };
 
@@ -93,7 +92,7 @@ export function CountEditorModal({ countId, onClose }: { countId: string | null;
       onClose={onClose}
       size="lg"
       dismissible={!busy}
-      title={t('counts.editorTitle', { number: count?.number ?? '' })}
+      title={t('counts.editorTitle', { number: count ? format.date(count.createdAt) : '' })}
       description={count && <StatusBadge domain="inventoryCount" status={count.status} />}
       footer={
         editable ? (
@@ -134,7 +133,7 @@ export function CountEditorModal({ countId, onClose }: { countId: string | null;
                     return (
                       <tr key={field.id}>
                         <td>{line.ingredientName}</td>
-                        <td className={styles.num}>{format.number(line.expectedQty)} {line.unitCode ?? ''}</td>
+                        <td className={styles.num}>{format.number(line.expectedQty)} {line.baseUnitCode}</td>
                         <td>
                           <Input
                             className={styles.lineInput}

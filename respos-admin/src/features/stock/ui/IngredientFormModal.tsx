@@ -24,7 +24,7 @@ function initialValues(ingredient?: IngredientDto | null): IngredientFormValues 
     sku: ingredient?.sku ?? '',
     categoryId: ingredient?.categoryId ?? '',
     baseUnitId: ingredient?.baseUnitId ?? '',
-    costPrice: ingredient?.costPrice === null || ingredient?.costPrice === undefined ? '' : String(ingredient.costPrice),
+    costPrice: ingredient ? String(ingredient.costPrice) : '',
   };
 }
 
@@ -54,7 +54,7 @@ export function IngredientFormModal({ open, ingredient, onClose }: IngredientFor
     try {
       await save.mutateAsync({
         id: ingredient?.id,
-        input: { ...values, categoryId: values.categoryId || null },
+        input: { ...values, categoryId: values.categoryId || null, costPrice: values.costPrice ?? 0 },
       });
       toast.success(t(ingredient ? 'ingredients.updated' : 'ingredients.created'));
       onClose();

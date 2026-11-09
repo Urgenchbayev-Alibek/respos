@@ -3,7 +3,15 @@ import { ingredientKeys } from '@/entities/ingredient/ingredient.queries';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type { PageParams, PagedResult } from '@/shared/types/pagination';
-import type { CountLineInput, CreateMovementInput, InventoryCountDto, MovementListParams, StockMovementDto } from './stock.types';
+import type {
+  CountLineInput,
+  CreateCountInput,
+  CreateMovementInput,
+  InventoryCountDto,
+  InventoryCountSummaryDto,
+  MovementListParams,
+  StockMovementDto,
+} from './stock.types';
 
 export const movementKeys = {
   all: ['stock-movements'] as const,
@@ -48,7 +56,7 @@ export function useStockCounts(params: PageParams) {
   return useQuery({
     queryKey: countKeys.list(params),
     queryFn: ({ signal }) =>
-      apiClient.get<PagedResult<InventoryCountDto>>(ENDPOINTS.inventory.counts, { params: { ...params }, signal }),
+      apiClient.get<PagedResult<InventoryCountSummaryDto>>(ENDPOINTS.inventory.counts, { params: { ...params }, signal }),
     placeholderData: keepPreviousData,
   });
 }
@@ -64,7 +72,7 @@ export function useStockCount(id: string | null) {
 export function useCreateCount() {
   const invalidate = useInvalidateStock();
   return useMutation({
-    mutationFn: () => apiClient.post<InventoryCountDto>(ENDPOINTS.inventory.counts, {}),
+    mutationFn: (input: CreateCountInput) => apiClient.post<InventoryCountDto>(ENDPOINTS.inventory.counts, input),
     onSuccess: invalidate,
   });
 }

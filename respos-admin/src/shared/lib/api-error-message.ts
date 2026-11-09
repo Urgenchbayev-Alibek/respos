@@ -34,3 +34,20 @@ export function applyServerFieldErrors<T extends FieldValues>(
   });
   return matched;
 }
+
+/**
+ * Domain errors (409/422) carry only a `code`, no field `errors` (e.g. `organization.slug_taken`). Puts the
+ * localized message on the field the code is about. Returns true when the code matched.
+ */
+export function applyServerCodeError<T extends FieldValues>(
+  error: unknown,
+  setError: UseFormSetError<T>,
+  codeFields: Readonly<Record<string, Path<T>>>,
+  t: TFunction,
+): boolean {
+  if (!isApiError(error)) return false;
+  const field = codeFields[error.code];
+  if (!field) return false;
+  setError(field, { type: 'server', message: getErrorMessage(error, t) });
+  return true;
+}

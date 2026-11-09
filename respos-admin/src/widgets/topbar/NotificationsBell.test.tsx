@@ -12,8 +12,10 @@ const notification = {
   title: 'Низкий остаток: Рис',
   body: 'Осталось 3.5 кг',
   link: '/admin/inventory',
+  branchId: 'b-1',
   isRead: false,
   createdAt: '2026-11-10T08:30:00Z',
+  readAt: null,
 };
 
 describe('NotificationsBell', () => {
@@ -27,8 +29,9 @@ describe('NotificationsBell', () => {
       ),
       http.post(api('/notifications/read-all'), () => {
         readAll = true;
+        const marked = unread;
         unread = 0;
-        return new HttpResponse(null, { status: 204 });
+        return HttpResponse.json({ count: marked });
       }),
     );
     renderWithProviders(<NotificationsBell />, { auth: makeAuth(makeUser({ permissions: [P.notifications.read] })) });

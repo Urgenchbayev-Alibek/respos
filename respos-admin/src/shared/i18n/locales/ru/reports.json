@@ -58,13 +58,20 @@
     "minQuantity": "Минимум",
     "status": "Статус",
     "type": "Тип",
-    "totalCost": "Сумма по себестоимости",
     "openedAt": "Открыта",
     "closedAt": "Закрыта",
     "cashier": "Кассир",
     "expected": "Ожидалось",
     "actual": "Фактически",
-    "difference": "Расхождение"
+    "difference": "Расхождение",
+    "refunded": "Возвраты",
+    "stockValue": "Стоимость остатка",
+    "cashPayments": "Наличные",
+    "cardPayments": "Карта",
+    "otherPayments": "Другое",
+    "refunds": "Возвраты",
+    "closedBy": "Закрыл",
+    "sku": "Артикул"
   },
   "export": {
     "csv": "Экспорт CSV",

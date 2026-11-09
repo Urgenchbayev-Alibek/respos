@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PAYMENT_METHODS, type PaymentMethod } from '@/entities/payment/payment.types';
 import { PaymentsTable } from '@/features/payments/ui/PaymentsTable';
+import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
+import { dateRangeToUtc } from '@/shared/lib/zoned-time';
 import { Button, DemoBadge, Input, PageHeader, Select, Toolbar } from '@/shared/ui';
 
 interface Filters {
@@ -16,6 +18,7 @@ const EMPTY: Filters = { from: '', to: '', method: '' };
 export function PaymentsPage() {
   const { t } = useTranslation('payments');
   const [filters, setFilters] = useState<Filters>(EMPTY);
+  const { branch } = useCurrentBranch();
   const update = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((current) => ({ ...current, [key]: value }));
   const dirty = Boolean(filters.from || filters.to || filters.method);
@@ -48,7 +51,7 @@ export function PaymentsPage() {
         />
       </Toolbar>
       <PaymentsTable
-        filters={{ from: filters.from || undefined, to: filters.to || undefined, method: filters.method || undefined }}
+        filters={{ ...dateRangeToUtc(filters.from, filters.to, branch?.timezone), method: filters.method || undefined }}
       />
     </>
   );

@@ -13,7 +13,7 @@ export interface DashboardDto {
   tablesTotal: number;
   topItems: { name: string; quantity: number; revenue: number }[];
   lowStockCount: number;
-  currentShift: { id: Guid; openedAt: Iso8601; openedByName: string } | null;
+  currentShift: { id: Guid; openedAt: Iso8601; openedByName: string | null } | null;
   isDemoData: boolean;
 }
 

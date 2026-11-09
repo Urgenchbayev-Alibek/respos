@@ -58,13 +58,20 @@
     "minQuantity": "Minimum",
     "status": "Holat",
     "type": "Turi",
-    "totalCost": "Tannarx bo‘yicha summa",
     "openedAt": "Ochilgan",
     "closedAt": "Yopilgan",
     "cashier": "Kassir",
     "expected": "Kutilgan",
     "actual": "Haqiqiy",
-    "difference": "Farq"
+    "difference": "Farq",
+    "refunded": "Qaytarishlar",
+    "stockValue": "Qoldiq qiymati",
+    "cashPayments": "Naqd",
+    "cardPayments": "Karta",
+    "otherPayments": "Boshqa",
+    "refunds": "Qaytarishlar",
+    "closedBy": "Yopgan",
+    "sku": "Artikul"
   },
   "export": {
     "csv": "CSV eksport",

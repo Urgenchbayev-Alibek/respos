@@ -35,6 +35,7 @@
     "paid": "Оплачено"
   },
   "closedAt": "Закрыт",
+  "cancelReason": "Причина отмены",
   "comment": "Комментарий",
   "sections": {
     "items": "Позиции",

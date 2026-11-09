@@ -3,58 +3,27 @@ import userEvent from '@testing-library/user-event';
 import { delay } from 'msw';
 import { describe, expect, it } from 'vitest';
 import type { PayableOrderDto } from '@/entities/payment/payable-order.types';
+import { makeOrder, makeOrderItem } from '@/test/fixtures/floor-orders';
+import { makeCashShift, makePayment, makeReceipt } from '@/test/fixtures/payments';
 import { api, http, HttpResponse, problem, server } from '@/test/msw-server';
 import { makeAuth, makeUser, renderWithProviders } from '@/test/test-utils';
 import { PaymentPanel } from './PaymentPanel';
 
-const order: PayableOrderDto = {
-  id: 'o1',
-  number: 42,
-  type: 'dine_in',
+const order: PayableOrderDto = makeOrder({
   status: 'served',
-  tableNumber: '7',
   waiterName: 'Шерзод',
   guestCount: 4,
+  openedAt: '2026-11-10T07:18:00Z',
+  items: [makeOrderItem({ unitPrice: 50000, quantity: 2, status: 'served', lineTotal: 100000 })],
+  subtotal: 265000,
+  serviceChargeAmount: 26500,
   total: 291500,
   paidAmount: 150000,
   remainingAmount: 141500,
-  openedAt: '2026-11-10T07:18:00Z',
-  items: [
-    { id: 'i1', name: 'Плов', variantName: null, unitPrice: 50000, quantity: 2, modifiers: [], comment: null, status: 'served', lineTotal: 100000 },
-  ],
-  subtotal: 265000,
-  discountAmount: 0,
-  serviceChargeAmount: 26500,
-  taxAmount: 0,
-  comment: null,
-  payments: [],
-};
+});
 
-const shift = {
-  id: 'sh1',
-  status: 'open',
-  openedByName: 'Лола',
-  openedAt: '2026-11-10T04:02:00Z',
-  openingAmount: 500000,
-  closedByName: null,
-  closedAt: null,
-  expectedCashAmount: 800000,
-  actualCashAmount: null,
-  difference: null,
-  comment: null,
-};
-
-const payment = {
-  id: 'p1',
-  orderId: 'o1',
-  method: 'cash',
-  amount: 141500,
-  refundedAmount: 0,
-  status: 'completed',
-  provider: 'manual',
-  createdAt: '2026-11-10T08:00:00Z',
-  createdByName: 'Лола',
-};
+const shift = makeCashShift();
+const payment = makePayment();
 
 const auth = makeAuth(makeUser({ permissions: ['orders.read', 'payments.create', 'payments.refund', 'cash-shifts.read'] }));
 
@@ -108,7 +77,7 @@ describe('PaymentPanel', () => {
     server.use(
       http.post(api('/payments'), ({ request }) => {
         keys.push(request.headers.get('Idempotency-Key'));
-        return keys.length === 1 ? problem(422, 'payment.amount_exceeds_remaining') : HttpResponse.json(payment, { status: 201 });
+        return keys.length === 1 ? problem(422, 'payment.exceeds_due') : HttpResponse.json(payment, { status: 201 });
       }),
     );
     renderWithProviders(<PaymentPanel orderId="o1" />, { auth });
@@ -157,5 +126,20 @@ describe('PaymentPanel', () => {
 
     expect(await screen.findByText('Откройте смену')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Принять оплату/ })).not.toBeInTheDocument();
+  });
+
+  it('opens the pre-check from GET /orders/{id}/receipt', async () => {
+    mockOrderAndShift();
+    server.use(http.get(api('/orders/o1/receipt'), () => HttpResponse.json(makeReceipt())));
+    renderWithProviders(<PaymentPanel orderId="o1" />, { auth });
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole('button', { name: 'Пречек' }));
+
+    const sheet = await screen.findByTestId('precheck');
+    expect(sheet).toHaveTextContent('Демо Ресторан');
+    expect(sheet).toHaveTextContent('#0042');
+    expect(sheet).toHaveTextContent('Спасибо!');
+    expect(sheet).toHaveTextContent('Не является фискальным чеком');
   });
 });

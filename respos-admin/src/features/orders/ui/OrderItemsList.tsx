@@ -37,6 +37,11 @@ export function OrderItemsList({ items, renderActions }: OrderItemsListProps) {
             </div>
           )}
           {item.comment && <div className={styles.comment}>{item.comment}</div>}
+          {item.cancelReason && (
+            <div className={styles.comment}>
+              {t('cancelReason')}: {item.cancelReason}
+            </div>
+          )}
           <div className={styles.bottom}>
             <span className={styles.meta}>
               ×{format.number(item.quantity)} · {format.money(item.unitPrice)}

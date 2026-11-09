@@ -2,7 +2,7 @@ import type { MenuItemDto, PosCategoryDto } from '@/entities/menu/menu.types';
 import type { OrderDto, OrderItemDto } from '@/entities/order/order.types';
 import type { TableDto } from '@/entities/table/table.types';
 
-/** Shared test data for floor / menu / order tests. */
+/** Shared test data for floor / menu / order tests. Shapes mirror the real backend DTOs. */
 export function makeTable(overrides: Partial<TableDto> = {}): TableDto {
   return {
     id: 't1',
@@ -35,8 +35,10 @@ export function makeMenuItem(overrides: Partial<MenuItemDto> = {}): MenuItemDto 
     kitchenStationId: null,
     isAvailable: true,
     isArchived: false,
+    sku: null,
     variants: [],
     modifierGroups: [],
+    availability: [],
     ...overrides,
   };
 }
@@ -49,6 +51,7 @@ export function makeOrderItem(overrides: Partial<OrderItemDto> = {}): OrderItemD
   return {
     id: 'i1',
     menuItemId: 'm1',
+    variantId: null,
     name: 'Плов',
     variantName: null,
     unitPrice: 45000,
@@ -60,6 +63,7 @@ export function makeOrderItem(overrides: Partial<OrderItemDto> = {}): OrderItemD
     stationId: null,
     sentAt: null,
     readyAt: null,
+    cancelReason: null,
     ...overrides,
   };
 }
@@ -68,6 +72,7 @@ export function makeOrder(overrides: Partial<OrderDto> = {}): OrderDto {
   return {
     id: 'o1',
     number: 42,
+    businessDate: '2026-11-10',
     type: 'dine_in',
     status: 'draft',
     tableId: 't1',
@@ -88,6 +93,7 @@ export function makeOrder(overrides: Partial<OrderDto> = {}): OrderDto {
     taxAmount: 0,
     remainingAmount: 90000,
     comment: null,
+    cancelReason: null,
     payments: [],
     history: [],
     ...overrides,

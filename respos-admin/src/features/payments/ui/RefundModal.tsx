@@ -48,7 +48,7 @@ export function RefundModal({ payment, onClose }: { payment: PaymentDto; onClose
     try {
       const done = await submit({ amount: values.amount ?? 0, reason: values.reason.trim() });
       if (done === undefined) return;
-      toast.success(t('refund.success', { amount: format.money(values.amount) }));
+      toast.success(t('refund.success', { amount: format.money(done.amount) }));
       onClose();
     } catch (error) {
       if (!applyServerFieldErrors(error, setError, ['amount', 'reason'])) setServerError(getErrorMessage(error, t));

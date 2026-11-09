@@ -62,7 +62,7 @@ export function PaymentPanel({ orderId, onBack }: PaymentPanelProps) {
       <Card title={t('pay.title')}>
         <PayArea order={order} lastPayment={lastPayment} onPaid={setLastPayment} />
       </Card>
-      {precheckOpen && <PreCheckModal order={order} onClose={() => setPrecheckOpen(false)} />}
+      {precheckOpen && <PreCheckModal orderId={order.id} onClose={() => setPrecheckOpen(false)} />}
     </div>
   );
 }

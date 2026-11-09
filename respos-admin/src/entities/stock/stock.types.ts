@@ -18,19 +18,21 @@ export interface StockMovementDto {
   id: Guid;
   ingredientId: Guid;
   ingredientName: string;
-  baseUnitCode?: string | null;
+  baseUnitCode: string;
   type: MovementType;
-  /** Signed, in the ingredient base unit. */
+  /** Signed, in the ingredient base unit (write_off/consumption are negative). */
   quantity: number;
   balanceAfter: number;
   unitCost: number | null;
   sourceType: MovementSourceType;
   sourceId: Guid | null;
   reason: string | null;
-  createdByName?: string | null;
+  createdBy: Guid | null;
+  createdByName: string | null;
   createdAt: Iso8601;
 }
 
+/** `from`/`to` are ISO 8601 instants (backend DateTime, `to` inclusive) — use `dateRangeToUtc`. */
 export interface MovementListParams extends PageParams {
   ingredientId?: string;
   type?: MovementType;
@@ -39,6 +41,7 @@ export interface MovementListParams extends PageParams {
   to?: string;
 }
 
+/** `quantity` is in `unitId` (default: base unit): receipt/write_off positive (write_off is applied as −qty), adjustment signed. */
 export interface CreateMovementInput {
   ingredientId: string;
   type: ManualMovementType;
@@ -51,22 +54,41 @@ export interface CreateMovementInput {
 export interface InventoryCountLineDto {
   ingredientId: Guid;
   ingredientName: string;
-  unitCode?: string | null;
+  baseUnitCode: string;
   expectedQty: number;
   countedQty: number | null;
+  /** countedQty − expectedQty (null until counted). */
+  difference: number | null;
 }
 
+/** `GET /stock/counts` item. */
+export interface InventoryCountSummaryDto {
+  id: Guid;
+  status: InventoryCountStatus;
+  comment: string | null;
+  createdAt: Iso8601;
+  completedAt: Iso8601 | null;
+  lineCount: number;
+}
+
+/** `GET /stock/counts/{id}`, `POST/PUT /stock/counts…`, `POST …/complete`. */
 export interface InventoryCountDto {
   id: Guid;
-  number?: string | number | null;
   status: InventoryCountStatus;
+  comment: string | null;
   createdAt: Iso8601;
-  completedAt?: Iso8601 | null;
-  createdByName?: string | null;
-  lines?: InventoryCountLineDto[];
+  completedAt: Iso8601 | null;
+  lines: InventoryCountLineDto[];
+}
+
+export interface CreateCountInput {
+  comment?: string;
+  /** Default: all active ingredients. */
+  ingredientIds?: string[];
 }
 
 export interface CountLineInput {
   ingredientId: string;
-  countedQty: number;
+  /** null clears a counted value. */
+  countedQty: number | null;
 }

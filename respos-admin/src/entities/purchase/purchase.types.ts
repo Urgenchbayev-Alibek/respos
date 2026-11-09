@@ -16,16 +16,19 @@ export interface PurchaseItemDto {
 
 export interface PurchaseDto {
   id: Guid;
-  number: string;
+  /** Sequential per organization. */
+  number: number;
   supplierId: Guid;
   supplierName: string;
   status: PurchaseStatus;
   expectedAt: Iso8601 | null;
   total: number;
   comment: string | null;
-  items?: PurchaseItemDto[];
+  createdAt: Iso8601;
+  items: PurchaseItemDto[];
 }
 
+/** `from`/`to` are ISO instants on createdAt (use `dateRangeToUtc`). */
 export interface PurchaseListParams extends PageParams {
   status?: PurchaseStatus;
   supplierId?: string;
@@ -35,6 +38,7 @@ export interface PurchaseListParams extends PageParams {
 
 export interface PurchaseInput {
   supplierId: string;
+  /** ISO 8601 instant. */
   expectedAt?: string;
   comment?: string;
   items: { ingredientId: string; quantity: number; unitId: string; unitPrice: number }[];

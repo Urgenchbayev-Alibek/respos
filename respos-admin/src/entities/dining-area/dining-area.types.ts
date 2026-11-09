@@ -6,6 +6,8 @@ export interface DiningAreaDto {
   name: string;
   sortOrder: number;
   isActive: boolean;
+  /** Non-archived tables in the area. */
+  tableCount: number;
 }
 
 export interface DiningAreaInput {

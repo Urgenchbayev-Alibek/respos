@@ -2,23 +2,12 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { CashShiftDto } from '@/entities/cash-shift/cash-shift.types';
+import { makeCashShift } from '@/test/fixtures/payments';
 import { api, http, HttpResponse, server } from '@/test/msw-server';
 import { makeAuth, makeUser, renderWithProviders } from '@/test/test-utils';
 import { CloseShiftModal } from './CloseShiftModal';
 
-const shift: CashShiftDto = {
-  id: 'sh1',
-  status: 'open',
-  openedByName: 'Лола',
-  openedAt: '2026-11-10T04:02:00Z',
-  openingAmount: 500000,
-  closedByName: null,
-  closedAt: null,
-  expectedCashAmount: 3620000,
-  actualCashAmount: null,
-  difference: null,
-  comment: null,
-};
+const shift: CashShiftDto = makeCashShift({ expectedCashAmount: 3620000 });
 
 const text = (testId: string) => screen.getByTestId(testId).textContent?.replace(/\s/g, ' ') ?? '';
 
@@ -32,6 +21,7 @@ describe('CloseShiftModal', () => {
           ...shift,
           status: 'closed',
           closedAt: '2026-11-10T18:00:00Z',
+          closedBy: shift.openedBy,
           closedByName: 'Лола',
           actualCashAmount: 3600000,
           difference: -20000,

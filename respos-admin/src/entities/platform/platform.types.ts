@@ -1,3 +1,4 @@
+import type { AuditLogDto } from '@/entities/audit-log/audit-log.types';
 import type { DemoRequestStatus, OrganizationStatus, SubscriptionStatus } from '@/shared/constants/statuses';
 import type { Guid, Iso8601 } from '@/shared/types/api-response';
 import type { PageParams } from '@/shared/types/pagination';
@@ -10,7 +11,6 @@ export interface PlatformOrganizationDto {
   status: OrganizationStatus;
   planCode: string | null;
   subscriptionStatus: SubscriptionStatus | null;
-  subscriptionEndsAt?: Iso8601 | null;
   branchesCount: number;
   usersCount: number;
   createdAt: Iso8601;
@@ -63,6 +63,15 @@ export interface FeatureDto {
 }
 
 export interface FeatureFlagDto {
+  id: Guid;
+  /** null = global default. */
+  organizationId: Guid | null;
+  featureCode: string;
+  isEnabled: boolean;
+  updatedAt: Iso8601 | null;
+}
+
+export interface SetFeatureFlagInput {
   organizationId: Guid | null;
   featureCode: string;
   isEnabled: boolean;
@@ -71,23 +80,18 @@ export interface FeatureFlagDto {
 export interface SystemStatusDto {
   version: string;
   environment: string;
+  /** `ok` or `unavailable` (DB check). */
   dbStatus: string;
-  uptime: string | number;
+  /** Seconds since process start. */
+  uptime: number;
+  startedAt: Iso8601;
   organizationsCount: number;
   usersCount: number;
   ordersToday: number;
 }
 
-export interface SystemEventDto {
-  id: Guid;
-  createdAt: Iso8601;
-  action: string;
-  entityType?: string | null;
-  entityId?: string | null;
-  organizationName?: string | null;
-  userName?: string | null;
-  correlationId?: string | null;
-}
+/** `GET /platform/system-events` returns audit entries (`platform.*` and `integration.*` actions). */
+export type SystemEventDto = AuditLogDto;
 
 export interface DemoRequestDto {
   id: Guid;
@@ -109,4 +113,8 @@ export interface DemoRequestListParams extends PageParams {
 export interface TenantAccessDto {
   accessToken: string;
   expiresAt: Iso8601;
+  organizationId: Guid;
+  organizationName: string;
+  /** Read-only org permissions granted for this session. */
+  permissions: string[];
 }

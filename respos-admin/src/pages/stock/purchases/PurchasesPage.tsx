@@ -10,6 +10,7 @@ import { PERMISSIONS } from '@/shared/constants/permissions';
 import { PURCHASE_STATUSES, type PurchaseStatus } from '@/shared/constants/statuses';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
+import { dateRangeToUtc } from '@/shared/lib/zoned-time';
 import { DEFAULT_PAGE_SIZE } from '@/shared/types/pagination';
 import { Button, DataTable, Input, PageHeader, Select, StatusBadge, Toolbar, type DataTableColumn } from '@/shared/ui';
 
@@ -38,8 +39,7 @@ export function PurchasesPage() {
     sort: 'createdAt:desc',
     status: filters.status || undefined,
     supplierId: filters.supplierId || undefined,
-    from: filters.from || undefined,
-    to: filters.to || undefined,
+    ...dateRangeToUtc(filters.from || undefined, filters.to || undefined, format.timeZone),
   });
   const update = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     setFilters((current) => ({ ...current, [key]: value }));

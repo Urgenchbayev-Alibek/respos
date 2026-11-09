@@ -35,6 +35,7 @@
     "paid": "Toʻlangan"
   },
   "closedAt": "Yopilgan",
+  "cancelReason": "Bekor qilish sababi",
   "comment": "Izoh",
   "sections": {
     "items": "Pozitsiyalar",

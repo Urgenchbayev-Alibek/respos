@@ -59,6 +59,22 @@ describe('ReportsPage', () => {
     expect(await screen.findByText('Нет данных за период')).toBeInTheDocument();
   });
 
+  it('renders stock movement totals per type and ingredient (backend StockMovementTotalDto)', async () => {
+    server.use(
+      http.get(api('/reports/sales'), () => HttpResponse.json({ totalRevenue: 0, ordersCount: 0, averageCheck: 0, byDay: [] })),
+      http.get(api('/reports/stock-movements'), () =>
+        HttpResponse.json([
+          { type: 'write_off', ingredientId: 'ing-1', ingredientName: 'Рис девзира', unitCode: 'kg', quantity: -2.5, count: 3 },
+          { type: 'receipt', ingredientId: 'ing-1', ingredientName: 'Рис девзира', unitCode: 'kg', quantity: 50, count: 1 },
+        ]),
+      ),
+    );
+    renderWithProviders(<ReportsPage />, { auth });
+    await userEvent.click(await screen.findByRole('tab', { name: 'Движения' }));
+    expect(await screen.findByText('Списание')).toBeInTheDocument();
+    expect(screen.getAllByText('Рис девзира')).toHaveLength(2);
+  });
+
   it('validates a custom period', async () => {
     server.use(http.get(api('/reports/sales'), () => HttpResponse.json({ totalRevenue: 0, ordersCount: 0, averageCheck: 0, byDay: [] })));
     renderWithProviders(<ReportsPage />, { auth });

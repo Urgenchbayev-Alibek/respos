@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { formatAuditChanges } from '@/entities/audit-log/audit-log.queries';
 import type { AuditLogDto } from '@/entities/audit-log/audit-log.types';
+import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { Drawer } from '@/shared/ui';
 import styles from './audit.module.css';
@@ -9,12 +10,14 @@ import styles from './audit.module.css';
 export function AuditLogDrawer({ entry, onClose }: { entry: AuditLogDto | null; onClose: () => void }) {
   const { t } = useTranslation('audit');
   const format = useFormatters();
+  const { branches } = useCurrentBranch();
+  const branchName = entry?.branchId ? (branches.find((branch) => branch.id === entry.branchId)?.name ?? entry.branchId) : null;
   const changes = entry ? formatAuditChanges(entry) : null;
   const rows: [string, string | null | undefined][] = entry
     ? [
         [t('columns.time'), format.dateTime(entry.createdAt)],
         [t('columns.user'), entry.userName ?? entry.userId],
-        [t('columns.branch'), entry.branchName ?? entry.branchId],
+        [t('columns.branch'), branchName],
         [t('columns.action'), entry.action],
         [t('columns.entityType'), entry.entityType],
         [t('columns.entityId'), entry.entityId],

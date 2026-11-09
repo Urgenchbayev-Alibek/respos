@@ -18,14 +18,12 @@ import { V } from '@/shared/lib/validation';
 import { Alert, Button, FormField, IconButton, Input, Select, useToast } from '@/shared/ui';
 
 const schema = z.object({
-  effectiveFrom: z.string(),
   lines: z
     .array(z.object({ ingredientId: z.string().min(1, V.required), quantity: quantitySchema(), unitId: z.string().min(1, V.required) }))
     .min(1, 'errors:recipe.empty'),
 });
 type Output = z.output<typeof schema>;
 interface Values {
-  effectiveFrom: string;
   lines: { ingredientId: string; quantity: string; unitId: string }[];
 }
 
@@ -33,7 +31,6 @@ const EMPTY_LINE = { ingredientId: '', quantity: '', unitId: '' };
 
 function toValues(recipe: RecipeDto | null | undefined): Values {
   return {
-    effectiveFrom: '',
     lines: recipe?.ingredients.length
       ? recipe.ingredients.map((line) => ({ ingredientId: line.ingredientId, quantity: String(line.quantity), unitId: line.unitId }))
       : [EMPTY_LINE],
@@ -72,12 +69,7 @@ export function RecipeEditor({ menuItemId, variantId, recipe }: RecipeEditorProp
   const onSubmit = handleSubmit(async (values) => {
     setServerError(null);
     try {
-      await save.mutateAsync({
-        menuItemId,
-        variantId,
-        effectiveFrom: values.effectiveFrom || undefined,
-        ingredients: values.lines,
-      });
+      await save.mutateAsync({ menuItemId, variantId, ingredients: values.lines });
       toast.success(t('saved'));
     } catch (error) {
       setServerError(getErrorMessage(error, t));
@@ -147,9 +139,6 @@ export function RecipeEditor({ menuItemId, variantId, recipe }: RecipeEditorProp
       </div>
       {canManage && (
         <div className={styles.row}>
-          <FormField label={t('effectiveFrom')} hint={t('effectiveFromHint')}>
-            <Input type="date" {...register('effectiveFrom')} />
-          </FormField>
           <Button variant="primary" type="submit" loading={formState.isSubmitting}>
             {t('saveAsVersion', { version: (recipe?.version ?? 0) + 1 })}
           </Button>

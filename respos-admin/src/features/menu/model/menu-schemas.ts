@@ -38,7 +38,7 @@ export const menuItemSchema = z
       .string()
       .trim()
       .regex(/^\d{0,3}$/, MENU_V.prepTime)
-      .transform((value) => (value === '' ? null : Number(value))),
+      .transform((value) => (value === '' ? 0 : Number(value))),
     kitchenStationId: z.string(),
     isAvailable: z.boolean(),
     variants: z.array(variantSchema),
@@ -61,7 +61,7 @@ export function toMenuItemFormValues(item: MenuItemDto | null, defaultCategoryId
     sku: item?.sku ?? '',
     categoryId: item?.categoryId ?? defaultCategoryId,
     price: item ? item.price : (null as unknown as number),
-    prepTimeMinutes: item?.prepTimeMinutes === null || item?.prepTimeMinutes === undefined ? '' : String(item.prepTimeMinutes),
+    prepTimeMinutes: item?.prepTimeMinutes ? String(item.prepTimeMinutes) : '',
     kitchenStationId: item?.kitchenStationId ?? '',
     isAvailable: item?.isAvailable ?? true,
     variants: (item?.variants ?? []).map((variant) => ({ ...variant })),

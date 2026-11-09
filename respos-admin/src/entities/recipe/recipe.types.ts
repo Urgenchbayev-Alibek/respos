@@ -18,14 +18,13 @@ export interface RecipeDto {
   effectiveFrom: Iso8601;
   isActive: boolean;
   ingredients: RecipeIngredientDto[];
-  estimatedCost: number | null;
+  estimatedCost: number;
 }
 
-/** `POST /recipes` creates a new version and deactivates the previous one. */
+/** `POST /recipes` creates a new version (effectiveFrom = now) and deactivates the previous one. */
 export interface SaveRecipeInput {
   menuItemId: string;
   variantId?: string | null;
-  effectiveFrom?: string;
   ingredients: { ingredientId: string; quantity: number; unitId: string }[];
 }
 

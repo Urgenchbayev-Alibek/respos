@@ -34,6 +34,7 @@ describe('ReservationFormModal', () => {
     );
 
     await user.type(screen.getByLabelText(/Имя гостя/), 'Каримов');
+    await user.type(screen.getByLabelText(/Телефон/), '+998 90 123 45 67');
     await user.selectOptions(screen.getByLabelText(/^Стол/), 't1');
     await user.click(screen.getByRole('button', { name: 'Сохранить' }));
 
@@ -44,6 +45,7 @@ describe('ReservationFormModal', () => {
     expect(body).toMatchObject({
       tableId: 't1',
       guestName: 'Каримов',
+      guestPhone: '+998 90 123 45 67',
       guestCount: 2,
       startsAt: '2026-11-10T14:00:00.000Z',
       endsAt: '2026-11-10T16:00:00.000Z',
@@ -60,7 +62,7 @@ describe('ReservationFormModal', () => {
     await user.type(end, '18:00');
     await user.click(screen.getByRole('button', { name: 'Сохранить' }));
 
-    await waitFor(() => expect(screen.getByText('Обязательное поле')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getAllByText('Обязательное поле')).toHaveLength(2));
     expect(screen.getByText('Окончание должно быть позже начала')).toBeInTheDocument();
   });
 });

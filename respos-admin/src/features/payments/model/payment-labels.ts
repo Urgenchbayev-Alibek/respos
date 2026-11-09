@@ -5,6 +5,4 @@ export function getRefundable(payment: Pick<PaymentDto, 'amount' | 'refundedAmou
   return Math.max(0, Math.round((payment.amount - payment.refundedAmount) * 100) / 100);
 }
 
-export function formatOrderNumber(number: number | null | undefined): string {
-  return number === null || number === undefined ? '—' : `#${String(number).padStart(4, '0')}`;
-}
+export { formatOrderNumber } from '@/entities/order/order.types';

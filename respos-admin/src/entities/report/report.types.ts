@@ -1,5 +1,8 @@
 import type { CashShiftStatus } from '@/shared/constants/statuses';
+import type { MovementType } from '@/entities/stock/stock.types';
 import type { Guid, Iso8601 } from '@/shared/types/api-response';
+
+export type PaymentMethod = 'cash' | 'card' | 'other';
 
 /** Period in branch timezone, `YYYY-MM-DD` (inclusive). */
 export interface ReportPeriod {
@@ -11,8 +14,8 @@ export interface SalesReportDto {
   totalRevenue: number;
   ordersCount: number;
   averageCheck: number;
+  /** `date` is `YYYY-MM-DD` (branch timezone). */
   byDay: { date: string; revenue: number; orders: number }[];
-  isDemoData?: boolean;
 }
 
 export interface TopItemDto {
@@ -23,42 +26,56 @@ export interface TopItemDto {
 }
 
 export interface SalesByCategoryDto {
-  categoryId: Guid | null;
+  categoryId: Guid;
   name: string;
   revenue: number;
   quantity: number;
 }
 
+/** `amount` = payments − refunds of the method; `count` = number of payments. */
 export interface PaymentMethodTotalDto {
-  method: 'cash' | 'card' | 'other';
+  method: PaymentMethod;
   amount: number;
   count: number;
+  refundedAmount: number;
 }
 
+/** `GET /reports/stock` and `/reports/low-stock` row. */
 export interface StockBalanceRowDto {
   ingredientId: Guid;
   name: string;
+  sku: string | null;
   unitCode: string;
   quantity: number;
   minQuantity: number;
   isLow: boolean;
-  costPrice?: number | null;
+  costPrice: number;
+  /** quantity × costPrice. */
+  stockValue: number;
 }
 
+/** `GET /reports/stock-movements` row: totals per (type, ingredient); quantity is signed, base unit. */
 export interface MovementTotalDto {
-  type: string;
+  type: MovementType;
+  ingredientId: Guid;
+  ingredientName: string;
+  unitCode: string;
+  quantity: number;
   count: number;
-  quantity?: number | null;
-  totalCost?: number | null;
 }
 
 export interface CashShiftReportRowDto {
   id: Guid;
   openedAt: Iso8601;
-  closedAt: Iso8601 | null;
   openedByName: string | null;
+  closedAt: Iso8601 | null;
+  closedByName: string | null;
   status: CashShiftStatus;
   openingAmount: number;
+  cashPayments: number;
+  cardPayments: number;
+  otherPayments: number;
+  refunds: number;
   expectedCashAmount: number | null;
   actualCashAmount: number | null;
   difference: number | null;

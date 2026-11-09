@@ -81,7 +81,7 @@ export function DashboardPage() {
           {loading ? null : data.currentShift ? (
             <div className={styles.shift}>
               <StatusBadge domain="cashShift" status="open" size="lg" />
-              <p>{t('shiftOpened', { name: data.currentShift.openedByName, time: format.dateTime(data.currentShift.openedAt) })}</p>
+              <p>{t('shiftOpened', { name: data.currentShift.openedByName ?? '—', time: format.dateTime(data.currentShift.openedAt) })}</p>
             </div>
           ) : (
             <div className={styles.shift}>

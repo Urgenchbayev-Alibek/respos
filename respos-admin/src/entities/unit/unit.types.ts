@@ -21,3 +21,13 @@ export interface UnitConversionInput {
   toUnitId: string;
   factor: number;
 }
+
+/** `GET /unit-conversions` item: 1 fromUnit = factor × toUnit (the inverse is derived). */
+export interface UnitConversionDto {
+  id: Guid;
+  fromUnitId: Guid;
+  fromUnitCode: string;
+  toUnitId: Guid;
+  toUnitCode: string;
+  factor: number;
+}

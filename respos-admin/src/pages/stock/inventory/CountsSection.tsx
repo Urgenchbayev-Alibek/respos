@@ -2,7 +2,7 @@ import { ClipboardPlus } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreateCount, useStockCounts } from '@/entities/stock/stock.queries';
-import type { InventoryCountDto } from '@/entities/stock/stock.types';
+import type { InventoryCountSummaryDto } from '@/entities/stock/stock.types';
 import { CountEditorModal } from '@/features/stock/ui/CountEditorModal';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
@@ -24,20 +24,20 @@ export function CountsSection() {
 
   const start = async () => {
     try {
-      const count = await create.mutateAsync();
+      const count = await create.mutateAsync({});
       setOpenId(count.id);
     } catch (error) {
       toast.error(t('counts.createFailed'), getErrorMessage(error, t));
     }
   };
 
-  const columns = useMemo<DataTableColumn<InventoryCountDto>[]>(
+  const columns = useMemo<DataTableColumn<InventoryCountSummaryDto>[]>(
     () => [
-      { key: 'number', header: t('columns.number'), cell: (row) => row.number ?? row.id.slice(0, 8) },
       { key: 'created', header: t('columns.date'), cell: (row) => format.dateTime(row.createdAt) },
       { key: 'status', header: t('columns.status'), cell: (row) => <StatusBadge domain="inventoryCount" status={row.status} /> },
       { key: 'completed', header: t('columns.completedAt'), hideOnMobile: true, cell: (row) => format.dateTime(row.completedAt) },
-      { key: 'user', header: t('columns.user'), hideOnMobile: true, cell: (row) => row.createdByName ?? '—' },
+      { key: 'lines', header: t('columns.lineCount'), align: 'right', hideOnMobile: true, cell: (row) => format.number(row.lineCount) },
+      { key: 'comment', header: t('columns.comment'), hideOnMobile: true, cell: (row) => row.comment ?? '—' },
       {
         key: 'open',
         header: <span className="visually-hidden">{t('columns.actions')}</span>,

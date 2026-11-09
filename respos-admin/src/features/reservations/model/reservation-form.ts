@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { ReservationDto, ReservationInput } from '@/entities/reservation/reservation.types';
 import { addMinutesToTime, utcToZonedParts, zonedToUtcIso } from '@/shared/lib/zoned-time';
-import { optionalString, phoneSchema, requiredString, V } from '@/shared/lib/validation';
+import { optionalString, requiredString, V } from '@/shared/lib/validation';
 
 export const RESERVATION_V = {
   guestCount: 'reservations:validation.guestCount',
@@ -17,7 +17,8 @@ export const reservationSchema = z
     startTime: z.string().regex(/^\d{2}:\d{2}$/, V.required),
     endTime: z.string().regex(/^\d{2}:\d{2}$/, V.required),
     guestName: requiredString(150),
-    guestPhone: phoneSchema,
+    /** Backend requires a phone (SaveReservationValidator: NotEmpty + ValidPhone). */
+    guestPhone: z.string().trim().min(1, V.required).regex(/^\+?[\d\s\-()]{7,20}$/, V.phone),
     guestCount: z.coerce
       .number({ invalid_type_error: RESERVATION_V.guestCount })
       .int(RESERVATION_V.guestCount)
@@ -64,7 +65,7 @@ export function toFormValues(reservation: ReservationDto | null, date: string, t
     startTime: start?.time ?? DEFAULT_START_TIME,
     endTime: end?.time ?? addMinutesToTime(start?.time ?? DEFAULT_START_TIME, DEFAULT_DURATION_MINUTES),
     guestName: reservation.guestName,
-    guestPhone: reservation.guestPhone ?? '',
+    guestPhone: reservation.guestPhone,
     guestCount: reservation.guestCount,
     tableId: reservation.tableId ?? '',
     preferredAreaId: reservation.preferredAreaId ?? '',

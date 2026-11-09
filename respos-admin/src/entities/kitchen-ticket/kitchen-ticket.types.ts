@@ -37,12 +37,5 @@ export interface KitchenTicketParams {
   status: readonly TicketStatus[];
 }
 
-export interface KitchenStationDto {
-  id: Guid;
-  name: string;
-  sortOrder: number;
-  isActive: boolean;
-}
-
 export type TicketAction = 'start' | 'ready' | 'served' | 'recall';
 export type TicketItemAction = 'start' | 'ready';

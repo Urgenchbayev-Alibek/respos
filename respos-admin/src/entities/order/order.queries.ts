@@ -3,32 +3,31 @@ import { tableKeys } from '@/entities/table/table.queries';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type { PagedResult } from '@/shared/types/pagination';
-import type { AddOrderItem, CreateOrderInput, OrderDto, OrderListParams, OrderSummaryDto } from './order.types';
+import type { AddOrderItem, CreateOrderInput, OrderDto, OrderListParams } from './order.types';
+import type { ReceiptDto } from './receipt.types';
 
 export const orderKeys = {
   all: ['orders'] as const,
   list: (params: OrderListParams) => [...orderKeys.all, 'list', params] as const,
   active: () => [...orderKeys.all, 'active'] as const,
   detail: (id: string) => [...orderKeys.all, 'detail', id] as const,
+  receipt: (id: string) => [...orderKeys.all, 'receipt', id] as const,
 };
 
 export function useOrders(params: OrderListParams) {
   return useQuery({
     queryKey: orderKeys.list(params),
     queryFn: ({ signal }) =>
-      apiClient.get<PagedResult<OrderSummaryDto>>(ENDPOINTS.orders.list, { params: { ...params }, signal }),
+      apiClient.get<PagedResult<OrderDto>>(ENDPOINTS.orders.list, { params: { ...params }, signal }),
     placeholderData: keepPreviousData,
   });
 }
 
-/** `GET /orders/active` — plain array (tolerates a paged envelope). */
+/** `GET /orders/active` — plain array of full OrderDto (not paged). */
 export function useActiveOrders() {
   return useQuery({
     queryKey: orderKeys.active(),
-    queryFn: async ({ signal }) => {
-      const data = await apiClient.get<OrderSummaryDto[] | PagedResult<OrderSummaryDto>>(ENDPOINTS.orders.active, { signal });
-      return Array.isArray(data) ? data : data.items;
-    },
+    queryFn: ({ signal }) => apiClient.get<OrderDto[]>(ENDPOINTS.orders.active, { signal }),
   });
 }
 
@@ -37,6 +36,16 @@ export function useOrder(id: string | undefined) {
     queryKey: orderKeys.detail(id ?? ''),
     queryFn: ({ signal }) => apiClient.get<OrderDto>(ENDPOINTS.orders.one(id ?? ''), { signal }),
     enabled: Boolean(id),
+  });
+}
+
+/** `GET /orders/{id}/receipt` — pre-check data (needs orders.read or payments.read). Always refetched on open. */
+export function useOrderReceipt(id: string | undefined) {
+  return useQuery({
+    queryKey: orderKeys.receipt(id ?? ''),
+    queryFn: ({ signal }) => apiClient.get<ReceiptDto>(ENDPOINTS.orders.action(id ?? '', 'receipt'), { signal }),
+    enabled: Boolean(id),
+    staleTime: 0,
   });
 }
 

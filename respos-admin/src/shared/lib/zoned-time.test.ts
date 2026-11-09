@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addDaysToDateString, addMinutesToTime, utcToZonedParts, zonedToUtcIso } from './zoned-time';
+import { addDaysToDateString, addMinutesToTime, dateRangeToUtc, utcToZonedParts, zonedToUtcIso } from './zoned-time';
 
 describe('zoned-time', () => {
   it('converts branch wall clock to UTC and back', () => {
@@ -22,5 +22,13 @@ describe('zoned-time', () => {
     expect(addDaysToDateString('2026-03-01', -1)).toBe('2026-02-28');
     expect(addMinutesToTime('19:00', 120)).toBe('21:00');
     expect(addMinutesToTime('23:00', 120)).toBe('23:59');
+  });
+
+  it('turns an inclusive date range into UTC instants of the branch day bounds', () => {
+    expect(dateRangeToUtc('2026-11-10', '2026-11-10', 'Asia/Tashkent')).toEqual({
+      from: '2026-11-09T19:00:00.000Z',
+      to: '2026-11-10T19:00:00.000Z',
+    });
+    expect(dateRangeToUtc(undefined, '')).toEqual({ from: undefined, to: undefined });
   });
 });

@@ -2,9 +2,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ChefHat } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useKitchenStations } from '@/entities/kitchen-station/kitchen-station.queries';
 import {
   kitchenTicketKeys,
-  useKitchenStations,
   useKitchenTickets,
   useTicketAction,
   useTicketItemAction,

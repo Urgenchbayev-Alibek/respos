@@ -26,7 +26,9 @@
     "completedAt": "Yakunlangan",
     "expected": "Kutilgan",
     "counted": "Haqiqiy",
-    "difference": "Farq"
+    "difference": "Farq",
+    "lineCount": "Pozitsiyalar",
+    "comment": "Izoh"
   },
   "fields": {
     "ingredient": "Ingredient",

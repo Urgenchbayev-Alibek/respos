@@ -39,7 +39,6 @@ export const ENDPOINTS = {
     one: (reservationId: string) => `/reservations/${id(reservationId)}`,
     action: (reservationId: string, action: 'confirm' | 'seat' | 'complete' | 'cancel' | 'no-show') =>
       `/reservations/${id(reservationId)}/${action}`,
-    availability: '/reservations/availability',
   },
   kitchenStations: { list: '/kitchen-stations', one: (stationId: string) => `/kitchen-stations/${id(stationId)}` },
   menu: {

@@ -26,7 +26,9 @@
     "completedAt": "Завершена",
     "expected": "Ожидается",
     "counted": "Факт",
-    "difference": "Разница"
+    "difference": "Разница",
+    "lineCount": "Позиций",
+    "comment": "Комментарий"
   },
   "fields": {
     "ingredient": "Ингредиент",

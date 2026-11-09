@@ -48,7 +48,7 @@ export function CategoriesReport({ period }: Props) {
     { key: 'revenue', header: t('sales.revenue'), align: 'right', cell: (row) => num(format.money(row.revenue)) },
   ];
   return (
-    <TableReport title={t('tabs.categories')} exportName="sales-by-category" period={period} query={query} columns={columns} getRowId={(row, i) => row.categoryId ?? `none-${i}`} />
+    <TableReport title={t('tabs.categories')} exportName="sales-by-category" period={period} query={query} columns={columns} getRowId={(row) => row.categoryId} />
   );
 }
 
@@ -60,6 +60,7 @@ export function PaymentMethodsReport({ period }: Props) {
     { key: 'method', header: t('columns.method'), cell: (row) => t(`method.${row.method}`, { defaultValue: row.method }) },
     { key: 'count', header: t('columns.count'), align: 'right', cell: (row) => num(format.number(row.count, 0)) },
     { key: 'amount', header: t('columns.amount'), align: 'right', cell: (row) => num(format.money(row.amount)) },
+    { key: 'refunded', header: t('columns.refunded'), align: 'right', hideOnMobile: true, cell: (row) => num(format.money(row.refundedAmount)) },
   ];
   return <TableReport title={t('tabs.payments')} exportName="payment-methods" period={period} query={query} columns={columns} getRowId={(row) => row.method} />;
 }
@@ -71,6 +72,7 @@ function useStockColumns(): DataTableColumn<StockBalanceRowDto>[] {
     { key: 'name', header: t('columns.ingredient'), cell: (row) => row.name },
     { key: 'qty', header: t('columns.balance'), align: 'right', cell: (row) => num(`${format.number(row.quantity)} ${row.unitCode}`) },
     { key: 'min', header: t('columns.minQuantity'), align: 'right', cell: (row) => num(`${format.number(row.minQuantity)} ${row.unitCode}`) },
+    { key: 'value', header: t('columns.stockValue'), align: 'right', hideOnMobile: true, cell: (row) => num(format.money(row.stockValue)) },
     {
       key: 'status',
       header: t('columns.status'),
@@ -105,10 +107,20 @@ export function MovementTotalsReport({ period }: Props) {
   const query = useMovementTotalsReport(period);
   const columns: DataTableColumn<MovementTotalDto>[] = [
     { key: 'type', header: t('columns.type'), cell: (row) => t(`stock:movementType.${row.type}`, { defaultValue: row.type }) },
-    { key: 'count', header: t('columns.count'), align: 'right', cell: (row) => num(format.number(row.count, 0)) },
-    { key: 'cost', header: t('columns.totalCost'), align: 'right', cell: (row) => num(format.money(row.totalCost)) },
+    { key: 'ingredient', header: t('columns.ingredient'), cell: (row) => row.ingredientName },
+    { key: 'qty', header: t('columns.quantity'), align: 'right', cell: (row) => num(`${format.number(row.quantity)} ${row.unitCode}`) },
+    { key: 'count', header: t('columns.count'), align: 'right', hideOnMobile: true, cell: (row) => num(format.number(row.count, 0)) },
   ];
-  return <TableReport title={t('tabs.movements')} exportName="stock-movements" period={period} query={query} columns={columns} getRowId={(row) => row.type} />;
+  return (
+    <TableReport
+      title={t('tabs.movements')}
+      exportName="stock-movements"
+      period={period}
+      query={query}
+      columns={columns}
+      getRowId={(row) => `${row.type}-${row.ingredientId}`}
+    />
+  );
 }
 
 export function CashShiftsReport({ period }: Props) {
@@ -120,6 +132,9 @@ export function CashShiftsReport({ period }: Props) {
     { key: 'closed', header: t('columns.closedAt'), hideOnMobile: true, cell: (row) => format.dateTime(row.closedAt) },
     { key: 'by', header: t('columns.cashier'), hideOnMobile: true, cell: (row) => row.openedByName ?? '—' },
     { key: 'status', header: t('columns.status'), cell: (row) => <StatusBadge domain="cashShift" status={row.status} /> },
+    { key: 'cash', header: t('columns.cashPayments'), align: 'right', hideOnMobile: true, cell: (row) => num(format.money(row.cashPayments)) },
+    { key: 'card', header: t('columns.cardPayments'), align: 'right', hideOnMobile: true, cell: (row) => num(format.money(row.cardPayments)) },
+    { key: 'refunds', header: t('columns.refunds'), align: 'right', hideOnMobile: true, cell: (row) => num(format.money(row.refunds)) },
     { key: 'expected', header: t('columns.expected'), align: 'right', cell: (row) => num(format.money(row.expectedCashAmount)) },
     { key: 'actual', header: t('columns.actual'), align: 'right', cell: (row) => num(format.money(row.actualCashAmount)) },
     {

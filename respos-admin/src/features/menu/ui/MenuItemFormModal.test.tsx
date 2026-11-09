@@ -9,7 +9,9 @@ import { makeAuth, makeUser, renderWithProviders } from '@/test/test-utils';
 import { MenuItemFormModal } from './MenuItemFormModal';
 
 const auth = makeAuth(makeUser({ permissions: [PERMISSIONS.menu.read, PERMISSIONS.menu.manage, PERMISSIONS.kitchen.read] }));
-const categories: MenuCategoryDto[] = [{ id: 'c1', name: 'Горячее', nameUz: null, sortOrder: 1, isActive: true }];
+const categories: MenuCategoryDto[] = [
+  { id: 'c1', name: 'Горячее', nameUz: null, sortOrder: 1, isActive: true, isArchived: false, itemCount: 1 },
+];
 
 function mockLookups() {
   server.use(
@@ -77,7 +79,7 @@ describe('MenuItemFormModal', () => {
       categoryId: 'c1',
       price: 38000,
       kitchenStationId: 'k1',
-      prepTimeMinutes: null,
+      prepTimeMinutes: 0,
       isAvailable: true,
       variants: [{ name: '1 порция', price: 38000, isDefault: true }],
       modifierGroupIds: ['g1'],
