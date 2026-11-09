@@ -130,7 +130,9 @@ Touch only your module's files. Nothing has to be registered centrally.
 `order.not_found`, `order.item_not_found`, `order.invalid_status_transition`, `order.has_payments`, `order.closed`, `order.nothing_to_send`,
 `order.cancel_reason_required`, `order.invalid_quantity`, `order.item_not_editable`, `order.invalid_discount`, `order.table_required`,
 `payment.invalid_amount`, `payment.exceeds_due`, `payment.invalid_refund_amount`, `stock.insufficient`,
-`reservation.invalid_period`, `reservation.time_conflict`. Hub errors: `tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`.
+`reservation.invalid_period`, `reservation.time_conflict`,
+`report.not_found`, `report.invalid_period`, `report.unsupported_format`, `feature.disabled`, `feature.not_found`, `notification.not_found`,
+`organization.slug_taken`, `plan.not_found`, `plan.code_taken`, `plan.invalid_features`, `demo_request.not_found`. Hub errors: `tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`.
 
 ## Known limitations
 
@@ -138,4 +140,6 @@ Touch only your module's files. Nothing has to be registered centrally.
 - `POST /users` returns `user.email_taken` for an e-mail that exists in another org; use invitations for existing people.
 - Two concurrent refreshes with the same cookie (two tabs) trigger reuse detection → sign-in again.
 - Idempotency records are written after the action commits (separate statement); `Payment.IdempotencyKey` (unique per org) is the DB safety net.
-- Break-glass platform access tokens and platform endpoints are not implemented yet (Platform module).
+- Break-glass: `POST /platform/organizations/{id}/access` issues a 30-min JWT with claim `tenant_access=read_only` (no refresh);
+  it gets only org `*.read` permissions, all branches, and GET/HEAD requests only. Every grant is audited (`platform.tenant_access.granted`).
+- Notifications fan out one row per recipient (`INotificationPublisher`); `IFeatureFlags`: org flag > global flag > plan feature.

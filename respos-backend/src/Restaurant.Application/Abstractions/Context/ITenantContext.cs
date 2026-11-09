@@ -12,6 +12,9 @@ public interface ITenantContext
     Guid? BranchId { get; }
     bool IsPlatformAdmin { get; }
 
+    /// <summary>Break-glass platform session for <see cref="OrganizationId"/>: read-only (only *.read permissions, GET requests).</summary>
+    bool IsReadOnlyTenantAccess { get; }
+
     /// <summary>Current user id or throws 401 <c>auth.unauthenticated</c>.</summary>
     Guid RequireUserId();
 

@@ -15,6 +15,9 @@ public sealed record AccessToken(string Token, DateTime ExpiresAt);
 public interface ITokenService
 {
     AccessToken CreateAccessToken(User user, Guid? organizationId);
+
+    /// <summary>Break-glass token: platform admin, read-only access to <paramref name="organizationId"/>, no refresh token.</summary>
+    AccessToken CreateTenantAccessToken(User user, Guid organizationId, TimeSpan lifetime);
 }
 
 /// <summary>Opaque random tokens (refresh, reset, invitation). Only <see cref="Hash"/> is persisted.</summary>

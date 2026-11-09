@@ -31,7 +31,7 @@ public sealed class PermissionAuthorizationHandler(IPermissionService permission
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
-        if (tenant.UserId is not { } userId)
+        if (tenant.UserId is not { } userId || IsWriteDuringReadOnlyAccess(context))
         {
             return;
         }
@@ -42,4 +42,10 @@ public sealed class PermissionAuthorizationHandler(IPermissionService permission
             context.Succeed(requirement);
         }
     }
+
+    /// <summary>Break-glass sessions are read-only: only GET/HEAD requests are authorized.</summary>
+    private bool IsWriteDuringReadOnlyAccess(AuthorizationHandlerContext context) =>
+        tenant.IsReadOnlyTenantAccess
+        && context.Resource is HttpContext http
+        && !(HttpMethods.IsGet(http.Request.Method) || HttpMethods.IsHead(http.Request.Method));
 }

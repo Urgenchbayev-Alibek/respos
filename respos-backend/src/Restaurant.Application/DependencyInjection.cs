@@ -2,9 +2,12 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurant.Application.Abstractions.Events;
+using Restaurant.Application.Abstractions.Notifications;
 using Restaurant.Application.Abstractions.Security;
 using Restaurant.Application.Common.Handlers;
 using Restaurant.Application.Common.Security;
+using Restaurant.Application.Features.Notifications.Common;
+using Restaurant.Application.Features.Platform.FeatureFlags;
 
 namespace Restaurant.Application;
 
@@ -25,6 +28,8 @@ public static class DependencyInjection
 
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IBranchAccessService, BranchAccessService>();
+        services.AddScoped<INotificationPublisher, NotificationPublisher>();
+        services.AddScoped<IFeatureFlags, FeatureFlagService>();
         return services;
     }
 
