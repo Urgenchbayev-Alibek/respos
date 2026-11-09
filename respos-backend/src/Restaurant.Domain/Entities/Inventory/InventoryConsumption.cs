@@ -14,7 +14,7 @@ public class InventoryConsumption : Entity, IBranchScoped
 }
 
 /// <summary>Inventarization document; completing it creates inventory_count adjustments.</summary>
-public class InventoryCount : AuditableEntity, IBranchScoped
+public partial class InventoryCount : AuditableEntity, IBranchScoped
 {
     public Guid OrganizationId { get; set; }
     public Guid BranchId { get; set; }
