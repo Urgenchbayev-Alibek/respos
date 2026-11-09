@@ -1602,7 +1602,6 @@ namespace Restaurant.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Restaurant.Domain.Entities.Kitchen.KitchenTicketItem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -2243,7 +2242,6 @@ namespace Restaurant.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Restaurant.Domain.Entities.Orders.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -2334,7 +2332,6 @@ namespace Restaurant.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Restaurant.Domain.Entities.Orders.OrderItemModifier", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -2372,7 +2369,6 @@ namespace Restaurant.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Restaurant.Domain.Entities.Orders.OrderStatusHistory", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
