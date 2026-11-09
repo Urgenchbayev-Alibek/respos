@@ -1,0 +1,35 @@
+.wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  cursor: pointer;
+  min-height: 24px;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+  cursor: inherit;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  color: var(--color-text);
+}
+
+.description {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}

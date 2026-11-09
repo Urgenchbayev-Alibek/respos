@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "search": "Qidirish",
+    "close": "Yopish",
+    "cancel": "Bekor qilish",
+    "confirm": "Tasdiqlash",
+    "retry": "Qayta urinish",
+    "save": "Saqlash",
+    "delete": "Oʻchirish"
+  },
+  "fields": {
+    "reason": "Sabab"
+  },
+  "states": {
+    "loading": "Yuklanmoqda…",
+    "errorTitle": "Maʼlumotlarni yuklab boʻlmadi",
+    "correlationId": "Yordam uchun kod: {{id}}",
+    "emptyTitle": "Hozircha boʻsh"
+  },
+  "pagination": {
+    "label": "Sahifalar",
+    "summary": "{{from}}–{{to}} / {{total}}",
+    "previous": "Oldingi sahifa",
+    "next": "Keyingi sahifa",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "demo": {
+    "demo": "Demo",
+    "notConnected": "Ulanmagan"
+  },
+  "comingSoon": {
+    "title": "Boʻlim ishlab chiqilmoqda",
+    "description": "Bu boʻlim keyingi versiyalarda paydo boʻladi. Hozircha bu vaqtinchalik sahifa."
+  },
+  "languages": {
+    "ru": "Русский",
+    "uz": "Oʻzbekcha",
+    "en": "English"
+  }
+}

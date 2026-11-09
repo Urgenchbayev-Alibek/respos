@@ -1,0 +1,53 @@
+{
+  "title": "Branches",
+  "subtitle": "Locations of your business and their settings",
+  "create": "Add branch",
+  "empty": "No branches yet",
+  "active": "Active",
+  "inactive": "Inactive",
+  "backToBranches": "All branches",
+  "columns": {
+    "name": "Name",
+    "address": "Address",
+    "phone": "Phone",
+    "timezone": "Time zone",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "actions": {
+    "edit": "Edit",
+    "settings": "Branch settings",
+    "deactivate": "Deactivate",
+    "menu": "Actions: {{name}}"
+  },
+  "toast": {
+    "created": "Branch created",
+    "updated": "Branch saved",
+    "deactivated": "Branch deactivated",
+    "deactivateFailed": "Could not deactivate branch"
+  },
+  "confirmDeactivateTitle": "Deactivate branch?",
+  "confirmDeactivateMessage": "Branch “{{name}}” will become unavailable. Data is kept.",
+  "form": {
+    "createTitle": "New branch",
+    "editTitle": "Edit branch"
+  },
+  "fields": {
+    "name": "Name",
+    "address": "Address",
+    "phone": "Phone",
+    "timezone": "Time zone"
+  },
+  "settings": {
+    "title": "Branch settings",
+    "serviceCharge": "Service charge, %",
+    "tax": "Tax, %",
+    "percentHint": "Applied to the amount after discount",
+    "taxHint": "Added on top; 0% by default",
+    "allowNegativeStock": "Allow negative stock for manual operations",
+    "allowNegativeStockHint": "When off, write-offs larger than the balance are rejected.",
+    "receiptFooter": "Pre-check footer",
+    "receiptFooterHint": "E.g. “Thank you for visiting!”. The pre-check is not a fiscal receipt.",
+    "saved": "Branch settings saved"
+  }
+}

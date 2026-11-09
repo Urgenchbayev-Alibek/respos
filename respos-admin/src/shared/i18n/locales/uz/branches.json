@@ -1,0 +1,53 @@
+{
+  "title": "Filiallar",
+  "subtitle": "Tarmogʻingiz nuqtalari va ularning sozlamalari",
+  "create": "Filial qoʻshish",
+  "empty": "Hozircha filiallar yoʻq",
+  "active": "Faol",
+  "inactive": "Nofaol",
+  "backToBranches": "Barcha filiallar",
+  "columns": {
+    "name": "Nomi",
+    "address": "Manzil",
+    "phone": "Telefon",
+    "timezone": "Vaqt mintaqasi",
+    "status": "Holat",
+    "actions": "Amallar"
+  },
+  "actions": {
+    "edit": "Tahrirlash",
+    "settings": "Filial sozlamalari",
+    "deactivate": "Faolsizlantirish",
+    "menu": "Amallar: {{name}}"
+  },
+  "toast": {
+    "created": "Filial yaratildi",
+    "updated": "Filial saqlandi",
+    "deactivated": "Filial faolsizlantirildi",
+    "deactivateFailed": "Filialni faolsizlantirib boʻlmadi"
+  },
+  "confirmDeactivateTitle": "Filialni faolsizlantirasizmi?",
+  "confirmDeactivateMessage": "«{{name}}» filiali ish uchun mavjud boʻlmaydi. Maʼlumotlar saqlanadi.",
+  "form": {
+    "createTitle": "Yangi filial",
+    "editTitle": "Filialni tahrirlash"
+  },
+  "fields": {
+    "name": "Nomi",
+    "address": "Manzil",
+    "phone": "Telefon",
+    "timezone": "Vaqt mintaqasi"
+  },
+  "settings": {
+    "title": "Filial sozlamalari",
+    "serviceCharge": "Xizmat haqi, %",
+    "tax": "Soliq, %",
+    "percentHint": "Chegirmadan keyingi summaga hisoblanadi",
+    "taxHint": "Ustiga qoʻshiladi; standart 0%",
+    "allowNegativeStock": "Qoʻlda bajariladigan amallarda manfiy qoldiqqa ruxsat berish",
+    "allowNegativeStockHint": "Oʻchirilgan boʻlsa, qoldiqdan koʻp hisobdan chiqarish rad etiladi.",
+    "receiptFooter": "Oldindan chek pastki matni",
+    "receiptFooterHint": "Masalan: «Tashrifingiz uchun rahmat!». Oldindan chek fiskal chek emas.",
+    "saved": "Filial sozlamalari saqlandi"
+  }
+}

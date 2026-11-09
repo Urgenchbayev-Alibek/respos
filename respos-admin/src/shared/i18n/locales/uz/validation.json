@@ -1,0 +1,13 @@
+{
+  "required": "Majburiy maydon",
+  "email": "Toʻgʻri email kiriting",
+  "passwordPolicy": "Kamida 8 belgi, kamida bitta harf va bitta raqam",
+  "passwordsMismatch": "Parollar mos kelmadi",
+  "phone": "Toʻgʻri telefon raqamini kiriting",
+  "percent": "0 dan 100 gacha qiymat",
+  "positive": "Noldan katta boʻlishi kerak",
+  "nonNegative": "Manfiy boʻlishi mumkin emas",
+  "moneyPrecision": "Verguldan keyin koʻpi bilan 2 ta raqam",
+  "maxLength": "Qiymat juda uzun",
+  "selectAtLeastOne": "Kamida bittasini tanlang"
+}

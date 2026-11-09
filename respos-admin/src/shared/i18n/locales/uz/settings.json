@@ -1,0 +1,19 @@
+{
+  "title": "Sozlamalar",
+  "subtitle": "Tashkilot va filiallar",
+  "organization": {
+    "title": "Tashkilot",
+    "name": "Nomi",
+    "slug": "Identifikator",
+    "slugHint": "Manzillarda ishlatiladi; yordam xizmati orqali oʻzgartiriladi",
+    "currency": "Valyuta",
+    "currencyHint": "Barcha summalarda ishlatiladi",
+    "defaultLanguage": "Standart til",
+    "saved": "Tashkilot sozlamalari saqlandi",
+    "demoHint": "Sinov maʼlumotlari bilan demo tashkilot"
+  },
+  "branchSettings": {
+    "title": "Filial sozlamalari",
+    "hint": "Xizmat haqi, soliq, ombor, oldindan chek"
+  }
+}

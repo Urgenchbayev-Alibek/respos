@@ -1,0 +1,13 @@
+{
+  "required": "Required field",
+  "email": "Enter a valid email",
+  "passwordPolicy": "At least 8 characters, one letter and one digit",
+  "passwordsMismatch": "Passwords do not match",
+  "phone": "Enter a valid phone number",
+  "percent": "Value from 0 to 100",
+  "positive": "Must be greater than zero",
+  "nonNegative": "Cannot be negative",
+  "moneyPrecision": "At most 2 decimal places",
+  "maxLength": "Value is too long",
+  "selectAtLeastOne": "Select at least one option"
+}

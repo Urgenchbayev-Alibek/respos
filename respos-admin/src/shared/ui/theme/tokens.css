@@ -1,0 +1,131 @@
+/* RestaurantOS design tokens — shared with landing + docs/design. Change values here only. */
+:root {
+  /* Brand (saffron) */
+  --color-primary: #e85d2a;
+  --color-primary-hover: #cf4d1d;
+  --color-primary-subtle: #fdeee7;
+  /* AA-safe fill for white text (#E85D2A + white ≈ 3.5:1 fails AA). Use #E85D2A for accents/borders/icons/large headings. */
+  --color-primary-strong: #c2410c;
+  --color-primary-strong-hover: #9a3412;
+  --color-on-primary: #ffffff;
+
+  /* Neutral slate */
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748b;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f5f9;
+  --color-overlay: rgb(15 23 42 / 0.5);
+
+  /* Semantic */
+  --color-success: #16a34a;
+  --color-success-subtle: #dcfce7;
+  --color-warning: #d97706;
+  --color-warning-subtle: #fef3c7;
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --color-danger-subtle: #fee2e2;
+  --color-info: #2563eb;
+  --color-info-subtle: #dbeafe;
+  --color-neutral-subtle: #f1f5f9;
+
+  /* Status tones (see shared/constants/statuses.ts) */
+  --tone-neutral-fg: #334155;
+  --tone-neutral-bg: var(--color-neutral-subtle);
+  --tone-info-fg: #1d4ed8;
+  --tone-info-bg: var(--color-info-subtle);
+  --tone-success-fg: #15803d;
+  --tone-success-bg: var(--color-success-subtle);
+  --tone-warning-fg: #b45309;
+  --tone-warning-bg: var(--color-warning-subtle);
+  --tone-danger-fg: #b91c1c;
+  --tone-danger-bg: var(--color-danger-subtle);
+  --tone-primary-fg: #c2410c;
+  --tone-primary-bg: var(--color-primary-subtle);
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-size-base: 14px;
+  --font-size-xs: 0.786em;
+  --font-size-sm: 0.857em;
+  --font-size-md: 1em;
+  --font-size-lg: 1.143em;
+  --font-size-xl: 1.429em;
+  --font-size-2xl: 1.714em;
+  --font-size-3xl: 2.286em;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height: 1.5;
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Radius & shadow */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.08);
+  --shadow-md: 0 4px 12px rgb(15 23 42 / 0.1), 0 2px 4px rgb(15 23 42 / 0.06);
+  --focus-ring: 0 0 0 3px rgb(232 93 42 / 0.35);
+
+  /* Sizing */
+  --control-height: 36px;
+  --touch-target: 44px;
+  --sidebar-width: 248px;
+  --sidebar-collapsed-width: 64px;
+  --topbar-height: 56px;
+  --z-dropdown: 30;
+  --z-drawer: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --transition: 150ms ease;
+}
+
+/* Workspace density: waiter/cashier/stock are touch-first (≥ 44px controls). */
+[data-workspace='waiter'],
+[data-workspace='cashier'],
+[data-workspace='stock'] {
+  --font-size-base: 16px;
+  --control-height: var(--touch-target);
+}
+
+/* KDS: dark theme, huge type, touch targets. */
+[data-theme='kds'] {
+  --font-size-base: 20px;
+  --control-height: 52px;
+  --color-bg: #0b1220;
+  --color-surface: #111a2e;
+  --color-surface-muted: #18233b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-text-subtle: #7c8aa3;
+  --color-border: #1f2a44;
+  --color-border-strong: #2c3a5a;
+  --tone-neutral-fg: #cbd5e1;
+  --tone-neutral-bg: #1e293b;
+  --tone-info-fg: #93c5fd;
+  --tone-info-bg: #1e3a8a;
+  --tone-success-fg: #86efac;
+  --tone-success-bg: #14532d;
+  --tone-warning-fg: #fcd34d;
+  --tone-warning-bg: #78350f;
+  --tone-danger-fg: #fca5a5;
+  --tone-danger-bg: #7f1d1d;
+  --tone-primary-fg: #fdba74;
+  --tone-primary-bg: #7c2d12;
+  color-scheme: dark;
+}

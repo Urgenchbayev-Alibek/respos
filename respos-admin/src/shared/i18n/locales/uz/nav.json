@@ -1,0 +1,82 @@
+{
+  "admin": {
+    "label": "Boshqaruv paneli boʻlimlari",
+    "dashboard": "Bosh sahifa",
+    "branches": "Filiallar",
+    "users": "Xodimlar va rollar",
+    "tables": "Zallar va stollar",
+    "reservations": "Bronlar",
+    "menu": "Menyu",
+    "kitchenStations": "Oshxona stansiyalari",
+    "orders": "Buyurtmalar",
+    "inventory": "Ombor",
+    "recipes": "Retseptlar",
+    "suppliers": "Yetkazib beruvchilar",
+    "purchases": "Xaridlar",
+    "payments": "Toʻlovlar",
+    "cashShifts": "Kassa smenalari",
+    "reports": "Hisobotlar",
+    "notifications": "Bildirishnomalar",
+    "auditLogs": "Audit jurnali",
+    "settings": "Sozlamalar"
+  },
+  "waiter": {
+    "tables": "Stollar",
+    "orders": "Buyurtmalar",
+    "reservations": "Bronlar"
+  },
+  "cashier": {
+    "orders": "Toʻlovga",
+    "shift": "Smena",
+    "payments": "Toʻlovlar"
+  },
+  "stock": {
+    "inventory": "Qoldiqlar",
+    "purchases": "Xaridlar",
+    "counts": "Inventarizatsiya"
+  },
+  "platform": {
+    "organizations": "Tashkilotlar",
+    "plans": "Tariflar",
+    "featureFlags": "Feature flags",
+    "system": "Tizim",
+    "demoRequests": "Demo arizalar"
+  },
+  "workspaces": {
+    "admin": "Boshqaruv paneli",
+    "waiter": "Ofitsiant",
+    "kitchen": "Oshxona (KDS)",
+    "cashier": "Kassa",
+    "stock": "Ombor",
+    "platform": "Platforma"
+  },
+  "topbar": {
+    "branch": "Filial",
+    "switchBranch": "Filialni almashtirish",
+    "organization": "Tashkilot",
+    "switchOrganization": "Tashkilotni almashtirish",
+    "switchOrgFailed": "Tashkilotni almashtirib boʻlmadi",
+    "language": "Interfeys tili",
+    "profile": "Profil",
+    "logout": "Chiqish",
+    "userMenu": "Foydalanuvchi menyusi",
+    "workspace": "Ish joyi",
+    "switchWorkspace": "Ish joyini almashtirish",
+    "notifications": "Bildirishnomalar",
+    "expandSidebar": "Menyuni ochish",
+    "collapseSidebar": "Menyuni yigʻish",
+    "openMenu": "Menyuni ochish"
+  },
+  "realtime": {
+    "disconnected": "Aloqa yoʻq",
+    "connecting": "Ulanmoqda…",
+    "connected": "Onlayn",
+    "reconnecting": "Qayta ulanmoqda…"
+  },
+  "kitchen": {
+    "fullscreen": "Toʻliq ekran",
+    "exitFullscreen": "Toʻliq ekrandan chiqish"
+  },
+  "skipToContent": "Asosiy qismga oʻtish",
+  "sectionNav": "Boʻlim navigatsiyasi"
+}

@@ -1,0 +1,68 @@
+{
+  "order": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "in_progress": "In progress",
+    "partially_ready": "Partially ready",
+    "ready": "Ready",
+    "served": "Served",
+    "paid": "Paid",
+    "cancelled": "Cancelled"
+  },
+  "orderItem": {
+    "new": "New",
+    "sent": "Sent",
+    "preparing": "Preparing",
+    "ready": "Ready",
+    "served": "Served",
+    "cancelled": "Cancelled"
+  },
+  "table": {
+    "available": "Available",
+    "occupied": "Occupied",
+    "reserved": "Reserved",
+    "unavailable": "Unavailable"
+  },
+  "ticket": {
+    "new": "New",
+    "in_progress": "In progress",
+    "ready": "Ready",
+    "served": "Served",
+    "cancelled": "Cancelled"
+  },
+  "reservation": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "seated": "Seated",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "no_show": "No-show"
+  },
+  "user": {
+    "active": "Active",
+    "invited": "Invited",
+    "blocked": "Blocked",
+    "deactivated": "Deactivated"
+  },
+  "purchase": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "partially_received": "Partially received",
+    "received": "Received",
+    "cancelled": "Cancelled"
+  },
+  "payment": {
+    "completed": "Completed",
+    "refunded": "Refunded",
+    "partially_refunded": "Partially refunded"
+  },
+  "cashShift": {
+    "open": "Shift open",
+    "closed": "Shift closed"
+  },
+  "organization": {
+    "active": "Active",
+    "suspended": "Suspended",
+    "closed": "Closed"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Profile",
+  "language": {
+    "title": "Interface language",
+    "label": "Language",
+    "hint": "Saved on this device"
+  },
+  "password": {
+    "title": "Change password",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Repeat new password",
+    "submit": "Change password",
+    "changed": "Password changed"
+  }
+}

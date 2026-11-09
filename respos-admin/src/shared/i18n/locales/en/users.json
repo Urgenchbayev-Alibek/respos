@@ -1,0 +1,79 @@
+{
+  "title": "Users",
+  "subtitle": "Accounts, roles and branch access",
+  "searchPlaceholder": "Name, email or phone",
+  "empty": "No users found",
+  "allBranchesOrNone": "All branches / none",
+  "tabs": {
+    "label": "Users & roles",
+    "users": "Users",
+    "roles": "Roles"
+  },
+  "columns": {
+    "name": "User",
+    "roles": "Roles",
+    "branches": "Branches",
+    "status": "Status",
+    "lastLogin": "Last sign-in",
+    "actions": "Actions"
+  },
+  "filters": {
+    "allStatuses": "All statuses",
+    "allRoles": "All roles",
+    "allBranches": "All branches"
+  },
+  "actions": {
+    "create": "Create",
+    "invite": "Invite",
+    "edit": "Edit",
+    "block": "Block",
+    "unblock": "Unblock",
+    "deactivate": "Deactivate",
+    "menu": "Actions: {{name}}"
+  },
+  "confirm": {
+    "blockTitle": "Block user?",
+    "blockMessage": "{{name}} will not be able to sign in until unblocked.",
+    "unblockTitle": "Unblock user?",
+    "unblockMessage": "{{name}} will be able to sign in again.",
+    "deactivateTitle": "Deactivate user?",
+    "deactivateMessage": "{{name}} will lose access. Activity history is kept."
+  },
+  "toast": {
+    "created": "User created",
+    "updated": "Changes saved",
+    "block": "User blocked",
+    "unblock": "User unblocked",
+    "deactivate": "User deactivated",
+    "actionFailed": "Action failed"
+  },
+  "form": {
+    "title": {
+      "invite": "Invite user",
+      "create": "Create user",
+      "edit": "Edit user"
+    },
+    "submit": {
+      "invite": "Create invitation",
+      "create": "Create",
+      "edit": "Save"
+    },
+    "branchesHint": "Owner and admin roles have access to all branches automatically."
+  },
+  "fields": {
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "tempPassword": "Temporary password",
+    "roles": "Roles",
+    "branches": "Branch access"
+  },
+  "invite": {
+    "created": "Invitation created.",
+    "linkHint": "Email sending is not connected yet — share the link with the user yourself.",
+    "emailStub": "Email provider runs as a stub",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "copyFailed": "Could not copy"
+  }
+}

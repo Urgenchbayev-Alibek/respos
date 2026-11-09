@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "search": "Поиск",
+    "close": "Закрыть",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "retry": "Повторить",
+    "save": "Сохранить",
+    "delete": "Удалить"
+  },
+  "fields": {
+    "reason": "Причина"
+  },
+  "states": {
+    "loading": "Загрузка…",
+    "errorTitle": "Не удалось загрузить данные",
+    "correlationId": "Код для поддержки: {{id}}",
+    "emptyTitle": "Здесь пока пусто"
+  },
+  "pagination": {
+    "label": "Страницы",
+    "summary": "{{from}}–{{to}} из {{total}}",
+    "previous": "Предыдущая страница",
+    "next": "Следующая страница",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "demo": {
+    "demo": "Демо",
+    "notConnected": "Не подключено"
+  },
+  "comingSoon": {
+    "title": "Раздел в разработке",
+    "description": "Этот раздел появится в ближайших версиях. Сейчас здесь заглушка."
+  },
+  "languages": {
+    "ru": "Русский",
+    "uz": "Oʻzbekcha",
+    "en": "English"
+  }
+}

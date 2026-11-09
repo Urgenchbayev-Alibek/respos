@@ -1,0 +1,67 @@
+{
+  "unknown": "Something went wrong. Please try again.",
+  "network": {
+    "error": "Cannot reach the server. Check your connection and retry."
+  },
+  "server": {
+    "error": "Server error. We are looking into it."
+  },
+  "auth": {
+    "unauthenticated": "Your session has expired. Please sign in again.",
+    "forbidden": "You do not have permission for this action.",
+    "invalid_credentials": "Wrong email or password.",
+    "account_locked": "Account temporarily locked after failed sign-in attempts.",
+    "account_blocked": "Account is blocked. Contact your administrator.",
+    "account_deactivated": "Account is deactivated.",
+    "invalid_token": "The link is invalid.",
+    "token_expired": "The link has expired.",
+    "invalid_current_password": "Current password is incorrect."
+  },
+  "rate_limit": {
+    "exceeded": "Too many attempts. Wait a minute and try again."
+  },
+  "resource": {
+    "not_found": "Record not found."
+  },
+  "validation": {
+    "failed": "Please check the highlighted fields."
+  },
+  "tenant": {
+    "branch_forbidden": "No access to the selected branch."
+  },
+  "plan": {
+    "limit_exceeded": "Plan limit reached."
+  },
+  "user": {
+    "cannot_deactivate_self": "You cannot deactivate yourself.",
+    "last_owner": "The last owner cannot be changed.",
+    "email_taken": "A user with this email already exists."
+  },
+  "role": {
+    "system_readonly": "System roles cannot be changed.",
+    "in_use": "The role is assigned to users."
+  },
+  "order": {
+    "invalid_status_transition": "Invalid order status change."
+  },
+  "reservation": {
+    "time_conflict": "The table is already reserved for this time."
+  },
+  "payment": {
+    "duplicate": "The payment is already registered."
+  },
+  "stock": {
+    "insufficient": "Insufficient stock."
+  },
+  "pages": {
+    "forbiddenTitle": "Access denied",
+    "forbiddenDescription": "Your role has no access to this section. Contact your administrator.",
+    "goHome": "Go home",
+    "switchAccount": "Sign in as another user",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The link may be outdated or the section has moved.",
+    "crashTitle": "An error occurred",
+    "crashDescription": "Reload the page. If it happens again, contact support.",
+    "reload": "Reload"
+  }
+}

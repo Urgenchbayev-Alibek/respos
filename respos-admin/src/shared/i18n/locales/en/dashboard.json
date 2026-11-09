@@ -1,0 +1,23 @@
+{
+  "title": "Dashboard",
+  "subtitle": "Today at “{{branch}}”",
+  "demoHint": "Demo data is shown",
+  "noBranchTitle": "No branch selected",
+  "noBranchDescription": "You have no access to any branch. Contact your administrator.",
+  "loadError": "Could not load the dashboard",
+  "salesToday": "Sales today",
+  "ordersToday": "Orders today",
+  "averageCheck": "Average check",
+  "activeOrders": "Active orders",
+  "tablesOccupied": "Tables occupied",
+  "tablesValue": "{{occupied}} of {{total}}",
+  "lowStock": "Low stock",
+  "lowStockLink": "Open inventory",
+  "topItems": "Top items",
+  "shift": "Cash shift",
+  "shiftOpened": "Opened by {{name}}, {{time}}",
+  "noShift": "No open shift",
+  "noTopItems": "No sales yet today",
+  "topItemQuantity_one": "{{count}} portion",
+  "topItemQuantity_other": "{{count}} portions"
+}

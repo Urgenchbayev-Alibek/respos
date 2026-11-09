@@ -1,0 +1,23 @@
+{
+  "title": "Bosh sahifa",
+  "subtitle": "Bugun «{{branch}}» filialida",
+  "demoHint": "Namoyish maʼlumotlari koʻrsatilmoqda",
+  "noBranchTitle": "Filial tanlanmagan",
+  "noBranchDescription": "Sizda hech bir filialga ruxsat yoʻq. Administratorga murojaat qiling.",
+  "loadError": "Bosh sahifani yuklab boʻlmadi",
+  "salesToday": "Bugungi savdo",
+  "ordersToday": "Bugungi buyurtmalar",
+  "averageCheck": "Oʻrtacha chek",
+  "activeOrders": "Faol buyurtmalar",
+  "tablesOccupied": "Band stollar",
+  "tablesValue": "{{occupied}} / {{total}}",
+  "lowStock": "Kam qoldiqlar",
+  "lowStockLink": "Omborni ochish",
+  "topItems": "Mashhur taomlar",
+  "shift": "Kassa smenasi",
+  "shiftOpened": "{{name}} ochdi, {{time}}",
+  "noShift": "Smena ochilmagan",
+  "noTopItems": "Bugun hali savdo boʻlmadi",
+  "topItemQuantity_one": "{{count}} porsiya",
+  "topItemQuantity_other": "{{count}} porsiya"
+}

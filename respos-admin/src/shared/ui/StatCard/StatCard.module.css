@@ -1,0 +1,64 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.label {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.icon {
+  display: inline-flex;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+}
+
+.icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.warning .icon {
+  background: var(--color-warning-subtle);
+  color: var(--color-warning);
+}
+
+.danger .icon {
+  background: var(--color-danger-subtle);
+  color: var(--color-danger);
+}
+
+.success .icon {
+  background: var(--color-success-subtle);
+  color: var(--color-success);
+}

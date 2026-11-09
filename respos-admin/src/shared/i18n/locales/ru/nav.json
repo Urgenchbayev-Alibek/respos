@@ -1,0 +1,82 @@
+{
+  "admin": {
+    "label": "Разделы админ-панели",
+    "dashboard": "Дашборд",
+    "branches": "Филиалы",
+    "users": "Сотрудники и роли",
+    "tables": "Залы и столы",
+    "reservations": "Бронирования",
+    "menu": "Меню",
+    "kitchenStations": "Кухонные станции",
+    "orders": "Заказы",
+    "inventory": "Склад",
+    "recipes": "Рецептуры",
+    "suppliers": "Поставщики",
+    "purchases": "Закупки",
+    "payments": "Платежи",
+    "cashShifts": "Кассовые смены",
+    "reports": "Отчёты",
+    "notifications": "Уведомления",
+    "auditLogs": "Журнал аудита",
+    "settings": "Настройки"
+  },
+  "waiter": {
+    "tables": "Столы",
+    "orders": "Заказы",
+    "reservations": "Брони"
+  },
+  "cashier": {
+    "orders": "К оплате",
+    "shift": "Смена",
+    "payments": "Платежи"
+  },
+  "stock": {
+    "inventory": "Остатки",
+    "purchases": "Закупки",
+    "counts": "Инвентаризация"
+  },
+  "platform": {
+    "organizations": "Организации",
+    "plans": "Тарифы",
+    "featureFlags": "Feature flags",
+    "system": "Система",
+    "demoRequests": "Заявки на демо"
+  },
+  "workspaces": {
+    "admin": "Админ-панель",
+    "waiter": "Официант",
+    "kitchen": "Кухня (KDS)",
+    "cashier": "Касса",
+    "stock": "Склад",
+    "platform": "Платформа"
+  },
+  "topbar": {
+    "branch": "Филиал",
+    "switchBranch": "Сменить филиал",
+    "organization": "Организация",
+    "switchOrganization": "Сменить организацию",
+    "switchOrgFailed": "Не удалось сменить организацию",
+    "language": "Язык интерфейса",
+    "profile": "Профиль",
+    "logout": "Выйти",
+    "userMenu": "Меню пользователя",
+    "workspace": "Рабочее место",
+    "switchWorkspace": "Сменить рабочее место",
+    "notifications": "Уведомления",
+    "expandSidebar": "Развернуть меню",
+    "collapseSidebar": "Свернуть меню",
+    "openMenu": "Открыть меню"
+  },
+  "realtime": {
+    "disconnected": "Нет связи",
+    "connecting": "Подключение…",
+    "connected": "Онлайн",
+    "reconnecting": "Переподключение…"
+  },
+  "kitchen": {
+    "fullscreen": "Полноэкранный режим",
+    "exitFullscreen": "Выйти из полноэкранного режима"
+  },
+  "skipToContent": "Перейти к содержимому",
+  "sectionNav": "Навигация раздела"
+}

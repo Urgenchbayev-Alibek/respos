@@ -1,0 +1,68 @@
+{
+  "order": {
+    "draft": "Qoralama",
+    "submitted": "Yuborildi",
+    "in_progress": "Tayyorlanmoqda",
+    "partially_ready": "Qisman tayyor",
+    "ready": "Tayyor",
+    "served": "Berildi",
+    "paid": "Toʻlandi",
+    "cancelled": "Bekor qilindi"
+  },
+  "orderItem": {
+    "new": "Yangi",
+    "sent": "Yuborildi",
+    "preparing": "Tayyorlanmoqda",
+    "ready": "Tayyor",
+    "served": "Berildi",
+    "cancelled": "Bekor qilindi"
+  },
+  "table": {
+    "available": "Boʻsh",
+    "occupied": "Band",
+    "reserved": "Bron qilingan",
+    "unavailable": "Mavjud emas"
+  },
+  "ticket": {
+    "new": "Yangi",
+    "in_progress": "Tayyorlanmoqda",
+    "ready": "Tayyor",
+    "served": "Berildi",
+    "cancelled": "Bekor qilindi"
+  },
+  "reservation": {
+    "pending": "Kutilmoqda",
+    "confirmed": "Tasdiqlandi",
+    "seated": "Mehmonlar stolda",
+    "completed": "Yakunlandi",
+    "cancelled": "Bekor qilindi",
+    "no_show": "Kelmadi"
+  },
+  "user": {
+    "active": "Faol",
+    "invited": "Taklif qilingan",
+    "blocked": "Bloklangan",
+    "deactivated": "Faolsizlantirilgan"
+  },
+  "purchase": {
+    "draft": "Qoralama",
+    "submitted": "Yuborildi",
+    "partially_received": "Qisman qabul qilindi",
+    "received": "Qabul qilindi",
+    "cancelled": "Bekor qilindi"
+  },
+  "payment": {
+    "completed": "Oʻtkazildi",
+    "refunded": "Qaytarildi",
+    "partially_refunded": "Qisman qaytarildi"
+  },
+  "cashShift": {
+    "open": "Smena ochiq",
+    "closed": "Smena yopiq"
+  },
+  "organization": {
+    "active": "Faol",
+    "suspended": "Toʻxtatilgan",
+    "closed": "Yopilgan"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "search": "Search",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "retry": "Retry",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "fields": {
+    "reason": "Reason"
+  },
+  "states": {
+    "loading": "Loading…",
+    "errorTitle": "Could not load data",
+    "correlationId": "Support code: {{id}}",
+    "emptyTitle": "Nothing here yet"
+  },
+  "pagination": {
+    "label": "Pages",
+    "summary": "{{from}}–{{to}} of {{total}}",
+    "previous": "Previous page",
+    "next": "Next page",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "demo": {
+    "demo": "Demo",
+    "notConnected": "Not connected"
+  },
+  "comingSoon": {
+    "title": "Section in progress",
+    "description": "This section is coming in an upcoming release. This is a placeholder."
+  },
+  "languages": {
+    "ru": "Русский",
+    "uz": "Oʻzbekcha",
+    "en": "English"
+  }
+}

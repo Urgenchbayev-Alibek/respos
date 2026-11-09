@@ -1,0 +1,16 @@
+{
+  "title": "Profil",
+  "language": {
+    "title": "Interfeys tili",
+    "label": "Til",
+    "hint": "Ushbu qurilmada saqlanadi"
+  },
+  "password": {
+    "title": "Parolni oʻzgartirish",
+    "current": "Joriy parol",
+    "new": "Yangi parol",
+    "confirm": "Yangi parolni takrorlang",
+    "submit": "Parolni oʻzgartirish",
+    "changed": "Parol oʻzgartirildi"
+  }
+}

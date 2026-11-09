@@ -1,0 +1,19 @@
+{
+  "title": "Settings",
+  "subtitle": "Organization and branches",
+  "organization": {
+    "title": "Organization",
+    "name": "Name",
+    "slug": "Identifier",
+    "slugHint": "Used in URLs; changed via support",
+    "currency": "Currency",
+    "currencyHint": "Used for all amounts",
+    "defaultLanguage": "Default language",
+    "saved": "Organization settings saved",
+    "demoHint": "Demo organization with test data"
+  },
+  "branchSettings": {
+    "title": "Branch settings",
+    "hint": "Service charge, tax, stock, pre-check"
+  }
+}

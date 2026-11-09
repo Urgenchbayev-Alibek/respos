@@ -1,0 +1,67 @@
+{
+  "unknown": "Xatolik yuz berdi. Qayta urinib koʻring.",
+  "network": {
+    "error": "Server bilan aloqa yoʻq. Internetni tekshirib, qayta urinib koʻring."
+  },
+  "server": {
+    "error": "Server xatosi. Muammoni oʻrganmoqdamiz."
+  },
+  "auth": {
+    "unauthenticated": "Sessiya tugadi. Qaytadan kiring.",
+    "forbidden": "Bu amal uchun huquqingiz yetarli emas.",
+    "invalid_credentials": "Email yoki parol notoʻgʻri.",
+    "account_locked": "Muvaffaqiyatsiz urinishlardan soʻng akkaunt vaqtincha bloklandi.",
+    "account_blocked": "Akkaunt bloklangan. Administratorga murojaat qiling.",
+    "account_deactivated": "Akkaunt faolsizlantirilgan.",
+    "invalid_token": "Havola yaroqsiz.",
+    "token_expired": "Havolaning muddati tugagan.",
+    "invalid_current_password": "Joriy parol notoʻgʻri."
+  },
+  "rate_limit": {
+    "exceeded": "Juda koʻp urinish. Bir daqiqa kutib, qayta urinib koʻring."
+  },
+  "resource": {
+    "not_found": "Yozuv topilmadi."
+  },
+  "validation": {
+    "failed": "Maydonlar toʻgʻri toʻldirilganini tekshiring."
+  },
+  "tenant": {
+    "branch_forbidden": "Tanlangan filialga ruxsat yoʻq."
+  },
+  "plan": {
+    "limit_exceeded": "Tarif limiti tugadi."
+  },
+  "user": {
+    "cannot_deactivate_self": "Oʻzingizni faolsizlantira olmaysiz.",
+    "last_owner": "Oxirgi egasini oʻzgartirib boʻlmaydi.",
+    "email_taken": "Bu email bilan foydalanuvchi allaqachon mavjud."
+  },
+  "role": {
+    "system_readonly": "Tizim rolini oʻzgartirib boʻlmaydi.",
+    "in_use": "Rol xodimlarga biriktirilgan."
+  },
+  "order": {
+    "invalid_status_transition": "Buyurtma holatini bunday oʻzgartirib boʻlmaydi."
+  },
+  "reservation": {
+    "time_conflict": "Stol bu vaqtga allaqachon bron qilingan."
+  },
+  "payment": {
+    "duplicate": "Toʻlov allaqachon roʻyxatga olingan."
+  },
+  "stock": {
+    "insufficient": "Omborda qoldiq yetarli emas."
+  },
+  "pages": {
+    "forbiddenTitle": "Ruxsat yoʻq",
+    "forbiddenDescription": "Rolingizda bu boʻlimga ruxsat yoʻq. Administratorga murojaat qiling.",
+    "goHome": "Bosh sahifaga",
+    "switchAccount": "Boshqa foydalanuvchi bilan kirish",
+    "notFoundTitle": "Sahifa topilmadi",
+    "notFoundDescription": "Havola eskirgan yoki boʻlim koʻchirilgan boʻlishi mumkin.",
+    "crashTitle": "Xatolik yuz berdi",
+    "crashDescription": "Sahifani yangilang. Xato takrorlansa, yordamga yozing.",
+    "reload": "Yangilash"
+  }
+}

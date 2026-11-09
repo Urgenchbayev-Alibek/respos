@@ -1,0 +1,79 @@
+{
+  "title": "Xodimlar",
+  "subtitle": "Hisoblar, rollar va filiallarga ruxsat",
+  "searchPlaceholder": "Ism, email yoki telefon",
+  "empty": "Xodimlar topilmadi",
+  "allBranchesOrNone": "Barcha filiallar / biriktirilmagan",
+  "tabs": {
+    "label": "Xodimlar va rollar",
+    "users": "Xodimlar",
+    "roles": "Rollar"
+  },
+  "columns": {
+    "name": "Xodim",
+    "roles": "Rollar",
+    "branches": "Filiallar",
+    "status": "Holat",
+    "lastLogin": "Oxirgi kirish",
+    "actions": "Amallar"
+  },
+  "filters": {
+    "allStatuses": "Barcha holatlar",
+    "allRoles": "Barcha rollar",
+    "allBranches": "Barcha filiallar"
+  },
+  "actions": {
+    "create": "Yaratish",
+    "invite": "Taklif qilish",
+    "edit": "Tahrirlash",
+    "block": "Bloklash",
+    "unblock": "Blokdan chiqarish",
+    "deactivate": "Faolsizlantirish",
+    "menu": "Amallar: {{name}}"
+  },
+  "confirm": {
+    "blockTitle": "Xodimni bloklaysizmi?",
+    "blockMessage": "{{name}} blokdan chiqarilmaguncha tizimga kira olmaydi.",
+    "unblockTitle": "Xodimni blokdan chiqarasizmi?",
+    "unblockMessage": "{{name}} yana tizimga kira oladi.",
+    "deactivateTitle": "Xodimni faolsizlantirasizmi?",
+    "deactivateMessage": "{{name}} ruxsatni yoʻqotadi. Amallar tarixi saqlanadi."
+  },
+  "toast": {
+    "created": "Xodim yaratildi",
+    "updated": "Oʻzgarishlar saqlandi",
+    "block": "Xodim bloklandi",
+    "unblock": "Xodim blokdan chiqarildi",
+    "deactivate": "Xodim faolsizlantirildi",
+    "actionFailed": "Amal bajarilmadi"
+  },
+  "form": {
+    "title": {
+      "invite": "Xodimni taklif qilish",
+      "create": "Xodim yaratish",
+      "edit": "Xodimni tahrirlash"
+    },
+    "submit": {
+      "invite": "Taklif yaratish",
+      "create": "Yaratish",
+      "edit": "Saqlash"
+    },
+    "branchesHint": "Ega va administrator barcha filiallarga avtomatik ruxsatga ega."
+  },
+  "fields": {
+    "fullName": "Ism va familiya",
+    "email": "Email",
+    "phone": "Telefon",
+    "tempPassword": "Vaqtinchalik parol",
+    "roles": "Rollar",
+    "branches": "Filiallarga ruxsat"
+  },
+  "invite": {
+    "created": "Taklif yaratildi.",
+    "linkHint": "Email yuborish hali ulanmagan — havolani xodimga oʻzingiz yuboring.",
+    "emailStub": "Email provayderi sinov rejimida",
+    "copy": "Havolani nusxalash",
+    "copied": "Havola nusxalandi",
+    "copyFailed": "Nusxalab boʻlmadi"
+  }
+}

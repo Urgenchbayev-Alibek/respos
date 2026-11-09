@@ -1,0 +1,82 @@
+{
+  "admin": {
+    "label": "Admin sections",
+    "dashboard": "Dashboard",
+    "branches": "Branches",
+    "users": "Users & Roles",
+    "tables": "Dining areas & tables",
+    "reservations": "Reservations",
+    "menu": "Menu",
+    "kitchenStations": "Kitchen stations",
+    "orders": "Orders",
+    "inventory": "Inventory",
+    "recipes": "Recipes",
+    "suppliers": "Suppliers",
+    "purchases": "Purchases",
+    "payments": "Payments",
+    "cashShifts": "Cash shifts",
+    "reports": "Reports",
+    "notifications": "Notifications",
+    "auditLogs": "Audit log",
+    "settings": "Settings"
+  },
+  "waiter": {
+    "tables": "Tables",
+    "orders": "Orders",
+    "reservations": "Reservations"
+  },
+  "cashier": {
+    "orders": "To pay",
+    "shift": "Shift",
+    "payments": "Payments"
+  },
+  "stock": {
+    "inventory": "Stock",
+    "purchases": "Purchases",
+    "counts": "Stock count"
+  },
+  "platform": {
+    "organizations": "Organizations",
+    "plans": "Plans",
+    "featureFlags": "Feature flags",
+    "system": "System",
+    "demoRequests": "Demo requests"
+  },
+  "workspaces": {
+    "admin": "Admin panel",
+    "waiter": "Waiter",
+    "kitchen": "Kitchen (KDS)",
+    "cashier": "Cashier",
+    "stock": "Stock",
+    "platform": "Platform"
+  },
+  "topbar": {
+    "branch": "Branch",
+    "switchBranch": "Switch branch",
+    "organization": "Organization",
+    "switchOrganization": "Switch organization",
+    "switchOrgFailed": "Could not switch organization",
+    "language": "Interface language",
+    "profile": "Profile",
+    "logout": "Log out",
+    "userMenu": "User menu",
+    "workspace": "Workspace",
+    "switchWorkspace": "Switch workspace",
+    "notifications": "Notifications",
+    "expandSidebar": "Expand menu",
+    "collapseSidebar": "Collapse menu",
+    "openMenu": "Open menu"
+  },
+  "realtime": {
+    "disconnected": "Offline",
+    "connecting": "Connecting…",
+    "connected": "Online",
+    "reconnecting": "Reconnecting…"
+  },
+  "kitchen": {
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen"
+  },
+  "skipToContent": "Skip to content",
+  "sectionNav": "Section navigation"
+}

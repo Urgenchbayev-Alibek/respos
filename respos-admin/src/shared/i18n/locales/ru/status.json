@@ -1,0 +1,68 @@
+{
+  "order": {
+    "draft": "Черновик",
+    "submitted": "Отправлен",
+    "in_progress": "Готовится",
+    "partially_ready": "Частично готов",
+    "ready": "Готов",
+    "served": "Подан",
+    "paid": "Оплачен",
+    "cancelled": "Отменён"
+  },
+  "orderItem": {
+    "new": "Новая",
+    "sent": "Отправлена",
+    "preparing": "Готовится",
+    "ready": "Готова",
+    "served": "Подана",
+    "cancelled": "Отменена"
+  },
+  "table": {
+    "available": "Свободен",
+    "occupied": "Занят",
+    "reserved": "Забронирован",
+    "unavailable": "Недоступен"
+  },
+  "ticket": {
+    "new": "Новый",
+    "in_progress": "Готовится",
+    "ready": "Готов",
+    "served": "Выдан",
+    "cancelled": "Отменён"
+  },
+  "reservation": {
+    "pending": "Ожидает",
+    "confirmed": "Подтверждена",
+    "seated": "Гости за столом",
+    "completed": "Завершена",
+    "cancelled": "Отменена",
+    "no_show": "Не пришли"
+  },
+  "user": {
+    "active": "Активен",
+    "invited": "Приглашён",
+    "blocked": "Заблокирован",
+    "deactivated": "Деактивирован"
+  },
+  "purchase": {
+    "draft": "Черновик",
+    "submitted": "Отправлена",
+    "partially_received": "Частично принята",
+    "received": "Принята",
+    "cancelled": "Отменена"
+  },
+  "payment": {
+    "completed": "Проведён",
+    "refunded": "Возвращён",
+    "partially_refunded": "Частичный возврат"
+  },
+  "cashShift": {
+    "open": "Смена открыта",
+    "closed": "Смена закрыта"
+  },
+  "organization": {
+    "active": "Активна",
+    "suspended": "Приостановлена",
+    "closed": "Закрыта"
+  }
+}
