@@ -117,7 +117,11 @@
     "users": "Пользователей",
     "ordersToday": "Заказов сегодня",
     "events": "Системные события",
-    "noEvents": "Событий нет"
+    "noEvents": "Событий нет",
+    "dbHealthy": "Работает",
+    "dbUnhealthy": "Недоступна: {{status}}",
+    "uptimeDays": "{{days}} д {{hours}} ч {{minutes}} мин",
+    "uptimeHours": "{{hours}} ч {{minutes}} мин"
   },
   "demo": {
     "title": "Заявки на демо",

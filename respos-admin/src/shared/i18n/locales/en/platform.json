@@ -117,7 +117,11 @@
     "users": "Users",
     "ordersToday": "Orders today",
     "events": "System events",
-    "noEvents": "No events"
+    "noEvents": "No events",
+    "dbHealthy": "Healthy",
+    "dbUnhealthy": "Unavailable: {{status}}",
+    "uptimeDays": "{{days}}d {{hours}}h {{minutes}}m",
+    "uptimeHours": "{{hours}}h {{minutes}}m"
   },
   "demo": {
     "title": "Demo requests",

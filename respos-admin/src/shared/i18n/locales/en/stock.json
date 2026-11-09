@@ -12,6 +12,7 @@
     "ingredient": "Ingredient",
     "category": "Category",
     "quantity": "Quantity",
+    "change": "Change",
     "minQuantity": "Minimum",
     "costPrice": "Cost price",
     "status": "Status",

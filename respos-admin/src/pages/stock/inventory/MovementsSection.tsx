@@ -58,7 +58,7 @@ export function MovementsSection() {
       },
       {
         key: 'quantity',
-        header: t('columns.quantity'),
+        header: t('columns.change'),
         align: 'right',
         cell: (row) => (
           <span className={row.quantity < 0 ? styles.negative : styles.num}>

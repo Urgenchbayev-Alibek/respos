@@ -90,6 +90,18 @@
   }
 
   .trigger {
+    flex-shrink: 1;
+    min-width: 0;
     max-width: 160px;
+  }
+
+  /* Phones: the coloured dot stays, the text is kept for screen readers only (topbar must fit 360px). */
+  .statusLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 }

@@ -66,3 +66,37 @@ Not measured: behaviour under concurrent load, over a real network, or with a Re
   500 on `POST /platform/organizations` (cross-tenant write rejected). `[PlatformScope]` clears the tenant for platform
   controllers (`PlatformScopeTests`).
 - Known noise: a refused `JoinBranch` (expected `HubException`) is logged by SignalR at `ERR` with a stack trace.
+
+# UI smoke in a real browser (Playwright)
+
+Folder: `scripts/ui-smoke/` (`@playwright/test` 1.64.1, Chromium only, sequential, trace + screenshot on failure).
+Runs against the real dev servers — API :5080 (Development seed), admin :5173, landing :5174. No mocks.
+
+```bash
+cd scripts/ui-smoke && npm install && npx playwright install chromium
+npx playwright test            # all specs; report: npx playwright show-report
+npm run typecheck
+# env: UI_ADMIN_URL, UI_LANDING_URL, UI_API_URL, UI_DEMO_PASSWORD; UI_SCREENSHOTS=0 skips doc screenshots,
+# UI_CRAWL_SHOTS=1 saves a full-page PNG of every crawled screen into test-results/
+```
+
+| Spec | Covers |
+|---|---|
+| `01-auth` | UI login for all 8 demo users → right workspace; reload restores the session from the httpOnly refresh cookie cross-port (5173 → 5080, CORS with credentials); wrong password; deep link → login; cook → admin = 403 page |
+| `02-crawl` | every screen of every workspace (42): no console errors, no unexpected 4xx/5xx or failed requests, no leaked i18n keys, no horizontal scroll, no screen stuck in loading |
+| `03-multitab` | two tabs of one session reloading concurrently stay signed in |
+| `10-admin` | dashboard numbers, users list + create, menu edit, floor plan, reservation create, orders drawer, inventory receipt movement, reports chart + tabs, audit log, notifications bell, settings save, RU → UZ → RU |
+| `20-order-flow` | waiter opens table → plov (variant + modifier) + lagman (modifier) → send; cook (2nd context) gets the ticket via SignalR without reload → start → ready; waiter gets the toast → serve all; cashier (opens shift if needed) pays the rest → paid; table free again; stockkeeper sees the sale consumption |
+| `30-platform-landing` | platform organizations + system page; landing home, demo form → 202 → success state; landing on a phone |
+| `40-mobile-logout` | waiter workspace at 390×844 (floor, orders, reservations, new order): no horizontal scroll; logout → reload stays on login |
+
+Sessions are reused between specs through `.auth/<role>.json` (git-ignored); the rotated refresh cookie is written back
+after each test, so one run logs every user in once (login limit 5/min per IP+e-mail). The demo form is limited to
+5 requests/hour per IP — more runs per hour make the landing test fail with 429.
+
+Bugs found and fixed by the first run (2026-11-10): floor plan rendered seeded pixel coordinates as grid cells (4 700 px
+horizontal scroll, tiles of different areas stacked); `/auth/refresh` limited per IP (20/min) — a full suite, or a
+restaurant's tablets behind one NAT reloading together, got 429 and were logged out (now per refresh cookie); waiter
+topbar overflowed a 390 px phone; reports period presets wrapped and the chart `<figure>` overflowed its card; platform
+system page showed a 40-char git SHA, `0h 16m`, raw `ok`; stock movement column "Остаток" for the change and English
+consumption reason "Order #N". Screenshots: `docs/design/assets/screenshots/`.

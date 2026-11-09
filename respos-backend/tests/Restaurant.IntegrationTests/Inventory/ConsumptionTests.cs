@@ -31,6 +31,7 @@ public sealed class ConsumptionTests(ApiFactory factory) : InventoryTestBase(fac
         consumption[0].Quantity.Should().Be(-0.4m); // 2 × 100 g (variant recipe) + 1 × 200 g (item recipe); cancelled/no-recipe skipped
         consumption[0].SourceType.Should().Be(StockMovementSource.Order);
         consumption[0].SourceId.Should().Be(order.Id);
+        consumption[0].Reason.Should().Be($"#{order.Number}"); // language-neutral, the UI localizes the source
         consumption[0].BalanceAfter.Should().Be(-0.1m); // sale may go negative even with AllowNegativeStock = false
         (await MovementsAsync(setup.Oil)).Should().ContainSingle(m => m.Quantity == -0.02m);
         (await BalanceAsync(setup.Org, setup.Rice)).Should().Be(-0.1m);

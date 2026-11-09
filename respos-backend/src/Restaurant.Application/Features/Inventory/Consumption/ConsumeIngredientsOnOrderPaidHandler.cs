@@ -71,7 +71,8 @@ public sealed class ConsumeIngredientsOnOrderPaidHandler(
                 new StockChange(order.OrganizationId, order.BranchId, ingredientId, StockMovementType.Consumption, -quantity, StockMovementSource.Order)
                 {
                     SourceId = order.Id,
-                    Reason = $"Order #{order.Number}",
+                    // Language-neutral: the UI shows the source ("Заказ") next to it.
+                    Reason = $"#{order.Number}",
                 },
                 allowNegative: true,
                 cancellationToken);

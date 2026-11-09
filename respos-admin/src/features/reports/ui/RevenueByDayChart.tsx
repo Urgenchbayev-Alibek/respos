@@ -38,7 +38,7 @@ function ChartTooltip({ active, payload }: TooltipProps<number, string>) {
  * accessible data-table view for screen readers / exact values.
  */
 export function RevenueByDayChart({ days }: { days: Day[] }) {
-  const { t } = useTranslation('reports');
+  const { t, i18n } = useTranslation('reports');
   const format = useFormatters();
   const [asTable, setAsTable] = useState(false);
   const columns: DataTableColumn<Day>[] = [
@@ -67,7 +67,7 @@ export function RevenueByDayChart({ days }: { days: Day[] }) {
                 tick={{ fill: AXIS_TEXT, fontSize: 12 }}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value: number) => new Intl.NumberFormat(undefined, { notation: 'compact' }).format(value)}
+                tickFormatter={(value: number) => new Intl.NumberFormat(i18n.language, { notation: 'compact' }).format(value)}
               />
               <Tooltip content={<ChartTooltip />} cursor={{ fill: 'var(--color-primary-subtle)' }} />
               <Bar dataKey="revenue" fill={BAR_FILL} radius={[4, 4, 0, 0]} maxBarSize={48} isAnimationActive={false} />

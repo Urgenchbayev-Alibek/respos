@@ -11,7 +11,7 @@ export function ConnectionStatus({ showLabel = true }: { showLabel?: boolean }) 
   return (
     <span className={styles.status} role="status" title={label}>
       <span className={clsx(styles.dot, styles[state])} aria-hidden="true" />
-      {showLabel ? label : <span className="visually-hidden">{label}</span>}
+      <span className={showLabel ? styles.statusLabel : 'visually-hidden'}>{label}</span>
     </span>
   );
 }

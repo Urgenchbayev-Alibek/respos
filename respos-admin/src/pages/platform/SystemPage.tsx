@@ -12,14 +12,20 @@ const SECONDS_PER_DAY = 86_400;
 const SECONDS_PER_HOUR = 3_600;
 const SECONDS_PER_MINUTE = 60;
 
-/** `uptime` is in seconds → `3d 4h 05m`. */
-function formatUptime(totalSeconds: number): string {
+/** `uptime` is in seconds → days / hours / minutes for the localized `system.uptime*` strings. */
+function splitUptime(totalSeconds: number): { days: number; hours: number; minutes: number } {
   const seconds = Math.max(0, Math.floor(totalSeconds));
-  const days = Math.floor(seconds / SECONDS_PER_DAY);
-  const hours = Math.floor((seconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR);
-  const minutes = Math.floor((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-  const hm = `${hours}h ${String(minutes).padStart(2, '0')}m`;
-  return days > 0 ? `${days}d ${hm}` : hm;
+  return {
+    days: Math.floor(seconds / SECONDS_PER_DAY),
+    hours: Math.floor((seconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR),
+    minutes: Math.floor((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE),
+  };
+}
+
+/** `1.0.0+<40-char git sha>` → `1.0.0+06d2d62` (full value stays in the tooltip). */
+function shortVersion(version: string): string {
+  const [base, build] = version.split('+');
+  return build ? `${base}+${build.slice(0, 7)}` : version;
 }
 
 /** Health/version/aggregates + platform system events (audit + integration errors). */
@@ -31,6 +37,7 @@ export function SystemPage() {
   const events = useSystemEvents({ page, pageSize: DEFAULT_PAGE_SIZE, sort: 'createdAt:desc' });
   const data = status.data;
   const dbOk = data ? HEALTHY.includes(data.dbStatus.toLowerCase()) : false;
+  const uptime = data ? splitUptime(data.uptime) : null;
 
   const columns: DataTableColumn<SystemEventDto>[] = [
     { key: 'time', header: t('columns.time'), cell: (row) => format.dateTime(row.createdAt) },
@@ -52,10 +59,10 @@ export function SystemPage() {
             label={t('system.db')}
             loading={!data}
             tone={data ? (dbOk ? 'success' : 'danger') : 'default'}
-            value={data && <StatusBadge tone={dbOk ? 'success' : 'danger'}>{data.dbStatus}</StatusBadge>}
+            value={data && <StatusBadge tone={dbOk ? 'success' : 'danger'}>{dbOk ? t('system.dbHealthy') : t('system.dbUnhealthy', { status: data.dbStatus })}</StatusBadge>}
           />
-          <StatCard label={t('system.version')} loading={!data} value={data?.version} hint={data?.environment} />
-          <StatCard label={t('system.uptime')} loading={!data} value={data ? formatUptime(data.uptime) : null} hint={data ? format.dateTime(data.startedAt) : undefined} />
+          <StatCard label={t('system.version')} loading={!data} value={data && <span title={data.version}>{shortVersion(data.version)}</span>} hint={data?.environment} />
+          <StatCard label={t('system.uptime')} loading={!data} value={uptime && t(uptime.days > 0 ? 'system.uptimeDays' : 'system.uptimeHours', uptime)} hint={data ? format.dateTime(data.startedAt) : undefined} />
           <StatCard label={t('system.organizations')} loading={!data} value={data?.organizationsCount} />
           <StatCard label={t('system.users')} loading={!data} value={data?.usersCount} />
           <StatCard label={t('system.ordersToday')} loading={!data} value={data?.ordersToday} />

@@ -18,6 +18,7 @@ public sealed class RateLimitingOptions
 public static class RateLimitingExtensions
 {
     public const string AuthPolicy = "auth";
+    public const string RefreshPolicy = "auth-refresh";
     public const string PublicDemoPolicy = "public-demo";
 
     public static IServiceCollection AddApiRateLimiting(this IServiceCollection services, IConfiguration configuration)
@@ -38,10 +39,27 @@ public static class RateLimitingExtensions
             options.AddPolicy(AuthPolicy, http => RateLimitPartition.GetFixedWindowLimiter(
                 ClientIp(http), _ => Window(settings.AuthPerMinute, TimeSpan.FromMinutes(1))));
 
+            // Refresh is limited per session, not per IP: all devices of a restaurant usually share one NAT address,
+            // and a power cut / Wi-Fi blip makes every tablet reload at once. Requests without a cookie fall back to IP.
+            options.AddPolicy(RefreshPolicy, http => RateLimitPartition.GetFixedWindowLimiter(
+                RefreshPartitionKey(http), _ => Window(settings.AuthPerMinute, TimeSpan.FromMinutes(1))));
+
             options.AddPolicy(PublicDemoPolicy, http => RateLimitPartition.GetFixedWindowLimiter(
                 ClientIp(http), _ => Window(settings.DemoRequestsPerHour, TimeSpan.FromHours(1))));
         });
         return services;
+    }
+
+    /// <summary>Hash of the refresh cookie (the raw token never becomes a dictionary key), or the client IP.</summary>
+    public static string RefreshPartitionKey(HttpContext http)
+    {
+        if (http.Request.Cookies.TryGetValue(Controllers.AuthController.RefreshCookieName, out var token) && !string.IsNullOrEmpty(token))
+        {
+            var hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(token));
+            return "rt:" + Convert.ToHexString(hash, 0, 16);
+        }
+
+        return "ip:" + ClientIp(http);
     }
 
     public static string ClientIp(HttpContext http) => http.Connection.RemoteIpAddress?.ToString() ?? "unknown";

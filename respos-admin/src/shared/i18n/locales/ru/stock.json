@@ -12,6 +12,7 @@
     "ingredient": "Ингредиент",
     "category": "Категория",
     "quantity": "Остаток",
+    "change": "Изменение",
     "minQuantity": "Минимум",
     "costPrice": "Себестоимость",
     "status": "Статус",

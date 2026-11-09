@@ -1,0 +1,17 @@
+{
+  "name": "respos-ui-smoke",
+  "private": true,
+  "type": "module",
+  "description": "Browser smoke tests (Playwright) for respos-admin + respos-landing against a real running API.",
+  "scripts": {
+    "install-browser": "playwright install chromium",
+    "smoke": "playwright test",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.10.2",
+    "typescript": "5.7.2"
+  }
+}

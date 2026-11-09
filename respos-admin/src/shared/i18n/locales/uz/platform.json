@@ -117,7 +117,11 @@
     "users": "Foydalanuvchilar",
     "ordersToday": "Bugungi buyurtmalar",
     "events": "Tizim hodisalari",
-    "noEvents": "Hodisalar yo‘q"
+    "noEvents": "Hodisalar yo‘q",
+    "dbHealthy": "Ishlayapti",
+    "dbUnhealthy": "Mavjud emas: {{status}}",
+    "uptimeDays": "{{days}} kun {{hours}} soat {{minutes}} daq",
+    "uptimeHours": "{{hours}} soat {{minutes}} daq"
   },
   "demo": {
     "title": "Demo so‘rovlari",

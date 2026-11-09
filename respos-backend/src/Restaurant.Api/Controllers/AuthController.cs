@@ -30,7 +30,7 @@ public sealed class AuthController(IOptions<AuthOptions> authOptions) : ApiContr
 
     [HttpPost("refresh")]
     [AllowAnonymous]
-    [EnableRateLimiting(RateLimitingExtensions.AuthPolicy)]
+    [EnableRateLimiting(RateLimitingExtensions.RefreshPolicy)]
     [ProducesResponseType<AuthResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Refresh([FromServices] RefreshHandler handler, CancellationToken ct)
     {
