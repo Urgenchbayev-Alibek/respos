@@ -1,0 +1,138 @@
+.ticket {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.warning {
+  border-color: var(--color-warning);
+}
+
+.danger {
+  border-color: var(--color-danger);
+}
+
+.highlight {
+  box-shadow: 0 0 0 4px var(--color-info);
+  animation: pulse 1.2s ease-in-out 3;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgb(37 99 235 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlight {
+    animation: none;
+  }
+}
+
+.done {
+  opacity: 0.85;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 800;
+}
+
+.timer {
+  font-size: 1.2em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.timer[data-level='warning'] {
+  color: var(--tone-warning-fg);
+}
+
+.timer[data-level='danger'] {
+  color: var(--tone-danger-fg);
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.8em;
+  color: var(--color-text-muted);
+}
+
+.newBadge {
+  display: inline-block;
+  margin-right: var(--space-2);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  background: var(--tone-info-bg);
+  color: var(--tone-info-fg);
+  font-weight: 700;
+}
+
+.items {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2);
+}
+
+.actions > :only-child {
+  grid-column: 1 / -1;
+}
+
+.btn {
+  min-height: 60px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 1.05em;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.start {
+  background: var(--color-info);
+}
+
+.ready {
+  background: var(--color-success);
+}
+
+.ghost {
+  min-height: 52px;
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.9em;
+  font-weight: 600;
+}

@@ -1,0 +1,24 @@
+.panel {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.meta {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.section {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--font-size-lg);
+}
+
+.back {
+  justify-self: start;
+}
+
+.success {
+  display: grid;
+  gap: var(--space-3);
+}

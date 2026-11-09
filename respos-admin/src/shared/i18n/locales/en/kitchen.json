@@ -1,0 +1,55 @@
+{
+  "title": "Kitchen tickets",
+  "empty": "No tickets",
+  "emptyServed": "No served tickets",
+  "columnEmpty": "Empty",
+  "actionFailed": "Could not change the status",
+  "soundUnavailable": "Sound is not available in this browser",
+  "columns": {
+    "new": "New",
+    "in_progress": "Cooking",
+    "ready": "Ready"
+  },
+  "ticket": {
+    "table": "Table {{number}}",
+    "takeaway": "Takeaway",
+    "aria": "Ticket #{{number}}, {{place}}",
+    "newBadge": "New",
+    "meta": "Waiter: {{waiter}} · Order #{{order}} · {{time}}",
+    "readyAt": "ready at {{time}}"
+  },
+  "timer": {
+    "label": "Waiting time",
+    "normal": "On time",
+    "warning": "Over 10 minutes",
+    "danger": "Over 20 minutes"
+  },
+  "actions": {
+    "start": "Start",
+    "ready": "Ready",
+    "served": "Served",
+    "recall": "Recall",
+    "byItem": "By item"
+  },
+  "itemActions": {
+    "start": "Start",
+    "ready": "Ready",
+    "startAria": "Start: {{name}}",
+    "readyAria": "Ready: {{name}}"
+  },
+  "toolbar": {
+    "stations": "Stations",
+    "allStations": "All stations",
+    "view": "Show",
+    "views": {
+      "active": "Active",
+      "served": "Served"
+    },
+    "soundOn": "Sound on",
+    "soundOff": "Sound off"
+  },
+  "offline": {
+    "disconnected": "No connection, data may be outdated. The list refreshes every 30 seconds.",
+    "reconnecting": "Connection lost. Reconnecting… The list will refresh automatically."
+  }
+}

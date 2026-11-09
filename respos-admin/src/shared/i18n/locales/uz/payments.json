@@ -1,0 +1,55 @@
+{
+  "title": "Toʻlovlar",
+  "subtitle": "Filial toʻlovlari tarixi va qaytarishlar.",
+  "empty": "Toʻlovlar topilmadi",
+  "manualProvider": "Qoʻlda belgilash (demo): haqiqiy toʻlov provayderi ulanmagan",
+  "columns": {
+    "createdAt": "Sana",
+    "order": "Buyurtma",
+    "method": "Usul",
+    "amount": "Summa",
+    "refunded": "Qaytarilgan",
+    "status": "Holat",
+    "cashier": "Kassir",
+    "actions": "Amallar"
+  },
+  "methods": {
+    "cash": "Naqd",
+    "card": "Karta",
+    "other": "Boshqa"
+  },
+  "filters": {
+    "from": "Sanadan",
+    "to": "Sanagacha",
+    "allMethods": "Barcha usullar",
+    "reset": "Filtrlarni tozalash"
+  },
+  "refund": {
+    "action": "Qaytarish",
+    "title": "Toʻlovni qaytarish",
+    "description": "Toʻlov {{amount}}, qaytarish mumkin {{refundable}}.",
+    "amount": "Qaytarish summasi",
+    "submit": "Qaytarishni rasmiylashtirish",
+    "success": "Qaytarildi: {{amount}}",
+    "exceedsRefundable": "Summa qaytarish mumkin boʻlgandan katta"
+  },
+  "shifts": {
+    "title": "Kassa smenalari",
+    "subtitle": "Ochilish, yopilish va naqd farqlari.",
+    "empty": "Smenalar topilmadi",
+    "allStatuses": "Barcha holatlar",
+    "detailTitle": "Kassa smenasi",
+    "openedLine": "Ochildi {{time}} · {{name}}",
+    "closedLine": "Yopildi {{time}} · {{name}}",
+    "columns": {
+      "openedAt": "Ochildi",
+      "openedBy": "Kassir",
+      "status": "Holat",
+      "opening": "Ochilish",
+      "expected": "Kutilgan",
+      "actual": "Haqiqatda",
+      "difference": "Farq",
+      "closedAt": "Yopildi"
+    }
+  }
+}

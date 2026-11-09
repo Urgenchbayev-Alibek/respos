@@ -1,0 +1,55 @@
+{
+  "title": "Payments",
+  "subtitle": "Branch payment history and refunds.",
+  "empty": "No payments found",
+  "manualProvider": "Manual mark (demo): no real payment provider is connected",
+  "columns": {
+    "createdAt": "Date",
+    "order": "Order",
+    "method": "Method",
+    "amount": "Amount",
+    "refunded": "Refunded",
+    "status": "Status",
+    "cashier": "Cashier",
+    "actions": "Actions"
+  },
+  "methods": {
+    "cash": "Cash",
+    "card": "Card",
+    "other": "Other"
+  },
+  "filters": {
+    "from": "From",
+    "to": "To",
+    "allMethods": "All methods",
+    "reset": "Reset filters"
+  },
+  "refund": {
+    "action": "Refund",
+    "title": "Refund payment",
+    "description": "Payment {{amount}}, refundable {{refundable}}.",
+    "amount": "Refund amount",
+    "submit": "Refund",
+    "success": "Refunded: {{amount}}",
+    "exceedsRefundable": "Amount exceeds the refundable amount"
+  },
+  "shifts": {
+    "title": "Cash shifts",
+    "subtitle": "Openings, closings and cash differences.",
+    "empty": "No shifts found",
+    "allStatuses": "All statuses",
+    "detailTitle": "Cash shift",
+    "openedLine": "Opened {{time}} · {{name}}",
+    "closedLine": "Closed {{time}} · {{name}}",
+    "columns": {
+      "openedAt": "Opened",
+      "openedBy": "Cashier",
+      "status": "Status",
+      "opening": "Opening",
+      "expected": "Expected",
+      "actual": "Actual",
+      "difference": "Difference",
+      "closedAt": "Closed"
+    }
+  }
+}

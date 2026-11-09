@@ -1,0 +1,55 @@
+{
+  "title": "Oshxona topshiriqlari",
+  "empty": "Topshiriqlar yoʻq",
+  "emptyServed": "Berilgan topshiriqlar yoʻq",
+  "columnEmpty": "Boʻsh",
+  "actionFailed": "Holatni oʻzgartirib boʻlmadi",
+  "soundUnavailable": "Bu brauzerda ovoz mavjud emas",
+  "columns": {
+    "new": "Yangi",
+    "in_progress": "Tayyorlanmoqda",
+    "ready": "Tayyor"
+  },
+  "ticket": {
+    "table": "Stol {{number}}",
+    "takeaway": "Olib ketish",
+    "aria": "Topshiriq #{{number}}, {{place}}",
+    "newBadge": "Yangi",
+    "meta": "Ofitsiant: {{waiter}} · Buyurtma #{{order}} · {{time}}",
+    "readyAt": "{{time}} da tayyor"
+  },
+  "timer": {
+    "label": "Kutish vaqti",
+    "normal": "Meʼyorda",
+    "warning": "10 daqiqadan koʻp",
+    "danger": "20 daqiqadan koʻp"
+  },
+  "actions": {
+    "start": "Boshlash",
+    "ready": "Tayyor",
+    "served": "Berildi",
+    "recall": "Qayta ishga",
+    "byItem": "Pozitsiyalar boʻyicha"
+  },
+  "itemActions": {
+    "start": "Boshlash",
+    "ready": "Tayyor",
+    "startAria": "Boshlash: {{name}}",
+    "readyAria": "Tayyor: {{name}}"
+  },
+  "toolbar": {
+    "stations": "Stansiyalar",
+    "allStations": "Barcha stansiyalar",
+    "view": "Koʻrsatish",
+    "views": {
+      "active": "Ishda",
+      "served": "Berilganlar"
+    },
+    "soundOn": "Ovoz yoq.",
+    "soundOff": "Ovoz oʻch."
+  },
+  "offline": {
+    "disconnected": "Aloqa yoʻq, maʼlumotlar eskirgan boʻlishi mumkin. Roʻyxat har 30 soniyada yangilanadi.",
+    "reconnecting": "Aloqa uzildi. Qayta ulanmoqda… Tiklangach roʻyxat avtomatik yangilanadi."
+  }
+}

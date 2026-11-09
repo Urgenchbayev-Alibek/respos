@@ -1,0 +1,50 @@
+.sheet {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 360px;
+  margin: 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.header {
+  text-align: center;
+}
+
+.header h3 {
+  margin: 0;
+}
+
+.meta {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.notFiscal {
+  margin: 0;
+  padding: var(--space-2);
+  border: 2px dashed var(--color-text);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media print {
+  :global(body *) {
+    visibility: hidden;
+  }
+
+  .sheet,
+  .sheet * {
+    visibility: visible;
+  }
+
+  .sheet {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80mm;
+    max-width: none;
+    color: #000;
+  }
+}
