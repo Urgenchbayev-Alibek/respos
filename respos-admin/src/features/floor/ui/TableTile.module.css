@@ -1,0 +1,116 @@
+.tile {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: 112px;
+  padding: var(--space-3);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+button.body {
+  cursor: pointer;
+}
+
+button.body:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.lg .body {
+  min-height: 128px;
+}
+
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-2);
+  padding-right: var(--space-8);
+}
+
+.number {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+}
+
+.seats {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.seats svg,
+.reservation svg {
+  width: 14px;
+  height: 14px;
+}
+
+.total {
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.reservation {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--tone-info-fg);
+  font-size: var(--font-size-sm);
+}
+
+.actions {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-1);
+}
+
+.available {
+  border-color: var(--color-success);
+}
+
+.occupied {
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
+}
+
+.reserved {
+  border-color: var(--color-info);
+  background: var(--color-info-subtle);
+}
+
+.unavailable {
+  border-style: dashed;
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+}
+
+.inactive {
+  opacity: 0.6;
+}
+
+.highlight {
+  box-shadow: 0 0 0 3px var(--color-success);
+}

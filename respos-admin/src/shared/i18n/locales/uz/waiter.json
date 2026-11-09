@@ -1,0 +1,73 @@
+{
+  "toast": {
+    "itemReady": "Berishga tayyor",
+    "itemReadyTable": "{{table}}-stol — {{item}}",
+    "sent": "Oshxonaga yuborildi",
+    "serveFailed": "Berilganini belgilab boʻlmadi"
+  },
+  "options": {
+    "errorMin": "Kamida {{min}} ta tanlang",
+    "errorMax": "Koʻpi bilan {{max}} ta tanlash mumkin",
+    "add": "Qoʻshish · {{price}}",
+    "variant": "Variant",
+    "required": "Majburiy",
+    "optional": "Ixtiyoriy",
+    "upTo": "{{max}} tagacha",
+    "quantity": "Miqdor",
+    "comment": "Oshxona uchun izoh"
+  },
+  "cart": {
+    "remove": "Olib tashlash: {{name}}",
+    "decrease": "Kamaytirish: {{name}}",
+    "increase": "Koʻpaytirish: {{name}}",
+    "comment": "Izoh: {{name}}",
+    "commentPlaceholder": "Masalan, piyozsiz",
+    "title": "Yangi pozitsiyalar",
+    "empty": "Menyudan taom tanlang",
+    "preview": "Yuborilmagan: {{n}} dona (taxminiy)"
+  },
+  "menu": {
+    "fromPrice": "{{price}} dan",
+    "title": "Menyu",
+    "search": "Taomni qidirish…",
+    "categories": "Toifalar",
+    "notFound": "Hech narsa topilmadi",
+    "emptyCategory": "Toifada mavjud taomlar yoʻq",
+    "unavailable": "Mavjud emas"
+  },
+  "order": {
+    "panel": "Buyurtma",
+    "serveItem": "Berildi: {{name}}",
+    "serve": "Berildi",
+    "serveAll": "Barcha tayyorini berish ({{n}})",
+    "send": "Oshxonaga yuborish ({{n}})",
+    "takeaway": "Olib ketish",
+    "table": "{{number}}-stol",
+    "back": "Zalga qaytish",
+    "guests": "Mehmonlar: {{guests}}",
+    "newOrder": "yangi buyurtma",
+    "billTab": "Chek ({{n}})",
+    "readOnly": "Buyurtma yopilgan — pozitsiya qoʻshib boʻlmaydi."
+  },
+  "guests": {
+    "question": "Stolda nechta mehmon?",
+    "open": "Buyurtma ochish",
+    "label": "Mehmonlar"
+  },
+  "floor": {
+    "title": "Zal",
+    "unavailable": "{{number}}-stol mavjud emas",
+    "empty": "Stollar yoʻq",
+    "emptyHint": "Administratordan «Zallar va stollar» boʻlimida stollar qoʻshishni soʻrang.",
+    "takeaway": "Olib ketish",
+    "readyBadge": "Berishga tayyor: {{n}}"
+  },
+  "orders": {
+    "title": "Faol buyurtmalar",
+    "mine": "Meniki",
+    "all": "Barchasi",
+    "empty": "Faol buyurtmalar yoʻq",
+    "emptyHint": "Zaldagi stolni bosib buyurtma oching.",
+    "minutes": "{{n}} daq"
+  }
+}

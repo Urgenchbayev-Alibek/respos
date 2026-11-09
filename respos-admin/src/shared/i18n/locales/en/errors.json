@@ -42,16 +42,27 @@
     "in_use": "The role is assigned to users."
   },
   "order": {
-    "invalid_status_transition": "Invalid order status change."
+    "invalid_status_transition": "Invalid order status change.",
+    "closed": "The order is already closed.",
+    "has_payments": "The order has payments — refund them first.",
+    "invalid_quantity": "Invalid quantity.",
+    "item_not_editable": "The item can no longer be changed — it was sent to the kitchen.",
+    "nothing_to_send": "No new items to send to the kitchen.",
+    "table_required": "Select a table for a dine-in order.",
+    "cancel_reason_required": "Enter a cancellation reason."
   },
   "reservation": {
-    "time_conflict": "The table is already reserved for this time."
+    "time_conflict": "The table is already reserved for this time.",
+    "invalid_period": "The reservation must end after it starts."
   },
   "payment": {
     "duplicate": "The payment is already registered."
   },
   "stock": {
     "insufficient": "Insufficient stock."
+  },
+  "kitchen_station": {
+    "not_found": "Kitchen station not found."
   },
   "pages": {
     "forbiddenTitle": "Access denied",

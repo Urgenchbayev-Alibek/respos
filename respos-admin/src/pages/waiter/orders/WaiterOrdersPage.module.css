@@ -1,0 +1,70 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 112px;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  text-decoration: none;
+}
+
+.card:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.ready {
+  border: 2px solid var(--color-success);
+}
+
+.top,
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.place {
+  font-size: var(--font-size-lg);
+}
+
+.meta {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+.time svg {
+  width: 16px;
+  height: 16px;
+}
+
+.total {
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}

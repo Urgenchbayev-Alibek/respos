@@ -1,0 +1,88 @@
+{
+  "title": "Залы и столы",
+  "subtitle": "Зоны зала, столы и план рассадки с текущими статусами.",
+  "tabs": {
+    "floor": "План зала",
+    "list": "Список",
+    "areas": "Зоны"
+  },
+  "areaFilter": "Зоны зала",
+  "allAreas": "Все зоны",
+  "floorLabel": "План зала",
+  "filters": {
+    "allStatuses": "Все статусы"
+  },
+  "actions": {
+    "addTable": "Добавить стол",
+    "addArea": "Добавить зону",
+    "edit": "Редактировать",
+    "archive": "В архив",
+    "makeAvailable": "Сделать доступным",
+    "makeUnavailable": "Сделать недоступным",
+    "menu": "Действия: стол {{number}}",
+    "editArea": "Редактировать зону {{name}}",
+    "archiveArea": "Архивировать зону {{name}}",
+    "goToAreas": "Перейти к зонам"
+  },
+  "tile": {
+    "label": "Стол {{number}}, {{status}}, мест: {{seats}}"
+  },
+  "columns": {
+    "number": "Стол",
+    "area": "Зона",
+    "capacity": "Мест",
+    "status": "Статус",
+    "order": "Активный заказ",
+    "reservation": "Ближайшая бронь",
+    "active": "Активен",
+    "actions": "Действия",
+    "name": "Название",
+    "sortOrder": "Порядок"
+  },
+  "fields": {
+    "number": "Номер стола",
+    "capacity": "Количество мест",
+    "area": "Зона",
+    "areaPlaceholder": "Выберите зону",
+    "posX": "Колонка на плане",
+    "posY": "Ряд на плане",
+    "posHint": "Необязательно: позиция плитки на плане (с 0).",
+    "isActive": "Активен",
+    "name": "Название",
+    "sortOrder": "Порядок сортировки"
+  },
+  "form": {
+    "createTable": "Новый стол",
+    "editTable": "Редактирование стола",
+    "createArea": "Новая зона",
+    "editArea": "Редактирование зоны"
+  },
+  "empty": {
+    "noAreas": "Зоны ещё не созданы",
+    "noAreasHint": "Создайте зону (например, «Основной зал» или «Терраса»), затем добавьте столы.",
+    "noTables": "Столов нет",
+    "noTablesHint": "Добавьте столы, чтобы официанты могли открывать заказы."
+  },
+  "confirm": {
+    "archiveTableTitle": "Архивировать стол?",
+    "archiveTableMessage": "Стол {{number}} исчезнет из плана зала. История заказов сохранится.",
+    "archiveAreaTitle": "Архивировать зону?",
+    "archiveAreaMessage": "Зона «{{name}}» будет скрыта из плана зала."
+  },
+  "hasActiveOrder": "Есть активный заказ — архив недоступен",
+  "toast": {
+    "tableSaved": "Стол сохранён",
+    "tableArchived": "Стол перемещён в архив",
+    "areaSaved": "Зона сохранена",
+    "areaArchived": "Зона перемещена в архив",
+    "statusChanged": "Статус стола изменён",
+    "actionFailed": "Не удалось выполнить действие"
+  },
+  "active": "Да",
+  "inactive": "Нет",
+  "validation": {
+    "capacity": "Целое число от 1 до 100",
+    "position": "Целое число от 0 до 99",
+    "sortOrder": "Целое неотрицательное число"
+  }
+}

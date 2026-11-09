@@ -1,0 +1,88 @@
+{
+  "title": "Areas & tables",
+  "subtitle": "Dining areas, tables and the floor plan with live statuses.",
+  "tabs": {
+    "floor": "Floor plan",
+    "list": "List",
+    "areas": "Areas"
+  },
+  "areaFilter": "Dining areas",
+  "allAreas": "All areas",
+  "floorLabel": "Floor plan",
+  "filters": {
+    "allStatuses": "All statuses"
+  },
+  "actions": {
+    "addTable": "Add table",
+    "addArea": "Add area",
+    "edit": "Edit",
+    "archive": "Archive",
+    "makeAvailable": "Make available",
+    "makeUnavailable": "Make unavailable",
+    "menu": "Actions: table {{number}}",
+    "editArea": "Edit area {{name}}",
+    "archiveArea": "Archive area {{name}}",
+    "goToAreas": "Go to areas"
+  },
+  "tile": {
+    "label": "Table {{number}}, {{status}}, seats: {{seats}}"
+  },
+  "columns": {
+    "number": "Table",
+    "area": "Area",
+    "capacity": "Seats",
+    "status": "Status",
+    "order": "Active order",
+    "reservation": "Next reservation",
+    "active": "Active",
+    "actions": "Actions",
+    "name": "Name",
+    "sortOrder": "Order"
+  },
+  "fields": {
+    "number": "Table number",
+    "capacity": "Seats",
+    "area": "Area",
+    "areaPlaceholder": "Select an area",
+    "posX": "Plan column",
+    "posY": "Plan row",
+    "posHint": "Optional: tile position on the plan (from 0).",
+    "isActive": "Active",
+    "name": "Name",
+    "sortOrder": "Sort order"
+  },
+  "form": {
+    "createTable": "New table",
+    "editTable": "Edit table",
+    "createArea": "New area",
+    "editArea": "Edit area"
+  },
+  "empty": {
+    "noAreas": "No areas yet",
+    "noAreasHint": "Create an area (e.g. “Main hall” or “Terrace”), then add tables.",
+    "noTables": "No tables",
+    "noTablesHint": "Add tables so waiters can open orders."
+  },
+  "confirm": {
+    "archiveTableTitle": "Archive table?",
+    "archiveTableMessage": "Table {{number}} will disappear from the floor plan. Order history is kept.",
+    "archiveAreaTitle": "Archive area?",
+    "archiveAreaMessage": "Area “{{name}}” will be hidden from the floor plan."
+  },
+  "hasActiveOrder": "Has an active order — cannot archive",
+  "toast": {
+    "tableSaved": "Table saved",
+    "tableArchived": "Table archived",
+    "areaSaved": "Area saved",
+    "areaArchived": "Area archived",
+    "statusChanged": "Table status changed",
+    "actionFailed": "Action failed"
+  },
+  "active": "Yes",
+  "inactive": "No",
+  "validation": {
+    "capacity": "Whole number from 1 to 100",
+    "position": "Whole number from 0 to 99",
+    "sortOrder": "Non-negative whole number"
+  }
+}

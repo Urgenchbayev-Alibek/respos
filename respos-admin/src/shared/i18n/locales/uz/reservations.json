@@ -1,0 +1,79 @@
+{
+  "title": "Bronlar",
+  "subtitle": "Kunlik stol bronlari: tasdiqlash, oʻtqazish, yakunlash, bekor qilish va kelmaslik.",
+  "actions": {
+    "create": "Yangi bron",
+    "edit": "Oʻzgartirish",
+    "menu": "Amallar: {{name}} broni",
+    "confirm": "Tasdiqlash",
+    "seat": "Oʻtqazish",
+    "complete": "Yakunlash",
+    "cancel": "Bronni bekor qilish",
+    "no-show": "Kelishmadi"
+  },
+  "prevDay": "Oldingi kun",
+  "nextDay": "Keyingi kun",
+  "today": "Bugun",
+  "views": {
+    "label": "Koʻrinish",
+    "day": "Kun",
+    "list": "Roʻyxat"
+  },
+  "searchPlaceholder": "Mehmon ismi yoki telefoni",
+  "filters": {
+    "allStatuses": "Barcha holatlar",
+    "allTables": "Barcha stollar"
+  },
+  "columns": {
+    "table": "Stol",
+    "time": "Vaqt",
+    "guest": "Mehmon",
+    "guests": "Mehmonlar",
+    "status": "Holat",
+    "comment": "Izoh",
+    "actions": "Amallar"
+  },
+  "fields": {
+    "guestName": "Mehmon ismi",
+    "guestPhone": "Telefon",
+    "date": "Sana",
+    "guestCount": "Mehmonlar soni",
+    "startTime": "Boshlanishi",
+    "endTime": "Tugashi",
+    "table": "Stol",
+    "tableHint": "Boʻsh qoldirib, stolni keyinroq belgilash mumkin.",
+    "noTable": "Stolsiz",
+    "preferredArea": "Afzal hudud",
+    "anyArea": "Istalgan hudud",
+    "comment": "Izoh"
+  },
+  "form": {
+    "createTitle": "Yangi bron",
+    "editTitle": "Bronni oʻzgartirish"
+  },
+  "tableOption": "{{number}}-stol · {{area}} · {{seats}} oʻrin",
+  "noTable": "Stolsiz",
+  "conflictField": "Bu stol shu vaqtga allaqachon bron qilingan",
+  "conflictBadge": "kesishma",
+  "overdueHint": "Vaqt oʻtdi — «Kelishmadi» deb belgilang yoki yakunlang",
+  "empty": "Bu kunga bronlar yoʻq",
+  "toast": {
+    "created": "Bron yaratildi",
+    "updated": "Bron oʻzgartirildi",
+    "confirm": "Bron tasdiqlandi",
+    "seat": "Mehmonlar oʻtqazildi",
+    "complete": "Bron yakunlandi",
+    "cancel": "Bron bekor qilindi",
+    "no-show": "Belgilandi: mehmonlar kelishmadi",
+    "actionFailed": "Amalni bajarib boʻlmadi"
+  },
+  "confirm": {
+    "message": "Mehmon: {{name}}",
+    "cancelTitle": "Bron bekor qilinsinmi?",
+    "no-showTitle": "Kelmaslik belgilansinmi?"
+  },
+  "validation": {
+    "guestCount": "1 dan 200 gacha butun son",
+    "endAfterStart": "Tugash vaqti boshlanishdan keyin boʻlishi kerak"
+  }
+}

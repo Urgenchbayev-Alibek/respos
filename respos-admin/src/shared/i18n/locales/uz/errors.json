@@ -42,16 +42,27 @@
     "in_use": "Rol xodimlarga biriktirilgan."
   },
   "order": {
-    "invalid_status_transition": "Buyurtma holatini bunday oʻzgartirib boʻlmaydi."
+    "invalid_status_transition": "Buyurtma holatini bunday oʻzgartirib boʻlmaydi.",
+    "closed": "Buyurtma allaqachon yopilgan.",
+    "has_payments": "Buyurtma boʻyicha toʻlovlar bor — avval qaytarishni rasmiylashtiring.",
+    "invalid_quantity": "Miqdor notoʻgʻri.",
+    "item_not_editable": "Pozitsiyani oʻzgartirib boʻlmaydi — u oshxonaga yuborilgan.",
+    "nothing_to_send": "Oshxonaga yuborish uchun yangi pozitsiyalar yoʻq.",
+    "table_required": "Zaldagi buyurtma uchun stolni tanlang.",
+    "cancel_reason_required": "Bekor qilish sababini kiriting."
   },
   "reservation": {
-    "time_conflict": "Stol bu vaqtga allaqachon bron qilingan."
+    "time_conflict": "Stol bu vaqtga allaqachon bron qilingan.",
+    "invalid_period": "Bron tugashi boshlanishidan keyin boʻlishi kerak."
   },
   "payment": {
     "duplicate": "Toʻlov allaqachon roʻyxatga olingan."
   },
   "stock": {
     "insufficient": "Omborda qoldiq yetarli emas."
+  },
+  "kitchen_station": {
+    "not_found": "Oshxona stansiyasi topilmadi."
   },
   "pages": {
     "forbiddenTitle": "Ruxsat yoʻq",

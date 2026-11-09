@@ -1,0 +1,88 @@
+{
+  "title": "Zallar va stollar",
+  "subtitle": "Zal hududlari, stollar va joriy holatlari bilan joylashuv rejasi.",
+  "tabs": {
+    "floor": "Zal rejasi",
+    "list": "Roʻyxat",
+    "areas": "Hududlar"
+  },
+  "areaFilter": "Zal hududlari",
+  "allAreas": "Barcha hududlar",
+  "floorLabel": "Zal rejasi",
+  "filters": {
+    "allStatuses": "Barcha holatlar"
+  },
+  "actions": {
+    "addTable": "Stol qoʻshish",
+    "addArea": "Hudud qoʻshish",
+    "edit": "Tahrirlash",
+    "archive": "Arxivga",
+    "makeAvailable": "Boʻsh qilish",
+    "makeUnavailable": "Mavjud emas qilish",
+    "menu": "Amallar: {{number}}-stol",
+    "editArea": "{{name}} hududini tahrirlash",
+    "archiveArea": "{{name}} hududini arxivlash",
+    "goToAreas": "Hududlarga oʻtish"
+  },
+  "tile": {
+    "label": "{{number}}-stol, {{status}}, oʻrinlar: {{seats}}"
+  },
+  "columns": {
+    "number": "Stol",
+    "area": "Hudud",
+    "capacity": "Oʻrin",
+    "status": "Holat",
+    "order": "Faol buyurtma",
+    "reservation": "Eng yaqin bron",
+    "active": "Faol",
+    "actions": "Amallar",
+    "name": "Nomi",
+    "sortOrder": "Tartib"
+  },
+  "fields": {
+    "number": "Stol raqami",
+    "capacity": "Oʻrinlar soni",
+    "area": "Hudud",
+    "areaPlaceholder": "Hududni tanlang",
+    "posX": "Rejadagi ustun",
+    "posY": "Rejadagi qator",
+    "posHint": "Ixtiyoriy: rejadagi plitka joylashuvi (0 dan).",
+    "isActive": "Faol",
+    "name": "Nomi",
+    "sortOrder": "Saralash tartibi"
+  },
+  "form": {
+    "createTable": "Yangi stol",
+    "editTable": "Stolni tahrirlash",
+    "createArea": "Yangi hudud",
+    "editArea": "Hududni tahrirlash"
+  },
+  "empty": {
+    "noAreas": "Hududlar hali yaratilmagan",
+    "noAreasHint": "Hudud yarating (masalan, «Asosiy zal» yoki «Terrasa»), soʻng stollar qoʻshing.",
+    "noTables": "Stollar yoʻq",
+    "noTablesHint": "Ofitsiantlar buyurtma ochishi uchun stollar qoʻshing."
+  },
+  "confirm": {
+    "archiveTableTitle": "Stol arxivlansinmi?",
+    "archiveTableMessage": "{{number}}-stol zal rejasidan yoʻqoladi. Buyurtmalar tarixi saqlanadi.",
+    "archiveAreaTitle": "Hudud arxivlansinmi?",
+    "archiveAreaMessage": "«{{name}}» hududi zal rejasidan yashiriladi."
+  },
+  "hasActiveOrder": "Faol buyurtma bor — arxivlab boʻlmaydi",
+  "toast": {
+    "tableSaved": "Stol saqlandi",
+    "tableArchived": "Stol arxivga koʻchirildi",
+    "areaSaved": "Hudud saqlandi",
+    "areaArchived": "Hudud arxivga koʻchirildi",
+    "statusChanged": "Stol holati oʻzgartirildi",
+    "actionFailed": "Amalni bajarib boʻlmadi"
+  },
+  "active": "Ha",
+  "inactive": "Yoʻq",
+  "validation": {
+    "capacity": "1 dan 100 gacha butun son",
+    "position": "0 dan 99 gacha butun son",
+    "sortOrder": "Manfiy boʻlmagan butun son"
+  }
+}

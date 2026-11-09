@@ -1,0 +1,73 @@
+{
+  "toast": {
+    "itemReady": "Ready to serve",
+    "itemReadyTable": "Table {{table}} — {{item}}",
+    "sent": "Sent to the kitchen",
+    "serveFailed": "Could not mark as served"
+  },
+  "options": {
+    "errorMin": "Choose at least {{min}}",
+    "errorMax": "Choose no more than {{max}}",
+    "add": "Add · {{price}}",
+    "variant": "Variant",
+    "required": "Required",
+    "optional": "Optional",
+    "upTo": "up to {{max}}",
+    "quantity": "Quantity",
+    "comment": "Note for the kitchen"
+  },
+  "cart": {
+    "remove": "Remove: {{name}}",
+    "decrease": "Decrease: {{name}}",
+    "increase": "Increase: {{name}}",
+    "comment": "Note: {{name}}",
+    "commentPlaceholder": "E.g. no onion",
+    "title": "New items",
+    "empty": "Pick dishes from the menu",
+    "preview": "Not sent: {{n}} pcs (preliminary)"
+  },
+  "menu": {
+    "fromPrice": "from {{price}}",
+    "title": "Menu",
+    "search": "Search dishes…",
+    "categories": "Categories",
+    "notFound": "Nothing found",
+    "emptyCategory": "No available dishes in this category",
+    "unavailable": "Unavailable"
+  },
+  "order": {
+    "panel": "Order",
+    "serveItem": "Served: {{name}}",
+    "serve": "Served",
+    "serveAll": "Serve all ready ({{n}})",
+    "send": "Send to kitchen ({{n}})",
+    "takeaway": "Takeaway",
+    "table": "Table {{number}}",
+    "back": "Back to floor",
+    "guests": "Guests: {{guests}}",
+    "newOrder": "new order",
+    "billTab": "Bill ({{n}})",
+    "readOnly": "The order is closed — items cannot be added."
+  },
+  "guests": {
+    "question": "How many guests at the table?",
+    "open": "Open order",
+    "label": "Guests"
+  },
+  "floor": {
+    "title": "Floor",
+    "unavailable": "Table {{number}} is unavailable",
+    "empty": "No tables",
+    "emptyHint": "Ask an administrator to add tables in “Areas & tables”.",
+    "takeaway": "Takeaway",
+    "readyBadge": "Ready to serve: {{n}}"
+  },
+  "orders": {
+    "title": "Active orders",
+    "mine": "Mine",
+    "all": "All",
+    "empty": "No active orders",
+    "emptyHint": "Open an order by tapping a table on the floor.",
+    "minutes": "{{n}} min"
+  }
+}

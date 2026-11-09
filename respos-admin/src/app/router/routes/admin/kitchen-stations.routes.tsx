@@ -1,11 +1,14 @@
-import { defineRoutes, stubPage } from '@/app/router/route-module';
+import { defineRoutes, lazyPage } from '@/app/router/route-module';
 import { PERMISSIONS as P } from '@/shared/constants/permissions';
 import { ROUTES } from '@/shared/constants/routes';
 
-/**
- * STUB (planned owner: agent A). Replace `stubPage(...)` with
- * `lazyPage(() => import('@/pages/...').then((m) => ({ default: m.XxxPage })), { anyOf: [...] })`.
- */
+/** Kitchen stations CRUD (branch-scoped). */
 export const routeModule = defineRoutes('admin', [
-  { path: ROUTES.admin.kitchenStations, element: stubPage('nav:admin.kitchenStations', { anyOf: [P.kitchen.read] }) },
+  {
+    path: ROUTES.admin.kitchenStations,
+    element: lazyPage(
+      () => import('@/pages/admin/kitchen-stations/KitchenStationsPage').then((m) => ({ default: m.KitchenStationsPage })),
+      { anyOf: [P.kitchen.read] },
+    ),
+  },
 ]);

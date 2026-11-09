@@ -1,0 +1,136 @@
+{
+  "title": "Menyu",
+  "subtitle": "Taomlar, toifalar va modifikatorlar. Stop-roʻyxat — «Mavjud» almashtirgichi.",
+  "stationsLink": "Oshxona stansiyalari →",
+  "tabs": {
+    "items": "Taomlar",
+    "categories": "Toifalar",
+    "modifiers": "Modifikatorlar"
+  },
+  "columns": {
+    "photo": "Rasm",
+    "name": "Nomi",
+    "category": "Toifa",
+    "price": "Narx",
+    "station": "Stansiya",
+    "available": "Mavjud",
+    "actions": "Amallar"
+  },
+  "archived": "Arxivda",
+  "variantsShort": "Variantlar: {{names}}",
+  "available": "Mavjud",
+  "stopped": "Stop-roʻyxat",
+  "availabilityLabel": "Mavjudligi: {{name}}",
+  "searchPlaceholder": "Taomni qidirish",
+  "filters": {
+    "allCategories": "Barcha toifalar",
+    "anyAvailability": "Har qanday mavjudlik",
+    "includeArchived": "Arxivni koʻrsatish"
+  },
+  "emptyItems": "Taomlar topilmadi",
+  "actions": {
+    "createItem": "Taom qoʻshish",
+    "editNamed": "{{name}}ni tahrirlash",
+    "archiveNamed": "Arxivga: {{name}}",
+    "deleteNamed": "{{name}}ni oʻchirish",
+    "archive": "Arxivga"
+  },
+  "confirm": {
+    "archiveItemTitle": "Taom arxivga koʻchirilsinmi?",
+    "archiveItemMessage": "«{{name}}» ofitsiant menyusidan yoʻqoladi. Buyurtmalar tarixi saqlanadi."
+  },
+  "toast": {
+    "available": "«{{name}}» yana mavjud",
+    "stopped": "«{{name}}» stop-roʻyxatda",
+    "actionFailed": "Amalni bajarib boʻlmadi",
+    "itemArchived": "Taom arxivga koʻchirildi",
+    "itemCreated": "Taom yaratildi",
+    "itemUpdated": "Taom saqlandi",
+    "categorySaved": "Toifa saqlandi",
+    "categoryArchived": "Toifa arxivga koʻchirildi",
+    "reorderFailed": "Tartibni oʻzgartirib boʻlmadi",
+    "groupSaved": "Modifikatorlar guruhi saqlandi",
+    "groupDeleted": "Modifikatorlar guruhi oʻchirildi"
+  },
+  "itemForm": {
+    "createTitle": "Yangi taom",
+    "editTitle": "Taomni tahrirlash",
+    "name": "Nomi (RU)",
+    "nameUz": "Nomi (UZ)",
+    "category": "Toifa",
+    "categoryPlaceholder": "Toifani tanlang",
+    "price": "Narx",
+    "station": "Oshxona stansiyasi",
+    "stationHint": "Oshxonaga yuborilganda chipta qayerga borishi.",
+    "defaultStation": "Standart stansiya",
+    "prepTime": "Tayyorlash vaqti, daq",
+    "sku": "Artikul",
+    "isAvailable": "Buyurtma uchun mavjud",
+    "description": "Tavsif",
+    "modifierGroups": "Modifikatorlar guruhlari",
+    "noModifierGroups": "Modifikatorlar guruhlari hali yoʻq — ularni «Modifikatorlar» varagʻida yarating."
+  },
+  "photo": {
+    "invalidType": "Faqat JPG, PNG yoki WebP",
+    "tooLarge": "Fayl 2 MB dan katta",
+    "alt": "Taom rasmi",
+    "replace": "Rasmni almashtirish",
+    "choose": "Rasm tanlash",
+    "hint": "JPG, PNG yoki WebP, 2 MB gacha",
+    "uploadFailed": "Taom saqlandi, lekin rasm yuklanmadi"
+  },
+  "variants": {
+    "title": "Variantlar",
+    "hint": "Masalan, 0,5 / 1 porsiya. Variant narxi — toʻliq narx (qoʻshimcha emas).",
+    "name": "Variant nomi",
+    "price": "Variant narxi",
+    "default": "Standart",
+    "remove": "{{index}}-variantni oʻchirish",
+    "add": "Variant qoʻshish"
+  },
+  "modifiers": {
+    "summary": "Tanlash {{min}}–{{max}} · variantlar: {{options}}",
+    "editTitle": "Modifikatorlar guruhini tahrirlash",
+    "createTitle": "Yangi modifikatorlar guruhi",
+    "name": "Guruh nomi",
+    "minSelect": "Kamida tanlash",
+    "maxSelect": "Koʻpi bilan tanlash",
+    "isRequired": "Majburiy guruh",
+    "options": "Opsiyalar",
+    "optionName": "Opsiya nomi",
+    "priceDelta": "Narxga qoʻshimcha",
+    "removeOption": "{{index}}-opsiyani oʻchirish",
+    "addOption": "Opsiya qoʻshish",
+    "rule": "Tanlash qoidasi",
+    "range": "{{min}} dan {{max}} gacha",
+    "required": "Majburiy",
+    "create": "Guruh qoʻshish",
+    "empty": "Modifikatorlar guruhlari yoʻq",
+    "emptyHint": "Masalan: «Pishirish darajasi», «Sous», «Qoʻshimchalar».",
+    "deleteTitle": "Modifikatorlar guruhi oʻchirilsinmi?",
+    "deleteMessage": "«{{name}}» guruhi barcha taomlardan ajratiladi."
+  },
+  "categories": {
+    "editTitle": "Toifani tahrirlash",
+    "createTitle": "Yangi toifa",
+    "name": "Nomi (RU)",
+    "nameUz": "Nomi (UZ)",
+    "isActive": "Menyuda koʻrsatish",
+    "empty": "Toifalar yoʻq",
+    "emptyHint": "Toifalar yarating: «Issiq taomlar», «Shoʻrvalar», «Ichimliklar»…",
+    "hidden": "Yashirin",
+    "moveUp": "Yuqoriga: {{name}}",
+    "moveDown": "Pastga: {{name}}",
+    "create": "Toifa qoʻshish",
+    "archiveTitle": "Toifa arxivga koʻchirilsinmi?",
+    "archiveMessage": "«{{name}}» toifasi menyudan yashiriladi."
+  },
+  "validation": {
+    "prepTime": "Butun daqiqalar soni (0–999)",
+    "oneDefault": "Aynan bitta standart variantni belgilang",
+    "selectRange": "Maksimum minimumdan va 1 dan kam boʻlmasligi kerak",
+    "minSelect": "Majburiy guruh uchun minimum kamida 1",
+    "optionsRequired": "Kamida bitta opsiya qoʻshing",
+    "priceDelta": "Qoʻshimchani kiriting (0 mumkin)"
+  }
+}

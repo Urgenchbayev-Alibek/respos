@@ -37,6 +37,8 @@ export const ROUTES = {
     root: '/waiter',
     tables: '/waiter',
     orders: '/waiter/orders',
+    newOrder: '/waiter/orders/new',
+    order: '/waiter/orders/:orderId',
     reservations: '/waiter/reservations',
   },
   kitchen: { root: '/kitchen', board: '/kitchen' },
