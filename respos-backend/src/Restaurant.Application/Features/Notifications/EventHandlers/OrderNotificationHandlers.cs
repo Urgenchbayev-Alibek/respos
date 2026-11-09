@@ -11,7 +11,7 @@ using static System.FormattableString;
 
 namespace Restaurant.Application.Features.Notifications.EventHandlers;
 
-/// <summary><see cref="OrderSubmittedDomainEvent"/> → <c>order_new</c> for branch users with <c>kitchen.read</c> (except the actor).</summary>
+/// <summary><see cref="OrderSubmittedDomainEvent"/> → <c>order_new</c> for branch kitchen staff (<c>kitchen.status.update</c>, except the actor) — waiters are not spammed.</summary>
 public sealed class OrderSubmittedNotificationHandler(IApplicationDbContext db, INotificationPublisher publisher, ITenantContext tenant)
     : IDomainEventHandler<OrderSubmittedDomainEvent>
 {
@@ -27,7 +27,7 @@ public sealed class OrderSubmittedNotificationHandler(IApplicationDbContext db, 
         var message = new NotificationMessage(
             order.OrganizationId, domainEvent.BranchId, NotificationType.OrderNew,
             Invariant($"Новый заказ #{order.Number:D4}"), place, "/kitchen");
-        await publisher.PublishToPermissionAsync(message, Permissions.Kitchen.Read, tenant.UserId, cancellationToken);
+        await publisher.PublishToPermissionAsync(message, Permissions.Kitchen.StatusUpdate, tenant.UserId, cancellationToken);
     }
 }
 
