@@ -44,6 +44,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("Jwt:SigningKey", "test-only-signing-key-with-at-least-32-bytes!!");
         builder.UseSetting("Auth:RefreshCookieSecure", "false");
         builder.UseSetting("Database:MigrateOnStartup", "true");
+        builder.UseSetting("Housekeeping:Enabled", "false"); // tests call HousekeepingCleaner directly
         builder.UseSetting("Seed:PlatformAdminPassword", TestPassword);
         builder.UseSetting("RateLimiting:GlobalPermitPerMinute", "100000");
         builder.UseSetting("RateLimiting:AuthPerMinute", "100000");

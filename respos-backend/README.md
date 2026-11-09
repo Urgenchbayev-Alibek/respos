@@ -7,13 +7,16 @@ Clean Architecture modular monolith: `Api → Application → Domain`, `Infrastr
 docker compose -f ../infra/docker/docker-compose.yml up -d postgres   # localhost:5433
 dotnet build && dotnet test                                            # tests need Docker (Testcontainers)
 dotnet run --project src/Restaurant.Api                                # http://localhost:5080/swagger
-dotnet ef migrations add <Name> -p src/Restaurant.Infrastructure -s src/Restaurant.Infrastructure -o Persistence/Migrations
+dotnet tool restore && dotnet ef migrations add <Module>_<Change> -p src/Restaurant.Infrastructure -s src/Restaurant.Api -o Persistence/Migrations
+dotnet ef database update -p src/Restaurant.Infrastructure -s src/Restaurant.Api   # design-time DB: RESPOS_DESIGN_CONNECTION
 docker build -t respos-api .                                           # container listens on 8080
 ```
 
 In Development the app migrates on startup and seeds the demo org (`Database:MigrateOnStartup`, `Seed:DemoData`).
 Demo users: `owner|admin|manager|waiter|cook|cashier|stock|accountant@demo.respos.uz` / `Demo123!` (`Seed:DemoPassword`, Development only), platform admin `superadmin@respos.uz`.
 Outside Development, set `ConnectionStrings__DefaultConnection`, `Jwt__SigningKey` (≥32 bytes), `Frontend__AllowedOrigins__0`, `Seed__PlatformAdminPassword`.
+Startup fails fast (`InvalidOperationException`) when the connection string is missing or the signing key is < 32 bytes.
+`Database:MigrateOnStartup` works in any environment (compose profile `full` runs `Production` with it on; see `docs/deployment/DEPLOYMENT.md`).
 Base seeders (permission sync incl. system-role permissions, plans/features, platform admin) run on every start and are idempotent.
 
 ## Layout
@@ -116,6 +119,14 @@ Touch only your module's files. Nothing has to be registered centrally.
 - **Rate limits**: login 5/min per IP+email, `auth` policy 20/min/IP (refresh, forgot/reset, accept), public demo requests 5/hour/IP, global 300/min per user/IP.
 - **Health**: `/health/live`, `/health/ready` (DB). **Swagger**: `/swagger` (Development or `Swagger:Enabled`).
 - **SignalR**: `/hubs/restaurant?access_token=…`; `JoinBranch`, `JoinKitchenStation`, `LeaveKitchenStation` validate access.
+  Refusals throw `HubException` with a safe code (`tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`);
+  `HubErrorLoggingFilter` logs them at Warning and drops SignalR's duplicate Error entry (other exceptions still log at Error).
+- **HTTP pipeline** (`Extensions/HttpPipelineExtensions`): `UseForwardedHeaders` (X-Forwarded-For/Proto; `Http:KnownProxies` /
+  `Http:KnownNetworks`, empty = trust the nearest hop, for PaaS), `Http:UseHttpsRedirection` (default false — TLS ends at the proxy;
+  true → HSTS + redirect outside Development), security headers on every response (`nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`).
+- **Housekeeping** (`Infrastructure/Housekeeping`): background job on start + every `Housekeeping:IntervalMinutes` (60; `Housekeeping:Enabled`)
+  bulk-deletes across tenants: idempotency records > 24h, refresh tokens expired/revoked > 30d, password-reset tokens and
+  invitations expired > 30d, read notifications > 90d (`*RetentionHours/Days` keys). Failures are logged; the next tick retries.
 
 ## Error codes
 
