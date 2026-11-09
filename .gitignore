@@ -22,3 +22,4 @@ respos-backend/src/Restaurant.Api/wwwroot/uploads/
 Thumbs.db
 .idea/
 .claude/settings.local.json
+.claude/worktrees/
