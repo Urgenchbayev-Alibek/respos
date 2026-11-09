@@ -23,6 +23,9 @@ internal sealed class KitchenTicketItemConfiguration : IEntityTypeConfiguration<
     {
         builder.ToTable("kitchen_ticket_items");
         builder.HasKey(e => e.Id);
+
+        // Child of a tracked aggregate with a client-generated Guid: new rows added via the navigation must be INSERTed.
+        builder.Property(e => e.Id).ValueGeneratedNever();
         builder.HasIndex(e => e.OrderItemId);
         builder.HasOne<OrderItem>().WithMany()
             .HasForeignKey(e => e.OrderItemId).OnDelete(DeleteBehavior.Restrict);

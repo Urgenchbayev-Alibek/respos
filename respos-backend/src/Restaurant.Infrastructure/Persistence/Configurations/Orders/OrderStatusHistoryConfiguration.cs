@@ -23,6 +23,9 @@ internal sealed class OrderStatusHistoryConfiguration : IEntityTypeConfiguration
     {
         builder.ToTable("order_status_history");
         builder.HasKey(e => e.Id);
+
+        // Child of a tracked aggregate with a client-generated Guid: new rows added via the navigation must be INSERTed.
+        builder.Property(e => e.Id).ValueGeneratedNever();
         builder.Property(e => e.Reason).HasMaxLength(ReasonLength);
         builder.HasIndex(e => new { e.OrderId, e.ChangedAt });
     }
