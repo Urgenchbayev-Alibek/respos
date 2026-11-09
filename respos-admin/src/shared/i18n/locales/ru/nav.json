@@ -33,7 +33,9 @@
   "stock": {
     "inventory": "Остатки",
     "purchases": "Закупки",
-    "counts": "Инвентаризация"
+    "counts": "Инвентаризация",
+    "suppliers": "Поставщики",
+    "recipes": "Рецептуры"
   },
   "platform": {
     "organizations": "Организации",

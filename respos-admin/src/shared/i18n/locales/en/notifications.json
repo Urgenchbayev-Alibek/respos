@@ -1,0 +1,24 @@
+{
+  "title": "Notifications",
+  "subtitle": "Orders, kitchen, stock and system events",
+  "bell": "Notifications",
+  "bellUnread": "Notifications: {{count}} unread",
+  "unreadMark": "Unread:",
+  "markAllRead": "Mark all read",
+  "allRead": "All notifications marked read",
+  "markFailed": "Could not mark as read",
+  "viewAll": "All notifications",
+  "empty": "No notifications",
+  "emptyUnread": "No unread notifications",
+  "filterAll": "All",
+  "filterUnread": "Unread",
+  "type": {
+    "order_new": "New order",
+    "order_status": "Order status",
+    "order_ready": "Ready",
+    "stock_low": "Low stock",
+    "purchase_received": "Goods received",
+    "integration_error": "Integration error",
+    "system": "System"
+  }
+}

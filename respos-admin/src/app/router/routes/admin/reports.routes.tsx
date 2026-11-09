@@ -1,11 +1,12 @@
-import { defineRoutes, stubPage } from '@/app/router/route-module';
+import { defineRoutes, lazyPage } from '@/app/router/route-module';
 import { PERMISSIONS as P } from '@/shared/constants/permissions';
 import { ROUTES } from '@/shared/constants/routes';
 
-/**
- * STUB (planned owner: agent C). Replace `stubPage(...)` with
- * `lazyPage(() => import('@/pages/...').then((m) => ({ default: m.XxxPage })), { anyOf: [...] })`.
- */
 export const routeModule = defineRoutes('admin', [
-  { path: ROUTES.admin.reports, element: stubPage('nav:admin.reports', { anyOf: [P.reports.read] }) },
+  {
+    path: ROUTES.admin.reports,
+    element: lazyPage(() => import('@/pages/admin/reports/ReportsPage').then((m) => ({ default: m.ReportsPage })), {
+      anyOf: [P.reports.read],
+    }),
+  },
 ]);

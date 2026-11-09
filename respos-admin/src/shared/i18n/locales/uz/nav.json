@@ -33,7 +33,9 @@
   "stock": {
     "inventory": "Qoldiqlar",
     "purchases": "Xaridlar",
-    "counts": "Inventarizatsiya"
+    "counts": "Inventarizatsiya",
+    "suppliers": "Yetkazib beruvchilar",
+    "recipes": "Retseptlar"
   },
   "platform": {
     "organizations": "Tashkilotlar",

@@ -63,5 +63,21 @@
     "crashTitle": "Xatolik yuz berdi",
     "crashDescription": "Sahifani yangilang. Xato takrorlansa, yordamga yozing.",
     "reload": "Yangilash"
+  },
+  "purchase": {
+    "invalid_status_transition": "Xarid holatini bunday o‘zgartirib bo‘lmaydi.",
+    "not_editable": "Faqat qoralamani tahrirlash mumkin."
+  },
+  "organization": {
+    "slug_taken": "Bu slug band."
+  },
+  "inventory_count": {
+    "already_completed": "Inventarizatsiya allaqachon yakunlangan."
+  },
+  "recipe": {
+    "empty": "Kamida bitta ingredient qo‘shing."
+  },
+  "unit": {
+    "conversion_exists": "Bunday konversiya mavjud."
   }
 }

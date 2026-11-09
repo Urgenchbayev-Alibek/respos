@@ -64,5 +64,21 @@
     "active": "Активна",
     "suspended": "Приостановлена",
     "closed": "Закрыта"
+  },
+  "subscription": {
+    "trial": "Пробный",
+    "active": "Активна",
+    "past_due": "Просрочена",
+    "suspended": "Приостановлена",
+    "cancelled": "Отменена"
+  },
+  "demoRequest": {
+    "new": "Новая",
+    "contacted": "Связались",
+    "closed": "Закрыта"
+  },
+  "inventoryCount": {
+    "draft": "Черновик",
+    "completed": "Завершена"
   }
 }

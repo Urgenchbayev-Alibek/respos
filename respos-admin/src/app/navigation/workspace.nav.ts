@@ -4,6 +4,7 @@ import {
   CalendarClock,
   ClipboardCheck,
   ClipboardList,
+  CookingPot,
   CreditCard,
   Flag,
   Inbox,
@@ -12,6 +13,7 @@ import {
   Package,
   Receipt,
   ShoppingCart,
+  Truck,
   Wallet,
 } from 'lucide-react';
 import { PERMISSIONS as P } from '@/shared/constants/permissions';
@@ -35,6 +37,8 @@ export const STOCK_NAV: readonly NavItem[] = [
   { id: 'inventory', labelKey: 'nav:stock.inventory', path: ROUTES.stock.inventory, icon: Package, anyOf: [P.inventory.read], end: true },
   { id: 'purchases', labelKey: 'nav:stock.purchases', path: ROUTES.stock.purchases, icon: ShoppingCart, anyOf: [P.purchases.read] },
   { id: 'counts', labelKey: 'nav:stock.counts', path: ROUTES.stock.counts, icon: ClipboardCheck, anyOf: [P.inventory.adjust] },
+  { id: 'suppliers', labelKey: 'nav:stock.suppliers', path: ROUTES.stock.suppliers, icon: Truck, anyOf: [P.suppliers.read] },
+  { id: 'recipes', labelKey: 'nav:stock.recipes', path: ROUTES.stock.recipes, icon: CookingPot, anyOf: [P.recipes.read] },
 ];
 
 export const PLATFORM_NAV: readonly NavItem[] = [

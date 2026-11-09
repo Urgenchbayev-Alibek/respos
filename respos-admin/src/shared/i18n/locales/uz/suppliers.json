@@ -1,0 +1,42 @@
+{
+  "title": "Yetkazib beruvchilar",
+  "subtitle": "Yetkazib beruvchilar va kontaktlar",
+  "search": "Nomi, telefon, STIR bo‘yicha qidirish",
+  "showArchived": "Arxivni ko‘rsatish",
+  "empty": "Hozircha yetkazib beruvchilar yo‘q",
+  "active": "Faol",
+  "archived": "Arxiv",
+  "columns": {
+    "status": "Holat",
+    "actions": "Amallar"
+  },
+  "fields": {
+    "name": "Nomi",
+    "contactPerson": "Aloqa shaxsi",
+    "phone": "Telefon",
+    "email": "Email",
+    "address": "Manzil",
+    "inn": "STIR",
+    "notes": "Izohlar"
+  },
+  "actions": {
+    "create": "Yetkazib beruvchi qo‘shish",
+    "edit": "«{{name}}»ni tahrirlash",
+    "archive": "«{{name}}»ni arxivlash",
+    "archiveShort": "Arxivlash"
+  },
+  "form": {
+    "createTitle": "Yangi yetkazib beruvchi",
+    "editTitle": "Yetkazib beruvchini tahrirlash"
+  },
+  "confirm": {
+    "archiveTitle": "Yetkazib beruvchi arxivlansinmi?",
+    "archiveMessage": "«{{name}}»ni yangi xaridlarda tanlab bo‘lmaydi. Tarix saqlanadi."
+  },
+  "toast": {
+    "created": "Yetkazib beruvchi qo‘shildi",
+    "updated": "Yetkazib beruvchi saqlandi",
+    "archived": "Yetkazib beruvchi arxivlandi",
+    "archiveFailed": "Arxivlab bo‘lmadi"
+  }
+}

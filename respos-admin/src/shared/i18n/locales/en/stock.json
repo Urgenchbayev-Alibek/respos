@@ -1,0 +1,175 @@
+{
+  "title": "Stock",
+  "subtitle": "Current branch balances, movements and counts",
+  "tabs": {
+    "ingredients": "Balances",
+    "movements": "Movements",
+    "counts": "Stock counts",
+    "units": "Units",
+    "categories": "Categories"
+  },
+  "columns": {
+    "ingredient": "Ingredient",
+    "category": "Category",
+    "quantity": "Quantity",
+    "minQuantity": "Minimum",
+    "costPrice": "Cost price",
+    "status": "Status",
+    "actions": "Actions",
+    "date": "Date",
+    "type": "Type",
+    "balanceAfter": "Balance after",
+    "source": "Source",
+    "reason": "Reason",
+    "user": "User",
+    "number": "Number",
+    "completedAt": "Completed",
+    "expected": "Expected",
+    "counted": "Counted",
+    "difference": "Difference"
+  },
+  "fields": {
+    "ingredient": "Ingredient",
+    "selectIngredient": "Select ingredient",
+    "movementType": "Operation type",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "unitCost": "Unit cost, {{currency}}",
+    "reason": "Reason",
+    "name": "Name",
+    "sku": "SKU",
+    "category": "Category",
+    "noCategory": "No category",
+    "baseUnit": "Base unit",
+    "selectUnit": "Select unit",
+    "costPrice": "Cost price, {{currency}}",
+    "minQuantityUnit": "Minimum quantity, {{unit}}",
+    "unitCode": "Code",
+    "unitKind": "Kind",
+    "fromUnit": "From unit (1 ×)",
+    "toUnit": "To unit",
+    "factor": "Factor"
+  },
+  "filters": {
+    "allCategories": "All categories",
+    "allIngredients": "All ingredients",
+    "allTypes": "All types",
+    "lowOnly": "Below minimum only",
+    "reset": "Reset",
+    "from": "From",
+    "to": "To"
+  },
+  "actions": {
+    "movement": "Movement",
+    "newMovement": "Movement",
+    "minQuantity": "Minimum quantity",
+    "edit": "Edit",
+    "archive": "Archive",
+    "addIngredient": "Add ingredient",
+    "menu": "Actions: {{name}}",
+    "editNamed": "Edit “{{name}}”",
+    "deleteNamed": "Delete “{{name}}”"
+  },
+  "level": {
+    "ok": "OK",
+    "low": "Below minimum",
+    "negative": "Negative",
+    "archived": "Archived"
+  },
+  "movementType": {
+    "receipt": "Receipt",
+    "consumption": "Consumption (sale)",
+    "write_off": "Write-off",
+    "adjustment": "Adjustment",
+    "inventory_count": "Stock count",
+    "transfer_in": "Transfer in",
+    "transfer_out": "Transfer out"
+  },
+  "sourceType": {
+    "order": "Order",
+    "purchase": "Purchase",
+    "manual": "Manual",
+    "inventory_count": "Stock count"
+  },
+  "unitKind": {
+    "mass": "Mass",
+    "volume": "Volume",
+    "count": "Count"
+  },
+  "movement": {
+    "title": {
+      "receipt": "Receipt",
+      "write_off": "Write-off",
+      "adjustment": "Stock adjustment"
+    },
+    "currentBalance": "Current balance",
+    "adjustmentHint": "Positive = surplus, negative = shortage",
+    "unitHint": "Converted to the base unit on the server",
+    "baseUnit": "Base ({{unit}})",
+    "baseUnitShort": "Base unit",
+    "reasonPlaceholder": "E.g. expired",
+    "saved": "Movement saved"
+  },
+  "movements": {
+    "empty": "No movements for the selected filters"
+  },
+  "ingredients": {
+    "title": "Ingredients",
+    "search": "Search by name or SKU",
+    "empty": "No ingredients yet",
+    "emptyFiltered": "Nothing found",
+    "createTitle": "New ingredient",
+    "editTitle": "Edit ingredient",
+    "created": "Ingredient created",
+    "updated": "Ingredient saved",
+    "baseUnitLocked": "Base unit cannot be changed after creation",
+    "minTitle": "Minimum quantity",
+    "minHint": "For the current branch. Below it you get a low-stock alert.",
+    "minSaved": "Minimum quantity saved",
+    "archiveTitle": "Archive ingredient?",
+    "archiveMessage": "“{{name}}” will disappear from pickers. Movement history is kept.",
+    "archived": "Ingredient archived",
+    "archiveFailed": "Could not archive"
+  },
+  "counts": {
+    "description": "Create a count — expected balances are snapshotted. Enter counted quantities and complete.",
+    "create": "Start count",
+    "createFailed": "Could not create the count",
+    "empty": "No counts yet",
+    "continue": "Continue",
+    "view": "Open",
+    "editorTitle": "Stock count {{number}}",
+    "noLines": "The count has no lines",
+    "countedFor": "Counted quantity: {{name}}",
+    "saveDraft": "Save draft",
+    "saved": "Draft saved",
+    "complete": "Complete",
+    "completeTitle": "Complete the count?",
+    "completeMessage": "Adjustments will be created for lines with differences. This cannot be undone.",
+    "completed": "Count completed"
+  },
+  "units": {
+    "description": "Organization units and conversion factors",
+    "add": "Add unit",
+    "addConversion": "Add conversion",
+    "empty": "No units yet",
+    "createTitle": "New unit",
+    "created": "Unit created",
+    "conversionTitle": "New conversion",
+    "conversionHint": "1 “from” = factor × “to”. E.g. 1 kg = 1000 g.",
+    "conversionCreated": "Conversion saved",
+    "sameUnit": "Choose a different unit"
+  },
+  "categories": {
+    "description": "Categories to group ingredients",
+    "add": "Add category",
+    "empty": "No categories yet",
+    "createTitle": "New category",
+    "editTitle": "Rename category",
+    "saved": "Category saved",
+    "deleteTitle": "Delete category?",
+    "deleteMessage": "Ingredients in “{{name}}” will have no category.",
+    "deleted": "Category deleted",
+    "deleteFailed": "Could not delete the category"
+  }
+}

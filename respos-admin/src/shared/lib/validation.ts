@@ -16,6 +16,9 @@ export const V = {
   moneyPrecision: 'validation:moneyPrecision',
   maxLength: 'validation:maxLength',
   selectAtLeastOne: 'validation:selectAtLeastOne',
+  quantity: 'validation:quantity',
+  nonZero: 'validation:nonZero',
+  slug: 'validation:slug',
 } as const;
 
 export const requiredString = (max = 200) => z.string().trim().min(1, V.required).max(max, V.maxLength);

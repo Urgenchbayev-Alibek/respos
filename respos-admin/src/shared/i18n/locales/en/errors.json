@@ -63,5 +63,21 @@
     "crashTitle": "An error occurred",
     "crashDescription": "Reload the page. If it happens again, contact support.",
     "reload": "Reload"
+  },
+  "purchase": {
+    "invalid_status_transition": "Invalid purchase status change.",
+    "not_editable": "Only drafts can be edited."
+  },
+  "organization": {
+    "slug_taken": "This slug is already taken."
+  },
+  "inventory_count": {
+    "already_completed": "The count is already completed."
+  },
+  "recipe": {
+    "empty": "Add at least one ingredient."
+  },
+  "unit": {
+    "conversion_exists": "This conversion already exists."
   }
 }
