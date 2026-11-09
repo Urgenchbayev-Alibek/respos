@@ -1,126 +1,122 @@
 # RestaurantOS — ERD (часть 3): ограничения, индексы, инварианты
 
-Обозначения scope: G — глобальная, O — OrganizationId, B — OrganizationId + BranchId, C — дочерняя (через родителя).
+Сверено с `AppDbContextModelSnapshot.cs` (миграция `InitialCreate`). Обозначения scope: G — глобальная, O — `organization_id`,
+B — `organization_id` + `branch_id`, C — дочерняя (через корень агрегата, без `organization_id`).
 
-> Модель данных разделена на 3 файла: [ERD.md](ERD.md) (соглашения, Identity, Floor, Menu, Orders & Kitchen) ·
+> Модель данных разделена на 3 файла: [ERD.md](ERD.md) (соглашения, Identity/SaaS, Floor, Menu, Orders & Kitchen) ·
 > [ERD_INVENTORY_PAYMENTS.md](ERD_INVENTORY_PAYMENTS.md) (Inventory, Procurement, Payments, Notifications/Audit) ·
-> [ERD_CONSTRAINTS.md](ERD_CONSTRAINTS.md) (scope, уникальные ограничения, удаление, индексы, инварианты, вопросы).
+> [ERD_CONSTRAINTS.md](ERD_CONSTRAINTS.md) (scope, уникальные ограничения, удаление, индексы, инварианты, решённые вопросы).
 
 ## 9. Scope, уникальные ограничения, удаление
 
-| Таблица | Scope | Уникальные ограничения | Удаление |
+«UK» — unique index в БД. «(код)» — правило проверяется только приложением, индекса нет.
+
+| Таблица | Scope | Уникальность | Удаление / FK |
 |---|---|---|---|
-| Organizations | G | `Slug` | не удаляется (`Status = closed`) |
-| RestaurantBranches | O | — (желательно `(OrganizationId, Name)`) | деактивация `IsActive` |
-| BranchSettings | B | PK = `BranchId` | вместе с филиалом (не удаляется) |
-| Users | G | `Email` (normalized lower) | деактивация `Status` |
-| UserOrganizations | O | `(UserId, OrganizationId)` | `IsActive = false` |
-| Roles | O | `(OrganizationId, Code)` | DELETE только не системной без пользователей |
-| Permissions | G | PK `Code` | не удаляется |
-| RolePermissions | C (Role) | PK `(RoleId, PermissionCode)` | **CASCADE** от Role |
-| UserRoles | O | PK `(UserId, RoleId)` | DELETE при снятии роли |
-| UserBranchAccess | O | PK `(UserId, BranchId)` | DELETE при снятии доступа |
-| RefreshTokens | G (+OrganizationId?) | `TokenHash` | очистка просроченных job-ом |
-| UserInvitations | O | `TokenHash`; `(OrganizationId, Email)` WHERE `AcceptedAt IS NULL` | истекают |
-| PasswordResetTokens | G | `TokenHash` | очистка |
-| Plans / Features | G | `Code` | `IsActive = false` |
-| PlanFeatures | G | PK `(PlanId, FeatureId)` | CASCADE от Plan |
-| Subscriptions | O | одна активная на org (partial unique `WHERE Status IN ('trial','active','past_due')`) | история хранится |
-| FeatureFlags | O / G | `(OrganizationId, FeatureCode)` NULLS NOT DISTINCT | DELETE |
-| DemoRequests | G | — | хранится |
-| DiningAreas | B | — | архив (`IsActive = false`) |
-| DiningTables | B | `(BranchId, Number)` WHERE `NOT IsArchived` | архив |
-| TableReservations | B | без пересечений для активных (см. §10) | статус `cancelled` |
-| KitchenStations | B | — | `IsActive = false` |
-| MenuCategories | O | — | архив |
-| MenuItems | O | `(OrganizationId, Sku)` WHERE `Sku IS NOT NULL AND NOT IsArchived` | архив |
-| MenuItemVariants | C (MenuItem) | — | архив |
-| ModifierGroups | O | — | DELETE, если не использован; иначе архив опций |
-| MenuItemModifierGroups | C | PK `(MenuItemId, ModifierGroupId)` | CASCADE от MenuItem / ModifierGroup |
-| ModifierOptions | C (Group) | — | архив |
-| MenuAvailability | C (MenuItem) | — | CASCADE от MenuItem |
-| Orders | B | `(BranchId, BusinessDate, Number)` | не удаляются (`cancelled`) |
-| OrderItems | C (Order) | — | статус `cancelled`; CASCADE только технически от Order |
-| OrderItemModifiers | C (OrderItem) | — | **CASCADE** от OrderItem |
-| OrderStatusHistory | C (Order) | — | append-only |
-| KitchenTickets | B | `(BranchId, OrderId, Number)` | статус `cancelled` |
-| KitchenTicketItems | C (Ticket) | `(TicketId, OrderItemId)` | CASCADE от Ticket |
-| UnitsOfMeasure | O | `(OrganizationId, Code)` | RESTRICT |
-| UnitConversions | O | `(OrganizationId, FromUnitId, ToUnitId)` | DELETE |
-| IngredientCategories | O | `(OrganizationId, Name)` | RESTRICT |
-| Ingredients | O | `(OrganizationId, Sku)` WHERE `Sku IS NOT NULL AND NOT IsArchived` | архив |
-| StockBalances | B | `(BranchId, IngredientId)` | не удаляется |
-| StockMovements | B | — | append-only |
-| Recipes | O | `(MenuItemId, VariantId, Version)`; одна активная: `(MenuItemId, VariantId)` WHERE `IsActive` NULLS NOT DISTINCT | история хранится |
-| RecipeIngredients | C (Recipe) | `(RecipeId, IngredientId)` | **CASCADE** от Recipe |
-| InventoryConsumptions | B | **`OrderId`** (идемпотентность) | не удаляется |
-| InventoryCounts | B | — | draft можно удалить |
-| InventoryCountLines | C | `(InventoryCountId, IngredientId)` | CASCADE от Count |
-| Suppliers | O | — | архив |
-| PurchaseOrders | B | `(BranchId, Number)` | draft — DELETE; иначе `cancelled` |
-| PurchaseOrderItems | C (PO) | — | **CASCADE** от PurchaseOrder |
-| CashShifts | B | одна открытая на филиал: `(BranchId)` WHERE `Status = 'open'` | не удаляется |
-| Payments | B | `(OrganizationId, IdempotencyKey)` | не удаляется (refund) |
-| Refunds | B | — | не удаляется |
-| Notifications | O (+BranchId?) | — | очистка старых job-ом |
-| NotificationReads | C | PK `(NotificationId, UserId)` | CASCADE от Notification |
-| AuditLogs | O? | — | append-only |
-| IdempotencyRecords | G (по UserId) | `(Key, UserId)` | TTL 24 ч, очистка job-ом |
+| organizations | G | UK `slug` | не удаляется (`status = suspended/closed`) |
+| branches | O | — | деактивация `is_active` |
+| branch_settings | B | UK `branch_id` (PK — `id`) | **CASCADE** от branches |
+| users | G | UK `email` | деактивация `status` |
+| user_organizations | O | UK `(user_id, organization_id)` | `is_active = false` |
+| roles | O | UK `(organization_id, code)` | DELETE только несистемной без пользователей |
+| permissions | G | PK `code` | синхронизируется сидером |
+| role_permissions | C (Role) | PK `(role_id, permission_code)` | **CASCADE** от roles и permissions |
+| user_roles | O | PK `(user_id, role_id)` | DELETE при снятии роли |
+| user_branch_accesses | O | PK `(user_id, branch_id)` | DELETE при снятии доступа |
+| refresh_tokens | G (+`organization_id` nullable) | UK `token_hash` | отзыв `revoked_at`; очистки job-ом нет |
+| user_invitations | O | UK `token_hash` | истекают (`expires_at`), одноразовые (`accepted_at`) |
+| password_reset_tokens | G | UK `token_hash` | одноразовые (`used_at`) |
+| plans | G | UK `code` | `is_active = false` |
+| features | G | PK `code` | — |
+| plan_features | C (Plan) | PK `(plan_id, feature_code)` | **CASCADE** от plans и features |
+| subscriptions | O | — (одна активная — код) | история хранится |
+| feature_flags | O / G | UK `(organization_id, feature_code)` (NULLs distinct — уникальность глобальных флагов БД не гарантирует) | DELETE |
+| billing_events, demo_requests | O / G | — | хранятся |
+| dining_areas | B | — | архив |
+| dining_tables | B | UK `(branch_id, number)` WHERE `is_archived = false` | архив |
+| table_reservations | B | — (пересечения — код, §10) | статус `cancelled` |
+| kitchen_stations | B | — | архив / `is_active` |
+| menu_categories, modifier_groups | O | — | архив |
+| menu_items | O | — (SKU не уникален в БД) | архив |
+| menu_item_variants | C (MenuItem) | — | архив; **CASCADE** от menu_items |
+| menu_item_modifier_groups | C | PK `(menu_item_id, modifier_group_id)` | **CASCADE** от menu_items; RESTRICT от modifier_groups |
+| modifier_options | C (Group) | — | архив; **CASCADE** от modifier_groups |
+| menu_availabilities | C (MenuItem) | — | **CASCADE** от menu_items |
+| orders | B | UK `(branch_id, business_date, number)` | не удаляются (`cancelled`) |
+| order_items | C (Order) | — | статус `cancelled`; **CASCADE** от orders (технически) |
+| order_item_modifiers | C (OrderItem) | — | **CASCADE** от order_items |
+| order_status_history | C (Order) | — | append-only; **CASCADE** от orders |
+| kitchen_tickets | B | — (индекс `(order_id, kitchen_station_id, number)` не уникальный) | статус `cancelled` |
+| kitchen_ticket_items | C (Ticket) | — | **CASCADE** от kitchen_tickets |
+| units_of_measure | O | UK `(organization_id, code)` | RESTRICT |
+| unit_conversions | O | UK `(from_unit_id, to_unit_id)` | DELETE |
+| ingredient_categories | O | — | архив |
+| ingredients | O | — | архив |
+| stock_balances | B | UK `(branch_id, ingredient_id)` | не удаляется |
+| stock_movements | B | — | append-only |
+| recipes | O | UK `(menu_item_id, variant_id, version)`; одна активная: UK `(menu_item_id)` WHERE `is_active AND variant_id IS NULL` + UK `(menu_item_id, variant_id)` WHERE `is_active AND variant_id IS NOT NULL` | история хранится |
+| recipe_ingredients | C (Recipe) | — | **CASCADE** от recipes |
+| inventory_consumptions | B | UK **`order_id`** (идемпотентность) | не удаляется |
+| inventory_counts | B | — | completed не меняется |
+| inventory_count_lines | C | UK `(inventory_count_id, ingredient_id)` | **CASCADE** от inventory_counts |
+| suppliers | O | — | архив |
+| purchase_orders | B | UK `(branch_id, number)` | `cancelled` |
+| purchase_order_items | C (PO) | — | **CASCADE** от purchase_orders |
+| cash_shifts | B | одна открытая на филиал: UK `(branch_id)` WHERE `status = 'open'` | не удаляется |
+| payments | B | UK `(organization_id, idempotency_key)` | не удаляется (refund) |
+| refunds | B | — | не удаляется |
+| notifications | O (+`branch_id` nullable) | — | очистки job-ом нет |
+| notification_reads | C | PK `(notification_id, user_id)` | **CASCADE** от notifications |
+| audit_logs | O (nullable, без FK) | — | append-only |
+| idempotency_records | G (по `user_id`) | UK `(key, user_id)` | TTL 24 ч: просроченная запись удаляется при повторном обращении с тем же ключом (фоновой очистки нет) |
 
-`NULLS NOT DISTINCT` поддерживается PostgreSQL 15+ (у нас 16); в EF Core задаётся через raw SQL в миграции, если
-Npgsql-провайдер не даёт fluent-API (`AreNullsDistinct(false)` — проверить версию провайдера).
+Все остальные FK — `RESTRICT`. CHECK constraints и exclusion constraints в миграции нет.
 
-## 10. Индексы для частых запросов
+## 10. Индексы для частых запросов (фактические)
 
-- Каждая O/B-таблица: индекс по `OrganizationId` (часто составной с `BranchId` первым полем после org).
-- `Orders`: `(BranchId, Status)`, `(BranchId, OpenedAt)`, `(BranchId, TableId)` WHERE `Status NOT IN ('paid','cancelled')`,
-  `(BranchId, WaiterId, OpenedAt)`.
-- `OrderItems`: `(OrderId)`, `(MenuItemId)` (популярные блюда).
-- `KitchenTickets`: `(BranchId, Status, CreatedAt)`, `(BranchId, KitchenStationId, Status)`.
-- `TableReservations`: `(TableId, StartsAt, EndsAt)`, `(BranchId, StartsAt)`.
-  Рекомендуется exclusion constraint как защита от гонок:
-  `EXCLUDE USING gist (TableId WITH =, tstzrange(StartsAt, EndsAt, '[)') WITH &&) WHERE (Status IN ('pending','confirmed','seated') AND TableId IS NOT NULL)`
-  (нужно расширение `btree_gist`; добавляется raw SQL в миграции). Ошибка constraint → 409 `reservation.time_conflict`.
-- `StockMovements`: `(BranchId, IngredientId, CreatedAt)`, `(BranchId, SourceType, SourceId)`.
-- `StockBalances`: unique `(BranchId, IngredientId)`; для «ниже минимума» — фильтр `Quantity < MinQuantity` по филиалу.
-- `Payments`: `(BranchId, CreatedAt)`, `(OrderId)`, `(CashShiftId)`.
-- `PurchaseOrders`: `(BranchId, Status)`, `(SupplierId)`.
-- `AuditLogs`: `(OrganizationId, CreatedAt DESC)`, `(OrganizationId, EntityType, EntityId)`.
-- `Notifications`: `(OrganizationId, BranchId, CreatedAt DESC)`.
-- `Users`: unique `Email`; `MenuItems`: `(OrganizationId, CategoryId)`, поиск по имени — `pg_trgm` позднее при необходимости.
+- Каждая O/B-таблица: индекс `organization_id`; B-таблицы — ещё `(organization_id, branch_id)`.
+- `orders`: `(branch_id, status)`, `(branch_id, opened_at)`, `table_id`, `waiter_id`.
+- `order_items`: `order_id`, `menu_item_id`, `variant_id`, `kitchen_station_id`.
+- `kitchen_tickets`: `(branch_id, status, created_at)`, `(order_id, kitchen_station_id, number)`; `kitchen_ticket_items`: `ticket_id`, `order_item_id`.
+- `dining_tables`: `(branch_id, status)`, `dining_area_id`.
+- `table_reservations`: `(table_id, starts_at)`, `(branch_id, starts_at)`. Пересечения проверяются в коде (полуинтервал
+  `[starts_at, ends_at)`, `409 reservation.time_conflict`); exclusion constraint (`btree_gist`) — возможное усиление позже.
+- `stock_movements`: `(branch_id, ingredient_id, created_at)`, `(branch_id, created_at)`, `(source_type, source_id)`.
+- `payments`: `(branch_id, created_at)`, `order_id`, `cash_shift_id`; `refunds`: `payment_id`, `cash_shift_id`.
+- `cash_shifts`: `(branch_id, opened_at)`; `purchase_orders`: `(branch_id, status)`, `supplier_id`.
+- `audit_logs`: `(organization_id, created_at)`, `(entity_type, entity_id)`, `action`.
+- `notifications`: `(organization_id, branch_id, created_at)`, `user_id`; `notification_reads`: `user_id`.
+- `menu_items`: `(organization_id, category_id)`; `users`: UK `email`, `status`; `idempotency_records`: `created_at`.
 
 ## 11. Транзакционные инварианты
 
-1. `StockBalances.Quantity` меняется только вместе с вставкой `StockMovements` (одна транзакция, `BalanceAfter` = новое значение).
-2. Оплата: `Payments` + `Orders.PaidAmount/Status` + (при полной оплате) `InventoryConsumptions` + `StockMovements` +
-   `DiningTables.Status` — одна транзакция (или outbox, ADR-0006).
-3. Поступление закупки: `PurchaseOrderItems.ReceivedQuantity` + `StockMovements(receipt)` + `StockBalances` +
-   `Ingredients.CostPrice` + статус PO — одна транзакция.
-4. Номер заказа: следующий `Number` в `(BranchId, BusinessDate)` — через `SELECT max+1` под advisory lock или
-   отдельную таблицу счётчиков `OrderNumberSequences (BranchId, BusinessDate, LastNumber)`; уникальный индекс страхует.
+1. `stock_balances.quantity` меняется только вместе со вставкой `stock_movements` (одна транзакция, `balance_after` = новое значение).
+2. Оплата: `payments` + `orders.paid_amount/status` + (при полной оплате) `inventory_consumptions` + `stock_movements` +
+   `dining_tables.status` — один `SaveChanges` (обработчики доменных событий выполняются до commit, outbox нет; ADR-0006).
+3. Поступление закупки: `purchase_order_items.received_quantity` + `stock_movements(receipt)` + `stock_balances` +
+   `ingredients.cost_price` + статус PO — одна транзакция.
+4. Номер заказа: `max(number)+1` в `(branch_id, business_date)`; при нарушении UK — перенумерация и повтор (до 5 попыток).
+5. `kitchen_tickets.number` — номер отправки внутри заказа: `max(number)+1` по `order_id`, общий для тикетов одной отправки.
 
-## 12. Вопросы / несоответствия контракту
+## 12. Вопросы / несоответствия контракту — статус
 
-1. **`Order.BusinessDate` отсутствует в DOMAIN_MODEL**, но номер «sequential per branch per day» требует даты
-   бизнес-дня (в timezone филиала) для уникального ключа и отчётов. Предлагается добавить колонку.
-2. **`Refund.CashShiftId` отсутствует**, а закрытие смены считает `expected = opening + cash payments − cash refunds`.
-   Возврат в другой смене, чем платёж, без этой колонки посчитается неверно. Также нужен `Refund.Method`/или правило «метод = метод платежа».
-3. **`MenuItemVariant`**: в DOMAIN_MODEL «PriceDelta (or absolute Price — use `Price` absolute)» — двусмысленность;
-   здесь принят абсолютный `Price`, в DTO `variants: {id,name,price}`. Стоит убрать `PriceDelta` из текста контракта.
-4. **`MenuItem.KitchenStationId`** — меню org-scoped, а станции branch-scoped; при втором филиале нужна таблица
-   соответствия `MenuItemStation (MenuItemId, BranchId, StationId)`. В MVP — как в контракте.
-5. **`MenuItem.IsAvailable`** — org-уровень, тогда как «стоп-лист» обычно филиальный. Для мульти-филиала нужен branch-override.
-6. **`StockBalance.MinQuantity` vs `Ingredient.MinQuantity`**: в контракте одновременно «MinQuantity (per branch → stored on
-   StockBalance)» у Ingredient — здесь хранится только на `StockBalances`.
-7. **Дочерние таблицы без `OrganizationId`** (OrderItems, RecipeIngredients, PurchaseOrderItems, …) — контракт говорит
-   «Every business table has OrganizationId». Нужно решить: либо денормализовать `OrganizationId` во все дочерние
-   (проще global filter), либо явно разрешить scope через родителя (здесь — **C**).
-8. **`UserInvitation.RoleIds/BranchIds`** — массивы в одной колонке (jsonb/uuid[]) без FK; допустимо для приглашений,
-   но целостность проверяется кодом.
-9. **`OrderStatus` содержит `served`**, а ТЗ §4.6 перечисляет статусы без него — расширение, не конфликт; KitchenTicket
-   тоже имеет `served`, а `KitchenTicketItem` — нет (зеркалит item без `served`/`sent`).
-10. **`Payment.IdempotencyKey` unique per org** и **`IdempotencyRecord (Key, UserId)`** — две разные области
-    уникальности; один и тот же ключ у разных пользователей одной организации на `POST /payments` даст 409 по таблице
-    Payments, хотя IdempotencyRecord его пропустит. Нормально, но стоит описать поведение в контракте.
-11. **`AuditLog.EntityId`** — `text` (не все сущности имеют Guid, напр. `Permission.Code`).
-12. **Refund не возвращает ингредиенты** — допущение (ADR-0006), не отражено в контракте.
+Все пункты исходного ревью закрыты контрактом v1.1 (`respos-contracts/DECISIONS_v1_1.md`, далее D) и реализацией.
+
+| # | Вопрос | Статус |
+|---|---|---|
+| 1 | `Order.BusinessDate` отсутствовал | ✅ Решено (D §1): `orders.business_date date`, UK `(branch_id, business_date, number)` |
+| 2 | `Refund.CashShiftId` / метод возврата | ✅ Решено (D §2): `refunds.cash_shift_id` (смена на момент возврата) и `refunds.method` (из платежа) |
+| 3 | `MenuItemVariant` PriceDelta vs Price | ✅ Решено (D §5): только абсолютный `price` |
+| 4 | `MenuItem.KitchenStationId` org vs branch | ⏳ Принято как ограничение MVP (D §7, User-Todo L3/Q2): org-level; per-branch настройки позже |
+| 5 | `MenuItem.IsAvailable` org-уровень | ⏳ То же (D §7) |
+| 6 | `MinQuantity` у Ingredient и StockBalance | ✅ Решено (D §5): только `stock_balances.min_quantity` |
+| 7 | Дочерние таблицы без `OrganizationId` | ✅ Решено (D §6): scope через корень агрегата, без `organization_id` |
+| 8 | `UserInvitation.RoleIds/BranchIds` без FK | ✅ Принято: `uuid[]`, целостность проверяется кодом при приёме приглашения |
+| 9 | Разные семейства статусов (`served` у Order/Ticket, нет у TicketItem) | ✅ Решено (D §3): семейства различаются намеренно, есть таблица соответствия |
+| 10 | Две области уникальности idempotency | ✅ Решено (D §8, ADR-0013): HTTP replay `(key, user_id)` + DB safety net `(organization_id, idempotency_key)` → `409 payment.duplicate` |
+| 11 | `AuditLog.EntityId` — text | ✅ `varchar(64)` |
+| 12 | Refund не возвращает ингредиенты | ✅ Решено (D §4, BR-10.9): не возвращает, статус `paid` не меняется |
+
+Дополнительно: ограничения из ранней версии документа, которых в реальной БД **нет**, — уникальность SKU блюд/ингредиентов,
+partial unique «одна активная подписка», exclusion constraint броней (пересечения проверяет код), CHECK-ограничения enum,
+`NULLS NOT DISTINCT` для глобальных feature flags. При необходимости — отдельной миграцией.

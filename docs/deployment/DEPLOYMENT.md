@@ -19,9 +19,13 @@ docker compose -f infra/docker/docker-compose.yml up -d postgres
 ./scripts/dev-up.sh          # Linux/macOS/Git Bash
 pwsh ./scripts/dev-up.ps1    # Windows PowerShell
 
-# API в контейнере вместе с БД (профиль full; нужен respos-backend/Dockerfile)
+# API в контейнере вместе с БД (профиль full; образ из respos-backend/Dockerfile, http://localhost:5080 → :8080)
 docker compose -f infra/docker/docker-compose.yml --profile full up -d --build
 ```
+
+Профиль `full` запускает API с `ASPNETCORE_ENVIRONMENT=Development`: `appsettings.Development.json` входит в образ, поэтому
+миграции и демо-seed выполняются при старте; строка подключения переопределена на `postgres:5432`. В production образ работает
+с `ASPNETCORE_ENVIRONMENT=Production`, и dev-значения из этого файла не применяются.
 
 Затем:
 
@@ -31,7 +35,10 @@ cd respos-admin   && npm install && npm run dev                 # http://localho
 cd respos-landing && npm install && npm run dev                 # http://localhost:5174
 ```
 
-Переменные — по образцу корневого `.env.example`; копию `.env` не коммитить. Demo seed (`Seed__DemoData=true`) — только в Development.
+Локально `dotnet run` берёт всё из `appsettings.Development.json` (строка подключения на 5433, dev-ключ JWT, CORS для
+`:5173/:5174`, `Database:MigrateOnStartup=true`, `Seed:DemoData=true`, пароль демо `Demo123!`) — `.env` не нужен.
+`.env.example` — справочник имён переменных; копию `.env` не коммитить. Не задавайте `Seed__DemoPassword` пустым значением.
+Demo seed выполняется только при `ASPNETCORE_ENVIRONMENT=Development` **и** `Seed:DemoData=true`.
 
 ## 2. Окружения
 
@@ -57,8 +64,10 @@ cd respos-landing && npm install && npm run dev                 # http://localho
 
 | Переменная | Пример (не реальный адрес) | Проект |
 |---|---|---|
-| `VITE_API_BASE_URL` | `https://api.example.com/api/v1` | admin, landing (форма заявки) |
+| `VITE_API_BASE_URL` | `https://api.example.com/api/v1` | admin, landing (форма заявки, тарифы) |
 | `VITE_HUB_URL` | `https://api.example.com/hubs/restaurant` | admin |
+| `VITE_APP_ENV` | `development` / `preview` / `production` (метка окружения в UI, необязательно) | admin |
+| `VITE_ADMIN_APP_URL` | `https://app.example.com` (ссылка «Войти») | landing |
 
 `VITE_*` попадают в браузерный бандл — **никаких секретов в них**. URL API не хардкодить.
 
@@ -75,6 +84,13 @@ fallback-перезапись всех путей на `index.html`:
 
 Требования к платформе: .NET 8 (контейнер), **длительные WebSocket-соединения** (SignalR), HTTPS, переменные окружения/секреты, health checks, логи. Для БД: PostgreSQL 16, автоматические бэкапы и восстановление (PITR желательно), лимит подключений, регион, экспорт.
 
+Образ: `respos-backend/Dockerfile` (multi-stage, `mcr.microsoft.com/dotnet/aspnet:8.0`, слушает `8080`, по умолчанию
+`ASPNETCORE_ENVIRONMENT=Production`, пользователь `app`, каталог файлов `/app/storage`):
+
+```bash
+cd respos-backend && docker build -t respos-api . && docker run -p 8080:8080 --env-file prod.env respos-api
+```
+
 | Вариант | Плюсы | Что проверить перед выбором |
 |---|---|---|
 | PaaS с контейнерами (Render, Railway, Fly.io и т. п.) | быстрый старт из Dockerfile, managed Postgres | засыпание на бесплатном тарифе, поддержка WebSocket, лимиты, регион, цена бэкапов |
@@ -83,7 +99,7 @@ fallback-перезапись всех путей на `index.html`:
 
 Выбор — за владельцем (User-Todo **T3**). Требования закона РУз о персональных данных (локализация данных граждан РУз) могут сделать хостинг в Узбекистане обязательным — нужна юридическая консультация (User-Todo, раздел C).
 
-Минимальные переменные backend (production):
+Минимальные переменные backend (production). Имена — секции `appsettings.json` через `__`:
 
 ```env
 ASPNETCORE_ENVIRONMENT=Production
@@ -91,10 +107,38 @@ ConnectionStrings__DefaultConnection=Host=...;Port=5432;Database=...;Username=..
 Jwt__Issuer=respos
 Jwt__Audience=respos
 Jwt__SigningKey=<случайные ≥ 32 байт, из secret manager>
-Frontend__AllowedOrigins=https://app.example.com,https://example.com
-FileStorage__Provider=Local
-Seed__DemoData=false
+Frontend__AllowedOrigins=https://app.example.com,https://example.com   # или Frontend__AllowedOrigins__0=..., __1=...
+Frontend__AppUrl=https://app.example.com                              # база ссылок приглашений / сброса пароля
+Auth__RefreshCookieSameSite=Lax                                       # None — только при cross-site (§7)
+Seed__PlatformAdminPassword=<секрет>                                  # без него superadmin@respos.uz не создаётся
 ```
+
+Полный список настроек (значения по умолчанию — `respos-backend/src/Restaurant.Api/appsettings.json`):
+
+| Переменная | По умолчанию | Назначение |
+|---|---|---|
+| `ConnectionStrings__DefaultConnection` | — | PostgreSQL |
+| `Jwt__Issuer`, `Jwt__Audience` | `respos` | параметры токена |
+| `Jwt__SigningKey` | — (обязателен, ≥ 32 байт) | подпись JWT |
+| `Jwt__AccessTokenMinutes` | `15` | время жизни access token |
+| `Auth__RefreshTokenDays` | `14` | refresh token |
+| `Auth__PasswordResetTokenMinutes`, `Auth__InvitationDays` | `60`, `7` | сроки токенов сброса/приглашений |
+| `Auth__MaxFailedLoginAttempts`, `Auth__LockoutMinutes` | `5`, `15` | блокировка входа |
+| `Auth__RefreshCookieSameSite` | `Lax` | `Lax` / `Strict` / `None` |
+| `Auth__RefreshCookieSecure` | `true` | `false` только для локального HTTP |
+| `Frontend__AllowedOrigins` | `[]` | CORS allowlist (с credentials) |
+| `Frontend__AppUrl` | `http://localhost:5173` | URL admin-приложения для ссылок в письмах |
+| `FileStorage__Provider` | `Local` | единственный провайдер в MVP |
+| `FileStorage__LocalRoot`, `FileStorage__PublicBasePath` | `storage`, `/files` | каталог фото меню и URL-префикс |
+| `RateLimiting__GlobalPermitPerMinute`, `__LoginPerMinute`, `__AuthPerMinute`, `__DemoRequestsPerHour` | `300`, `5`, `20`, `5` | лимиты |
+| `Database__MigrateOnStartup` | `false` (`true` в Development) | применять миграции при старте |
+| `Database__SeedOnStartup` | `true` | базовые идемпотентные сидеры: права и системные роли, тарифы/фичи, platform admin |
+| `Seed__DemoData` | `false` (`true` в Development) | демо-организация — **только в Development** |
+| `Seed__DemoPassword` | `Demo123!` | пароль демо-пользователей (Development) |
+| `Seed__PlatformAdminPassword` | — | пароль `superadmin@respos.uz` вне Development |
+| `Swagger__Enabled` | `false` | Swagger вне Development |
+| `Serilog__*` | compact JSON в stdout | логирование |
+| `RESPOS_DESIGN_CONNECTION` | dev-БД `localhost:5433` | только для `dotnet ef` (design-time factory) |
 
 Health checks: `GET /health/live` (процесс жив), `GET /health/ready` (включая БД) — использовать в настройках платформы.
 
@@ -102,15 +146,23 @@ Health checks: `GET /health/live` (процесс жив), `GET /health/ready` (
 
 Правила ТЗ §18.5: понятные имена, проверка на чистой БД, не редактировать применённые production-миграции, анализ разрушительных изменений, **production-миграция только после бэкапа**, demo seed отдельно от production data.
 
+Инструмент — локальный `dotnet-ef` 8.0.11 (`respos-backend/.config/dotnet-tools.json`). Design-time `AppDbContextFactory`
+берёт строку подключения из `RESPOS_DESIGN_CONNECTION` (иначе dev-БД на 5433). Таблица истории — `__ef_migrations_history`.
+
 ```bash
-# создание (разработчик)
 cd respos-backend
-dotnet tool restore            # если dotnet-ef подключён как local tool
-dotnet ef migrations add AddReservations --project src/Restaurant.Infrastructure --startup-project src/Restaurant.Api
-# применение локально
-dotnet ef database update --project src/Restaurant.Infrastructure --startup-project src/Restaurant.Api
+dotnet tool restore
+# создание (разработчик); имя — <Module>_<Change>
+dotnet ef migrations add Orders_AddX -p src/Restaurant.Infrastructure -s src/Restaurant.Api -o Persistence/Migrations
+# применение локально (в Development также автоматически при старте API)
+dotnet ef database update -p src/Restaurant.Infrastructure -s src/Restaurant.Api
 # идемпотентный SQL-скрипт для ревью и production
-dotnet ef migrations script --idempotent -o migrate.sql --project src/Restaurant.Infrastructure --startup-project src/Restaurant.Api
+dotnet ef migrations script --idempotent -o migrate.sql -p src/Restaurant.Infrastructure -s src/Restaurant.Api
+# или самодостаточный bundle
+dotnet ef migrations bundle --self-contained -r linux-x64 -o efbundle -p src/Restaurant.Infrastructure -s src/Restaurant.Api
+./efbundle --connection "Host=...;Database=...;Username=...;Password=...;SSL Mode=Require"
+# применение к удалённой БД через dotnet ef
+RESPOS_DESIGN_CONNECTION="Host=...;..." dotnet ef database update -p src/Restaurant.Infrastructure -s src/Restaurant.Api
 ```
 
 Процедура production:
@@ -120,7 +172,9 @@ dotnet ef migrations script --idempotent -o migrate.sql --project src/Restaurant
 4. Задеплоить API, проверить `/health/ready` и smoke-сценарий (вход, создание заказа на демо-организации staging).
 5. При неудаче — откат версии API; откат схемы — восстановлением из бэкапа или заранее подготовленным down-скриптом.
 
-Автоприменение миграций при старте допускается только в Development **[?]** (решение backend).
+Автоприменение миграций при старте (`Database__MigrateOnStartup=true`) включено только в `appsettings.Development.json`;
+вне Development миграции применяются отдельным шагом до старта API (User-Todo L4). Базовые сидеры (`Database__SeedOnStartup`)
+идемпотентны и выполняются при каждом старте.
 
 ## 6. Резервное копирование и восстановление
 
@@ -138,7 +192,10 @@ pg_restore -c -h HOST -U USER -d respos_restore respos_YYYY-MM-DD.dump
 
 - `Frontend__AllowedOrigins` — явный allowlist (production домены admin и landing, при необходимости preview-домены). Никаких `*` с credentials.
 - CORS должен разрешать credentials (`AllowCredentials`) — refresh-cookie отправляется на `/api/v1/auth/refresh`.
-- Refresh-cookie: `HttpOnly; Secure; SameSite=None` в production (ADR-0003). При разных регистрируемых доменах (например `*.vercel.app` и `api.onrender.com`) браузеры с блокировкой сторонних cookies (Safari и др.) могут не отправлять cookie → **рекомендуется один домен**: `app.<домен>` (Vercel) и `api.<домен>` (backend). Тогда cookie становится first-party.
+- Refresh-cookie `refresh_token`: `HttpOnly; Secure; Path=/api/v1/auth`, `SameSite` из `Auth__RefreshCookieSameSite` (по умолчанию `Lax`; DECISIONS_v1_1 §10).
+  **Рекомендуемый деплой — same-site**: `app.<домен>` (Vercel) и `api.<домен>` (backend), `SameSite=Lax`.
+  Только если домены разные (например `*.vercel.app` и `api.onrender.com`) — `Auth__RefreshCookieSameSite=None` (+ `Secure`);
+  браузеры с блокировкой сторонних cookies (Safari и др.) всё равно могут не отправлять такую cookie.
 - SignalR: тот же origin в allowlist; токен в `?access_token=` — не логировать query string на прокси.
 
 ## 8. Секреты
@@ -152,16 +209,17 @@ pg_restore -c -h HOST -U USER -d respos_restore respos_YYYY-MM-DD.dump
 ## 9. HTTPS
 
 - Vercel выдаёт сертификаты автоматически (в т. ч. для своего домена).
-- Backend: TLS на платформе / reverse proxy (Caddy — автоматический Let’s Encrypt; Nginx + certbot). API за прокси должен учитывать `X-Forwarded-Proto` (ForwardedHeaders), включить HSTS в production.
+- Backend: TLS на платформе / reverse proxy (Caddy — автоматический Let’s Encrypt; Nginx + certbot). Контейнер слушает HTTP `8080`; HTTPS-редирект, HSTS и `ForwardedHeaders` в API **не настроены** — TLS и HSTS обеспечивает прокси/платформа.
 - Доступ к Postgres — только по TLS (`SSL Mode=Require`) и только из сети backend.
 
 ## 10. Чек-лист перед пилотом
 
 - [ ] Платформа backend и БД выбрана, тарифы/лимиты проверены (T3)
 - [ ] Свой домен, `app.` и `api.` поддомены, HTTPS
-- [ ] Production переменные заданы, `Seed__DemoData=false`
+- [ ] Production переменные заданы (`Jwt__SigningKey`, `Frontend__AllowedOrigins`, `Frontend__AppUrl`, `Seed__PlatformAdminPassword`), `Seed__DemoData` не включён
+- [ ] Миграции применены (скрипт/bundle) после бэкапа
 - [ ] Бэкапы включены и восстановление проверено
 - [ ] CORS allowlist = только production домены
 - [ ] Health checks подключены, алерт при падении
-- [ ] E2E-сценарий (TEST_PLAN §5) пройден на staging
+- [ ] E2E-сценарий (`scripts/e2e`, [E2E_RESULTS](../testing/E2E_RESULTS.md)) пройден на staging — с демо-организацией (вне Development демо-seed не создаётся, данные готовятся вручную)
 - [ ] Метки «Демо» / «Не является фискальным чеком» видны; юридическая консультация (User-Todo C)

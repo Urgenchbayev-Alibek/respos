@@ -15,4 +15,6 @@
 | [0008](0008-payment-provider-adapter.md) | Адаптер платёжного провайдера, только ручной/демо | Accepted |
 | [0009](0009-dotnet-8-upgrade-to-10.md) | .NET 8 сейчас, переход на .NET 10 LTS | Accepted, follow-up |
 | [0010](0010-single-react-app-workspaces.md) | Одно React-приложение с workspaces + отдельный лендинг | Accepted |
-| [0011](0011-no-mediatr-plain-handlers.md) | Без MediatR: простые handlers через DI scanning | Proposed |
+| [0011](0011-no-mediatr-plain-handlers.md) | Без MediatR: `IHandler<TRequest,TResponse>` через DI scanning | Accepted |
+| [0012](0012-platform-break-glass-access.md) | Платформенный break-glass доступ (30 мин, read-only, аудит) | Accepted |
+| [0013](0013-idempotency-replay-store-and-db-keys.md) | Idempotency: HTTP replay store + DB unique keys | Accepted |

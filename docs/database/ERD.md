@@ -1,224 +1,246 @@
 # RestaurantOS — ERD и модель данных
 
-Источник истины по полям — `respos-contracts/DOMAIN_MODEL.md`. Здесь: связи, ключи, ограничения, индексы,
-правила удаления и tenant scope. PostgreSQL 16, EF Core 8 (Npgsql). Имена таблиц — множественное число (`Orders`).
+Сверено с реальной EF-моделью (`respos-backend/src/Restaurant.Infrastructure/Persistence/Migrations/AppDbContextModelSnapshot.cs`,
+миграция `InitialCreate`) и конфигурациями `Persistence/Configurations/<Module>/`. Поля сущностей — `respos-contracts/DOMAIN_MODEL.md`
+с уточнениями `respos-contracts/DECISIONS_v1_1.md`. PostgreSQL 16, EF Core 8 (Npgsql) + `UseSnakeCaseNamingConvention()`.
 
-
-> Модель данных разделена на 3 файла: [ERD.md](ERD.md) (соглашения, Identity, Floor, Menu, Orders & Kitchen) ·
+> Модель данных разделена на 3 файла: [ERD.md](ERD.md) (соглашения, Identity/SaaS, Floor, Menu, Orders & Kitchen) ·
 > [ERD_INVENTORY_PAYMENTS.md](ERD_INVENTORY_PAYMENTS.md) (Inventory, Procurement, Payments, Notifications/Audit) ·
-> [ERD_CONSTRAINTS.md](ERD_CONSTRAINTS.md) (scope, уникальные ограничения, удаление, индексы, инварианты, вопросы).
+> [ERD_CONSTRAINTS.md](ERD_CONSTRAINTS.md) (scope, уникальные ограничения, удаление, индексы, инварианты, решённые вопросы).
 
 ## 0. Общие соглашения
 
 | Что | Тип / правило |
 |---|---|
-| PK | `Id uuid` (генерируется приложением, `Guid.CreateVersion7()`/sequential — на выбор backend) |
-| Деньги | `numeric(18,2)` |
-| Количество | `numeric(18,3)` |
-| Проценты | `numeric(5,2)` |
+| Имена | таблицы и колонки — `snake_case`, таблицы во множественном числе (`orders`, `order_items`, `branches`); C#-свойство `BranchId` ↔ колонка `branch_id` |
+| PK | `id uuid` (генерируется приложением). Исключения: `permissions.code`, `features.code`; составные PK у связок (`role_permissions`, `user_roles`, …) |
+| Деньги | `numeric(18,2)` (по умолчанию для всех `decimal`) |
+| Количество | `numeric(18,3)` (`IsQuantity()`) |
+| Проценты | `numeric(5,2)`; координаты столов `numeric(9,2)` |
 | Коэффициент конверсии | `numeric(18,6)` |
-| Время | `timestamptz`, хранится UTC; date-only — `date` в timezone филиала |
-| Enum | `text` со snake_case значением (как в API) + CHECK constraint |
-| Concurrency | `RowVersion` = системная колонка `xmin` (Npgsql `UseXminAsConcurrencyToken`) — `Orders`, `StockBalances`, `CashShifts` |
-| Аудит-поля | `CreatedAt, CreatedBy, UpdatedAt, UpdatedBy` (`AuditableEntity`) |
-| Архив | `IsArchived bool, ArchivedAt timestamptz null` (`IArchivable`) |
-| Tenant | `OrganizationId uuid not null` + индекс + EF global query filter; филиальные — ещё `BranchId uuid not null` |
+| Время | `timestamptz` (UTC); `orders.business_date` — `date` в timezone филиала; `menu_availabilities.start_time/end_time` — `time` |
+| Enum | `varchar(32)` со snake_case значением (как в API). CHECK constraints **не** создаются — значения контролирует код |
+| Строки | `varchar(N)` с явной длиной (имена 200, коды 64, причины 500, комментарии 1000/2000) |
+| Concurrency | системная колонка `xmin` (`xid`) — только `orders` и `stock_balances`; конфликт → `409 concurrency.conflict` |
+| Аудит-поля | `created_at, created_by, updated_at, updated_by` (`AuditableEntity`, заполняет `AuditableEntityInterceptor`) |
+| Архив | `is_archived bool, archived_at timestamptz null` (`IArchivable`); у части таблиц ещё `is_active` |
+| Tenant | `organization_id uuid not null` + индекс + EF global query filter; филиальные — ещё `branch_id uuid not null` (фильтр явный в handler-ах) |
+| История миграций | таблица `__ef_migrations_history` |
 
-**Удаление:** по умолчанию FK `ON DELETE RESTRICT`. `CASCADE` только для принадлежащих дочерних строк агрегата
-(перечислены в [ERD_CONSTRAINTS.md §9](ERD_CONSTRAINTS.md)). Всё, на что ссылается история (меню, столы, ингредиенты, поставщики, пользователи, роли),
-архивируется/деактивируется, а не удаляется. Физически удаляются только черновики без истории.
+**Удаление:** по умолчанию FK `ON DELETE RESTRICT`. `CASCADE` — только для дочерних строк агрегата
+(список — [ERD_CONSTRAINTS.md §9](ERD_CONSTRAINTS.md)). Всё, на что ссылается история, архивируется/деактивируется.
 
-Обозначения scope: **G** — глобальная (без tenant), **O** — `OrganizationId`, **B** — `OrganizationId` + `BranchId`,
-**C** — дочерняя строка, scope через родителя (собственный `OrganizationId` не обязателен, запросы — только через агрегат).
+Обозначения scope: **G** — глобальная (без tenant), **O** — `organization_id`, **B** — `organization_id` + `branch_id`,
+**C** — дочерняя строка без собственного `organization_id`, доступ только через корень агрегата (DECISIONS_v1_1 §6).
 
 ## 1. Identity / SaaS
 
 ```mermaid
 erDiagram
-  Organizations ||--o{ RestaurantBranches : has
-  RestaurantBranches ||--|| BranchSettings : has
-  Users ||--o{ UserOrganizations : member
-  Organizations ||--o{ UserOrganizations : has
-  Organizations ||--o{ Roles : defines
-  Roles ||--o{ RolePermissions : grants
-  Permissions ||--o{ RolePermissions : in
-  Users ||--o{ UserRoles : has
-  Roles ||--o{ UserRoles : assigned
-  Users ||--o{ UserBranchAccess : can
-  RestaurantBranches ||--o{ UserBranchAccess : allows
-  Users ||--o{ RefreshTokens : owns
-  Users ||--o{ PasswordResetTokens : requests
-  Organizations ||--o{ UserInvitations : sends
-  Plans ||--o{ PlanFeatures : includes
-  Features ||--o{ PlanFeatures : in
-  Plans ||--o{ Subscriptions : used_by
-  Organizations ||--o{ Subscriptions : has
-  Organizations |o--o{ FeatureFlags : overrides
-  Organizations ||--o{ BillingEvents : has
+  organizations ||--o{ branches : has
+  branches ||--|| branch_settings : has
+  users ||--o{ user_organizations : member
+  organizations ||--o{ user_organizations : has
+  organizations ||--o{ roles : defines
+  roles ||--o{ role_permissions : grants
+  permissions ||--o{ role_permissions : in
+  users ||--o{ user_roles : has
+  roles ||--o{ user_roles : assigned
+  users ||--o{ user_branch_accesses : can
+  branches ||--o{ user_branch_accesses : allows
+  users ||--o{ refresh_tokens : owns
+  users ||--o{ password_reset_tokens : requests
+  organizations ||--o{ user_invitations : sends
+  plans ||--o{ plan_features : includes
+  features ||--o{ plan_features : in
+  plans ||--o{ subscriptions : used_by
+  organizations ||--o{ subscriptions : has
+  organizations |o--o{ feature_flags : overrides
+  organizations ||--o{ billing_events : has
 
-  Organizations {
-    uuid Id PK
-    text Name
-    text Slug UK
-    text Currency "UZS"
-    text DefaultLanguage "ru"
-    text Status "active|suspended|closed"
-    bool IsDemo
+  organizations {
+    uuid id PK
+    varchar name
+    varchar slug UK
+    varchar currency "UZS"
+    varchar default_language "ru"
+    varchar status "active|suspended|closed"
+    bool is_demo
   }
-  RestaurantBranches {
-    uuid Id PK
-    uuid OrganizationId FK
-    text Name
-    text Timezone "Asia/Tashkent"
-    bool IsActive
+  branches {
+    uuid id PK
+    uuid organization_id FK
+    varchar name
+    varchar address
+    varchar phone
+    varchar timezone "Asia/Tashkent"
+    bool is_active
   }
-  BranchSettings {
-    uuid BranchId PK,FK
-    uuid OrganizationId FK
-    numeric ServiceChargePercent
-    numeric TaxPercent
-    bool AllowNegativeStock
-    text InventoryConsumptionTrigger "on_payment"
+  branch_settings {
+    uuid id PK
+    uuid branch_id FK,UK
+    uuid organization_id FK
+    numeric service_charge_percent
+    numeric tax_percent
+    bool allow_negative_stock
+    varchar inventory_consumption_trigger "on_payment"
+    varchar receipt_footer
   }
-  Users {
-    uuid Id PK
-    text Email UK "normalized lower"
-    text PasswordHash
-    text Status "active|invited|blocked|deactivated"
-    bool IsPlatformAdmin
-    int FailedLoginCount
-    timestamptz LockoutUntil
+  users {
+    uuid id PK
+    varchar email UK "normalized lower"
+    varchar password_hash "null для приглашённых"
+    varchar full_name
+    varchar status "active|invited|blocked|deactivated"
+    bool is_platform_admin
+    int failed_login_count
+    timestamptz lockout_until
+    timestamptz last_login_at
   }
-  UserOrganizations {
-    uuid Id PK
-    uuid UserId FK
-    uuid OrganizationId FK
-    bool IsActive
+  user_organizations {
+    uuid id PK
+    uuid user_id FK
+    uuid organization_id FK
+    bool is_active
+    timestamptz joined_at
   }
-  Roles {
-    uuid Id PK
-    uuid OrganizationId FK
-    text Code
-    bool IsSystem
+  roles {
+    uuid id PK
+    uuid organization_id FK
+    varchar code
+    varchar name
+    bool is_system
   }
-  Permissions {
-    text Code PK
-    text Module
+  permissions {
+    varchar code PK
+    varchar module
   }
-  RolePermissions {
-    uuid RoleId PK,FK
-    text PermissionCode PK,FK
+  role_permissions {
+    uuid role_id PK,FK
+    varchar permission_code PK,FK
   }
-  UserRoles {
-    uuid UserId PK,FK
-    uuid RoleId PK,FK
-    uuid OrganizationId FK
+  user_roles {
+    uuid user_id PK,FK
+    uuid role_id PK,FK
+    uuid organization_id FK
   }
-  UserBranchAccess {
-    uuid UserId PK,FK
-    uuid BranchId PK,FK
-    uuid OrganizationId FK
+  user_branch_accesses {
+    uuid user_id PK,FK
+    uuid branch_id PK,FK
+    uuid organization_id FK
   }
-  RefreshTokens {
-    uuid Id PK
-    uuid UserId FK
-    uuid OrganizationId FK "nullable"
-    text TokenHash UK "SHA-256"
-    uuid FamilyId
-    timestamptz ExpiresAt
-    timestamptz RevokedAt
-    uuid ReplacedByTokenId FK
+  refresh_tokens {
+    uuid id PK
+    uuid user_id FK
+    uuid organization_id FK "nullable"
+    varchar token_hash UK "SHA-256"
+    uuid family_id
+    timestamptz expires_at
+    timestamptz revoked_at
+    uuid replaced_by_token_id
   }
-  UserInvitations {
-    uuid Id PK
-    uuid OrganizationId FK
-    text Email
-    jsonb RoleIds
-    jsonb BranchIds
-    text TokenHash UK
-    timestamptz ExpiresAt
+  user_invitations {
+    uuid id PK
+    uuid organization_id FK
+    uuid user_id FK "nullable"
+    varchar email
+    uuid_array role_ids "uuid[]"
+    uuid_array branch_ids "uuid[]"
+    varchar token_hash UK
+    timestamptz expires_at
+    timestamptz accepted_at
   }
-  PasswordResetTokens {
-    uuid Id PK
-    uuid UserId FK
-    text TokenHash UK
-    timestamptz UsedAt
+  password_reset_tokens {
+    uuid id PK
+    uuid user_id FK
+    varchar token_hash UK
+    timestamptz expires_at
+    timestamptz used_at
   }
-  Plans {
-    uuid Id PK
-    text Code UK "starter|business|enterprise"
-    int MaxBranches
-    int MaxUsers
+  plans {
+    uuid id PK
+    varchar code UK "starter|business|enterprise"
+    int max_branches
+    int max_users
+    bool is_active
   }
-  Features {
-    uuid Id PK
-    text Code UK
+  features {
+    varchar code PK
+    varchar name
   }
-  PlanFeatures {
-    uuid PlanId PK,FK
-    uuid FeatureId PK,FK
+  plan_features {
+    uuid plan_id PK,FK
+    varchar feature_code PK,FK
   }
-  Subscriptions {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid PlanId FK
-    text Status
+  subscriptions {
+    uuid id PK
+    uuid organization_id FK
+    uuid plan_id FK
+    varchar status
+    timestamptz starts_at
+    timestamptz ends_at
   }
-  FeatureFlags {
-    uuid Id PK
-    uuid OrganizationId FK "null = global"
-    text FeatureCode
-    bool IsEnabled
+  feature_flags {
+    uuid id PK
+    uuid organization_id FK "null = global"
+    varchar feature_code
+    bool is_enabled
   }
-  BillingEvents {
-    uuid Id PK
-    uuid OrganizationId FK
+  billing_events {
+    uuid id PK
+    uuid organization_id FK
+    varchar type
+    numeric amount
+    jsonb payload_json
   }
 ```
 
-`DemoRequests` (G) — отдельная таблица без связей (заявки с лендинга).
+`demo_requests` (G) — отдельная таблица без связей (заявки с лендинга, индекс `(status, created_at)`).
 
 ## 2. Floor & Reservations
 
 ```mermaid
 erDiagram
-  RestaurantBranches ||--o{ DiningAreas : has
-  DiningAreas ||--o{ DiningTables : contains
-  DiningTables |o--o{ TableReservations : reserved
-  DiningAreas |o--o{ TableReservations : preferred
+  branches ||--o{ dining_areas : has
+  dining_areas ||--o{ dining_tables : contains
+  dining_tables |o--o{ table_reservations : reserved
+  dining_areas |o--o{ table_reservations : preferred
 
-  DiningAreas {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid BranchId FK
-    text Name
-    int SortOrder
-    bool IsActive
+  dining_areas {
+    uuid id PK
+    uuid organization_id FK
+    uuid branch_id FK
+    varchar name
+    int sort_order
+    bool is_active
+    bool is_archived
   }
-  DiningTables {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid BranchId FK
-    uuid DiningAreaId FK
-    text Number
-    int Capacity
-    text Status "available|occupied|reserved|unavailable"
-    bool IsArchived
-    numeric PosX
-    numeric PosY
+  dining_tables {
+    uuid id PK
+    uuid organization_id FK
+    uuid branch_id FK
+    uuid dining_area_id FK
+    varchar number
+    int capacity
+    varchar status "available|occupied|reserved|unavailable"
+    bool is_active
+    bool is_archived
+    numeric pos_x
+    numeric pos_y
   }
-  TableReservations {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid BranchId FK
-    uuid TableId FK "nullable"
-    uuid PreferredAreaId FK "nullable"
-    text GuestName
-    text GuestPhone
-    int GuestCount
-    timestamptz StartsAt
-    timestamptz EndsAt
-    text Status "pending|confirmed|seated|completed|cancelled|no_show"
+  table_reservations {
+    uuid id PK
+    uuid organization_id FK
+    uuid branch_id FK
+    uuid table_id FK "nullable"
+    uuid preferred_area_id FK "nullable"
+    varchar guest_name
+    varchar guest_phone
+    int guest_count
+    timestamptz starts_at
+    timestamptz ends_at
+    varchar status "pending|confirmed|seated|completed|cancelled|no_show"
+    varchar cancel_reason
   }
 ```
 
@@ -226,77 +248,84 @@ erDiagram
 
 ```mermaid
 erDiagram
-  MenuCategories ||--o{ MenuItems : groups
-  MenuItems ||--o{ MenuItemVariants : has
-  MenuItems ||--o{ MenuItemModifierGroups : uses
-  ModifierGroups ||--o{ MenuItemModifierGroups : linked
-  ModifierGroups ||--o{ ModifierOptions : has
-  MenuItems ||--o{ MenuAvailability : schedule
-  KitchenStations |o--o{ MenuItems : prepares
-  RestaurantBranches ||--o{ KitchenStations : has
+  menu_categories ||--o{ menu_items : groups
+  menu_items ||--o{ menu_item_variants : has
+  menu_items ||--o{ menu_item_modifier_groups : uses
+  modifier_groups ||--o{ menu_item_modifier_groups : linked
+  modifier_groups ||--o{ modifier_options : has
+  menu_items ||--o{ menu_availabilities : schedule
+  kitchen_stations |o--o{ menu_items : prepares
+  branches ||--o{ kitchen_stations : has
 
-  MenuCategories {
-    uuid Id PK
-    uuid OrganizationId FK
-    text Name
-    text NameUz
-    int SortOrder
-    bool IsArchived
+  menu_categories {
+    uuid id PK
+    uuid organization_id FK
+    varchar name
+    varchar name_uz
+    int sort_order
+    bool is_active
+    bool is_archived
   }
-  MenuItems {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid CategoryId FK
-    uuid KitchenStationId FK "nullable"
-    text Name
-    text NameUz
-    numeric Price
-    int PrepTimeMinutes
-    text Sku
-    bool IsAvailable
-    bool IsArchived
+  menu_items {
+    uuid id PK
+    uuid organization_id FK
+    uuid category_id FK
+    uuid kitchen_station_id FK "nullable, org-level (D §7)"
+    varchar name
+    varchar name_uz
+    varchar description
+    numeric price
+    int prep_time_minutes
+    varchar sku
+    varchar photo_url
+    bool is_available "org-level (D §7)"
+    bool is_archived
   }
-  MenuItemVariants {
-    uuid Id PK
-    uuid MenuItemId FK
-    text Name
-    numeric Price "absolute"
-    bool IsDefault
-    bool IsArchived
+  menu_item_variants {
+    uuid id PK
+    uuid menu_item_id FK
+    varchar name
+    numeric price "absolute (D §5)"
+    bool is_default
+    bool is_archived
   }
-  ModifierGroups {
-    uuid Id PK
-    uuid OrganizationId FK
-    text Name
-    int MinSelect
-    int MaxSelect
-    bool IsRequired
+  modifier_groups {
+    uuid id PK
+    uuid organization_id FK
+    varchar name
+    int min_select
+    int max_select
+    bool is_required
+    bool is_archived
   }
-  MenuItemModifierGroups {
-    uuid MenuItemId PK,FK
-    uuid ModifierGroupId PK,FK
+  menu_item_modifier_groups {
+    uuid menu_item_id PK,FK
+    uuid modifier_group_id PK,FK
+    int sort_order
   }
-  ModifierOptions {
-    uuid Id PK
-    uuid GroupId FK
-    text Name
-    numeric PriceDelta
-    bool IsArchived
+  modifier_options {
+    uuid id PK
+    uuid group_id FK
+    varchar name
+    numeric price_delta
+    int sort_order
+    bool is_archived
   }
-  MenuAvailability {
-    uuid Id PK
-    uuid MenuItemId FK
-    int DayOfWeek "nullable"
-    time StartTime
-    time EndTime
+  menu_availabilities {
+    uuid id PK
+    uuid menu_item_id FK
+    int day_of_week "nullable"
+    time start_time
+    time end_time
   }
-  KitchenStations {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid BranchId FK
-    text Name
-    int SortOrder
-    bool IsActive
+  kitchen_stations {
+    uuid id PK
+    uuid organization_id FK
+    uuid branch_id FK
+    varchar name
+    int sort_order
+    bool is_active
+    bool is_archived
   }
 ```
 
@@ -304,83 +333,95 @@ erDiagram
 
 ```mermaid
 erDiagram
-  DiningTables |o--o{ Orders : serves
-  Users ||--o{ Orders : waiter
-  Orders ||--|{ OrderItems : contains
-  OrderItems ||--o{ OrderItemModifiers : has
-  Orders ||--o{ OrderStatusHistory : logs
-  MenuItems ||--o{ OrderItems : snapshot_of
-  Orders ||--o{ KitchenTickets : produces
-  KitchenStations ||--o{ KitchenTickets : receives
-  KitchenTickets ||--|{ KitchenTicketItems : contains
-  OrderItems ||--o{ KitchenTicketItems : tracked_by
+  dining_tables |o--o{ orders : serves
+  users ||--o{ orders : waiter
+  orders ||--|{ order_items : contains
+  order_items ||--o{ order_item_modifiers : has
+  orders ||--o{ order_status_history : logs
+  menu_items ||--o{ order_items : snapshot_of
+  orders ||--o{ kitchen_tickets : produces
+  kitchen_stations ||--o{ kitchen_tickets : receives
+  kitchen_tickets ||--|{ kitchen_ticket_items : contains
+  order_items ||--o{ kitchen_ticket_items : tracked_by
 
-  Orders {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid BranchId FK
-    date BusinessDate "branch tz"
-    int Number
-    text Type "dine_in|takeaway"
-    uuid TableId FK "nullable"
-    uuid WaiterId FK
-    text Status
-    numeric Subtotal
-    text DiscountType "none|amount|percent"
-    numeric DiscountValue
-    numeric DiscountAmount
-    numeric ServiceChargeAmount
-    numeric TaxAmount
-    numeric Total
-    numeric PaidAmount
-    timestamptz OpenedAt
-    timestamptz ClosedAt
-    xid RowVersion "xmin"
+  orders {
+    uuid id PK
+    uuid organization_id FK
+    uuid branch_id FK
+    date business_date "branch tz (D §1)"
+    int number "UK with branch_id, business_date"
+    varchar type "dine_in|takeaway"
+    uuid table_id FK "nullable"
+    uuid waiter_id FK
+    int guest_count
+    varchar status
+    numeric subtotal
+    varchar discount_type "none|amount|percent"
+    numeric discount_value
+    numeric discount_amount
+    numeric service_charge_amount
+    numeric tax_amount
+    numeric total
+    numeric paid_amount
+    varchar comment
+    varchar cancel_reason
+    timestamptz opened_at
+    timestamptz closed_at
+    xid xmin "concurrency"
   }
-  OrderItems {
-    uuid Id PK
-    uuid OrderId FK
-    uuid MenuItemId FK
-    uuid VariantId FK "nullable"
-    text NameSnapshot
-    text VariantNameSnapshot
-    numeric UnitPrice
-    numeric Quantity
-    numeric LineTotal
-    text Status "new|sent|preparing|ready|served|cancelled"
-    uuid KitchenStationId FK
+  order_items {
+    uuid id PK
+    uuid order_id FK
+    uuid menu_item_id FK
+    uuid variant_id FK "nullable"
+    uuid kitchen_station_id FK "nullable"
+    varchar name_snapshot
+    varchar variant_name_snapshot
+    numeric unit_price
+    numeric quantity
+    numeric line_total
+    varchar status "new|sent|preparing|ready|served|cancelled"
+    varchar comment
+    varchar cancel_reason
+    timestamptz sent_at
+    timestamptz ready_at
   }
-  OrderItemModifiers {
-    uuid Id PK
-    uuid OrderItemId FK
-    uuid ModifierOptionId FK
-    text NameSnapshot
-    numeric PriceDelta
+  order_item_modifiers {
+    uuid id PK
+    uuid order_item_id FK
+    uuid modifier_option_id FK
+    varchar name_snapshot
+    numeric price_delta
   }
-  OrderStatusHistory {
-    uuid Id PK
-    uuid OrderId FK
-    text FromStatus
-    text ToStatus
-    uuid ChangedBy FK
-    timestamptz ChangedAt
-    text Reason
+  order_status_history {
+    uuid id PK
+    uuid order_id FK
+    varchar from_status
+    varchar to_status
+    uuid changed_by "no FK"
+    timestamptz changed_at
+    varchar reason
   }
-  KitchenTickets {
-    uuid Id PK
-    uuid OrganizationId FK
-    uuid BranchId FK
-    uuid OrderId FK
-    uuid KitchenStationId FK
-    int Number
-    text Status "new|in_progress|ready|served|cancelled"
-    timestamptz CreatedAt
+  kitchen_tickets {
+    uuid id PK
+    uuid organization_id FK
+    uuid branch_id FK
+    uuid order_id FK
+    uuid kitchen_station_id FK
+    int number "send round within order"
+    varchar status "new|in_progress|ready|served|cancelled"
+    timestamptz started_at
+    timestamptz ready_at
+    timestamptz created_at
   }
-  KitchenTicketItems {
-    uuid Id PK
-    uuid TicketId FK
-    uuid OrderItemId FK
-    text Status "new|preparing|ready|cancelled"
+  kitchen_ticket_items {
+    uuid id PK
+    uuid ticket_id FK
+    uuid order_item_id FK
+    varchar status "new|preparing|ready|cancelled"
   }
 ```
 
+Дочерние таблицы `order_items`, `order_item_modifiers`, `order_status_history`, `kitchen_ticket_items`, `menu_item_variants`,
+`modifier_options`, `menu_item_modifier_groups`, `menu_availabilities`, `role_permissions`, `plan_features` не имеют `organization_id`
+(scope **C**, DECISIONS_v1_1 §6).

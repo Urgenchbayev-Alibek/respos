@@ -1,24 +1,28 @@
 # ADR-0011. Без MediatR: простые handlers через DI scanning
 
-**Статус:** Proposed (backend-агент может подтвердить или отклонить)
+**Статус:** Accepted (реализовано в `respos-backend`, см. `respos-backend/README.md` → «How to add a feature module»)
 **Дата:** 2026-11-10
 
 ## Контекст
 
 Application-слой строится на commands/queries. Типичный выбор — MediatR. ТЗ §18.4 требует обосновывать каждую новую
-зависимость и избегать лишних абстракций. Одна из причин пересмотреть MediatR — изменение модели лицензирования в его
-новых версиях (коммерческая лицензия для части пользователей). **Актуальные условия лицензии нужно проверить в
-официальном репозитории/на сайте перед решением**; этот ADR не утверждает конкретных условий.
+зависимость и избегать лишних абстракций. Дополнительный довод против MediatR — изменение модели лицензирования его
+новых версий (актуальные условия перед повторным рассмотрением нужно проверять в официальном источнике; этот ADR их не утверждает).
 
-## Решение (предлагаемое)
+## Решение (фактическое)
 
-- Минимальные интерфейсы в `Application/Abstractions/Messaging`:
-  `ICommandHandler<TCommand, TResult>`, `IQueryHandler<TQuery, TResult>`, `IDomainEventHandler<TEvent>`.
-- Регистрация реализаций сканированием сборки Application при старте (рефлексия или Scrutor — на выбор
-  backend-агента; Scrutor — тоже зависимость, обосновать).
-- Контроллер получает handler через DI (`[FromServices] ICommandHandler<CreateOrderCommand, OrderDto> handler`).
-- Cross-cutting (валидация, транзакция, аудит, логирование) — декораторы handler-ов или ASP.NET Core filters.
-- Доменные события диспетчеризует собственный `IDomainEventDispatcher` (в `SaveChanges` / outbox).
+- Один интерфейс `IHandler<TRequest, TResponse>` (`Application/Common/Handlers/IHandler.cs`):
+  `Task<Result<TResponse>> HandleAsync(TRequest request, CancellationToken ct)`. Разделения на `ICommandHandler`/`IQueryHandler` нет.
+- Регистрация — собственное сканирование сборки Application рефлексией (`Application/DependencyInjection.cs`, без Scrutor):
+  `AddHandlersFromAssembly` (handler регистрируется как сам класс и как `IHandler<,>`, scoped),
+  `AddValidatorsFromAssembly` (FluentValidation), `AddDomainEventHandlersFromAssembly` (`IDomainEventHandler<TEvent>`),
+  `AddFeatureServicesFromAssembly` (классы с `[ScopedService]` — общие помощники модулей).
+- Контроллер получает конкретный handler через DI: `[FromServices] CancelOrderHandler h` → `OkOrProblem(await h.HandleAsync(...))`.
+- Cross-cutting — не декораторы, а ASP.NET Core filters/middleware: глобальный `ValidationFilter` (FluentValidation для
+  аргументов action), `[RequireBranch]`, `[RequireIdempotencyKey]`, `[HasPermission]`, `ExceptionHandlingMiddleware`.
+  Транзакция = один `SaveChangesAsync` (или `ExecuteInTransactionAsync`); аудит — `IAuditLogger` в том же unit of work.
+- Доменные события диспетчеризует `IDomainEventDispatcher` **внутри `SaveChanges`, до commit** (outbox нет);
+  realtime-сообщения отправляются после успешного commit.
 
 ## Альтернативы
 
@@ -28,6 +32,6 @@ Application-слой строится на commands/queries. Типичный в
 
 ## Последствия
 
-- Явная навигация «контроллер → handler», меньше зависимостей.
-- Немного своего кода (~100 строк: интерфейсы, регистрация, декораторы) — покрыть тестами.
-- Если backend уже реализован иначе — обновить статус (Accepted/Rejected) и описать фактическое решение.
+- Явная навигация «контроллер → handler», ноль дополнительных пакетов; новый use case не требует правки центральных файлов.
+- Pipeline behaviors нет: всё сквозное — в filters/middleware/interceptors; правило «валидатор рядом с командой» обязательно.
+- Обработчики доменных событий не должны вызывать `SaveChangesAsync`.

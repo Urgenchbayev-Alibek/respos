@@ -7,12 +7,12 @@
 
 | Уровень | Где | Инструменты | Запуск |
 |---|---|---|---|
-| Unit (backend) | `respos-backend/tests/Restaurant.UnitTests` | xUnit (+ FluentAssertions или аналог — по решению backend) | `dotnet test` |
+| Unit (backend) | `respos-backend/tests/Restaurant.UnitTests` | xUnit + FluentAssertions 6.12 | `dotnet test` |
 | Integration (backend) | `respos-backend/tests/Restaurant.IntegrationTests` | xUnit, `WebApplicationFactory`, Testcontainers (PostgreSQL 16) | `dotnet test` (нужен Docker) |
-| Frontend unit/component | `respos-admin/src/**/*.test.tsx`, `respos-landing/src/**` | Vitest, React Testing Library, MSW (если выбран) | `npm run test` |
+| Frontend unit/component | `respos-admin/src/**/*.test.tsx`, `respos-landing/src/**` | Vitest, React Testing Library, MSW (admin) | `npm run test` |
 | E2E (API + SignalR) | `scripts/e2e/e2e-smoke.mjs` — сценарий ТЗ §16 против запущенного API; результаты — `docs/testing/E2E_RESULTS.md` | Node 24 + `@microsoft/signalr` | `cd scripts/e2e && npm install && node e2e-smoke.mjs` |
-| E2E (UI) | отдельная папка (предложение: `e2e/` в корне, Playwright) | Playwright — **[?]** не выбран в контракте | вручную / CI позже |
-| Производительность | скрипты k6 или аналог — **[?]** | измерение целей §6.1 | вручную на тестовом стенде |
+| E2E (UI) | `scripts/ui-smoke` (вход по ролям, обход экранов) против запущенных API + admin + landing | Playwright (Chromium) | `cd scripts/ui-smoke && npm install && npm run install-browser && npm run smoke`; в CI пока нет |
+| Производительность | `scripts/e2e` (замер латентностей и доставки SignalR, `E2E_PERF_JSON=perf.json`) | Node | вручную; результаты — `E2E_RESULTS.md`; нагрузочного теста (k6) нет |
 
 Интеграционные тесты используют настоящий PostgreSQL (Testcontainers), а не InMemory-провайдер: глобальные фильтры, `xmin`, уникальные индексы и транзакции должны проверяться на реальной СУБД. На GitHub-hosted `ubuntu-latest` Docker доступен — Testcontainers работает в CI.
 
@@ -124,7 +124,7 @@ Landing: форма заявки (валидация, honeypot `website`, 202 �
 
 ## 7. CI
 
-`.github/workflows/ci.yml`: backend (`dotnet build/test`, включая Testcontainers), admin и landing (`lint`, `typecheck`, `test`, `build`), проверка лимита 500 строк (`scripts/check-file-length.mjs`). E2E и нагрузочные тесты в CI MVP не входят **[?]**.
+`.github/workflows/ci.yml`: backend (`dotnet build/test`, включая Testcontainers), admin и landing (`lint`, `typecheck`, `test`, `build`), проверка лимита 500 строк (`scripts/check-file-length.mjs`). E2E (`scripts/e2e`, `scripts/ui-smoke`) и нагрузочные тесты в CI MVP не входят — запускаются вручную против работающего API.
 
 ## 8. Definition of Done (ТЗ §16)
 
@@ -132,4 +132,4 @@ Landing: форма заявки (валидация, honeypot `website`, 202 �
 
 ## 9. Результаты замеров
 
-_Пока нет — заполнить после первого деплоя на тестовый стенд._
+Локальные замеры API и доставки SignalR (ноутбук, Debug-сборка) — [E2E_RESULTS.md](E2E_RESULTS.md#performance-61): цели §6.1 для API и KDS выполнены. Замеры на тестовом стенде — после первого деплоя.

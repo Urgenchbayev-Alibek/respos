@@ -16,6 +16,9 @@
   не доверяя списку в токене.
 - **Refresh token**: случайные ≥ 32 байта, cookie `refresh_token` — `HttpOnly`, `Secure`, `Path=/api/v1/auth`,
   `SameSite=None` в prod / `Lax` в dev. В БД хранится только **SHA-256 hash** (`RefreshToken.TokenHash`).
+  *Уточнение v1.1 (DECISIONS_v1_1 §10, реализовано):* `SameSite` настраивается `Auth:RefreshCookieSameSite` (по умолчанию `Lax`);
+  рекомендуемый деплой — same-site (`app.<domain>` + `api.<domain>`) с `Lax`; `None; Secure` — только при cross-site.
+  Блокировка: 5 неудачных входов → 15 мин (DECISIONS_v1_1 §12).
 - **Ротация**: каждый `POST /auth/refresh` выдаёт новый refresh, старый получает `RevokedAt` + `ReplacedByTokenId`.
   **Повторное использование отозванного токена → отзыв всей семьи** (`FamilyId`) + запись аудита.
 - При перезагрузке страницы SPA вызывает `/auth/refresh`; logout отзывает токен и чистит cookie.

@@ -1,7 +1,8 @@
 # RestaurantOS — обзор архитектуры
 
-Связанные документы: контракт `respos-contracts/` (источник истины для API), ADR в `docs/architecture/ADR/`,
-модель данных `docs/database/ERD.md`, бизнес-правила `docs/requirements/BUSINESS_RULES.md`.
+Связанные документы: контракт `respos-contracts/` (источник истины для API; v1.2 — `ENDPOINTS.md` по реальным DTO),
+ADR в `docs/architecture/ADR/`, модель данных `docs/database/ERD.md`, бизнес-правила `docs/requirements/BUSINESS_RULES.md`,
+практическое руководство backend — `respos-backend/README.md`. Документ отражает реализованный MVP (2026-11-10).
 
 ## 1. Кратко
 
@@ -55,9 +56,9 @@ flowchart TB
 | Проект | Содержит | Зависит от |
 |---|---|---|
 | `src/Restaurant.Domain` | Entities, Value Objects, Enums, доменные события, исключения, `Constants/Permissions.cs`, базовые `Entity`/`AuditableEntity`/`ITenantScoped`/`IBranchScoped`/`IArchivable`, `Result`/`Error` | ничего |
-| `src/Restaurant.Application` | Use cases (commands/queries + handlers), DTO, validators (FluentValidation), абстракции: `IAppDbContext`, `ICurrentUser`, `ITenantContext`, `IClock`, `IFileStorage`, `IPaymentProvider`, `IRealtimeNotifier`, `IEmailSender` | Domain |
-| `src/Restaurant.Infrastructure` | EF Core DbContext, configurations, migrations, seed, identity (hashing, JWT, refresh tokens), SignalR notifier, ManualPaymentProvider, файлы, логирование | Application, Domain |
-| `src/Restaurant.Api` | Controllers, middleware, auth/policies, `RestaurantHub`, DI composition, Swagger, health checks | Application, Infrastructure (только composition root) |
+| `src/Restaurant.Application` | Use cases `Features/<Module>/<UseCase>/` (command/query record + `AbstractValidator` + `IHandler<TRequest,TResponse>`), DTO, доменные event handlers; абстракции: `IApplicationDbContext`, `ITenantContext`, `IClock`, `IFileStorage`, `IPaymentProvider`, `IRealtimeNotifier`, `IEmailSender`, `IAuditLogger`, `IIdempotencyService`, `INotificationPublisher`, `IDomainEventHandler<T>` | Domain |
+| `src/Restaurant.Infrastructure` | `AppDbContext` (partials по модулям), configurations, migrations, seeders, identity (хеширование, JWT, refresh tokens), `AuditableEntityInterceptor`, `DomainEventDispatcher`, SignalR notifier, `ManualPaymentProvider`, `LogEmailSender` (заглушка), локальное файловое хранилище, idempotency store | Application, Domain |
+| `src/Restaurant.Api` | Controllers, middleware, filters, `[HasPermission]` (policy provider), `RestaurantHub`, rate limiting, DI composition, Swagger, health checks | Application, Infrastructure (только composition root) |
 | `tests/Restaurant.UnitTests` | Domain + Application unit tests | |
 | `tests/Restaurant.IntegrationTests` | API + Postgres (Testcontainers) | |
 
@@ -75,30 +76,30 @@ flowchart LR
 
 ## 5. Модули
 
-Модули ТЗ §7.3 → папки `Restaurant.Application/Features/*` (одноимённые подпапки в Domain/Entities и Infrastructure/Persistence/Configurations).
+Фактические папки `Restaurant.Application/Features/*` (сущности — `Domain/Entities/<Module>/`, конфигурации — `Infrastructure/Persistence/Configurations/<Module>/`).
 
-| Модуль | Features-папка | Ключевые сущности | Права (префикс) |
+| Модуль | Features-папки | Ключевые сущности | Права (префикс) |
 |---|---|---|---|
-| Identity | `Auth`, `Users`, `Roles` | User, Role, Permission, RefreshToken, UserInvitation | `users.*`, `roles.*` |
-| Organization | `Organizations`, `Platform` | Organization, Plan, Subscription, FeatureFlag, DemoRequest | `settings.manage`, `platform.*` |
+| Identity | `Auth` (Login, Refresh, Session, Passwords, AcceptInvitation), `Users`, `Roles` | User, Role, Permission, RefreshToken, UserInvitation, PasswordResetToken | `users.*`, `roles.*` |
+| Organization / SaaS | `Organizations`, `Platform` (Organizations, Plans, FeatureFlags, DemoRequests, SystemInfo), `Public` | Organization, Plan, Subscription, FeatureFlag, DemoRequest | `settings.*`, `platform.*` |
 | Branches | `Branches` | RestaurantBranch, BranchSettings, UserBranchAccess | `branches.*` |
-| Floor | `Tables` | DiningArea, DiningTable | `tables.*` |
+| Floor | `Floor` (DiningAreas, Tables) | DiningArea, DiningTable | `tables.*` |
 | Reservations | `Reservations` | TableReservation | `reservations.*` |
-| Menu | `Menu` | MenuCategory, MenuItem, Variant, ModifierGroup/Option, MenuAvailability | `menu.*` |
+| Menu | `Menu` (Categories, Items, ModifierGroups, Pos), `KitchenStations` | MenuCategory, MenuItem, MenuItemVariant, ModifierGroup/Option, MenuAvailability, KitchenStation | `menu.*` |
 | Orders | `Orders` | Order, OrderItem, OrderItemModifier, OrderStatusHistory | `orders.*` |
-| Kitchen | `Kitchen` | KitchenStation, KitchenTicket, KitchenTicketItem | `kitchen.*` |
-| Inventory | `Inventory`, `Recipes` | Ingredient, StockBalance, StockMovement, Recipe, InventoryConsumption, InventoryCount | `inventory.*`, `recipes.*` |
-| Procurement | `Suppliers`, `Purchases` | Supplier, PurchaseOrder, PurchaseOrderItem | `suppliers.*`, `purchases.*` |
-| Payments | `Payments`, `CashShifts` | Payment, Refund, CashShift | `payments.*`, `cash-shifts.*` |
-| Reporting | `Reports`, `Dashboard` | (read models, запросы) | `reports.read` |
-| Notifications | `Notifications` | Notification, NotificationRead | `notifications.read` |
+| Kitchen | `Kitchen` (ListTickets, UpdateTicketStatus) | KitchenTicket, KitchenTicketItem | `kitchen.*` |
+| Inventory | `Inventory` (Units, IngredientCategories, Ingredients, StockMovements, InventoryCounts, Consumption), `Recipes` | UnitOfMeasure, Ingredient, StockBalance, StockMovement, Recipe, InventoryConsumption, InventoryCount | `inventory.*`, `recipes.*` |
+| Procurement | `Procurement` (Suppliers, Purchases) | Supplier, PurchaseOrder, PurchaseOrderItem | `suppliers.*`, `purchases.*` |
+| Payments | `Payments` (RegisterPayment, RefundPayment, ListPayments, CashShifts) | Payment, Refund, CashShift | `payments.*`, `cash-shifts.*` |
+| Reporting | `Reports` (Sales, CashShifts, Export CSV), `Dashboard` | read-запросы | `reports.read` |
+| Notifications | `Notifications` (Inbox, EventHandlers) | Notification, NotificationRead | `notifications.read` |
 | Audit | `Audit` | AuditLog | `audit.read` |
 
 ### Правила границ модулей
 
 1. Handler пишет только в сущности **своего** модуля. Изменения в другом модуле — через доменное событие
-   (например, `OrderPaidDomainEvent` → Inventory списывает ингредиенты) или через явно объявленный
-   application-сервис (например, `IStockService.ApplyMovement` — единственная точка изменения остатка).
+   (например, `OrderPaidDomainEvent` → Inventory списывает ингредиенты, Orders освобождает стол) или через явно объявленный
+   общий сервис `[ScopedService]` (например, `StockLedger` — единственная точка изменения остатка; `KitchenTicketSync`, `TableOccupancy`).
 2. Чтение чужих данных для отображения допустимо через DbContext (read-only проекции), без изменения.
 3. Reporting только читает. Audit пишется через `IAuditLogger`, а не напрямую в таблицу.
 4. Циклические зависимости между Features запрещены; общие вещи — в `Application/Common` и `Abstractions`.
@@ -106,31 +107,38 @@ flowchart LR
 
 ## 6. Конвейер запроса
 
+Фактический порядок (`Api/Extensions/WebApplicationExtensions.UseApiPipeline` + MVC filters):
+
 ```mermaid
 flowchart TB
-  R[HTTP запрос] --> C1[CorrelationIdMiddleware<br/>X-Correlation-Id]
-  C1 --> C2[ExceptionHandlingMiddleware<br/>→ ProblemDetails, без stack trace]
-  C2 --> C3[Rate limiting<br/>login, public forms]
-  C3 --> C4[JWT Bearer authentication]
-  C4 --> C5[TenantContext resolution<br/>org из токена + X-Branch-Id → проверка UserBranchAccess]
-  C5 --> C6["Authorization policy [HasPermission]"]
-  C6 --> C7[Controller → command/query]
-  C7 --> C8[Idempotency filter<br/>для эндпоинтов с IK]
-  C8 --> C9[FluentValidation]
-  C9 --> C10[Handler: domain methods<br/>EF global query filters]
-  C10 --> C11[SaveChanges в транзакции<br/>+ AuditLog + outbox доменных событий]
-  C11 --> C12[Post-commit: domain event handlers<br/>IRealtimeNotifier → SignalR]
+  R[HTTP запрос] --> C1[CorrelationIdMiddleware<br/>X-Correlation-Id → ответ + log context]
+  C1 --> C2[Serilog request logging]
+  C2 --> C3[ExceptionHandlingMiddleware<br/>→ ProblemDetails, без stack trace]
+  C3 --> C4[Swagger - Development или Swagger:Enabled<br/>Static files /files - локальное хранилище]
+  C4 --> C5[CORS - Frontend:AllowedOrigins, credentials]
+  C5 --> C6[JWT Bearer authentication]
+  C6 --> C7[RequestContextMiddleware<br/>RequestContext из claims: user, org, platform_admin, tenant_access]
+  C7 --> C8[Rate limiter<br/>global 300/мин, auth 20/мин, demo 5/час]
+  C8 --> C9["Authorization: [Authorize] + [HasPermission] policy<br/>права из БД на запрос; break-glass → только GET/HEAD"]
+  C9 --> C10["Resource filter [RequireIdempotencyKey]<br/>replay сохранённого ответа"]
+  C10 --> C11["Action filters: [RequireBranch] X-Branch-Id → UserBranchAccess,<br/>[LoginRateLimit], ValidationFilter (FluentValidation, Order=100)"]
+  C11 --> C12[Controller → IHandler: domain methods<br/>EF global query filters по org]
+  C12 --> C13[SaveChanges: AuditableEntityInterceptor,<br/>domain event handlers до commit, AuditLog, COMMIT]
+  C13 --> C14[После commit: IRealtimeNotifier → SignalR;<br/>сохранение idempotency-ответа]
 ```
 
 Детали:
 
-- **Tenant context** (`ITenantContext`): `OrganizationId` берётся только из claim `org` токена; `BranchId` — только
-  из заголовка `X-Branch-Id` после проверки доступа (owner/admin — все филиалы организации). Нет контекста на
-  tenant-эндпоинте → 403 `tenant.branch_forbidden`. ID из тела запроса для scoping не используются.
+- **Tenant context** (`ITenantContext` = scoped `RequestContext`): `OrganizationId` берётся только из claim `org` токена; `BranchId` — только
+  из заголовка `X-Branch-Id` после проверки доступа в `[RequireBranch]` (owner/admin — все филиалы организации). Нет/чужой филиал
+  → 403 `tenant.branch_forbidden`; нет org на tenant-эндпоинте → `tenant.required`. ID из тела запроса для scoping не используются.
+  Платформенные эндпоинты помечены `[PlatformScope]` и работают без tenant-фильтра.
 - **Ошибки**: доменные исключения/`Result.Failure` маппятся в коды контракта (`order.invalid_status_transition` → 409,
   `validation.failed` → 400, чужой ID → 404). 500 отдаёт только `server.error` + `correlationId`.
-- **Транзакции**: одна команда = одна транзакция. Остаток склада и `StockMovement` пишутся вместе (ADR-0006).
-- **Конкурентность**: `Order`, `StockBalance` имеют `RowVersion` (`xmin`); конфликт → 409, клиент перечитывает.
+- **Транзакции**: одна команда = один `SaveChangesAsync` (или `ExecuteInTransactionAsync`). Остаток склада и `StockMovement` пишутся вместе (ADR-0006).
+- **Конкурентность**: `Order`, `StockBalance` имеют `xmin`; конфликт → 409 `concurrency.conflict`, нарушение unique → 409 `conflict.duplicate`.
+- **Rate limits**: login 5/мин на IP+email (`[LoginRateLimit]`), политика `auth` 20/мин/IP (refresh, forgot/reset, accept),
+  публичные заявки 5/час/IP, глобально 300/мин на пользователя/IP (`RateLimiting:*`).
 
 ### Пример: оплата заказа
 
@@ -146,21 +154,23 @@ sequenceDiagram
   API->>API: auth, tenant, [HasPermission payments.create]
   API->>DB: IdempotencyRecord (Key, UserId)?
   alt ключ уже обработан
-    API-->>UI: сохранённый ответ
+    API-->>UI: сохранённый ответ (Idempotent-Replayed: true)
   else новый ключ
     API->>H: RegisterPaymentCommand
     H->>DB: open CashShift? remaining due?
-    H->>DB: INSERT Payment, UPDATE Order.PaidAmount (+status paid, table available)
-    H->>INV: OrderPaidDomainEvent (в той же транзакции)
+    H->>DB: INSERT Payment, UPDATE Order.PaidAmount (+status paid)
+    H->>INV: OrderPaidDomainEvent (внутри SaveChanges, до commit)
     INV->>DB: INSERT InventoryConsumption(OrderId unique) + StockMovements + StockBalances
-    H->>DB: COMMIT (+ AuditLog, IdempotencyRecord)
+    Note over H,DB: ReleaseTableOnOrderPaidHandler → стол available
+    H->>DB: COMMIT (+ AuditLog)
     API->>RT: PaymentRegistered, OrderUpdated, TableUpdated, StockLow?
+    API->>DB: сохранить ответ в IdempotencyRecord
     API-->>UI: 201 PaymentDto
   end
 ```
 
-Списание выполняется в той же транзакции, что и перевод заказа в `paid` (или надёжно после неё через outbox —
-решает backend-агент; в любом случае идемпотентность гарантирует уникальный `InventoryConsumption.OrderId`).
+Списание выполняется в той же транзакции, что и перевод заказа в `paid` (outbox нет); идемпотентность дополнительно
+гарантирует уникальный `InventoryConsumption.OrderId` (ADR-0006, ADR-0013).
 
 ## 7. Multi-tenancy
 
@@ -168,19 +178,28 @@ sequenceDiagram
 
 - Все бизнес-таблицы: `OrganizationId` (индекс) + EF global query filter `e.OrganizationId == tenant.OrganizationId`.
 - Филиальные таблицы: `BranchId`; в запросах явный фильтр `BranchId == tenant.BranchId`.
-- При создании сущности `OrganizationId`/`BranchId` проставляются в `SaveChanges` interceptor-е из контекста, а не из DTO.
+- Дочерние таблицы агрегатов (OrderItem, RecipeIngredient, PurchaseOrderItem, …) без `OrganizationId` — доступ только через корень (DECISIONS_v1_1 §6).
+- При создании сущности `OrganizationId` проставляется в `AppDbContext.SaveChanges` из контекста, а не из DTO; запись в чужую организацию → исключение.
 - Чужой ID → 404 (не раскрываем существование).
-- Platform Super Admin работает без `org` в токене и видит только агрегаты; доступ к данным ресторана —
-  только break-glass `POST /platform/organizations/{id}/access` с причиной, read-only, 30 мин, аудит.
+- Platform Super Admin видит только агрегаты; доступ к данным ресторана — только break-glass
+  `POST /platform/organizations/{id}/access` с причиной: read-only JWT на 30 мин без refresh, аудит (ADR-0012).
 - Изоляция проверяется интеграционными тестами (см. `docs/testing/TEST_PLAN.md`).
 
 ## 8. Realtime
 
 Подробно — `respos-contracts/REALTIME.md`, ADR-0005.
 
-- Hub `/hubs/restaurant`, JWT через `access_token` query. Группы: `branch:{id}`, `branch:{id}:kitchen`,
-  `branch:{id}:station:{stationId}`, `user:{userId}`. `JoinBranch` проверяет доступ к филиалу.
-- События отправляются **после commit**; payload минимальный (ID + статус).
+- Hub `/hubs/restaurant`, JWT через `access_token` query. Группы (`RealtimeGroups`):
+
+  | Группа | Как попасть | Кто получает |
+  |---|---|---|
+  | `user:{userId}` | автоматически при подключении | личные события (`NotificationCreated`) |
+  | `branch:{branchId}` | `JoinBranch(branchId)` — проверка доступа к филиалу | `OrderUpdated`, `OrderItemReady`, `TableUpdated`, `PaymentRegistered`, `StockLow` |
+  | `branch:{branchId}:kitchen` | `JoinKitchenStation(branchId, null)` — доступ к филиалу + право `kitchen.read` | `KitchenTicketCreated`, `KitchenTicketUpdated` (все станции) |
+  | `branch:{branchId}:station:{stationId}` | `JoinKitchenStation(branchId, stationId)` (станция филиала); `LeaveKitchenStation` | те же тикет-события только этой станции |
+
+  Ошибки hub (`HubException`): `tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`.
+- `IRealtimeNotifier.ToBranch/ToKitchen/ToUser` только ставит сообщения в очередь; отправка — **после успешного commit**; payload минимальный (ID + статус).
 - Клиент после события инвалидирует запросы TanStack Query и перечитывает REST; после reconnect — полная инвалидация
   запросов текущего workspace.
 - Масштабирование: в MVP один инстанс API. При нескольких инстансах потребуется backplane (Redis) или Azure SignalR — отдельный ADR.
@@ -189,7 +208,8 @@ sequenceDiagram
 
 - Заголовок `Idempotency-Key` обязателен для `POST /payments`, `POST /payments/{id}/refunds`,
   `POST /orders/{id}/send-to-kitchen`, `POST /purchases/{id}/receive`.
-- `IdempotencyRecord (Key, UserId)` unique; хранится хеш запроса и ответ 24 ч. Тот же ключ + другой body → 409/422.
+- `IdempotencyRecord (Key, UserId)` unique; хранится хеш запроса и 2xx-ответ 24 ч. Тот же ключ + другой body → 422
+  `idempotency.key_reused`; параллельный дубль → 409 `idempotency.in_progress` (ADR-0013).
 - Дополнительные защиты на уровне данных: `Payment (OrganizationId, IdempotencyKey)` unique,
   `InventoryConsumption.OrderId` unique, проверка `amount ≤ remaining due`.
 
@@ -198,7 +218,7 @@ sequenceDiagram
 - `AuditLog` append-only: пользователь, организация, филиал, action (`order.cancelled`, `payment.refunded`,
   `user.role_changed`, `stock.adjusted`, `platform.tenant_access` …), сущность, ID, correlationId, санитизированный `ChangesJson`.
 - Не логировать пароли, токены, hash-и, платёжные секреты, лишние персональные данные.
-- Serilog — структурированные логи в stdout (JSON в prod), обогащение `CorrelationId`, `OrganizationId`, `UserId`.
+- Serilog — структурированные логи в stdout (compact JSON по умолчанию, текст в Development), обогащение `CorrelationId` через log context.
 - Health checks: `/health/live` (процесс), `/health/ready` (БД).
 
 ## 11. Frontend (кратко)
