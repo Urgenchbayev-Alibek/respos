@@ -1,0 +1,40 @@
+name: respos
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: respos
+      POSTGRES_USER: respos
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-respos_dev}
+    ports:
+      - "5433:5432"
+    volumes:
+      - respos-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U respos -d respos"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    profiles: ["full"]
+    build:
+      context: ../../respos-backend
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=respos;Username=respos;Password=${POSTGRES_PASSWORD:-respos_dev}
+      Jwt__Issuer: respos-dev
+      Jwt__Audience: respos-dev
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:-dev-only-signing-key-change-me-at-least-32-bytes!!}
+      Frontend__AllowedOrigins: http://localhost:5173,http://localhost:5174
+      FileStorage__Provider: Local
+    ports:
+      - "5080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  respos-pg:
