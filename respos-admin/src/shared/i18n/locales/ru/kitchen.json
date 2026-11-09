@@ -1,0 +1,55 @@
+{
+  "title": "Задания кухни",
+  "empty": "Заданий нет",
+  "emptyServed": "Выданных заданий нет",
+  "columnEmpty": "Пусто",
+  "actionFailed": "Не удалось изменить статус",
+  "soundUnavailable": "Звук недоступен в этом браузере",
+  "columns": {
+    "new": "Новые",
+    "in_progress": "Готовятся",
+    "ready": "Готовы"
+  },
+  "ticket": {
+    "table": "Стол {{number}}",
+    "takeaway": "С собой",
+    "aria": "Задание #{{number}}, {{place}}",
+    "newBadge": "Новый",
+    "meta": "Официант: {{waiter}} · Заказ #{{order}} · {{time}}",
+    "readyAt": "готово в {{time}}"
+  },
+  "timer": {
+    "label": "Время ожидания",
+    "normal": "В норме",
+    "warning": "Больше 10 минут",
+    "danger": "Больше 20 минут"
+  },
+  "actions": {
+    "start": "Начать",
+    "ready": "Готово",
+    "served": "Выдано",
+    "recall": "Вернуть в работу",
+    "byItem": "По позициям"
+  },
+  "itemActions": {
+    "start": "Начать",
+    "ready": "Готово",
+    "startAria": "Начать: {{name}}",
+    "readyAria": "Готово: {{name}}"
+  },
+  "toolbar": {
+    "stations": "Станции",
+    "allStations": "Все станции",
+    "view": "Показать",
+    "views": {
+      "active": "В работе",
+      "served": "Выданные"
+    },
+    "soundOn": "Звук вкл.",
+    "soundOff": "Звук выкл."
+  },
+  "offline": {
+    "disconnected": "Нет связи, данные могут быть устаревшими. Список обновляется каждые 30 секунд.",
+    "reconnecting": "Связь потеряна. Переподключение… После восстановления список обновится автоматически."
+  }
+}
