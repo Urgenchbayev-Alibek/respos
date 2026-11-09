@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Api.Authorization;
+using Restaurant.Api.Filters;
 using Restaurant.Application.Common.Models;
 using Restaurant.Application.Features.Platform.Common;
 using Restaurant.Application.Features.Platform.Organizations;
@@ -8,6 +9,7 @@ using Restaurant.Domain.Constants;
 namespace Restaurant.Api.Controllers;
 
 /// <summary>Platform super admin: tenants (aggregates only) + break-glass access. Platform permissions require IsPlatformAdmin.</summary>
+[PlatformScope]
 [Route(RoutePrefix + "platform/organizations")]
 public sealed class PlatformOrganizationsController : ApiControllerBase
 {

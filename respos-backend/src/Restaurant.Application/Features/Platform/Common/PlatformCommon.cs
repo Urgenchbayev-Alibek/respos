@@ -17,7 +17,8 @@ public sealed record PlatformOrganizationDto(
     int BranchesCount,
     int UsersCount,
     DateTime CreatedAt,
-    bool IsDemo);
+    bool IsDemo,
+    DateTime? SubscriptionEndsAt);
 
 public static class PlatformErrors
 {
@@ -62,5 +63,7 @@ public static class PlatformQueries
             db.Branches.IgnoreQueryFilters().Count(b => b.OrganizationId == o.Id && b.IsActive),
             db.UserOrganizations.IgnoreQueryFilters().Count(uo => uo.OrganizationId == o.Id && uo.IsActive),
             o.CreatedAt,
-            o.IsDemo));
+            o.IsDemo,
+            db.Subscriptions.IgnoreQueryFilters().Where(s => s.OrganizationId == o.Id)
+                .OrderByDescending(s => s.StartsAt).Select(s => s.EndsAt).FirstOrDefault()));
 }

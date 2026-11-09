@@ -10,7 +10,8 @@
 | Unit (backend) | `respos-backend/tests/Restaurant.UnitTests` | xUnit (+ FluentAssertions или аналог — по решению backend) | `dotnet test` |
 | Integration (backend) | `respos-backend/tests/Restaurant.IntegrationTests` | xUnit, `WebApplicationFactory`, Testcontainers (PostgreSQL 16) | `dotnet test` (нужен Docker) |
 | Frontend unit/component | `respos-admin/src/**/*.test.tsx`, `respos-landing/src/**` | Vitest, React Testing Library, MSW (если выбран) | `npm run test` |
-| E2E | отдельная папка (предложение: `e2e/` в корне, Playwright) | Playwright — **[?]** не выбран в контракте | вручную / CI позже |
+| E2E (API + SignalR) | `scripts/e2e/e2e-smoke.mjs` — сценарий ТЗ §16 против запущенного API; результаты — `docs/testing/E2E_RESULTS.md` | Node 24 + `@microsoft/signalr` | `cd scripts/e2e && npm install && node e2e-smoke.mjs` |
+| E2E (UI) | отдельная папка (предложение: `e2e/` в корне, Playwright) | Playwright — **[?]** не выбран в контракте | вручную / CI позже |
 | Производительность | скрипты k6 или аналог — **[?]** | измерение целей §6.1 | вручную на тестовом стенде |
 
 Интеграционные тесты используют настоящий PostgreSQL (Testcontainers), а не InMemory-провайдер: глобальные фильтры, `xmin`, уникальные индексы и транзакции должны проверяться на реальной СУБД. На GitHub-hosted `ubuntu-latest` Docker доступен — Testcontainers работает в CI.

@@ -1,8 +1,8 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Application.Common.Extensions;
 using Restaurant.Application.Common.Handlers;
 using Restaurant.Application.Common.Models;
-using Restaurant.Application.Features.Orders.Common;
 using Restaurant.Application.Features.Payments.Common;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Payments;
@@ -33,7 +33,7 @@ public sealed class GetCashShiftHandler(CashShiftReadService reader) : IHandler<
     }
 }
 
-/// <summary><c>GET /cash-shifts?status=&amp;from=&amp;to=</c> (openedAt desc).</summary>
+/// <summary><c>GET /cash-shifts?status=&amp;from=&amp;to=&amp;sort=</c>; sort <c>openedAt|createdAt|closedAt</c> (default openedAt desc).</summary>
 public sealed record ListCashShiftsQuery : PageQuery
 {
     public string? Status { get; init; }
@@ -43,6 +43,13 @@ public sealed record ListCashShiftsQuery : PageQuery
 
 public sealed class ListCashShiftsHandler(CashShiftReadService reader) : IHandler<ListCashShiftsQuery, PagedResult<CashShiftDto>>
 {
+    private static readonly Dictionary<string, Expression<Func<CashShift, object>>> SortFields = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["openedAt"] = s => s.OpenedAt,
+        ["createdAt"] = s => s.CreatedAt,
+        ["closedAt"] = s => s.ClosedAt!,
+    };
+
     public async Task<Result<PagedResult<CashShiftDto>>> HandleAsync(ListCashShiftsQuery request, CancellationToken cancellationToken)
     {
         var query = reader.BranchShifts();
@@ -63,7 +70,7 @@ public sealed class ListCashShiftsHandler(CashShiftReadService reader) : IHandle
             query = query.Where(s => s.OpenedAt <= toUtc);
         }
 
-        var page = await query.OrderByDescending(s => s.OpenedAt).ToPagedResultAsync(request, cancellationToken);
+        var page = await query.ApplySort(request, SortFields, s => s.OpenedAt, defaultDescending: true).ToPagedResultAsync(request, cancellationToken);
         var items = await reader.MapAsync(page.Items, cancellationToken);
         return new PagedResult<CashShiftDto>(items, page.Page, page.PageSize, page.TotalCount);
     }

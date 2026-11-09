@@ -28,6 +28,11 @@ public partial class KitchenTicket : AuditableEntity, IBranchScoped
     public Guid BranchId { get; set; }
     public Guid OrderId { get; set; }
     public Guid KitchenStationId { get; set; }
+
+    /// <summary>
+    /// Send round within the order (1 = first "send to kitchen", 2 = the next one, …), shared by the tickets of all stations
+    /// created by the same send. Not unique per branch: KDS shows it together with <c>orderNumber</c> (e.g. "#0042 · 2").
+    /// </summary>
     public int Number { get; set; }
     public KitchenTicketStatus Status { get; set; } = KitchenTicketStatus.New;
     public DateTime? StartedAt { get; set; }

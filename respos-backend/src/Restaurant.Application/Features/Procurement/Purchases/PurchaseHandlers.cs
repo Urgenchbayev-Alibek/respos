@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Application.Abstractions.Audit;
 using Restaurant.Application.Abstractions.Context;
@@ -13,9 +14,21 @@ using Restaurant.Domain.Enums;
 
 namespace Restaurant.Application.Features.Procurement.Purchases;
 
+/// <summary>
+/// <c>GET /purchases</c>: list rows carry <c>items: []</c> on purpose (summary list; lines via <c>GET /purchases/{id}</c>).
+/// Sort <c>createdAt|number|expectedAt|total</c> (default number desc).
+/// </summary>
 public sealed class ListPurchasesHandler(IApplicationDbContext db, ITenantContext tenant)
     : IHandler<ListPurchasesQuery, PagedResult<PurchaseDto>>
 {
+    private static readonly Dictionary<string, Expression<Func<PurchaseOrder, object>>> SortFields = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["createdAt"] = p => p.CreatedAt,
+        ["number"] = p => p.Number,
+        ["expectedAt"] = p => p.ExpectedAt!,
+        ["total"] = p => p.Total,
+    };
+
     public async Task<Result<PagedResult<PurchaseDto>>> HandleAsync(ListPurchasesQuery request, CancellationToken cancellationToken)
     {
         var branchId = tenant.RequireBranchId();
@@ -42,7 +55,7 @@ public sealed class ListPurchasesHandler(IApplicationDbContext db, ITenantContex
             query = query.Where(p => p.CreatedAt <= toUtc);
         }
 
-        return await query.OrderByDescending(p => p.Number)
+        return await query.ApplySort(request, SortFields, p => p.Number, defaultDescending: true)
             .Select(p => new PurchaseDto(p.Id, p.Number, p.SupplierId, p.Supplier!.Name, p.Status, p.ExpectedAt, p.Total, p.Comment,
                 p.CreatedAt, new List<PurchaseItemDto>()))
             .ToPagedResultAsync(request, cancellationToken);

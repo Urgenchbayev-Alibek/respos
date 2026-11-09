@@ -77,6 +77,6 @@ public sealed class RefundPaymentHandler(
 
         var names = await users.GetAsync([payment.CreatedBy, refund.CreatedBy], cancellationToken);
         return new RefundDto(refund.Id, payment.Id, order.Id, refund.CashShiftId, refund.Method, refund.Amount, refund.Reason,
-            refund.CreatedAt, refund.CreatedBy is { } by ? names.GetValueOrDefault(by) : null, PaymentDto.From(payment, names));
+            refund.CreatedAt, refund.CreatedBy is { } by ? names.GetValueOrDefault(by) : null, PaymentDto.From(payment, names, order.Number));
     }
 }

@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
@@ -22,8 +23,17 @@ public sealed record ListReservationsQuery : PageQuery
     public DateOnly? Date { get; init; }
     public DateTime? From { get; init; }
     public DateTime? To { get; init; }
-    public ReservationStatus? Status { get; init; }
+    /// <summary>snake_case, comma list allowed (<c>confirmed,no_show</c>).</summary>
+    public string? Status { get; init; }
     public Guid? TableId { get; init; }
+}
+
+public sealed class ListReservationsValidator : AbstractValidator<ListReservationsQuery>
+{
+    public ListReservationsValidator()
+    {
+        RuleFor(x => x.Status).Must(SnakeCaseEnum.IsValidListOrEmpty<ReservationStatus>).WithMessage("Unknown reservation status.");
+    }
 }
 
 public sealed class ListReservationsHandler(IApplicationDbContext db, ITenantContext tenant, BranchTimeService branchTime)
@@ -60,9 +70,10 @@ public sealed class ListReservationsHandler(IApplicationDbContext db, ITenantCon
             query = query.Where(r => r.StartsAt < toUtc);
         }
 
-        if (request.Status is { } status)
+        var statuses = SnakeCaseEnum.ParseList<ReservationStatus>(request.Status);
+        if (statuses.Count > 0)
         {
-            query = query.Where(r => r.Status == status);
+            query = query.Where(r => statuses.Contains(r.Status));
         }
 
         if (request.TableId is { } tableId)

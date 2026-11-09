@@ -59,7 +59,8 @@ public sealed class PlatformOrganizationsTests(ApiFactory factory) : PlatformTes
         list.GetProperty("totalCount").GetInt32().Should().Be(1);
         var row = list.GetProperty("items")[0];
         row.EnumerateObject().Select(p => p.Name).Should().BeEquivalentTo(
-            "id", "name", "slug", "status", "planCode", "subscriptionStatus", "branchesCount", "usersCount", "createdAt", "isDemo");
+            "id", "name", "slug", "status", "planCode", "subscriptionStatus", "branchesCount", "usersCount", "createdAt", "isDemo",
+            "subscriptionEndsAt");
 
         var events = await ReadJsonAsync(await admin.GetAsync("/api/v1/platform/system-events?action=platform.organization.created&pageSize=100"));
         events.GetProperty("items").EnumerateArray().Should().Contain(e => e.GetProperty("entityId").GetString() == orgId.ToString());

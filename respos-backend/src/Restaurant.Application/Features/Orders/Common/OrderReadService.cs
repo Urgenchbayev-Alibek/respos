@@ -57,7 +57,7 @@ public sealed class OrderReadService(IApplicationDbContext db, ITenantContext te
         var byId = orders.ToDictionary(o => o.Id);
         return orderIds
             .Where(byId.ContainsKey)
-            .Select(id => Map(byId[id], tables, names, paymentsByOrder[id].Select(p => PaymentDto.From(p, names)).ToList()))
+            .Select(id => Map(byId[id], tables, names, paymentsByOrder[id].Select(p => PaymentDto.From(p, names, byId[id].Number)).ToList()))
             .ToList();
     }
 

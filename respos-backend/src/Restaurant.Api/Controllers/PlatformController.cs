@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Api.Authorization;
+using Restaurant.Api.Filters;
 using Restaurant.Application.Common.Models;
 using Restaurant.Application.Features.Audit;
 using Restaurant.Application.Features.Platform.DemoRequests;
@@ -11,6 +12,7 @@ using Restaurant.Domain.Constants;
 namespace Restaurant.Api.Controllers;
 
 /// <summary>Platform super admin: plans, features, feature flags, system info/events, demo requests.</summary>
+[PlatformScope]
 [Route(RoutePrefix + "platform")]
 public sealed class PlatformController : ApiControllerBase
 {

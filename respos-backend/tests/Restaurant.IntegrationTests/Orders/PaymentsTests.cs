@@ -32,6 +32,21 @@ public sealed class PaymentsTests(ApiFactory factory) : PosTestBase(factory)
     }
 
     [Fact]
+    public async Task Paying_another_tenants_order_is_404_even_without_an_open_shift()
+    {
+        var org = await CreateOrgWithUserAsync(SystemRoles.Owner);
+        var seed = await SeedPosAsync(org);
+        var orderId = Id(await CreateOrderAsync(await BranchClientAsync(org), null, Line(seed.TeaId)));
+        var other = await CreateOrgWithUserAsync(SystemRoles.Cashier);
+        var otherCashier = await BranchClientAsync(other);
+
+        var response = await PayAsync(otherCashier, orderId, TeaPrice);
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        (await ReadErrorCodeAsync(response)).Should().Be("order.not_found");
+    }
+
+    [Fact]
     public async Task Same_idempotency_key_creates_one_payment_and_overpay_is_rejected()
     {
         var org = await CreateOrgWithUserAsync();
@@ -59,6 +74,29 @@ public sealed class PaymentsTests(ApiFactory factory) : PosTestBase(factory)
         order.GetProperty("paidAmount").GetDecimal().Should().Be(10000m);
         order.GetProperty("remainingAmount").GetDecimal().Should().Be(PlovPrice - 10000m);
         order.GetProperty("payments").GetArrayLength().Should().Be(1);
+    }
+
+    [Fact]
+    public async Task Payment_list_has_order_number_and_honours_created_at_sort()
+    {
+        var org = await CreateOrgWithUserAsync();
+        var seed = await SeedPosAsync(org);
+        var client = await BranchClientAsync(org);
+        await OpenShiftAsync(client);
+        var order = await CreateOrderAsync(client, seed.Table1Id, Line(seed.PlovId));
+        var orderId = Id(order);
+        var number = order.GetProperty("number").GetInt32();
+        var first = await ReadJsonAsync(await PayAsync(client, orderId, 1000m));
+        var second = await ReadJsonAsync(await PayAsync(client, orderId, 2000m));
+        first.GetProperty("orderNumber").GetInt32().Should().Be(number);
+
+        var asc = await ReadJsonAsync(await client.GetAsync("/api/v1/payments?sort=createdAt:asc"));
+        var desc = await ReadJsonAsync(await client.GetAsync("/api/v1/payments?sort=createdAt:desc"));
+
+        asc.GetProperty("items").EnumerateArray().Select(Id).Should().Equal(Id(first), Id(second));
+        desc.GetProperty("items").EnumerateArray().Select(Id).Should().Equal(Id(second), Id(first));
+        asc.GetProperty("items")[0].GetProperty("orderNumber").GetInt32().Should().Be(number);
+        (await GetOrderAsync(client, orderId)).GetProperty("payments")[0].GetProperty("orderNumber").GetInt32().Should().Be(number);
     }
 
     [Fact]

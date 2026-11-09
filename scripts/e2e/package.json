@@ -1,0 +1,12 @@
+{
+  "name": "respos-e2e",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end smoke scenario against a running RestaurantOS API (spec §16).",
+  "scripts": {
+    "smoke": "node e2e-smoke.mjs"
+  },
+  "dependencies": {
+    "@microsoft/signalr": "8.0.7"
+  }
+}

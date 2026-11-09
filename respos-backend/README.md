@@ -117,22 +117,18 @@ Touch only your module's files. Nothing has to be registered centrally.
 - **Health**: `/health/live`, `/health/ready` (DB). **Swagger**: `/swagger` (Development or `Swagger:Enabled`).
 - **SignalR**: `/hubs/restaurant?access_token=…`; `JoinBranch`, `JoinKitchenStation`, `LeaveKitchenStation` validate access.
 
-## Error codes defined so far
+## Error codes
 
-`validation.failed`, `server.error`, `request.invalid`, `concurrency.conflict`, `conflict.duplicate`, `rate_limit.exceeded`,
-`auth.unauthenticated`, `auth.forbidden`, `auth.invalid_credentials`, `auth.account_locked`, `auth.account_blocked`, `auth.no_organization`,
-`auth.organization_forbidden`, `auth.invalid_refresh_token`, `auth.refresh_token_reused`, `auth.token_expired`, `auth.invalid_token`,
-`auth.invalid_current_password`, `organization.suspended`, `organization.not_found`,
-`tenant.required`, `tenant.branch_forbidden`, `plan.limit_exceeded`,
-`user.not_found`, `user.email_taken`, `user.cannot_modify_self`, `user.last_owner`, `user.owner_protected`, `user.invalid_roles`, `user.invalid_branches`,
-`role.not_found`, `role.name_taken`, `role.system_protected`, `role.in_use`, `role.invalid_permissions`, `branch.not_found`, `branch.last_active`,
-`idempotency.key_required`, `idempotency.key_reused`, `idempotency.in_progress`,
-`order.not_found`, `order.item_not_found`, `order.invalid_status_transition`, `order.has_payments`, `order.closed`, `order.nothing_to_send`,
-`order.cancel_reason_required`, `order.invalid_quantity`, `order.item_not_editable`, `order.invalid_discount`, `order.table_required`,
-`payment.invalid_amount`, `payment.exceeds_due`, `payment.invalid_refund_amount`, `stock.insufficient`,
-`reservation.invalid_period`, `reservation.time_conflict`,
-`report.not_found`, `report.invalid_period`, `report.unsupported_format`, `feature.disabled`, `feature.not_found`, `notification.not_found`,
-`organization.slug_taken`, `plan.not_found`, `plan.code_taken`, `plan.invalid_features`, `demo_request.not_found`. Hub errors: `tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`.
+Every `code` the API can return (collected from all modules' `*Errors.cs`, validators and middleware). Frontends map them to localized messages and fall back to `title`.
+
+- **Common**: `concurrency.conflict`, `conflict.duplicate`, `feature.disabled`, `feature.not_found`, `idempotency.in_progress`, `idempotency.key_required`, `idempotency.key_reused`, `plan.code_taken`, `plan.invalid_features`, `plan.limit_exceeded`, `plan.not_found`, `rate_limit.exceeded`, `request.invalid`, `server.error`, `tenant.branch_forbidden`, `tenant.required`, `validation.failed`
+- **Auth & organization**: `auth.account_blocked`, `auth.account_locked`, `auth.forbidden`, `auth.invalid_credentials`, `auth.invalid_current_password`, `auth.invalid_refresh_token`, `auth.invalid_token`, `auth.no_organization`, `auth.organization_forbidden`, `auth.refresh_token_reused`, `auth.token_expired`, `auth.unauthenticated`, `auth.weak_password`, `branch.last_active`, `branch.not_found`, `organization.not_found`, `organization.slug_taken`, `organization.suspended`, `role.in_use`, `role.invalid_permissions`, `role.name_taken`, `role.not_found`, `role.system_protected`, `user.cannot_modify_self`, `user.email_taken`, `user.invalid_branches`, `user.invalid_roles`, `user.last_owner`, `user.not_found`, `user.owner_protected`
+- **Floor & reservations**: `dining_area.archived`, `dining_area.has_tables`, `dining_area.not_found`, `reservation.invalid_period`, `reservation.invalid_status_transition`, `reservation.not_editable`, `reservation.not_found`, `reservation.table_required`, `reservation.time_conflict`, `table.archived`, `table.has_active_order`, `table.invalid_status`, `table.not_found`, `table.number_taken`, `table.unavailable`
+- **Menu & kitchen**: `kitchen_station.in_use`, `kitchen_station.not_configured`, `kitchen_station.not_found`, `kitchen_ticket.invalid_status_transition`, `kitchen_ticket.not_found`, `kitchen_ticket_item.not_found`, `menu_category.archived`, `menu_category.has_items`, `menu_category.not_found`, `menu_item.archived`, `menu_item.invalid_modifier_groups`, `menu_item.invalid_photo`, `menu_item.invalid_variant`, `menu_item.not_found`, `modifier_group.invalid_option`, `modifier_group.not_found`
+- **Orders & payments**: `cash_shift.already_open`, `cash_shift.closed`, `cash_shift.invalid_amount`, `cash_shift.not_found`, `cash_shift.not_open`, `order.cancel_reason_required`, `order.closed`, `order.has_payments`, `order.invalid_discount`, `order.invalid_quantity`, `order.invalid_status_transition`, `order.item_not_editable`, `order.item_not_found`, `order.menu_item_unavailable`, `order.not_dine_in`, `order.not_found`, `order.nothing_to_send`, `order.table_required`, `payment.duplicate`, `payment.exceeds_due`, `payment.invalid_amount`, `payment.invalid_refund_amount`, `payment.not_found`, `payment.provider_failed`, `payment.refund_reason_required`
+- **Inventory & procurement**: `ingredient.archived`, `ingredient.base_unit_locked`, `ingredient.not_found`, `ingredient_category.not_found`, `inventory_count.completed`, `inventory_count.not_found`, `purchase.invalid_receive_quantity`, `purchase.invalid_status_transition`, `purchase.item_not_found`, `purchase.not_editable`, `purchase.not_found`, `purchase.receive_exceeds_remaining`, `recipe.invalid_variant`, `recipe.not_found`, `stock.insufficient`, `supplier.archived`, `supplier.not_found`, `unit.code_taken`, `unit.conversion_exists`, `unit.conversion_missing`, `unit.not_found`
+- **Reports, notifications, platform**: `demo_request.not_found`, `notification.not_found`, `report.invalid_period`, `report.not_found`, `report.unsupported_format`
+- **SignalR hub errors** (`HubException` message): `tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`.
 
 ## Known limitations
 

@@ -164,6 +164,15 @@ public sealed class ReservationTests(ApiFactory factory) : ApiTestBase(factory)
 
         var bySearch = await client.GetFromJsonAsync<JsonElement>("/api/v1/reservations?search=BOB&status=pending", Json);
         bySearch.GetProperty("items").EnumerateArray().Single().GetProperty("guestName").GetString().Should().Be("Bobur");
+
+        // snake_case multi-word values and comma lists (regression: status=no_show was a 400 from the default binder)
+        var noShow = await client.GetAsync("/api/v1/reservations?status=no_show");
+        noShow.StatusCode.Should().Be(HttpStatusCode.OK);
+        (await ReadJsonAsync(noShow)).GetProperty("totalCount").GetInt32().Should().Be(0);
+        var list = await client.GetFromJsonAsync<JsonElement>("/api/v1/reservations?status=pending,no_show", Json);
+        list.GetProperty("totalCount").GetInt32().Should().Be(2);
+        var unknown = await client.GetAsync("/api/v1/reservations?status=bogus");
+        unknown.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]

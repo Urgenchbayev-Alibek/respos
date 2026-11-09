@@ -15,8 +15,9 @@ const SCAN_ROOTS = [
   'respos-backend/tests',
   'respos-admin/src',
   'respos-landing/src',
+  'scripts',
 ];
-const EXTENSIONS = new Set(['.cs', '.ts', '.tsx', '.js', '.jsx', '.css', '.scss', '.sql']);
+const EXTENSIONS = new Set(['.cs', '.ts', '.tsx', '.js', '.mjs', '.jsx', '.css', '.scss', '.sql']);
 const EXCLUDED_DIRS = new Set(['Migrations', 'node_modules', 'dist', 'bin', 'obj', 'coverage']);
 
 function isSourceFile(name) {

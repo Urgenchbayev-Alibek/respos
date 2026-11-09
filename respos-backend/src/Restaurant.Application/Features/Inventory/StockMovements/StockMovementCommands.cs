@@ -1,6 +1,6 @@
+using Restaurant.Application.Common.Extensions;
 using FluentValidation;
 using Restaurant.Application.Common.Models;
-using Restaurant.Application.Features.Inventory.Common;
 using Restaurant.Domain.Enums;
 
 namespace Restaurant.Application.Features.Inventory.StockMovements;

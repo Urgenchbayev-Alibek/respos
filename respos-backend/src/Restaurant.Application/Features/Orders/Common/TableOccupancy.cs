@@ -4,6 +4,7 @@ using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Abstractions.Realtime;
 using Restaurant.Application.Common.Handlers;
+using Restaurant.Application.Features.Floor.Common;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Floor;
 using Restaurant.Domain.Entities.Orders;
@@ -13,10 +14,13 @@ namespace Restaurant.Application.Features.Orders.Common;
 
 /// <summary>
 /// Table status driven by orders: a dine-in order makes its table <c>occupied</c>; when the last active order of a
-/// table is paid/cancelled/moved away the table becomes <c>available</c>. Queues <c>TableUpdated</c>.
+/// table is paid/cancelled/moved away the table becomes <c>available</c>. Queues <c>TableUpdated</c> on a change.
+/// Status rules live in the Floor domain (<see cref="DiningTable.Occupy"/>, <see cref="DiningTable.ReleaseIfIdle"/>);
+/// "busy" is <see cref="TableReadService.ActiveOrders"/> — shared with reservations, no duplicated rules.
 /// </summary>
 [ScopedService]
-public sealed class TableOccupancy(IApplicationDbContext db, ITenantContext tenant, IClock clock, IRealtimeNotifier realtime)
+public sealed class TableOccupancy(
+    IApplicationDbContext db, ITenantContext tenant, IClock clock, IRealtimeNotifier realtime, TableReadService tableReads)
 {
     /// <summary>Tracked active table of the current branch that can take orders, or an error.</summary>
     public async Task<Result<DiningTable>> GetUsableTableAsync(Guid tableId, CancellationToken ct)
@@ -33,8 +37,10 @@ public sealed class TableOccupancy(IApplicationDbContext db, ITenantContext tena
 
     public void Occupy(DiningTable table)
     {
-        table.Status = TableStatus.Occupied;
-        Notify(table);
+        if (table.Occupy())
+        {
+            Notify(table);
+        }
     }
 
     /// <summary>Frees the table unless another active order (other than <paramref name="releasingOrderId"/>) is on it.</summary>
@@ -45,17 +51,16 @@ public sealed class TableOccupancy(IApplicationDbContext db, ITenantContext tena
             return;
         }
 
-        var busy = await db.Orders.AnyAsync(
-            o => o.TableId == id && o.Id != releasingOrderId && !OrderReadService.ClosedStatuses.Contains(o.Status), ct);
-        if (busy)
+        var table = await db.DiningTables.FirstOrDefaultAsync(t => t.Id == id, ct);
+        if (table is null)
         {
             return;
         }
 
-        var table = await db.DiningTables.FirstOrDefaultAsync(t => t.Id == id, ct);
-        if (table is { Status: TableStatus.Occupied })
+        // the releasing order's new status is not saved yet → exclude it explicitly
+        var busy = await tableReads.ActiveOrders(table.BranchId).AnyAsync(o => o.TableId == id && o.Id != releasingOrderId, ct);
+        if (table.ReleaseIfIdle(busy))
         {
-            table.Status = TableStatus.Available;
             Notify(table);
         }
     }

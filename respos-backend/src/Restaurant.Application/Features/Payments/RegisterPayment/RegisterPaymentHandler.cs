@@ -35,7 +35,7 @@ public sealed class RegisterPaymentValidator : AbstractValidator<RegisterPayment
 }
 
 /// <summary>
-/// <c>POST /payments</c> (Idempotency-Key): requires an open shift (422 <c>cash_shift.not_open</c>); 0 &lt; amount ≤ remaining
+/// <c>POST /payments</c> (Idempotency-Key): unknown/foreign order → 404 first; then requires an open shift (422 <c>cash_shift.not_open</c>); 0 &lt; amount ≤ remaining
 /// (422 <c>payment.exceeds_due</c>); charged through the payment provider. Full payment → order <c>paid</c>
 /// (OrderPaidDomainEvent: table release, inventory consumption — same transaction). Audited; realtime after commit.
 /// </summary>
@@ -54,16 +54,16 @@ public sealed class RegisterPaymentHandler(
     public async Task<Result<PaymentDto>> HandleAsync(RegisterPaymentCommand request, CancellationToken cancellationToken)
     {
         var branchId = tenant.RequireBranchId();
-        var shift = await shifts.FindOpenAsync(tracked: false, cancellationToken);
-        if (shift is null)
-        {
-            return CashShiftErrors.NotOpen;
-        }
-
         var order = await db.Orders.FirstOrDefaultAsync(o => o.Id == request.OrderId && o.BranchId == branchId, cancellationToken);
         if (order is null)
         {
             return OrderErrors.NotFound;
+        }
+
+        var shift = await shifts.FindOpenAsync(tracked: false, cancellationToken);
+        if (shift is null)
+        {
+            return CashShiftErrors.NotOpen;
         }
 
         if (await db.Payments.AnyAsync(p => p.IdempotencyKey == request.IdempotencyKey, cancellationToken))
@@ -102,6 +102,6 @@ public sealed class RegisterPaymentHandler(
         orders.NotifyOrderUpdated(order);
         await db.SaveChangesAsync(cancellationToken);
 
-        return PaymentDto.From(payment, await users.GetAsync([payment.CreatedBy], cancellationToken));
+        return PaymentDto.From(payment, await users.GetAsync([payment.CreatedBy], cancellationToken), order.Number);
     }
 }

@@ -15,11 +15,12 @@ public sealed record PaymentDto(
     string? ExternalReference,
     DateTime CreatedAt,
     Guid? CreatedBy,
-    string? CreatedByName)
+    string? CreatedByName,
+    int OrderNumber)
 {
-    public static PaymentDto From(Payment p, IReadOnlyDictionary<Guid, string> names) => new(
+    public static PaymentDto From(Payment p, IReadOnlyDictionary<Guid, string> names, int orderNumber) => new(
         p.Id, p.OrderId, p.CashShiftId, p.Method, p.Amount, p.RefundedAmount, p.Status, p.Provider, p.ExternalReference,
-        p.CreatedAt, p.CreatedBy, p.CreatedBy is { } by ? names.GetValueOrDefault(by) : null);
+        p.CreatedAt, p.CreatedBy, p.CreatedBy is { } by ? names.GetValueOrDefault(by) : null, orderNumber);
 }
 
 public sealed record RefundDto(
