@@ -5,8 +5,8 @@
   --color-primary-subtle: #fdeee7;
   /* Accessible variants: white text on --color-primary is only ~3.5:1, so filled
      buttons use --color-primary-strong (5:1) and text links use --color-primary-text. */
-  --color-primary-strong: #c2461a;
-  --color-primary-strong-hover: #a93c16;
+  --color-primary-strong: #c2410c;
+  --color-primary-strong-hover: #9a3412;
   --color-primary-text: #b8441a;
 
   --color-text: #0f172a;
