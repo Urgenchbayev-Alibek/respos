@@ -29,6 +29,13 @@ public class MenuItem : AuditableEntity, ITenantScoped, IArchivable
         IsAvailable = false;
         ArchivedAt = utcNow;
     }
+
+    /// <summary>
+    /// Can be ordered at the given branch-local time: not archived, available, and inside one of the
+    /// <see cref="Availability"/> windows (no windows = all day).
+    /// </summary>
+    public bool IsOrderableAt(DateTime branchLocalTime) =>
+        !IsArchived && IsAvailable && MenuAvailability.AnyCovers(Availability, branchLocalTime);
 }
 
 /// <summary>Variant with an absolute price (e.g. "0.5 порции").</summary>
@@ -59,4 +66,29 @@ public class MenuAvailability : Entity
     public TimeOnly EndTime { get; set; }
 
     public MenuItem? MenuItem { get; set; }
+
+    /// <summary>
+    /// True when <paramref name="localTime"/> falls into [StartTime, EndTime). A window with EndTime ≤ StartTime
+    /// runs overnight; its after-midnight part belongs to the previous <see cref="DayOfWeek"/>.
+    /// </summary>
+    public bool Covers(DateTime localTime)
+    {
+        var time = TimeOnly.FromDateTime(localTime);
+        var day = localTime.DayOfWeek;
+        if (EndTime > StartTime)
+        {
+            return DayMatches(day) && time >= StartTime && time < EndTime;
+        }
+
+        var previousDay = (System.DayOfWeek)(((int)day + 6) % 7);
+        return (DayMatches(day) && time >= StartTime) || (DayMatches(previousDay) && time < EndTime);
+    }
+
+    public static bool AnyCovers(IEnumerable<MenuAvailability> windows, DateTime localTime)
+    {
+        var list = windows as ICollection<MenuAvailability> ?? windows.ToList();
+        return list.Count == 0 || list.Any(w => w.Covers(localTime));
+    }
+
+    private bool DayMatches(System.DayOfWeek day) => DayOfWeek is null || DayOfWeek == day;
 }
