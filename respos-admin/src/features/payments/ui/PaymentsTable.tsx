@@ -1,6 +1,7 @@
 import { Undo2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatOrderNumber } from '@/entities/order/order.types';
 import { usePayments } from '@/entities/payment/payment.queries';
 import type { PaymentDto, PaymentListParams } from '@/entities/payment/payment.types';
 import { PERMISSIONS } from '@/shared/constants/permissions';
@@ -32,8 +33,14 @@ export function PaymentsTable({ filters, enabled = true }: { filters: Filters; e
   const columns = useMemo<DataTableColumn<PaymentDto>[]>(
     () => [
       { key: 'createdAt', header: t('columns.createdAt'), cell: (p) => format.dateTime(p.createdAt) },
-      // PaymentDto has no order number (backend gap): show a short order reference with the full id as a tooltip.
-      { key: 'order', header: t('columns.order'), cell: (p) => <span title={p.orderId}>{shortId(p.orderId)}</span> },
+      // `orderNumber` is additive on the backend: older servers omit it, then a short order id is shown.
+      {
+        key: 'order',
+        header: t('columns.order'),
+        cell: (p) => (
+          <span title={p.orderId}>{typeof p.orderNumber === 'number' ? formatOrderNumber(p.orderNumber) : shortId(p.orderId)}</span>
+        ),
+      },
       { key: 'method', header: t('columns.method'), cell: (p) => t(`methods.${p.method}`) },
       { key: 'amount', header: t('columns.amount'), align: 'right', cell: (p) => format.money(p.amount) },
       {

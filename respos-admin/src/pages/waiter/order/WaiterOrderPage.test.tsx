@@ -118,4 +118,47 @@ describe('WaiterOrderPage', () => {
     await user.click(screen.getByRole('button', { name: 'Отправить на кухню (1)' }));
     await waitFor(() => expect(added).toEqual({ items: [{ menuItemId: 'm2', quantity: 1, modifierOptionIds: [] }] }));
   });
+  it('edits quantity and comment of a saved new item and cancels it with a reason', async () => {
+    useBaseHandlers();
+    let order = makeOrder({ items: [makeOrderItem(), makeOrderItem({ id: 'i2', name: 'Лагман', status: 'sent' })] });
+    const updates: unknown[] = [];
+    let cancelBody: unknown = null;
+    server.use(
+      http.get(api('/orders/o1'), () => HttpResponse.json(order)),
+      http.put(api('/orders/o1/items/i1'), async ({ request }) => {
+        const body = (await request.json()) as { quantity: number; comment: string | null };
+        updates.push(body);
+        order = { ...order, items: [makeOrderItem({ ...body }), ...order.items.slice(1)] };
+        return HttpResponse.json(order);
+      }),
+      http.post(api('/orders/o1/items/i1/cancel'), async ({ request }) => {
+        cancelBody = await request.json();
+        order = { ...order, items: [makeOrderItem({ status: 'cancelled' }), ...order.items.slice(1)] };
+        return HttpResponse.json(order);
+      }),
+    );
+    const user = userEvent.setup();
+    renderRoutes(routes, { auth, route: '/waiter/orders/o1' });
+
+    await user.click(await screen.findByRole('button', { name: 'Увеличить: Плов' }));
+    await waitFor(() => expect(updates).toEqual([{ quantity: 3, comment: null }]));
+    expect(screen.queryByRole('button', { name: 'Увеличить: Лагман' })).not.toBeInTheDocument();
+    // A sent item needs orders.cancel, which this waiter does not have.
+    expect(screen.queryByRole('button', { name: 'Отменить позицию: Лагман' })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Комментарий: Плов' }));
+    const dialog = await screen.findByRole('dialog');
+    await user.type(within(dialog).getByRole('textbox'), ' без лука ');
+    await user.click(within(dialog).getByRole('button', { name: 'Сохранить' }));
+    await waitFor(() => expect(updates).toHaveLength(2));
+    expect(updates[1]).toEqual({ quantity: 3, comment: 'без лука' });
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(screen.getByText('без лука')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Отменить позицию: Плов' }));
+    const confirm = await screen.findByRole('dialog');
+    await user.type(within(confirm).getByRole('textbox'), 'Гость передумал');
+    await user.click(within(confirm).getByRole('button', { name: 'Отменить позицию' }));
+    await waitFor(() => expect(cancelBody).toEqual({ reason: 'Гость передумал' }));
+  });
 });

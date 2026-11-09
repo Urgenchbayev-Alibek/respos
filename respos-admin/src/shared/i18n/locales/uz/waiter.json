@@ -3,7 +3,8 @@
     "itemReady": "Berishga tayyor",
     "itemReadyTable": "{{table}}-stol — {{item}}",
     "sent": "Oshxonaga yuborildi",
-    "serveFailed": "Berilganini belgilab boʻlmadi"
+    "serveFailed": "Berilganini belgilab boʻlmadi",
+    "itemUpdateFailed": "Pozitsiyani oʻzgartirib boʻlmadi"
   },
   "options": {
     "errorMin": "Kamida {{min}} ta tanlang",

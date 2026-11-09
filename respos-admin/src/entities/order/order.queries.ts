@@ -3,7 +3,14 @@ import { tableKeys } from '@/entities/table/table.queries';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type { PagedResult } from '@/shared/types/pagination';
-import type { AddOrderItem, CreateOrderInput, OrderDto, OrderListParams } from './order.types';
+import type {
+  AddOrderItem,
+  ApplyDiscountInput,
+  CreateOrderInput,
+  OrderDto,
+  OrderListParams,
+  UpdateOrderItemInput,
+} from './order.types';
 import type { ReceiptDto } from './receipt.types';
 
 export const orderKeys = {
@@ -107,5 +114,26 @@ export function useCancelOrderItem() {
 export function useCancelOrder() {
   return useOrderMutation(({ orderId, reason }: { orderId: string; reason: string }) =>
     apiClient.post<OrderDto>(ENDPOINTS.orders.action(orderId, 'cancel'), { reason }),
+  );
+}
+
+/** Only `new` items (else 409 `order.item_not_editable`). */
+export function useUpdateOrderItem() {
+  return useOrderMutation(({ orderId, itemId, input }: { orderId: string; itemId: string; input: UpdateOrderItemInput }) =>
+    apiClient.put<OrderDto>(ENDPOINTS.orders.item(orderId, itemId), input),
+  );
+}
+
+/** Totals are recalculated by the server; the returned OrderDto replaces the cached detail. */
+export function useApplyDiscount() {
+  return useOrderMutation(({ orderId, input }: { orderId: string; input: ApplyDiscountInput }) =>
+    apiClient.post<OrderDto>(ENDPOINTS.orders.action(orderId, 'discount'), input),
+  );
+}
+
+/** Dine-in only; frees the old table and occupies the new one (table queries are invalidated too). */
+export function useTransferOrder() {
+  return useOrderMutation(({ orderId, tableId }: { orderId: string; tableId: string }) =>
+    apiClient.post<OrderDto>(ENDPOINTS.orders.action(orderId, 'transfer'), { tableId }),
   );
 }

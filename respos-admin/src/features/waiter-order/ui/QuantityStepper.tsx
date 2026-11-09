@@ -11,10 +11,12 @@ export interface QuantityStepperProps {
   min?: number;
   /** When set, "−" at the minimum turns into a remove button. */
   onRemove?: () => void;
+  /** E.g. while a server update is running. */
+  disabled?: boolean;
 }
 
 /** −/+ with 44px touch targets. */
-export function QuantityStepper({ value, onChange, label, min = 1, onRemove }: QuantityStepperProps) {
+export function QuantityStepper({ value, onChange, label, min = 1, onRemove, disabled = false }: QuantityStepperProps) {
   const { t } = useTranslation('waiter');
   const atMin = value <= min;
   const showRemove = atMin && onRemove;
@@ -24,7 +26,7 @@ export function QuantityStepper({ value, onChange, label, min = 1, onRemove }: Q
         type="button"
         className={styles.button}
         aria-label={showRemove ? t('cart.remove', { name: label }) : t('cart.decrease', { name: label })}
-        disabled={atMin && !onRemove}
+        disabled={disabled || (atMin && !onRemove)}
         onClick={() => (showRemove ? onRemove() : onChange(value - 1))}
       >
         {showRemove ? <Trash2 aria-hidden="true" /> : <Minus aria-hidden="true" />}
@@ -36,7 +38,7 @@ export function QuantityStepper({ value, onChange, label, min = 1, onRemove }: Q
         type="button"
         className={styles.button}
         aria-label={t('cart.increase', { name: label })}
-        disabled={value >= MAX_LINE_QUANTITY}
+        disabled={disabled || value >= MAX_LINE_QUANTITY}
         onClick={() => onChange(value + 1)}
       >
         <Plus aria-hidden="true" />

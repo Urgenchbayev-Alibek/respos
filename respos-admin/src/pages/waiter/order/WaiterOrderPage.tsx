@@ -7,6 +7,7 @@ import { localizedName, type MenuItemDto } from '@/entities/menu/menu.types';
 import { useOrder, useServeAllItems, useServeOrderItem } from '@/entities/order/order.queries';
 import { formatOrderNumber, isOrderOpen, type OrderType } from '@/entities/order/order.types';
 import { useTables } from '@/entities/table/table.queries';
+import { OrderActions } from '@/features/order-actions/ui/OrderActions';
 import { cartQuantity, cartReducer } from '@/features/waiter-order/model/cart';
 import { useSubmitOrder, type NewOrderDraft } from '@/features/waiter-order/model/use-submit-order';
 import { useWaiterRealtime } from '@/features/waiter-order/model/use-waiter-realtime';
@@ -126,6 +127,11 @@ export function WaiterOrderPage() {
           </p>
         </div>
         {data && <StatusBadge domain="order" status={data.status} size="lg" />}
+        {data && (
+          <div className={styles.headerActions}>
+            <OrderActions order={data} />
+          </div>
+        )}
       </header>
       <div className={styles.mobileTabs}>
         <Tabs

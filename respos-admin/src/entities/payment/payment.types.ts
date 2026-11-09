@@ -5,10 +5,12 @@ import type { PageParams } from '@/shared/types/pagination';
 export const PAYMENT_METHODS = ['cash', 'card', 'other'] as const;
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
-/** PaymentDto (backend `Payments/Common/PaymentDtos.cs`). `provider` is `manual` in MVP. No order number. */
+/** PaymentDto (backend `Payments/Common/PaymentDtos.cs`). `provider` is `manual` in MVP. */
 export interface PaymentDto {
   id: Guid;
   orderId: Guid;
+  /** Additive backend field: order number (unique per branch + business date). Absent on older servers. */
+  orderNumber?: number;
   cashShiftId: Guid;
   method: PaymentMethod;
   amount: number;

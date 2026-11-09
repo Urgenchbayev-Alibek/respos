@@ -27,6 +27,9 @@ export interface OrderItemDto {
 
 export type { PaymentDto };
 
+export const DISCOUNT_TYPES = ['none', 'amount', 'percent'] as const;
+export type DiscountType = (typeof DISCOUNT_TYPES)[number];
+
 export interface OrderHistoryEntry {
   fromStatus: OrderStatus | null;
   toStatus: OrderStatus;
@@ -61,7 +64,7 @@ export interface OrderSummaryDto {
 export interface OrderDto extends OrderSummaryDto {
   items: OrderItemDto[];
   subtotal: number;
-  discountType: 'none' | 'amount' | 'percent';
+  discountType: DiscountType;
   discountValue: number;
   discountAmount: number;
   serviceChargeAmount: number;
@@ -97,6 +100,19 @@ export interface CreateOrderInput {
   guestCount: number;
   comment?: string;
   items?: AddOrderItem[];
+}
+
+/** `POST /orders/{id}/discount` [orders.discount.apply]: reason required unless `none`; the server caps it at the subtotal. */
+export interface ApplyDiscountInput {
+  type: DiscountType;
+  value: number;
+  reason: string;
+}
+
+/** `PUT /orders/{id}/items/{itemId}` — only items still in status `new`. */
+export interface UpdateOrderItemInput {
+  quantity: number;
+  comment: string | null;
 }
 
 /** `#0042` */

@@ -1,0 +1,38 @@
+{
+  "discount": {
+    "action": "Discount",
+    "title": "Discount · order {{number}}",
+    "description": "Subtotal {{subtotal}}. The server recalculates the totals; the discount cannot exceed the subtotal.",
+    "type": "Discount type",
+    "types": {
+      "percent": "Percent",
+      "amount": "Fixed amount",
+      "none": "No discount (remove)"
+    },
+    "percent": "Percent",
+    "amount": "Amount",
+    "submit": "Apply",
+    "applied": "Discount applied",
+    "removed": "Discount removed"
+  },
+  "transfer": {
+    "action": "Move table",
+    "title": "Move order {{number}}",
+    "description": "Currently at table {{number}}. The old table is freed automatically.",
+    "table": "New table",
+    "placeholder": "Select a table…",
+    "option": "Table {{number}} · {{area}} · {{capacity}} seats",
+    "noTables": "No free tables",
+    "submit": "Move",
+    "done": "Order moved to table {{number}}"
+  },
+  "cancelItem": {
+    "action": "Cancel item: {{name}}",
+    "title": "Cancel “{{name}}”?",
+    "messageNew": "The item has not been sent to the kitchen yet. Enter a reason.",
+    "messageSent": "The item is already in the kitchen — its ticket will be cancelled. Enter a reason, it goes to the audit log.",
+    "confirm": "Cancel item",
+    "done": "Item cancelled",
+    "failed": "Could not cancel the item"
+  }
+}

@@ -3,7 +3,8 @@
     "itemReady": "Ready to serve",
     "itemReadyTable": "Table {{table}} — {{item}}",
     "sent": "Sent to the kitchen",
-    "serveFailed": "Could not mark as served"
+    "serveFailed": "Could not mark as served",
+    "itemUpdateFailed": "Could not update the item"
   },
   "options": {
     "errorMin": "Choose at least {{min}}",

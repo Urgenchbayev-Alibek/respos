@@ -3,7 +3,8 @@
     "itemReady": "Готово к подаче",
     "itemReadyTable": "Стол {{table}} — {{item}}",
     "sent": "Отправлено на кухню",
-    "serveFailed": "Не удалось отметить подачу"
+    "serveFailed": "Не удалось отметить подачу",
+    "itemUpdateFailed": "Не удалось изменить позицию"
   },
   "options": {
     "errorMin": "Выберите минимум {{min}}",

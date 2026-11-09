@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCancelOrder, useOrder } from '@/entities/order/order.queries';
 import { formatOrderNumber, isOrderOpen, type OrderDto } from '@/entities/order/order.types';
+import { canApplyDiscount, canTransferOrder } from '@/features/order-actions/model/order-permissions';
+import { CancelItemButton } from '@/features/order-actions/ui/CancelItemButton';
+import { OrderActions } from '@/features/order-actions/ui/OrderActions';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
@@ -27,6 +30,7 @@ export function OrderDetailDrawer({ orderId, onClose }: OrderDetailDrawerProps) 
   const cancel = useCancelOrder();
   const [confirmCancel, setConfirmCancel] = useState(false);
   const data = order.data;
+  const hasActions = Boolean(data && (canApplyDiscount(data, hasPermission) || canTransferOrder(data, hasPermission)));
   const canCancel = Boolean(data && hasPermission(PERMISSIONS.orders.cancel) && isOrderOpen(data) && data.paidAmount === 0);
 
   const doCancel = async (reason: string) => {
@@ -77,7 +81,7 @@ export function OrderDetailDrawer({ orderId, onClose }: OrderDetailDrawerProps) 
       </dl>
       <section className={styles.section}>
         <h3 className={styles.heading}>{t('sections.items')}</h3>
-        <OrderItemsList items={value.items} />
+        <OrderItemsList items={value.items} renderActions={(item) => <CancelItemButton order={value} item={item} />} />
       </section>
       <section className={styles.section}>
         <OrderTotals order={value} />
@@ -130,10 +134,15 @@ export function OrderDetailDrawer({ orderId, onClose }: OrderDetailDrawerProps) 
       onClose={onClose}
       title={t('detailTitle', { number: formatOrderNumber(data?.number) })}
       footer={
-        canCancel && (
-          <Button variant="danger" icon={<Ban />} onClick={() => setConfirmCancel(true)}>
-            {t('actions.cancel')}
-          </Button>
+        (canCancel || hasActions) && (
+          <>
+            {data && <OrderActions order={data} />}
+            {canCancel && (
+              <Button variant="danger" icon={<Ban />} onClick={() => setConfirmCancel(true)}>
+                {t('actions.cancel')}
+              </Button>
+            )}
+          </>
         )
       }
     >

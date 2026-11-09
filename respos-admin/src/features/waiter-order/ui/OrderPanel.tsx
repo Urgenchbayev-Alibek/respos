@@ -8,6 +8,7 @@ import { Alert, Button } from '@/shared/ui';
 import { cartPreviewTotal, cartQuantity, type CartAction, type CartLine } from '../model/cart';
 import { CartLineRow } from './CartLineRow';
 import styles from './OrderPanel.module.css';
+import { ServerItemControls } from './ServerItemControls';
 
 export interface OrderPanelProps {
   order: OrderDto | undefined;
@@ -38,19 +39,22 @@ export function OrderPanel(props: OrderPanelProps) {
         {items.length > 0 && (
           <OrderItemsList
             items={items}
-            renderActions={(item) =>
-              item.status === 'ready' && canEdit ? (
-                <Button
-                  size="sm"
-                  variant="primary"
-                  loading={servingItemId === item.id}
-                  onClick={() => onServe(item.id)}
-                  aria-label={t('order.serveItem', { name: item.name })}
-                >
-                  {t('order.serve')}
-                </Button>
-              ) : null
-            }
+            renderActions={(item) => (
+              <>
+                {order && <ServerItemControls order={order} item={item} canEdit={canEdit} />}
+                {item.status === 'ready' && canEdit && (
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    loading={servingItemId === item.id}
+                    onClick={() => onServe(item.id)}
+                    aria-label={t('order.serveItem', { name: item.name })}
+                  >
+                    {t('order.serve')}
+                  </Button>
+                )}
+              </>
+            )}
           />
         )}
         {lines.length > 0 && (

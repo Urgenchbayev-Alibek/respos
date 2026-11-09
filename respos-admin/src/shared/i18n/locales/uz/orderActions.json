@@ -1,0 +1,38 @@
+{
+  "discount": {
+    "action": "Chegirma",
+    "title": "Chegirma · buyurtma {{number}}",
+    "description": "Oraliq summa {{subtotal}}. Jami summani server qayta hisoblaydi; chegirma oraliq summadan oshmaydi.",
+    "type": "Chegirma turi",
+    "types": {
+      "percent": "Foiz",
+      "amount": "Belgilangan summa",
+      "none": "Chegirmasiz (olib tashlash)"
+    },
+    "percent": "Foiz",
+    "amount": "Summa",
+    "submit": "Qoʻllash",
+    "applied": "Chegirma qoʻllandi",
+    "removed": "Chegirma olib tashlandi"
+  },
+  "transfer": {
+    "action": "Stolni almashtirish",
+    "title": "{{number}} buyurtmani koʻchirish",
+    "description": "Hozir {{number}}-stolda. Eski stol avtomatik boʻshatiladi.",
+    "table": "Yangi stol",
+    "placeholder": "Stolni tanlang…",
+    "option": "{{number}}-stol · {{area}} · {{capacity}} oʻrin",
+    "noTables": "Boʻsh stollar yoʻq",
+    "submit": "Koʻchirish",
+    "done": "Buyurtma {{number}}-stolga koʻchirildi"
+  },
+  "cancelItem": {
+    "action": "Pozitsiyani bekor qilish: {{name}}",
+    "title": "“{{name}}” bekor qilinsinmi?",
+    "messageNew": "Pozitsiya hali oshxonaga yuborilmagan. Sababini kiriting.",
+    "messageSent": "Pozitsiya oshxonada — uning cheki bekor qilinadi. Sababini kiriting, u audit jurnaliga yoziladi.",
+    "confirm": "Pozitsiyani bekor qilish",
+    "done": "Pozitsiya bekor qilindi",
+    "failed": "Pozitsiyani bekor qilib boʻlmadi"
+  }
+}
