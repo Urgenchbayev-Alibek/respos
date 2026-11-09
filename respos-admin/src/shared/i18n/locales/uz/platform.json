@@ -1,0 +1,134 @@
+{
+  "columns": {
+    "organization": "Tashkilot",
+    "status": "Holat",
+    "plan": "Tarif",
+    "branches": "Filiallar",
+    "users": "Xodimlar",
+    "createdAt": "Yaratilgan",
+    "actions": "Amallar",
+    "time": "Vaqt",
+    "action": "Amal",
+    "user": "Foydalanuvchi",
+    "entity": "Obyekt",
+    "correlationId": "Correlation ID"
+  },
+  "filters": {
+    "allStatuses": "Barcha holatlar"
+  },
+  "fields": {
+    "orgName": "Tashkilot nomi",
+    "slug": "Slug (manzil)",
+    "slugHint": "Lotin harflari, raqamlar va chiziqcha; platformada yagona",
+    "currency": "Valyuta (ISO)",
+    "plan": "Tarif",
+    "selectPlan": "Tarifni tanlang",
+    "branchName": "Birinchi filial",
+    "ownerFullName": "Egasi: F.I.Sh.",
+    "ownerEmail": "Egasi: email",
+    "ownerPassword": "Egasi: vaqtinchalik parol",
+    "subscriptionStatus": "Obuna holati",
+    "endsAt": "Amal qilish muddati",
+    "planCode": "Tarif kodi",
+    "planName": "Tarif",
+    "maxBranches": "Maks. filiallar",
+    "maxUsers": "Maks. xodimlar",
+    "planActive": "Ulanish uchun mavjud",
+    "features": "Funksiyalar",
+    "featureCode": "Kod",
+    "featureName": "Funksiya"
+  },
+  "validation": {
+    "currency": "3 ta katta lotin harfidan iborat valyuta kodi (UZS)"
+  },
+  "actions": {
+    "menu": "Amallar: {{name}}",
+    "subscription": "Obunani o‘zgartirish",
+    "suspend": "To‘xtatish",
+    "activate": "Faollashtirish",
+    "access": "Ma’lumotlarga kirish (break-glass)"
+  },
+  "confirm": {
+    "suspendTitle": "«{{name}}» to‘xtatilsinmi?",
+    "suspendMessage": "Tashkilot xodimlari faollashtirilguncha kira olmaydi. Ma’lumotlar saqlanadi.",
+    "activateTitle": "«{{name}}» faollashtirilsinmi?",
+    "activateMessage": "Xodimlar yana tizimga kira oladi."
+  },
+  "organizations": {
+    "title": "Tashkilotlar",
+    "subtitle": "Platforma mijozlari — faqat umumiy ko‘rsatkichlar",
+    "search": "Nomi yoki slug bo‘yicha qidirish",
+    "empty": "Tashkilotlar yo‘q",
+    "create": "Tashkilot yaratish",
+    "createTitle": "Yangi tashkilot",
+    "created": "«{{name}}» tashkiloti yaratildi",
+    "actionFailed": "Amal bajarilmadi",
+    "done": {
+      "suspend": "«{{name}}» to‘xtatildi",
+      "activate": "«{{name}}» faollashtirildi"
+    }
+  },
+  "subscription": {
+    "title": "Obuna",
+    "saved": "Obuna yangilandi"
+  },
+  "access": {
+    "title": "«{{name}}» ma’lumotlariga kirish",
+    "warning": "Bu mijoz ma’lumotlariga favqulodda kirish. U faqat o‘qish uchun 30 daqiqaga beriladi, kirish va sabab audit jurnaliga yoziladi va tashkilot egasiga ko‘rinadi.",
+    "reason": "Kirish sababi",
+    "reasonHint": "Masalan: qo‘llab-quvvatlash murojaati raqami va nimani tekshirish kerak",
+    "reasonTooShort": "Sababni batafsilroq yozing (kamida 10 belgi)",
+    "submit": "Kirish olish (audit)"
+  },
+  "plans": {
+    "title": "Tariflar va limitlar",
+    "subtitle": "Filial va xodim limitlari, funksiyalar",
+    "create": "Yangi tarif",
+    "createTitle": "Yangi tarif",
+    "editTitle": "Tarifni tahrirlash",
+    "edit": "«{{name}}»ni tahrirlash",
+    "saved": "Tarif saqlandi",
+    "empty": "Tariflar yo‘q",
+    "active": "Mavjud",
+    "inactive": "Yashirin",
+    "featuresTitle": "Funksiyalar ma’lumotnomasi"
+  },
+  "flags": {
+    "title": "Feature flags",
+    "subtitle": "Global bayroqlar va tashkilotlar uchun qayta belgilash",
+    "scope": "Amal doirasi",
+    "global": "Global (barcha tashkilotlar)",
+    "source": "Manba",
+    "explicit": "Belgilangan",
+    "default": "Standart",
+    "enabled": "Yoqilgan",
+    "toggle": "«{{name}}»ni yoqish",
+    "saved": "Bayroq saqlandi",
+    "saveFailed": "Bayroqni saqlab bo‘lmadi",
+    "empty": "Funksiyalar yo‘q"
+  },
+  "system": {
+    "title": "Tizim holati",
+    "subtitle": "Versiya, ma’lumotlar bazasi, umumiy ko‘rsatkichlar va tizim hodisalari",
+    "db": "Ma’lumotlar bazasi",
+    "version": "Versiya",
+    "uptime": "Ish vaqti",
+    "organizations": "Tashkilotlar",
+    "users": "Foydalanuvchilar",
+    "ordersToday": "Bugungi buyurtmalar",
+    "events": "Tizim hodisalari",
+    "noEvents": "Hodisalar yo‘q"
+  },
+  "demo": {
+    "title": "Demo so‘rovlari",
+    "subtitle": "Saytdan kelgan so‘rovlar",
+    "empty": "So‘rovlar yo‘q",
+    "restaurant": "Restoran",
+    "contact": "Kontakt",
+    "message": "Xabar",
+    "changeStatus": "Holatni o‘zgartirish",
+    "changeStatusFor": "«{{name}}» so‘rovi holati",
+    "statusSaved": "So‘rov holati yangilandi",
+    "statusFailed": "Holatni yangilab bo‘lmadi"
+  }
+}

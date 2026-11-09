@@ -63,5 +63,21 @@
     "crashTitle": "Произошла ошибка",
     "crashDescription": "Перезагрузите страницу. Если ошибка повторится — сообщите в поддержку.",
     "reload": "Перезагрузить"
+  },
+  "purchase": {
+    "invalid_status_transition": "Недопустимая смена статуса закупки.",
+    "not_editable": "Редактировать можно только черновик."
+  },
+  "organization": {
+    "slug_taken": "Такой slug уже занят."
+  },
+  "inventory_count": {
+    "already_completed": "Инвентаризация уже завершена."
+  },
+  "recipe": {
+    "empty": "Добавьте хотя бы один ингредиент."
+  },
+  "unit": {
+    "conversion_exists": "Такая конверсия уже существует."
   }
 }

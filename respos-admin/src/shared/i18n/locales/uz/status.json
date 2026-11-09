@@ -64,5 +64,21 @@
     "active": "Faol",
     "suspended": "Toʻxtatilgan",
     "closed": "Yopilgan"
+  },
+  "subscription": {
+    "trial": "Sinov",
+    "active": "Faol",
+    "past_due": "Muddati o‘tgan",
+    "suspended": "To‘xtatilgan",
+    "cancelled": "Bekor qilingan"
+  },
+  "demoRequest": {
+    "new": "Yangi",
+    "contacted": "Bog‘lanildi",
+    "closed": "Yopilgan"
+  },
+  "inventoryCount": {
+    "draft": "Qoralama",
+    "completed": "Yakunlangan"
   }
 }

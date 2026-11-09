@@ -64,5 +64,21 @@
     "active": "Active",
     "suspended": "Suspended",
     "closed": "Closed"
+  },
+  "subscription": {
+    "trial": "Trial",
+    "active": "Active",
+    "past_due": "Past due",
+    "suspended": "Suspended",
+    "cancelled": "Cancelled"
+  },
+  "demoRequest": {
+    "new": "New",
+    "contacted": "Contacted",
+    "closed": "Closed"
+  },
+  "inventoryCount": {
+    "draft": "Draft",
+    "completed": "Completed"
   }
 }

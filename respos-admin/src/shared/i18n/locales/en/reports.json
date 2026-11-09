@@ -1,0 +1,73 @@
+{
+  "title": "Reports",
+  "subtitle": "Calculated on the server for the current branch, in its timezone",
+  "empty": "No data",
+  "emptyPeriod": "No data for the period",
+  "tabs": {
+    "sales": "Sales",
+    "items": "Top items",
+    "categories": "Categories",
+    "payments": "Payment methods",
+    "stock": "Stock",
+    "movements": "Movements",
+    "shifts": "Cash shifts"
+  },
+  "period": {
+    "label": "Period",
+    "today": "Today",
+    "7d": "7 days",
+    "30d": "30 days",
+    "custom": "Custom",
+    "from": "From",
+    "to": "To",
+    "invalid": "Enter a valid period: start date must not be after end date."
+  },
+  "sales": {
+    "totalRevenue": "Revenue",
+    "ordersCount": "Orders",
+    "averageCheck": "Average check",
+    "byDay": "Revenue by day",
+    "chartLabel": "Revenue by day chart",
+    "revenue": "Revenue",
+    "orders": "Orders",
+    "showTable": "Show as table",
+    "showChart": "Show chart"
+  },
+  "stock": {
+    "lowTitle": "Below minimum",
+    "balancesTitle": "Balances",
+    "ok": "OK",
+    "low": "Low",
+    "negative": "Negative"
+  },
+  "method": {
+    "cash": "Cash",
+    "card": "Card",
+    "other": "Other"
+  },
+  "columns": {
+    "date": "Date",
+    "item": "Item",
+    "category": "Category",
+    "quantity": "Qty",
+    "method": "Method",
+    "count": "Count",
+    "amount": "Amount",
+    "ingredient": "Ingredient",
+    "balance": "Balance",
+    "minQuantity": "Minimum",
+    "status": "Status",
+    "type": "Type",
+    "totalCost": "Total at cost",
+    "openedAt": "Opened",
+    "closedAt": "Closed",
+    "cashier": "Cashier",
+    "expected": "Expected",
+    "actual": "Actual",
+    "difference": "Difference"
+  },
+  "export": {
+    "csv": "Export CSV",
+    "failed": "Export failed"
+  }
+}

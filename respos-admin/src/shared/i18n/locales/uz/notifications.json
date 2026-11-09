@@ -1,0 +1,24 @@
+{
+  "title": "Bildirishnomalar",
+  "subtitle": "Buyurtmalar, oshxona, ombor va tizim hodisalari",
+  "bell": "Bildirishnomalar",
+  "bellUnread": "Bildirishnomalar: o‘qilmagan {{count}}",
+  "unreadMark": "O‘qilmagan:",
+  "markAllRead": "Hammasini o‘qilgan deb belgilash",
+  "allRead": "Barcha bildirishnomalar o‘qildi",
+  "markFailed": "Belgilab bo‘lmadi",
+  "viewAll": "Barcha bildirishnomalar",
+  "empty": "Bildirishnomalar yo‘q",
+  "emptyUnread": "O‘qilmaganlar yo‘q",
+  "filterAll": "Hammasi",
+  "filterUnread": "O‘qilmaganlar",
+  "type": {
+    "order_new": "Yangi buyurtma",
+    "order_status": "Buyurtma holati",
+    "order_ready": "Tayyor",
+    "stock_low": "Kam qoldiq",
+    "purchase_received": "Kirim",
+    "integration_error": "Integratsiya xatosi",
+    "system": "Tizim"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "title": "Suppliers",
+  "subtitle": "Supplier cards and contacts",
+  "search": "Search by name, phone, tax ID",
+  "showArchived": "Show archived",
+  "empty": "No suppliers yet",
+  "active": "Active",
+  "archived": "Archived",
+  "columns": {
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "fields": {
+    "name": "Name",
+    "contactPerson": "Contact person",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "inn": "Tax ID",
+    "notes": "Notes"
+  },
+  "actions": {
+    "create": "Add supplier",
+    "edit": "Edit “{{name}}”",
+    "archive": "Archive “{{name}}”",
+    "archiveShort": "Archive"
+  },
+  "form": {
+    "createTitle": "New supplier",
+    "editTitle": "Edit supplier"
+  },
+  "confirm": {
+    "archiveTitle": "Archive supplier?",
+    "archiveMessage": "“{{name}}” cannot be used in new purchases. History is kept."
+  },
+  "toast": {
+    "created": "Supplier added",
+    "updated": "Supplier saved",
+    "archived": "Supplier archived",
+    "archiveFailed": "Could not archive"
+  }
+}

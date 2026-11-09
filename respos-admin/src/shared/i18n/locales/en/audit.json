@@ -1,0 +1,28 @@
+{
+  "title": "Audit log",
+  "subtitle": "Who changed what and when. Read-only.",
+  "empty": "No entries found",
+  "reset": "Reset",
+  "details": "Entry details",
+  "openDetails": "Open details: {{action}}",
+  "changes": "Changes",
+  "noChanges": "No changes recorded",
+  "columns": {
+    "time": "Time",
+    "user": "User",
+    "branch": "Branch",
+    "action": "Action",
+    "entityType": "Entity",
+    "entityId": "ID",
+    "correlationId": "Correlation ID",
+    "ip": "IP address"
+  },
+  "filters": {
+    "from": "From",
+    "to": "To",
+    "allUsers": "All users",
+    "action": "Action, e.g. order.cancelled",
+    "entityType": "Entity, e.g. Order",
+    "entityId": "Entity ID"
+  }
+}

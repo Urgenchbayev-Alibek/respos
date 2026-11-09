@@ -1,0 +1,76 @@
+{
+  "title": "Purchases",
+  "subtitle": "Purchase orders and receiving into branch stock",
+  "empty": "No purchases yet",
+  "backToList": "Back to purchases",
+  "detailTitle": "Purchase {{number}} · {{supplier}}",
+  "expectedOn": "Expected {{date}}",
+  "linesCaption": "Purchase lines",
+  "noLines": "No lines",
+  "total": "Total",
+  "selectSupplier": "Select supplier",
+  "selectIngredient": "Select ingredient",
+  "addLine": "Add line",
+  "removeLine": "Remove line",
+  "columns": {
+    "number": "Number",
+    "supplier": "Supplier",
+    "status": "Status",
+    "expectedAt": "Expected",
+    "total": "Total",
+    "ingredient": "Ingredient",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "unitPrice": "Unit price",
+    "lineTotal": "Line total",
+    "ordered": "Ordered",
+    "received": "Received",
+    "receiveNow": "Receive now",
+    "actions": "Actions"
+  },
+  "fields": {
+    "supplier": "Supplier",
+    "expectedAt": "Expected date",
+    "comment": "Comment"
+  },
+  "filters": {
+    "allStatuses": "All statuses",
+    "allSuppliers": "All suppliers",
+    "from": "From",
+    "to": "To",
+    "reset": "Reset"
+  },
+  "actions": {
+    "create": "New purchase",
+    "edit": "Edit",
+    "submit": "Submit",
+    "cancel": "Cancel purchase",
+    "receive": "Receive"
+  },
+  "form": {
+    "createTitle": "New purchase",
+    "editTitle": "Purchase draft {{number}}",
+    "saveDraft": "Save draft"
+  },
+  "confirm": {
+    "submitTitle": "Submit purchase?",
+    "submitMessage": "After submitting, {{number}} can no longer be edited.",
+    "cancelTitle": "Cancel purchase?",
+    "cancelMessage": "Purchase {{number}} will be cancelled. This cannot be undone."
+  },
+  "toast": {
+    "created": "Purchase draft created",
+    "updated": "Draft saved",
+    "submit": "Purchase submitted",
+    "cancel": "Purchase cancelled",
+    "actionFailed": "Action failed"
+  },
+  "receive": {
+    "title": "Receive {{number}}",
+    "description": "Enter received quantity per line. Stock and cost price update automatically.",
+    "quantityFor": "Receive: {{name}}",
+    "submit": "Receive into stock",
+    "nothing": "Enter a quantity for at least one line",
+    "done": "Goods received"
+  }
+}

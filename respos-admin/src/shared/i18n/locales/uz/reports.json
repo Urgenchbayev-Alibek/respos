@@ -1,0 +1,73 @@
+{
+  "title": "Hisobotlar",
+  "subtitle": "Joriy filial bo‘yicha serverda, uning vaqt mintaqasida hisoblanadi",
+  "empty": "Ma’lumot yo‘q",
+  "emptyPeriod": "Davr uchun ma’lumot yo‘q",
+  "tabs": {
+    "sales": "Savdo",
+    "items": "Taomlar",
+    "categories": "Toifalar",
+    "payments": "To‘lov usullari",
+    "stock": "Ombor",
+    "movements": "Harakatlar",
+    "shifts": "Smenalar"
+  },
+  "period": {
+    "label": "Davr",
+    "today": "Bugun",
+    "7d": "7 kun",
+    "30d": "30 kun",
+    "custom": "Boshqa davr",
+    "from": "Sanadan",
+    "to": "Sanagacha",
+    "invalid": "To‘g‘ri davrni kiriting: boshlanish sanasi tugash sanasidan keyin bo‘lmasin."
+  },
+  "sales": {
+    "totalRevenue": "Tushum",
+    "ordersCount": "Buyurtmalar",
+    "averageCheck": "O‘rtacha chek",
+    "byDay": "Kunlar bo‘yicha tushum",
+    "chartLabel": "Kunlik tushum grafigi",
+    "revenue": "Tushum",
+    "orders": "Buyurtmalar",
+    "showTable": "Jadval ko‘rinishida",
+    "showChart": "Grafikni ko‘rsatish"
+  },
+  "stock": {
+    "lowTitle": "Minimumdan kam",
+    "balancesTitle": "Qoldiqlar",
+    "ok": "Me’yorda",
+    "low": "Kam",
+    "negative": "Manfiy"
+  },
+  "method": {
+    "cash": "Naqd",
+    "card": "Karta",
+    "other": "Boshqa"
+  },
+  "columns": {
+    "date": "Sana",
+    "item": "Taom",
+    "category": "Toifa",
+    "quantity": "Miqdor",
+    "method": "Usul",
+    "count": "Amallar",
+    "amount": "Summa",
+    "ingredient": "Ingredient",
+    "balance": "Qoldiq",
+    "minQuantity": "Minimum",
+    "status": "Holat",
+    "type": "Turi",
+    "totalCost": "Tannarx bo‘yicha summa",
+    "openedAt": "Ochilgan",
+    "closedAt": "Yopilgan",
+    "cashier": "Kassir",
+    "expected": "Kutilgan",
+    "actual": "Haqiqiy",
+    "difference": "Farq"
+  },
+  "export": {
+    "csv": "CSV eksport",
+    "failed": "Hisobotni yuklab bo‘lmadi"
+  }
+}

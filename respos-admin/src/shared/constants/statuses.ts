@@ -16,6 +16,9 @@ export const PURCHASE_STATUSES = ['draft', 'submitted', 'partially_received', 'r
 export const PAYMENT_STATUSES = ['completed', 'refunded', 'partially_refunded'] as const;
 export const CASH_SHIFT_STATUSES = ['open', 'closed'] as const;
 export const ORGANIZATION_STATUSES = ['active', 'suspended', 'closed'] as const;
+export const SUBSCRIPTION_STATUSES = ['trial', 'active', 'past_due', 'suspended', 'cancelled'] as const;
+export const DEMO_REQUEST_STATUSES = ['new', 'contacted', 'closed'] as const;
+export const INVENTORY_COUNT_STATUSES = ['draft', 'completed'] as const;
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
 export type OrderItemStatus = (typeof ORDER_ITEM_STATUSES)[number];
@@ -27,6 +30,9 @@ export type PurchaseStatus = (typeof PURCHASE_STATUSES)[number];
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
 export type CashShiftStatus = (typeof CASH_SHIFT_STATUSES)[number];
 export type OrganizationStatus = (typeof ORGANIZATION_STATUSES)[number];
+export type SubscriptionStatus = (typeof SUBSCRIPTION_STATUSES)[number];
+export type DemoRequestStatus = (typeof DEMO_REQUEST_STATUSES)[number];
+export type InventoryCountStatus = (typeof INVENTORY_COUNT_STATUSES)[number];
 
 export const STATUS_TONES = {
   order: {
@@ -56,6 +62,11 @@ export const STATUS_TONES = {
   } satisfies Record<PaymentStatus, StatusTone>,
   cashShift: { open: 'success', closed: 'neutral' } satisfies Record<CashShiftStatus, StatusTone>,
   organization: { active: 'success', suspended: 'warning', closed: 'neutral' } satisfies Record<OrganizationStatus, StatusTone>,
+  subscription: {
+    trial: 'info', active: 'success', past_due: 'warning', suspended: 'danger', cancelled: 'neutral',
+  } satisfies Record<SubscriptionStatus, StatusTone>,
+  demoRequest: { new: 'info', contacted: 'warning', closed: 'neutral' } satisfies Record<DemoRequestStatus, StatusTone>,
+  inventoryCount: { draft: 'neutral', completed: 'success' } satisfies Record<InventoryCountStatus, StatusTone>,
 } as const;
 
 export type StatusDomain = keyof typeof STATUS_TONES;

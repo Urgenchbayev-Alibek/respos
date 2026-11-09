@@ -1,0 +1,28 @@
+{
+  "title": "Журнал аудита",
+  "subtitle": "Кто, что и когда изменил. Только чтение.",
+  "empty": "Записей не найдено",
+  "reset": "Сбросить",
+  "details": "Детали записи",
+  "openDetails": "Открыть детали: {{action}}",
+  "changes": "Изменения",
+  "noChanges": "Изменения не записаны",
+  "columns": {
+    "time": "Время",
+    "user": "Пользователь",
+    "branch": "Филиал",
+    "action": "Действие",
+    "entityType": "Сущность",
+    "entityId": "ID",
+    "correlationId": "Correlation ID",
+    "ip": "IP-адрес"
+  },
+  "filters": {
+    "from": "С даты",
+    "to": "По дату",
+    "allUsers": "Все пользователи",
+    "action": "Действие, напр. order.cancelled",
+    "entityType": "Сущность, напр. Order",
+    "entityId": "ID сущности"
+  }
+}

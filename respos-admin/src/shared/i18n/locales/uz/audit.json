@@ -1,0 +1,28 @@
+{
+  "title": "Audit jurnali",
+  "subtitle": "Kim, nimani va qachon o‘zgartirgan. Faqat o‘qish.",
+  "empty": "Yozuvlar topilmadi",
+  "reset": "Tozalash",
+  "details": "Yozuv tafsilotlari",
+  "openDetails": "Tafsilotlarni ochish: {{action}}",
+  "changes": "O‘zgarishlar",
+  "noChanges": "O‘zgarishlar yozilmagan",
+  "columns": {
+    "time": "Vaqt",
+    "user": "Foydalanuvchi",
+    "branch": "Filial",
+    "action": "Amal",
+    "entityType": "Obyekt",
+    "entityId": "ID",
+    "correlationId": "Correlation ID",
+    "ip": "IP manzil"
+  },
+  "filters": {
+    "from": "Sanadan",
+    "to": "Sanagacha",
+    "allUsers": "Barcha foydalanuvchilar",
+    "action": "Amal, masalan order.cancelled",
+    "entityType": "Obyekt, masalan Order",
+    "entityId": "Obyekt ID"
+  }
+}

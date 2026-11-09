@@ -9,5 +9,8 @@
   "nonNegative": "Cannot be negative",
   "moneyPrecision": "At most 2 decimal places",
   "maxLength": "Value is too long",
-  "selectAtLeastOne": "Select at least one option"
+  "selectAtLeastOne": "Select at least one option",
+  "quantity": "Enter a number (max 3 decimals)",
+  "nonZero": "Value cannot be zero",
+  "slug": "Lowercase latin letters, digits and hyphens only"
 }

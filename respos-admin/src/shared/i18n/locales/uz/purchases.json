@@ -1,0 +1,76 @@
+{
+  "title": "Xaridlar",
+  "subtitle": "Yetkazib beruvchilarga buyurtmalar va filial omboriga qabul qilish",
+  "empty": "Hozircha xaridlar yo‘q",
+  "backToList": "Xaridlar ro‘yxatiga",
+  "detailTitle": "Xarid {{number}} · {{supplier}}",
+  "expectedOn": "Kutilmoqda: {{date}}",
+  "linesCaption": "Xarid qatorlari",
+  "noLines": "Qatorlar yo‘q",
+  "total": "Jami",
+  "selectSupplier": "Yetkazib beruvchini tanlang",
+  "selectIngredient": "Ingredientni tanlang",
+  "addLine": "Qator qo‘shish",
+  "removeLine": "Qatorni o‘chirish",
+  "columns": {
+    "number": "Raqam",
+    "supplier": "Yetkazib beruvchi",
+    "status": "Holat",
+    "expectedAt": "Kutilgan sana",
+    "total": "Summa",
+    "ingredient": "Ingredient",
+    "quantity": "Miqdor",
+    "unit": "Birlik",
+    "unitPrice": "Narx",
+    "lineTotal": "Summa",
+    "ordered": "Buyurtma qilingan",
+    "received": "Qabul qilingan",
+    "receiveNow": "Hozir qabul qilish",
+    "actions": "Amallar"
+  },
+  "fields": {
+    "supplier": "Yetkazib beruvchi",
+    "expectedAt": "Kutilgan sana",
+    "comment": "Izoh"
+  },
+  "filters": {
+    "allStatuses": "Barcha holatlar",
+    "allSuppliers": "Barcha yetkazib beruvchilar",
+    "from": "Sanadan",
+    "to": "Sanagacha",
+    "reset": "Tozalash"
+  },
+  "actions": {
+    "create": "Yangi xarid",
+    "edit": "Tahrirlash",
+    "submit": "Yetkazib beruvchiga yuborish",
+    "cancel": "Xaridni bekor qilish",
+    "receive": "Qabul qilish"
+  },
+  "form": {
+    "createTitle": "Yangi xarid",
+    "editTitle": "Xarid qoralamasi {{number}}",
+    "saveDraft": "Qoralamani saqlash"
+  },
+  "confirm": {
+    "submitTitle": "Xarid yuborilsinmi?",
+    "submitMessage": "Yuborilgandan keyin {{number}} xaridni tahrirlab bo‘lmaydi.",
+    "cancelTitle": "Xarid bekor qilinsinmi?",
+    "cancelMessage": "{{number}} xarid bekor qilinadi. Amalni qaytarib bo‘lmaydi."
+  },
+  "toast": {
+    "created": "Xarid qoralamasi yaratildi",
+    "updated": "Qoralama saqlandi",
+    "submit": "Xarid yuborildi",
+    "cancel": "Xarid bekor qilindi",
+    "actionFailed": "Amal bajarilmadi"
+  },
+  "receive": {
+    "title": "Qabul qilish {{number}}",
+    "description": "Qatorlar bo‘yicha qabul qilingan miqdorni kiriting. Qoldiq va tannarx avtomatik yangilanadi.",
+    "quantityFor": "Qabul qilish: {{name}}",
+    "submit": "Omborga qabul qilish",
+    "nothing": "Kamida bitta qator uchun miqdor kiriting",
+    "done": "Mahsulot omborga qabul qilindi"
+  }
+}

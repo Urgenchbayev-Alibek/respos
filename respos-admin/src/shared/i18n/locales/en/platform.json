@@ -1,0 +1,134 @@
+{
+  "columns": {
+    "organization": "Organization",
+    "status": "Status",
+    "plan": "Plan",
+    "branches": "Branches",
+    "users": "Users",
+    "createdAt": "Created",
+    "actions": "Actions",
+    "time": "Time",
+    "action": "Action",
+    "user": "User",
+    "entity": "Entity",
+    "correlationId": "Correlation ID"
+  },
+  "filters": {
+    "allStatuses": "All statuses"
+  },
+  "fields": {
+    "orgName": "Organization name",
+    "slug": "Slug",
+    "slugHint": "Latin, digits and hyphens; unique on the platform",
+    "currency": "Currency (ISO)",
+    "plan": "Plan",
+    "selectPlan": "Select plan",
+    "branchName": "First branch",
+    "ownerFullName": "Owner full name",
+    "ownerEmail": "Owner email",
+    "ownerPassword": "Owner temporary password",
+    "subscriptionStatus": "Subscription status",
+    "endsAt": "Ends at",
+    "planCode": "Plan code",
+    "planName": "Plan",
+    "maxBranches": "Max branches",
+    "maxUsers": "Max users",
+    "planActive": "Available for new subscriptions",
+    "features": "Features",
+    "featureCode": "Code",
+    "featureName": "Feature"
+  },
+  "validation": {
+    "currency": "3 uppercase letters (UZS)"
+  },
+  "actions": {
+    "menu": "Actions: {{name}}",
+    "subscription": "Edit subscription",
+    "suspend": "Suspend",
+    "activate": "Activate",
+    "access": "Tenant access (break-glass)"
+  },
+  "confirm": {
+    "suspendTitle": "Suspend “{{name}}”?",
+    "suspendMessage": "Staff cannot sign in until it is activated again. Data is kept.",
+    "activateTitle": "Activate “{{name}}”?",
+    "activateMessage": "Staff will be able to sign in again."
+  },
+  "organizations": {
+    "title": "Organizations",
+    "subtitle": "Platform tenants — aggregates only, no business data",
+    "search": "Search by name or slug",
+    "empty": "No organizations",
+    "create": "Create organization",
+    "createTitle": "New organization",
+    "created": "Organization “{{name}}” created",
+    "actionFailed": "Action failed",
+    "done": {
+      "suspend": "“{{name}}” suspended",
+      "activate": "“{{name}}” activated"
+    }
+  },
+  "subscription": {
+    "title": "Subscription",
+    "saved": "Subscription updated"
+  },
+  "access": {
+    "title": "Access “{{name}}” data",
+    "warning": "This is emergency access to customer data. It is read-only for 30 minutes; the access and the reason are written to the audit log and visible to the organization owner.",
+    "reason": "Reason for access",
+    "reasonHint": "E.g. support ticket number and what you need to check",
+    "reasonTooShort": "Describe the reason (at least 10 characters)",
+    "submit": "Get access (audited)"
+  },
+  "plans": {
+    "title": "Plans & limits",
+    "subtitle": "Branch and user limits, included features",
+    "create": "New plan",
+    "createTitle": "New plan",
+    "editTitle": "Edit plan",
+    "edit": "Edit “{{name}}”",
+    "saved": "Plan saved",
+    "empty": "No plans",
+    "active": "Available",
+    "inactive": "Hidden",
+    "featuresTitle": "Feature catalog"
+  },
+  "flags": {
+    "title": "Feature flags",
+    "subtitle": "Global flags and per-organization overrides",
+    "scope": "Scope",
+    "global": "Global (all organizations)",
+    "source": "Source",
+    "explicit": "Set",
+    "default": "Default",
+    "enabled": "Enabled",
+    "toggle": "Enable “{{name}}”",
+    "saved": "Flag saved",
+    "saveFailed": "Could not save the flag",
+    "empty": "No features"
+  },
+  "system": {
+    "title": "System status",
+    "subtitle": "Version, database, aggregates and system events",
+    "db": "Database",
+    "version": "Version",
+    "uptime": "Uptime",
+    "organizations": "Organizations",
+    "users": "Users",
+    "ordersToday": "Orders today",
+    "events": "System events",
+    "noEvents": "No events"
+  },
+  "demo": {
+    "title": "Demo requests",
+    "subtitle": "Requests from the website",
+    "empty": "No requests",
+    "restaurant": "Restaurant",
+    "contact": "Contact",
+    "message": "Message",
+    "changeStatus": "Change status",
+    "changeStatusFor": "Status of “{{name}}”",
+    "statusSaved": "Request status updated",
+    "statusFailed": "Could not update status"
+  }
+}

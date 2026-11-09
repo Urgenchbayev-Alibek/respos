@@ -1,0 +1,175 @@
+{
+  "title": "Ombor",
+  "subtitle": "Joriy filial qoldiqlari, harakatlar va inventarizatsiya",
+  "tabs": {
+    "ingredients": "Qoldiqlar",
+    "movements": "Harakatlar",
+    "counts": "Inventarizatsiya",
+    "units": "O‘lchov birliklari",
+    "categories": "Toifalar"
+  },
+  "columns": {
+    "ingredient": "Ingredient",
+    "category": "Toifa",
+    "quantity": "Qoldiq",
+    "minQuantity": "Minimum",
+    "costPrice": "Tannarx",
+    "status": "Holat",
+    "actions": "Amallar",
+    "date": "Sana",
+    "type": "Turi",
+    "balanceAfter": "Keyingi qoldiq",
+    "source": "Manba",
+    "reason": "Sabab",
+    "user": "Xodim",
+    "number": "Raqam",
+    "completedAt": "Yakunlangan",
+    "expected": "Kutilgan",
+    "counted": "Haqiqiy",
+    "difference": "Farq"
+  },
+  "fields": {
+    "ingredient": "Ingredient",
+    "selectIngredient": "Ingredientni tanlang",
+    "movementType": "Amal turi",
+    "quantity": "Miqdor",
+    "unit": "Birlik",
+    "unitCost": "Birlik narxi, {{currency}}",
+    "reason": "Sabab",
+    "name": "Nomi",
+    "sku": "Artikul (SKU)",
+    "category": "Toifa",
+    "noCategory": "Toifasiz",
+    "baseUnit": "Asosiy birlik",
+    "selectUnit": "Birlikni tanlang",
+    "costPrice": "Tannarx, {{currency}}",
+    "minQuantityUnit": "Minimal qoldiq, {{unit}}",
+    "unitCode": "Kod",
+    "unitKind": "Turi",
+    "fromUnit": "Birlikdan (1 ×)",
+    "toUnit": "Birlikka",
+    "factor": "Koeffitsient"
+  },
+  "filters": {
+    "allCategories": "Barcha toifalar",
+    "allIngredients": "Barcha ingredientlar",
+    "allTypes": "Barcha turlar",
+    "lowOnly": "Faqat minimumdan kam",
+    "reset": "Tozalash",
+    "from": "Sanadan",
+    "to": "Sanagacha"
+  },
+  "actions": {
+    "movement": "Harakat",
+    "newMovement": "Harakat",
+    "minQuantity": "Minimal qoldiq",
+    "edit": "Tahrirlash",
+    "archive": "Arxivlash",
+    "addIngredient": "Ingredient qo‘shish",
+    "menu": "Amallar: {{name}}",
+    "editNamed": "«{{name}}»ni tahrirlash",
+    "deleteNamed": "«{{name}}»ni o‘chirish"
+  },
+  "level": {
+    "ok": "Me’yorda",
+    "low": "Minimumdan kam",
+    "negative": "Manfiy",
+    "archived": "Arxiv"
+  },
+  "movementType": {
+    "receipt": "Kirim",
+    "consumption": "Sarf (sotuv)",
+    "write_off": "Hisobdan chiqarish",
+    "adjustment": "Tuzatish",
+    "inventory_count": "Inventarizatsiya",
+    "transfer_in": "Ko‘chirish (kirim)",
+    "transfer_out": "Ko‘chirish (chiqim)"
+  },
+  "sourceType": {
+    "order": "Buyurtma",
+    "purchase": "Xarid",
+    "manual": "Qo‘lda",
+    "inventory_count": "Inventarizatsiya"
+  },
+  "unitKind": {
+    "mass": "Massa",
+    "volume": "Hajm",
+    "count": "Dona"
+  },
+  "movement": {
+    "title": {
+      "receipt": "Kirim",
+      "write_off": "Hisobdan chiqarish",
+      "adjustment": "Qoldiqni tuzatish"
+    },
+    "currentBalance": "Joriy qoldiq",
+    "adjustmentHint": "Musbat — ortiqcha, manfiy — kamomad",
+    "unitHint": "Serverda asosiy birlikka o‘tkaziladi",
+    "baseUnit": "Asosiy ({{unit}})",
+    "baseUnitShort": "Asosiy birlik",
+    "reasonPlaceholder": "Masalan: yaroqlilik muddati tugagan",
+    "saved": "Harakat saqlandi"
+  },
+  "movements": {
+    "empty": "Tanlangan davrda harakatlar yo‘q"
+  },
+  "ingredients": {
+    "title": "Ingredientlar",
+    "search": "Nomi yoki SKU bo‘yicha qidirish",
+    "empty": "Hozircha ingredientlar yo‘q",
+    "emptyFiltered": "Hech narsa topilmadi",
+    "createTitle": "Yangi ingredient",
+    "editTitle": "Ingredientni tahrirlash",
+    "created": "Ingredient yaratildi",
+    "updated": "Ingredient saqlandi",
+    "baseUnitLocked": "Asosiy birlikni yaratilgandan keyin o‘zgartirib bo‘lmaydi",
+    "minTitle": "Minimal qoldiq",
+    "minHint": "Joriy filial uchun. Minimumdan kam bo‘lsa — bildirishnoma.",
+    "minSaved": "Minimal qoldiq saqlandi",
+    "archiveTitle": "Ingredient arxivlansinmi?",
+    "archiveMessage": "«{{name}}» tanlov ro‘yxatlaridan yo‘qoladi. Harakatlar tarixi saqlanadi.",
+    "archived": "Ingredient arxivlandi",
+    "archiveFailed": "Arxivlab bo‘lmadi"
+  },
+  "counts": {
+    "description": "Inventarizatsiya yarating — tizim kutilgan qoldiqlarni qayd etadi. Haqiqiy miqdorni kiriting va yakunlang.",
+    "create": "Inventarizatsiyani boshlash",
+    "createFailed": "Inventarizatsiyani yaratib bo‘lmadi",
+    "empty": "Hali inventarizatsiya o‘tkazilmagan",
+    "continue": "Davom etish",
+    "view": "Ochish",
+    "editorTitle": "Inventarizatsiya {{number}}",
+    "noLines": "Inventarizatsiyada qatorlar yo‘q",
+    "countedFor": "Haqiqiy miqdor: {{name}}",
+    "saveDraft": "Qoralamani saqlash",
+    "saved": "Qoralama saqlandi",
+    "complete": "Yakunlash",
+    "completeTitle": "Inventarizatsiya yakunlansinmi?",
+    "completeMessage": "Farqli qatorlar bo‘yicha qoldiq tuzatishlari yaratiladi. Bu amalni bekor qilib bo‘lmaydi.",
+    "completed": "Inventarizatsiya yakunlandi"
+  },
+  "units": {
+    "description": "Tashkilot o‘lchov birliklari va konversiya koeffitsientlari",
+    "add": "Birlik qo‘shish",
+    "addConversion": "Konversiya qo‘shish",
+    "empty": "Hozircha birliklar yo‘q",
+    "createTitle": "Yangi birlik",
+    "created": "Birlik yaratildi",
+    "conversionTitle": "Yangi konversiya",
+    "conversionHint": "1 «birlikdan» = koeffitsient × «birlikka». Masalan: 1 kg = 1000 g.",
+    "conversionCreated": "Konversiya saqlandi",
+    "sameUnit": "Boshqa birlikni tanlang"
+  },
+  "categories": {
+    "description": "Ingredientlarni guruhlash uchun toifalar",
+    "add": "Toifa qo‘shish",
+    "empty": "Hozircha toifalar yo‘q",
+    "createTitle": "Yangi toifa",
+    "editTitle": "Toifa nomini o‘zgartirish",
+    "saved": "Toifa saqlandi",
+    "deleteTitle": "Toifa o‘chirilsinmi?",
+    "deleteMessage": "«{{name}}» toifasidagi ingredientlar toifasiz qoladi.",
+    "deleted": "Toifa o‘chirildi",
+    "deleteFailed": "Toifani o‘chirib bo‘lmadi"
+  }
+}
