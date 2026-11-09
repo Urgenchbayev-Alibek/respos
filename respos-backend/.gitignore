@@ -1,0 +1,7 @@
+bin/
+obj/
+*.user
+.vs/
+TestResults/
+src/Restaurant.Api/wwwroot/uploads/
+src/Restaurant.Api/storage/

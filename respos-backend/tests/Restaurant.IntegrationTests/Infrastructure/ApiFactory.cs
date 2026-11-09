@@ -1,0 +1,64 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Restaurant.Application;
+using Testcontainers.PostgreSql;
+
+namespace Restaurant.IntegrationTests.Infrastructure;
+
+/// <summary>
+/// One PostgreSQL container (Testcontainers) + one API host for the whole test collection.
+/// Migrations and base seeders (permissions, plans) run at host startup; demo data is NOT seeded (env "Testing").
+/// Tests isolate themselves by creating their own organizations (see <see cref="ApiTestBase"/>).
+/// </summary>
+public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
+{
+    public const string TestPassword = "Test1234!";
+    public const string PlatformAdminEmail = "superadmin@respos.uz";
+
+    private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder()
+        .WithImage("postgres:16-alpine")
+        .WithDatabase("respos_tests")
+        .WithUsername("respos")
+        .WithPassword("respos_test")
+        .Build();
+
+    public async Task InitializeAsync()
+    {
+        await _postgres.StartAsync();
+        _ = Server; // builds the host → migrations + seeders run once
+    }
+
+    public new async Task DisposeAsync()
+    {
+        await base.DisposeAsync();
+        await _postgres.DisposeAsync();
+    }
+
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.UseEnvironment("Testing");
+        builder.UseSetting("ConnectionStrings:DefaultConnection", _postgres.GetConnectionString());
+        builder.UseSetting("Jwt:Issuer", "respos-test");
+        builder.UseSetting("Jwt:Audience", "respos-test");
+        builder.UseSetting("Jwt:SigningKey", "test-only-signing-key-with-at-least-32-bytes!!");
+        builder.UseSetting("Auth:RefreshCookieSecure", "false");
+        builder.UseSetting("Database:MigrateOnStartup", "true");
+        builder.UseSetting("Seed:PlatformAdminPassword", TestPassword);
+        builder.UseSetting("RateLimiting:GlobalPermitPerMinute", "100000");
+        builder.UseSetting("RateLimiting:AuthPerMinute", "100000");
+        builder.UseSetting("RateLimiting:DemoRequestsPerHour", "5");
+        builder.UseSetting("FileStorage:LocalRoot", Path.Combine(Path.GetTempPath(), "respos-tests-storage"));
+        builder.ConfigureServices(services =>
+        {
+            services.AddControllers().AddApplicationPart(typeof(ApiFactory).Assembly);
+            services.AddDomainEventHandlersFromAssembly(typeof(ApiFactory).Assembly);
+        });
+    }
+}
+
+[CollectionDefinition(Name)]
+public sealed class ApiCollection : ICollectionFixture<ApiFactory>
+{
+    public const string Name = "api";
+}

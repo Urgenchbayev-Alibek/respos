@@ -1,0 +1,32 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Restaurant.Domain.Entities.Audit;
+using Restaurant.Domain.Entities.Floor;
+using Restaurant.Domain.Entities.Identity;
+using Restaurant.Domain.Entities.Inventory;
+using Restaurant.Domain.Entities.Kitchen;
+using Restaurant.Domain.Entities.Menu;
+using Restaurant.Domain.Entities.Notifications;
+using Restaurant.Domain.Entities.Orders;
+using Restaurant.Domain.Entities.Payments;
+using Restaurant.Domain.Entities.Procurement;
+using Restaurant.Domain.Entities.Recipes;
+using Restaurant.Domain.Entities.Reservations;
+using Restaurant.Domain.Entities.Saas;
+using static Restaurant.Infrastructure.Persistence.Configurations.ConfigurationExtensions;
+
+namespace Restaurant.Infrastructure.Persistence.Configurations;
+
+internal sealed class BillingEventConfiguration : IEntityTypeConfiguration<BillingEvent>
+{
+    public void Configure(EntityTypeBuilder<BillingEvent> builder)
+    {
+        builder.ToTable("billing_events");
+        builder.HasKey(e => e.Id);
+        builder.Property(e => e.Type).HasMaxLength(CodeLength).IsRequired();
+        builder.Property(e => e.PayloadJson).HasColumnType("jsonb");
+        builder.HasIndex(e => new { e.OrganizationId, e.CreatedAt });
+        builder.HasOne<Organization>().WithMany()
+            .HasForeignKey(e => e.OrganizationId).OnDelete(DeleteBehavior.Restrict);
+    }
+}
