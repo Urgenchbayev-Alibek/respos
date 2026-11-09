@@ -1,0 +1,68 @@
+{
+  "title": "Buyurtmalar",
+  "subtitle": "Filialning barcha buyurtmalari: holatlar, summalar, tarix va toʻlovlar.",
+  "searchPlaceholder": "Buyurtma raqami",
+  "empty": "Buyurtmalar topilmadi",
+  "totals": {
+    "subtotal": "Oraliq jami",
+    "discount": "Chegirma",
+    "serviceCharge": "Xizmat haqi",
+    "tax": "Soliq",
+    "total": "Jami",
+    "paid": "Toʻlangan",
+    "remaining": "Toʻlanishi kerak"
+  },
+  "noItems": "Hozircha pozitsiyalar yoʻq",
+  "sentAt": "{{time}} da yuborilgan",
+  "toast": {
+    "cancelled": "Buyurtma bekor qilindi",
+    "actionFailed": "Amalni bajarib boʻlmadi"
+  },
+  "type": {
+    "dine_in": "Zalda",
+    "takeaway": "Olib ketish"
+  },
+  "tableLabel": "{{number}}-stol",
+  "guests": "Mehmonlar: {{guests}}",
+  "columns": {
+    "number": "Raqam",
+    "type": "Turi",
+    "table": "Stol",
+    "waiter": "Ofitsiant",
+    "status": "Holat",
+    "openedAt": "Ochilgan",
+    "total": "Summa",
+    "paid": "Toʻlangan"
+  },
+  "closedAt": "Yopilgan",
+  "comment": "Izoh",
+  "sections": {
+    "items": "Pozitsiyalar",
+    "payments": "Toʻlovlar",
+    "history": "Holatlar tarixi"
+  },
+  "noPayments": "Toʻlovlar yoʻq",
+  "method": {
+    "cash": "Naqd",
+    "card": "Karta",
+    "other": "Boshqa"
+  },
+  "detailTitle": "Buyurtma {{number}}",
+  "actions": {
+    "cancel": "Buyurtmani bekor qilish"
+  },
+  "confirm": {
+    "cancelTitle": "Buyurtma bekor qilinsinmi?",
+    "cancelMessage": "Oshxonadagi ochiq chiptalar bekor qilinadi. Sababini kiriting — u jurnalga yoziladi."
+  },
+  "filters": {
+    "status": "Holat",
+    "all": "Barchasi",
+    "active": "Faol",
+    "allTypes": "Barcha turlar",
+    "allTables": "Barcha stollar",
+    "allWaiters": "Barcha ofitsiantlar",
+    "from": "Sanadan",
+    "to": "Sanagacha"
+  }
+}

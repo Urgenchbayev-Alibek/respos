@@ -1,0 +1,68 @@
+{
+  "title": "Orders",
+  "subtitle": "All branch orders: statuses, totals, history and payments.",
+  "searchPlaceholder": "Order number",
+  "empty": "No orders found",
+  "totals": {
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "serviceCharge": "Service charge",
+    "tax": "Tax",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Due"
+  },
+  "noItems": "No items yet",
+  "sentAt": "sent {{time}}",
+  "toast": {
+    "cancelled": "Order cancelled",
+    "actionFailed": "Action failed"
+  },
+  "type": {
+    "dine_in": "Dine-in",
+    "takeaway": "Takeaway"
+  },
+  "tableLabel": "Table {{number}}",
+  "guests": "Guests: {{guests}}",
+  "columns": {
+    "number": "Number",
+    "type": "Type",
+    "table": "Table",
+    "waiter": "Waiter",
+    "status": "Status",
+    "openedAt": "Opened",
+    "total": "Total",
+    "paid": "Paid"
+  },
+  "closedAt": "Closed",
+  "comment": "Comment",
+  "sections": {
+    "items": "Items",
+    "payments": "Payments",
+    "history": "Status history"
+  },
+  "noPayments": "No payments",
+  "method": {
+    "cash": "Cash",
+    "card": "Card",
+    "other": "Other"
+  },
+  "detailTitle": "Order {{number}}",
+  "actions": {
+    "cancel": "Cancel order"
+  },
+  "confirm": {
+    "cancelTitle": "Cancel order?",
+    "cancelMessage": "Open kitchen tickets will be cancelled. Enter a reason — it goes to the audit log."
+  },
+  "filters": {
+    "status": "Status",
+    "all": "All",
+    "active": "Active",
+    "allTypes": "All types",
+    "allTables": "All tables",
+    "allWaiters": "All waiters",
+    "from": "From",
+    "to": "To"
+  }
+}

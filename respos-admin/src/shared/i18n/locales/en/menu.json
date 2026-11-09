@@ -1,0 +1,136 @@
+{
+  "title": "Menu",
+  "subtitle": "Dishes, categories and modifiers. Stop-list is the “Available” switch.",
+  "stationsLink": "Kitchen stations →",
+  "tabs": {
+    "items": "Dishes",
+    "categories": "Categories",
+    "modifiers": "Modifiers"
+  },
+  "columns": {
+    "photo": "Photo",
+    "name": "Name",
+    "category": "Category",
+    "price": "Price",
+    "station": "Station",
+    "available": "Available",
+    "actions": "Actions"
+  },
+  "archived": "Archived",
+  "variantsShort": "Variants: {{names}}",
+  "available": "Available",
+  "stopped": "Stop-list",
+  "availabilityLabel": "Availability: {{name}}",
+  "searchPlaceholder": "Search dishes",
+  "filters": {
+    "allCategories": "All categories",
+    "anyAvailability": "Any availability",
+    "includeArchived": "Show archived"
+  },
+  "emptyItems": "No dishes found",
+  "actions": {
+    "createItem": "Add dish",
+    "editNamed": "Edit {{name}}",
+    "archiveNamed": "Archive {{name}}",
+    "deleteNamed": "Delete {{name}}",
+    "archive": "Archive"
+  },
+  "confirm": {
+    "archiveItemTitle": "Archive dish?",
+    "archiveItemMessage": "“{{name}}” will disappear from the waiter menu. Order history is kept."
+  },
+  "toast": {
+    "available": "“{{name}}” is available again",
+    "stopped": "“{{name}}” is on the stop-list",
+    "actionFailed": "Action failed",
+    "itemArchived": "Dish archived",
+    "itemCreated": "Dish created",
+    "itemUpdated": "Dish saved",
+    "categorySaved": "Category saved",
+    "categoryArchived": "Category archived",
+    "reorderFailed": "Could not change the order",
+    "groupSaved": "Modifier group saved",
+    "groupDeleted": "Modifier group deleted"
+  },
+  "itemForm": {
+    "createTitle": "New dish",
+    "editTitle": "Edit dish",
+    "name": "Name (RU)",
+    "nameUz": "Name (UZ)",
+    "category": "Category",
+    "categoryPlaceholder": "Select a category",
+    "price": "Price",
+    "station": "Kitchen station",
+    "stationHint": "Where the ticket goes when sent to the kitchen.",
+    "defaultStation": "Default station",
+    "prepTime": "Prep time, min",
+    "sku": "SKU",
+    "isAvailable": "Available for ordering",
+    "description": "Description",
+    "modifierGroups": "Modifier groups",
+    "noModifierGroups": "No modifier groups yet — create them on the “Modifiers” tab."
+  },
+  "photo": {
+    "invalidType": "Only JPG, PNG or WebP",
+    "tooLarge": "File is larger than 2 MB",
+    "alt": "Dish photo",
+    "replace": "Replace photo",
+    "choose": "Choose photo",
+    "hint": "JPG, PNG or WebP, up to 2 MB",
+    "uploadFailed": "Dish saved, but the photo failed to upload"
+  },
+  "variants": {
+    "title": "Variants",
+    "hint": "E.g. 0.5 / 1 portion. Variant price is the full price (not a surcharge).",
+    "name": "Variant name",
+    "price": "Variant price",
+    "default": "Default",
+    "remove": "Remove variant {{index}}",
+    "add": "Add variant"
+  },
+  "modifiers": {
+    "summary": "Pick {{min}}–{{max}} · options: {{options}}",
+    "editTitle": "Edit modifier group",
+    "createTitle": "New modifier group",
+    "name": "Group name",
+    "minSelect": "Min selection",
+    "maxSelect": "Max selection",
+    "isRequired": "Required group",
+    "options": "Options",
+    "optionName": "Option name",
+    "priceDelta": "Price surcharge",
+    "removeOption": "Remove option {{index}}",
+    "addOption": "Add option",
+    "rule": "Selection rule",
+    "range": "{{min}} to {{max}}",
+    "required": "Required",
+    "create": "Add group",
+    "empty": "No modifier groups",
+    "emptyHint": "E.g. “Doneness”, “Sauce”, “Extras”.",
+    "deleteTitle": "Delete modifier group?",
+    "deleteMessage": "Group “{{name}}” will be unlinked from all dishes."
+  },
+  "categories": {
+    "editTitle": "Edit category",
+    "createTitle": "New category",
+    "name": "Name (RU)",
+    "nameUz": "Name (UZ)",
+    "isActive": "Show in menu",
+    "empty": "No categories",
+    "emptyHint": "Create categories: “Hot dishes”, “Soups”, “Drinks”…",
+    "hidden": "Hidden",
+    "moveUp": "Move up: {{name}}",
+    "moveDown": "Move down: {{name}}",
+    "create": "Add category",
+    "archiveTitle": "Archive category?",
+    "archiveMessage": "Category “{{name}}” will be hidden from the menu."
+  },
+  "validation": {
+    "prepTime": "Whole minutes (0–999)",
+    "oneDefault": "Mark exactly one default variant",
+    "selectRange": "Max must be at least the min and at least 1",
+    "minSelect": "A required group needs a min of at least 1",
+    "optionsRequired": "Add at least one option",
+    "priceDelta": "Enter a surcharge (0 is fine)"
+  }
+}

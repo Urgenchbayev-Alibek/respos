@@ -1,0 +1,41 @@
+{
+  "title": "Oshxona stansiyalari",
+  "subtitle": "Filial sexlari: taomlar stansiyaga yoʻnaltiriladi, chiptalar uning KDS ekranida koʻrinadi.",
+  "columns": {
+    "name": "Nomi",
+    "sortOrder": "Tartib",
+    "status": "Holat",
+    "actions": "Amallar"
+  },
+  "fields": {
+    "name": "Nomi",
+    "sortOrder": "Tartib",
+    "sortOrderHint": "Tartib boʻyicha birinchi stansiya — stansiyasiz taomlar uchun standart stansiya.",
+    "isActive": "Faol"
+  },
+  "form": {
+    "createTitle": "Yangi stansiya",
+    "editTitle": "Stansiyani tahrirlash"
+  },
+  "actions": {
+    "create": "Stansiya qoʻshish",
+    "edit": "{{name}}ni tahrirlash",
+    "delete": "{{name}}ni oʻchirish"
+  },
+  "confirm": {
+    "deleteTitle": "Stansiya oʻchirilsinmi?",
+    "deleteMessage": "«{{name}}» stansiyasi oʻchiriladi. Uning taomlari standart stansiyaga oʻtadi."
+  },
+  "toast": {
+    "saved": "Stansiya saqlandi",
+    "deleted": "Stansiya oʻchirildi",
+    "deleteFailed": "Stansiyani oʻchirib boʻlmadi"
+  },
+  "active": "Faol",
+  "inactive": "Nofaol",
+  "empty": "Hozircha stansiyalar yoʻq",
+  "emptyHint": "Kamida bitta stansiya yarating (masalan, «Issiq sex» yoki «Bar»).",
+  "validation": {
+    "sortOrder": "Manfiy boʻlmagan butun son"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "title": "Заказы",
+  "subtitle": "Все заказы филиала: статусы, суммы, история и оплаты.",
+  "searchPlaceholder": "Номер заказа",
+  "empty": "Заказов не найдено",
+  "totals": {
+    "subtotal": "Подытог",
+    "discount": "Скидка",
+    "serviceCharge": "Сервисный сбор",
+    "tax": "Налог",
+    "total": "Итого",
+    "paid": "Оплачено",
+    "remaining": "К оплате"
+  },
+  "noItems": "Позиций пока нет",
+  "sentAt": "отправлено {{time}}",
+  "toast": {
+    "cancelled": "Заказ отменён",
+    "actionFailed": "Не удалось выполнить действие"
+  },
+  "type": {
+    "dine_in": "В зале",
+    "takeaway": "Навынос"
+  },
+  "tableLabel": "Стол {{number}}",
+  "guests": "Гостей: {{guests}}",
+  "columns": {
+    "number": "Номер",
+    "type": "Тип",
+    "table": "Стол",
+    "waiter": "Официант",
+    "status": "Статус",
+    "openedAt": "Открыт",
+    "total": "Сумма",
+    "paid": "Оплачено"
+  },
+  "closedAt": "Закрыт",
+  "comment": "Комментарий",
+  "sections": {
+    "items": "Позиции",
+    "payments": "Оплаты",
+    "history": "История статусов"
+  },
+  "noPayments": "Оплат нет",
+  "method": {
+    "cash": "Наличные",
+    "card": "Карта",
+    "other": "Другое"
+  },
+  "detailTitle": "Заказ {{number}}",
+  "actions": {
+    "cancel": "Отменить заказ"
+  },
+  "confirm": {
+    "cancelTitle": "Отменить заказ?",
+    "cancelMessage": "Открытые тикеты кухни будут отменены. Укажите причину — она попадёт в журнал."
+  },
+  "filters": {
+    "status": "Статус",
+    "all": "Все",
+    "active": "Активные",
+    "allTypes": "Все типы",
+    "allTables": "Все столы",
+    "allWaiters": "Все официанты",
+    "from": "С даты",
+    "to": "По дату"
+  }
+}

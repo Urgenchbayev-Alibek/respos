@@ -1,0 +1,35 @@
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.row dt {
+  color: var(--color-text-muted);
+}
+
+.row dd {
+  margin: 0;
+}
+
+.grand {
+  padding-top: var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.grand dt {
+  color: var(--color-text);
+}
+
+.remaining {
+  font-weight: var(--font-weight-semibold);
+}

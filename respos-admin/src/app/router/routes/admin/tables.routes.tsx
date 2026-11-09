@@ -1,11 +1,13 @@
-import { defineRoutes, stubPage } from '@/app/router/route-module';
+import { defineRoutes, lazyPage } from '@/app/router/route-module';
 import { PERMISSIONS as P } from '@/shared/constants/permissions';
 import { ROUTES } from '@/shared/constants/routes';
 
-/**
- * STUB (planned owner: agent A). Replace `stubPage(...)` with
- * `lazyPage(() => import('@/pages/...').then((m) => ({ default: m.XxxPage })), { anyOf: [...] })`.
- */
+/** Dining areas, tables and the floor plan. */
 export const routeModule = defineRoutes('admin', [
-  { path: ROUTES.admin.tables, element: stubPage('nav:admin.tables', { anyOf: [P.tables.read] }) },
+  {
+    path: ROUTES.admin.tables,
+    element: lazyPage(() => import('@/pages/admin/tables/TablesPage').then((m) => ({ default: m.TablesPage })), {
+      anyOf: [P.tables.read],
+    }),
+  },
 ]);

@@ -1,0 +1,79 @@
+{
+  "title": "Reservations",
+  "subtitle": "Table reservations for the day: confirm, seat, complete, cancel and no-show.",
+  "actions": {
+    "create": "New reservation",
+    "edit": "Edit",
+    "menu": "Actions: reservation {{name}}",
+    "confirm": "Confirm",
+    "seat": "Seat",
+    "complete": "Complete",
+    "cancel": "Cancel reservation",
+    "no-show": "No-show"
+  },
+  "prevDay": "Previous day",
+  "nextDay": "Next day",
+  "today": "Today",
+  "views": {
+    "label": "View",
+    "day": "Day",
+    "list": "List"
+  },
+  "searchPlaceholder": "Guest name or phone",
+  "filters": {
+    "allStatuses": "All statuses",
+    "allTables": "All tables"
+  },
+  "columns": {
+    "table": "Table",
+    "time": "Time",
+    "guest": "Guest",
+    "guests": "Guests",
+    "status": "Status",
+    "comment": "Comment",
+    "actions": "Actions"
+  },
+  "fields": {
+    "guestName": "Guest name",
+    "guestPhone": "Phone",
+    "date": "Date",
+    "guestCount": "Guests",
+    "startTime": "Starts",
+    "endTime": "Ends",
+    "table": "Table",
+    "tableHint": "Can be left empty and assigned later.",
+    "noTable": "No table",
+    "preferredArea": "Preferred area",
+    "anyArea": "Any area",
+    "comment": "Comment"
+  },
+  "form": {
+    "createTitle": "New reservation",
+    "editTitle": "Edit reservation"
+  },
+  "tableOption": "Table {{number}} · {{area}} · {{seats}} seats",
+  "noTable": "No table",
+  "conflictField": "This table is already reserved at that time",
+  "conflictBadge": "overlap",
+  "overdueHint": "Time has passed — mark as no-show or complete",
+  "empty": "No reservations for this day",
+  "toast": {
+    "created": "Reservation created",
+    "updated": "Reservation updated",
+    "confirm": "Reservation confirmed",
+    "seat": "Guests seated",
+    "complete": "Reservation completed",
+    "cancel": "Reservation cancelled",
+    "no-show": "Marked as no-show",
+    "actionFailed": "Action failed"
+  },
+  "confirm": {
+    "message": "Guest: {{name}}",
+    "cancelTitle": "Cancel reservation?",
+    "no-showTitle": "Mark as no-show?"
+  },
+  "validation": {
+    "guestCount": "Whole number from 1 to 200",
+    "endAfterStart": "End must be after start"
+  }
+}

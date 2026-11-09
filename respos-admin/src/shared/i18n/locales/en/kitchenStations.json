@@ -1,0 +1,41 @@
+{
+  "title": "Kitchen stations",
+  "subtitle": "Branch stations: dishes are routed to a station and its tickets appear on that KDS.",
+  "columns": {
+    "name": "Name",
+    "sortOrder": "Order",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "fields": {
+    "name": "Name",
+    "sortOrder": "Order",
+    "sortOrderHint": "The first station by order is the default for dishes without a station.",
+    "isActive": "Active"
+  },
+  "form": {
+    "createTitle": "New station",
+    "editTitle": "Edit station"
+  },
+  "actions": {
+    "create": "Add station",
+    "edit": "Edit {{name}}",
+    "delete": "Delete {{name}}"
+  },
+  "confirm": {
+    "deleteTitle": "Delete station?",
+    "deleteMessage": "Station “{{name}}” will be deleted. Its dishes will go to the default station."
+  },
+  "toast": {
+    "saved": "Station saved",
+    "deleted": "Station deleted",
+    "deleteFailed": "Could not delete the station"
+  },
+  "active": "Active",
+  "inactive": "Inactive",
+  "empty": "No stations yet",
+  "emptyHint": "Create at least one station (e.g. “Hot kitchen” or “Bar”).",
+  "validation": {
+    "sortOrder": "Non-negative whole number"
+  }
+}
