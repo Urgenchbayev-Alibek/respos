@@ -14,16 +14,18 @@ public sealed class RequestContext : ITenantContext, IRequestInfo
     public Guid? OrganizationId { get; private set; }
     public Guid? BranchId { get; private set; }
     public bool IsPlatformAdmin { get; private set; }
+    public bool IsReadOnlyTenantAccess { get; private set; }
 
     public string? IpAddress { get; private set; }
     public string? CorrelationId { get; private set; }
     public string? UserAgent { get; private set; }
 
-    public void SetUser(Guid? userId, Guid? organizationId, bool isPlatformAdmin)
+    public void SetUser(Guid? userId, Guid? organizationId, bool isPlatformAdmin, bool isReadOnlyTenantAccess = false)
     {
         UserId = userId;
         OrganizationId = organizationId;
         IsPlatformAdmin = isPlatformAdmin;
+        IsReadOnlyTenantAccess = isReadOnlyTenantAccess && isPlatformAdmin && organizationId is not null;
         BranchId = null;
     }
 

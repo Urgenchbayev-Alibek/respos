@@ -27,7 +27,8 @@ public sealed class RequestContextMiddleware(RequestDelegate next)
         var userId = TryGuid(user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("sub"));
         var organizationId = TryGuid(user.FindFirstValue(JwtOptions.OrganizationClaim));
         var isPlatformAdmin = string.Equals(user.FindFirstValue(JwtOptions.PlatformAdminClaim), "true", StringComparison.OrdinalIgnoreCase);
-        requestContext.SetUser(userId, organizationId, isPlatformAdmin);
+        var isReadOnlyTenantAccess = user.FindFirstValue(JwtOptions.TenantAccessClaim) == JwtOptions.ReadOnlyTenantAccess;
+        requestContext.SetUser(userId, organizationId, isPlatformAdmin, isReadOnlyTenantAccess);
     }
 
     private static Guid? TryGuid(string? value) => Guid.TryParse(value, out var id) ? id : null;

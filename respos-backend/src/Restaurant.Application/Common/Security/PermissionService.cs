@@ -10,11 +10,15 @@ namespace Restaurant.Application.Common.Security;
 /// <summary>
 /// Loads effective permissions from the DB (never from the token) and caches them for the request scope.
 /// Inactive users, inactive memberships and non-active organizations yield no org permissions.
-/// Platform admins additionally get all platform.* permissions.
+/// Platform admins additionally get all platform.* permissions; a break-glass session gets only org *.read permissions.
 /// </summary>
 internal sealed class PermissionService(IApplicationDbContext db, ITenantContext tenant) : IPermissionService
 {
     private static readonly IReadOnlySet<string> Empty = new HashSet<string>();
+
+    private static readonly IReadOnlySet<string> ReadOnlyOrganizationCodes = PermissionCatalog.OrganizationCodes
+        .Where(c => c.EndsWith(".read", StringComparison.Ordinal))
+        .ToHashSet(StringComparer.Ordinal);
     private readonly Dictionary<(Guid UserId, Guid? OrgId), IReadOnlySet<string>> _cache = [];
 
     public async Task<IReadOnlySet<string>> GetPermissionsAsync(Guid userId, Guid? organizationId, CancellationToken cancellationToken = default)
@@ -57,6 +61,12 @@ internal sealed class PermissionService(IApplicationDbContext db, ITenantContext
             return Empty;
         }
 
+        if (IsReadOnlyTenantAccess(userId, organizationId))
+        {
+            // Break-glass session: read-only access to that organization only (no platform permissions).
+            return user.IsPlatformAdmin ? ReadOnlyOrganizationCodes : Empty;
+        }
+
         var result = new HashSet<string>(StringComparer.Ordinal);
         if (user.IsPlatformAdmin)
         {
@@ -75,6 +85,9 @@ internal sealed class PermissionService(IApplicationDbContext db, ITenantContext
 
         return result;
     }
+
+    private bool IsReadOnlyTenantAccess(Guid userId, Guid? organizationId) =>
+        tenant.IsReadOnlyTenantAccess && tenant.UserId == userId && organizationId is not null && tenant.OrganizationId == organizationId;
 
     private Task<bool> IsActiveMemberAsync(Guid userId, Guid orgId, CancellationToken ct) =>
         db.UserOrganizations.IgnoreQueryFilters().AnyAsync(

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Abstractions.Security;
 using Restaurant.Domain.Constants;
@@ -9,7 +10,8 @@ namespace Restaurant.Application.Common.Security;
 /// Branch access rules: owner/admin roles → every active branch of the org; others → UserBranchAccess rows.
 /// Works with explicit ids (ignores tenant filters) so it can run before the tenant context is complete (hub, filters).
 /// </summary>
-internal sealed class BranchAccessService(IApplicationDbContext db) : IBranchAccessService
+/// A break-glass (read-only platform) session sees every active branch of its organization.
+internal sealed class BranchAccessService(IApplicationDbContext db, ITenantContext tenant) : IBranchAccessService
 {
     public async Task<bool> HasAccessAsync(Guid userId, Guid organizationId, Guid branchId, CancellationToken cancellationToken = default)
     {
@@ -20,7 +22,8 @@ internal sealed class BranchAccessService(IApplicationDbContext db) : IBranchAcc
     public async Task<IReadOnlyList<BranchSummary>> GetAccessibleBranchesAsync(
         Guid userId, Guid organizationId, CancellationToken cancellationToken = default)
     {
-        var isMember = await db.UserOrganizations.IgnoreQueryFilters()
+        var isBreakGlass = tenant.IsReadOnlyTenantAccess && tenant.UserId == userId && tenant.OrganizationId == organizationId;
+        var isMember = isBreakGlass || await db.UserOrganizations.IgnoreQueryFilters()
             .AnyAsync(uo => uo.UserId == userId && uo.OrganizationId == organizationId && uo.IsActive, cancellationToken);
         if (!isMember)
         {
@@ -28,7 +31,7 @@ internal sealed class BranchAccessService(IApplicationDbContext db) : IBranchAcc
         }
 
         var allBranchRoles = SystemRoles.AllBranchRoles.ToArray();
-        var hasAllBranches = await db.UserRoles.IgnoreQueryFilters()
+        var hasAllBranches = isBreakGlass || await db.UserRoles.IgnoreQueryFilters()
             .AnyAsync(ur => ur.UserId == userId
                             && ur.OrganizationId == organizationId
                             && allBranchRoles.Contains(ur.Role!.Code), cancellationToken);

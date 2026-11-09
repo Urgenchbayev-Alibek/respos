@@ -6,6 +6,10 @@ public sealed class JwtOptions
     public const string OrganizationClaim = "org";
     public const string PlatformAdminClaim = "platform_admin";
 
+    /// <summary>Break-glass token marker (value <see cref="ReadOnlyTenantAccess"/>).</summary>
+    public const string TenantAccessClaim = "tenant_access";
+    public const string ReadOnlyTenantAccess = "read_only";
+
     public string Issuer { get; set; } = "respos";
     public string Audience { get; set; } = "respos";
 
