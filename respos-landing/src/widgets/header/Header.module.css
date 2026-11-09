@@ -1,0 +1,140 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--header-height);
+}
+
+.brand {
+  display: inline-flex;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.desktopNav {
+  display: none;
+  margin-left: 16px;
+}
+
+.navList {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.navActive {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.demoButton {
+  display: none;
+}
+
+.burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.mobilePanel {
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  overflow-y: auto;
+  padding-block: 16px 32px;
+  background: var(--color-surface);
+}
+
+.mobilePanel[hidden] {
+  display: none;
+}
+
+.mobileList {
+  list-style: none;
+}
+
+.mobileList .navLink {
+  display: flex;
+  min-height: 52px;
+  padding-inline: 4px;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  font-size: 17px;
+  color: var(--color-text);
+}
+
+.mobileActions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.mobileActions > :first-child {
+  align-self: flex-start;
+}
+
+@media (min-width: 480px) {
+  .demoButton {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktopNav,
+  .desktopOnly {
+    display: flex;
+  }
+
+  .desktopOnly {
+    display: inline-flex;
+  }
+
+  .burger,
+  .mobilePanel {
+    display: none;
+  }
+}

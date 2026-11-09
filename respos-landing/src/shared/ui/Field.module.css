@@ -1,0 +1,64 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.control {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: 16px; /* prevents zoom on iOS */
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.control::placeholder {
+  color: #64748b;
+}
+
+.control:hover {
+  border-color: #94a3b8;
+}
+
+.control:focus-visible {
+  border-color: var(--color-primary);
+  border-radius: var(--radius-md);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.invalid,
+.invalid:hover {
+  border-color: var(--color-danger);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.error {
+  font-size: 13px;
+  font-weight: 500;
+  color: #b91c1c;
+}

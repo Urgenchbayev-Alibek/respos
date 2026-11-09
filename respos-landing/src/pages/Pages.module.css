@@ -1,0 +1,128 @@
+/* Layout pieces shared by inner pages. Inner page intro sections sit above these bodies. */
+.pageBody {
+  padding-bottom: 80px;
+}
+
+.cardTitle {
+  font-size: 19px;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+/* FAQ */
+.moreBox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-subtle);
+}
+
+.moreTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Contacts */
+.contactsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 16px;
+}
+
+.contactPrimary,
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+}
+
+.contactPrimary {
+  background: linear-gradient(135deg, var(--color-primary-strong), #9a3412);
+  color: #fff;
+}
+
+.contactPrimary p {
+  color: #ffedd5;
+}
+
+.contactPrimary > a {
+  margin-top: auto;
+}
+
+.contactCard {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.contactIcon {
+  width: 28px;
+  height: 28px;
+  color: var(--color-primary-text);
+}
+
+/* Demo */
+.demoLayout {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+
+.formCard {
+  min-width: 0;
+  padding: 24px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.aside {
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+}
+
+.nextList {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+  list-style: none;
+}
+
+.nextList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.nextList svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--color-success);
+}
+
+@media (min-width: 640px) {
+  .formCard {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .demoLayout {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 32px;
+  }
+}

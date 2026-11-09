@@ -1,0 +1,18 @@
+export const ROUTES = {
+  home: '/',
+  features: '/features',
+  pricing: '/pricing',
+  faq: '/faq',
+  contacts: '/contacts',
+  demo: '/demo',
+  privacy: '/privacy',
+  terms: '/terms',
+} as const;
+
+/** Primary navigation (labels are i18n keys under `nav.*`). */
+export const NAV_ITEMS = [
+  { to: ROUTES.features, key: 'features' },
+  { to: ROUTES.pricing, key: 'pricing' },
+  { to: ROUTES.faq, key: 'faq' },
+  { to: ROUTES.contacts, key: 'contacts' },
+] as const;

@@ -1,0 +1,20 @@
+import type { Messages } from '../../types';
+import type { TranslationShape } from '../ru';
+import { common } from './common';
+import { demo } from './demo';
+import { faq } from './faq';
+import { features } from './features';
+import { home } from './home';
+import { contacts, legal } from './pages';
+import { pricing } from './pricing';
+
+export const uz: Messages<TranslationShape> = {
+  ...common,
+  home,
+  features,
+  pricing,
+  faq,
+  demo,
+  contacts,
+  legal,
+};

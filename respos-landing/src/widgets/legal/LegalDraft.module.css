@@ -1,0 +1,43 @@
+.wrap {
+  padding-block: 48px 80px;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: clamp(28px, 5vw, 40px);
+}
+
+.note {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+  background: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+}
+
+.sections {
+  display: grid;
+  gap: 24px;
+  margin-top: 36px;
+  padding-left: 22px;
+}
+
+.section::marker {
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.sectionTitle {
+  font-size: 19px;
+}
+
+.placeholder {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 1px dashed #cbd5e1;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: 15px;
+  font-style: italic;
+}

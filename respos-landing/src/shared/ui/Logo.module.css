@@ -1,0 +1,29 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text);
+}
+
+.mark {
+  width: 32px;
+  height: 32px;
+}
+
+.word {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.accent {
+  color: var(--color-primary);
+}
+
+.inverse {
+  color: #fff;
+}
+
+.inverse .accent {
+  color: #ffb08f;
+}

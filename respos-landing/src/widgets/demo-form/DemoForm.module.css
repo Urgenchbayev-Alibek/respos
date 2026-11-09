@@ -1,0 +1,81 @@
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.row {
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  background: var(--color-danger-subtle);
+  color: #991b1b;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.alert svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.consent {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.successIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-success);
+}
+
+.successTitle {
+  font-size: 24px;
+}
+
+.successTitle:focus {
+  outline: none;
+}
