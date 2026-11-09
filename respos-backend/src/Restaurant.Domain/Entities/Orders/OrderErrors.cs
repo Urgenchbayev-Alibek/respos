@@ -7,7 +7,7 @@ public static class OrderErrors
 {
     public static readonly Error NotFound = Error.NotFound("order.not_found", "Order not found.");
     public static readonly Error ItemNotFound = Error.NotFound("order.item_not_found", "Order item not found.");
-    public static readonly Error HasPayments = Error.Conflict("order.has_payments", "The order has payments; refund them before cancelling.");
+    public static readonly Error HasPayments = Error.BusinessRule("order.has_payments", "The order has payments; refund them before cancelling.");
     public static readonly Error TableRequired = Error.Validation("order.table_required", "Dine-in orders require a table.");
     public static readonly Error OrderClosed = Error.Conflict("order.closed", "The order is already paid or cancelled.");
     public static readonly Error NothingToSend = Error.BusinessRule("order.nothing_to_send", "There are no new items to send.");
@@ -18,6 +18,11 @@ public static class OrderErrors
     public static readonly Error InvalidPaymentAmount = Error.Validation("payment.invalid_amount", "Payment amount must be greater than zero.");
     public static readonly Error PaymentExceedsDue = Error.BusinessRule("payment.exceeds_due", "Payment amount exceeds the remaining amount due.");
     public static readonly Error InvalidRefundAmount = Error.BusinessRule("payment.invalid_refund_amount", "Refund amount is invalid.");
+
+    public static readonly Error MenuItemUnavailable = Error.BusinessRule("order.menu_item_unavailable", "The menu item is archived or not available now.");
+    public static readonly Error NotDineIn = Error.BusinessRule("order.not_dine_in", "Only dine-in orders can be moved to another table.");
+    public static readonly Error TableNotFound = Error.NotFound("table.not_found", "Table not found.");
+    public static readonly Error TableUnavailable = Error.BusinessRule("table.unavailable", "The table is unavailable.");
 
     public static Error InvalidTransition(OrderStatus from, OrderStatus to) =>
         Error.Conflict("order.invalid_status_transition", $"Cannot change order status from {from} to {to}.");

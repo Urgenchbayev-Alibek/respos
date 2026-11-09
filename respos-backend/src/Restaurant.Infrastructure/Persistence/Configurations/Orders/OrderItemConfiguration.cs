@@ -23,6 +23,9 @@ internal sealed class OrderItemConfiguration : IEntityTypeConfiguration<OrderIte
     {
         builder.ToTable("order_items");
         builder.HasKey(e => e.Id);
+
+        // Child of a tracked aggregate with a client-generated Guid: new rows added via the navigation must be INSERTed.
+        builder.Property(e => e.Id).ValueGeneratedNever();
         builder.Property(e => e.NameSnapshot).HasMaxLength(NameLength).IsRequired();
         builder.Property(e => e.VariantNameSnapshot).HasMaxLength(NameLength);
         builder.Property(e => e.Comment).HasMaxLength(ReasonLength);

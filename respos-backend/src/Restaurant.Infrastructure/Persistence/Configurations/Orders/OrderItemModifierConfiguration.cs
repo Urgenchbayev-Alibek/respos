@@ -23,6 +23,9 @@ internal sealed class OrderItemModifierConfiguration : IEntityTypeConfiguration<
     {
         builder.ToTable("order_item_modifiers");
         builder.HasKey(e => e.Id);
+
+        // Child of a tracked aggregate with a client-generated Guid: new rows added via the navigation must be INSERTed.
+        builder.Property(e => e.Id).ValueGeneratedNever();
         builder.Property(e => e.NameSnapshot).HasMaxLength(NameLength).IsRequired();
         builder.HasOne<ModifierOption>().WithMany()
             .HasForeignKey(e => e.ModifierOptionId).OnDelete(DeleteBehavior.Restrict);
