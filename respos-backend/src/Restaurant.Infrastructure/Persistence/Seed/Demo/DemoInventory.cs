@@ -48,7 +48,7 @@ internal static class DemoInventory
                 CostPrice = spec.Cost,
             };
             context.Db.Ingredients.Add(ingredient);
-            AddInitialBalance(context, ingredient, spec);
+            AddOpeningBalance(context, ingredient, spec.Quantity, spec.Min);
             result[spec.Key] = ingredient;
         }
 
@@ -56,17 +56,18 @@ internal static class DemoInventory
         return result;
     }
 
-    private static void AddInitialBalance(DemoContext context, Ingredient ingredient, IngredientSpec spec)
+    /// <summary>Opening balance of <paramref name="ingredient"/> in the context branch via a receipt movement (cost = CostPrice).</summary>
+    internal static void AddOpeningBalance(DemoContext context, Ingredient ingredient, decimal quantity, decimal minQuantity)
     {
-        var balance = StockBalance.Create(context.OrganizationId, context.BranchId, ingredient.Id, spec.Min);
+        var balance = StockBalance.Create(context.OrganizationId, context.BranchId, ingredient.Id, minQuantity);
         var movement = new StockMovement
         {
             OrganizationId = context.OrganizationId,
             BranchId = context.BranchId,
             IngredientId = ingredient.Id,
             Type = StockMovementType.Receipt,
-            Quantity = spec.Quantity,
-            UnitCost = spec.Cost,
+            Quantity = quantity,
+            UnitCost = ingredient.CostPrice,
             SourceType = StockMovementSource.Manual,
             Reason = InitialReason,
             CreatedAt = context.Now,

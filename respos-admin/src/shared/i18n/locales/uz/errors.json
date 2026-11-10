@@ -225,5 +225,15 @@
     "not_found": "Stol topilmadi.",
     "number_taken": "Bunday raqamli stol allaqachon mavjud.",
     "unavailable": "Stol mavjud emas."
+  },
+  "stock_transfer": {
+    "not_found": "Ko'chirish topilmadi.",
+    "not_editable": "Faqat ko'chirish qoralamasini tahrirlash mumkin.",
+    "empty": "Kamida bitta pozitsiya qo'shing.",
+    "same_branch": "Yuboruvchi va qabul qiluvchi filiallar har xil bo'lishi kerak.",
+    "destination_not_found": "Qabul qiluvchi filial topilmadi yoki faol emas.",
+    "source_branch_required": "Amal yuboruvchi filialdan bajariladi.",
+    "destination_branch_required": "Ko'chirishni faqat qabul qiluvchi filialda qabul qilish mumkin.",
+    "invalid_status_transition": "Ko'chirish holatini bunday o'zgartirib bo'lmaydi."
   }
 }

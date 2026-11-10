@@ -11,7 +11,7 @@ export type MovementType = (typeof MOVEMENT_TYPES)[number];
 export const MANUAL_MOVEMENT_TYPES = ['receipt', 'write_off', 'adjustment'] as const;
 export type ManualMovementType = (typeof MANUAL_MOVEMENT_TYPES)[number];
 
-export const MOVEMENT_SOURCE_TYPES = ['order', 'purchase', 'manual', 'inventory_count'] as const;
+export const MOVEMENT_SOURCE_TYPES = ['order', 'purchase', 'manual', 'inventory_count', 'transfer'] as const;
 export type MovementSourceType = (typeof MOVEMENT_SOURCE_TYPES)[number];
 
 export interface StockMovementDto {

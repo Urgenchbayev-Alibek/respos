@@ -1,0 +1,21 @@
+{
+  "title": "«{{name}}» filiallar bo'yicha",
+  "description": "Bo'sh maydon — umumiy menyudagi qiymat. Narx, stop-list va sex har bir filial uchun alohida belgilanadi.",
+  "openNamed": "Filiallar bo'yicha: {{name}}",
+  "overridden": "Sozlangan",
+  "inherited": "Menyudagidek",
+  "available": "Sotuvda",
+  "stopped": "Stop-list",
+  "inherit": "Menyudagidek",
+  "inheritStation": "Menyudagidek / standart sex",
+  "fields": {
+    "price": "Filialdagi narx",
+    "basePrice": "Menyuda: {{price}}",
+    "availability": "Mavjudlik",
+    "station": "Sex",
+    "variantPrice": "«{{name}}» narxi"
+  },
+  "reset": "Tiklash",
+  "saved": "«{{branch}}» filiali sozlamalari saqlandi",
+  "resetDone": "«{{branch}}» filiali umumiy menyudan foydalanadi"
+}

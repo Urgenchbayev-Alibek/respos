@@ -41,7 +41,9 @@ public sealed class IngredientReader(IApplicationDbContext db)
             r.Quantity,
             r.MinQuantity,
             r.Quantity <= r.MinQuantity,
-            r.Ingredient.IsArchived));
+            r.Ingredient.IsArchived,
+            r.Ingredient.DefaultSupplierId,
+            r.Ingredient.DefaultSupplier == null ? null : r.Ingredient.DefaultSupplier.Name));
 
     public async Task<IngredientDto?> GetAsync(Guid branchId, Guid ingredientId, CancellationToken cancellationToken) =>
         await Project(Rows(branchId).Where(r => r.Ingredient.Id == ingredientId)).FirstOrDefaultAsync(cancellationToken);

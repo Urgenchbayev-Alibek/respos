@@ -6,7 +6,8 @@
     "movements": "Movements",
     "counts": "Stock counts",
     "units": "Units",
-    "categories": "Categories"
+    "categories": "Categories",
+    "transfers": "Transfers"
   },
   "columns": {
     "ingredient": "Ingredient",
@@ -51,7 +52,9 @@
     "unitKind": "Kind",
     "fromUnit": "From unit (1 ×)",
     "toUnit": "To unit",
-    "factor": "Factor"
+    "factor": "Factor",
+    "defaultSupplier": "Default supplier",
+    "noSupplier": "Not selected"
   },
   "filters": {
     "allCategories": "All categories",
@@ -92,7 +95,8 @@
     "order": "Order",
     "purchase": "Purchase",
     "manual": "Manual",
-    "inventory_count": "Stock count"
+    "inventory_count": "Stock count",
+    "transfer": "Transfer"
   },
   "unitKind": {
     "mass": "Mass",

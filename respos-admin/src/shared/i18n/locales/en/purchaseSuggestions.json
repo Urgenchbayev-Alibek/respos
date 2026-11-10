@@ -1,0 +1,23 @@
+{
+  "title": "Purchase suggestions",
+  "description": "Ingredients below minimum and by projected usage (average daily usage over {{lookback}} days × coverage days). Open purchase orders are taken into account.",
+  "coverageDays": "Coverage days",
+  "coverageHint": "0 = only bring stock up to the minimum",
+  "noSupplier": "No default supplier",
+  "noSupplierHint": "Set a default supplier on the ingredient to order these items.",
+  "columns": {
+    "include": "Include",
+    "ingredient": "Ingredient",
+    "stock": "Stock / min",
+    "onOrder": "On order",
+    "avgDaily": "Daily usage",
+    "suggested": "Order",
+    "lastPrice": "Last price"
+  },
+  "apply": "Create drafts ({{count}})",
+  "applied": "Purchase drafts created: {{count}}",
+  "comment": "Created from purchase suggestions",
+  "empty": "All stock levels are fine, nothing to buy.",
+  "invalidQuantity": "Quantity must be greater than zero.",
+  "open": "Suggestions"
+}

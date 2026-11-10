@@ -1,7 +1,8 @@
-import { Archive, ImageOff, Pencil, Plus } from 'lucide-react';
+import { Archive, Building2, ImageOff, Pencil, Plus } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useKitchenStations } from '@/entities/kitchen-station/kitchen-station.queries';
+import { BranchOverridesModal } from '@/features/branch-menu/ui/BranchOverridesModal';
 import { useArchiveMenuItem, useMenuItems, useSetMenuItemAvailability } from '@/entities/menu/menu-item.queries';
 import { useMenuCategories } from '@/entities/menu/menu.queries';
 import type { MenuItemDto } from '@/entities/menu/menu.types';
@@ -39,6 +40,7 @@ export function MenuItemsPanel({ canManage }: { canManage: boolean }) {
   const [page, setPage] = useState(1);
   const [editing, setEditing] = useState<MenuItemDto | null | 'new'>(null);
   const [archiving, setArchiving] = useState<MenuItemDto | null>(null);
+  const [branchItem, setBranchItem] = useState<MenuItemDto | null>(null);
   const search = useDebouncedValue(searchText.trim());
   const categories = useMenuCategories();
   const stations = useKitchenStations();
@@ -141,10 +143,17 @@ export function MenuItemsPanel({ canManage }: { canManage: boolean }) {
       key: 'actions',
       header: <span className="visually-hidden">{t('columns.actions')}</span>,
       align: 'right',
-      width: '112px',
+      width: '156px',
       cell: (item) => (
         <>
           <IconButton label={t('actions.editNamed', { name: item.name })} icon={<Pencil />} onClick={() => setEditing(item)} />
+          {!item.isArchived && (
+            <IconButton
+              label={t('branchMenu:openNamed', { name: item.name })}
+              icon={<Building2 />}
+              onClick={() => setBranchItem(item)}
+            />
+          )}
           {!item.isArchived && (
             <IconButton
               label={t('actions.archiveNamed', { name: item.name })}
@@ -234,6 +243,7 @@ export function MenuItemsPanel({ canManage }: { canManage: boolean }) {
         onConfirm={() => void doArchive()}
         onCancel={() => setArchiving(null)}
       />
+      <BranchOverridesModal item={branchItem} onClose={() => setBranchItem(null)} />
     </>
   );
 }

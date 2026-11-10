@@ -49,11 +49,15 @@ public class Ingredient : AuditableEntity, ITenantScoped, IArchivable
     /// <summary>Last purchase price per base unit.</summary>
     public decimal CostPrice { get; set; }
 
+    /// <summary>Supplier used to group purchase suggestions.</summary>
+    public Guid? DefaultSupplierId { get; set; }
+
     public bool IsArchived { get; private set; }
     public DateTime? ArchivedAt { get; private set; }
 
     public IngredientCategory? Category { get; set; }
     public UnitOfMeasure? BaseUnit { get; set; }
+    public Procurement.Supplier? DefaultSupplier { get; set; }
 
     public void Archive(DateTime utcNow)
     {

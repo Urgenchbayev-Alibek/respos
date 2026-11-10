@@ -36,6 +36,7 @@ export const ingredientSchema = z.object({
   categoryId: z.string(),
   baseUnitId: z.string().min(1, V.required),
   costPrice: optionalMoneyTextSchema,
+  defaultSupplierId: z.string(),
 });
 
 export interface IngredientFormValues {
@@ -44,6 +45,7 @@ export interface IngredientFormValues {
   categoryId: string;
   baseUnitId: string;
   costPrice: string;
+  defaultSupplierId: string;
 }
 export type IngredientFormOutput = z.output<typeof ingredientSchema>;
 
