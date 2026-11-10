@@ -2,6 +2,7 @@ using Restaurant.Application.Abstractions.Integrations;
 using Restaurant.Application.Features.Integrations.Common;
 using Restaurant.Application.Features.Integrations.Outbound;
 using Restaurant.Application.Features.Integrations.Settings;
+using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Integrations;
 using Restaurant.Domain.Enums;
 
@@ -84,16 +85,6 @@ public sealed class IntegrationConfigTests
         EmailRouting.Choose(new SmtpConfig { Host = "" }, platform).Should().Be(EmailRoute.Platform);
         EmailRouting.Choose(null, null).Should().Be(EmailRoute.Log);
     }
-
-    [Theory]
-    [InlineData("90 123 45 67", "+998901234567")]
-    [InlineData("998901234567", "+998901234567")]
-    [InlineData("+998 (90) 123-45-67", "+998901234567")]
-    [InlineData("+7 916 123 45 67", "+79161234567")]
-    [InlineData("12345", null)]
-    [InlineData("call me", null)]
-    public void Phone_numbers_are_normalized_to_e164(string raw, string? expected) =>
-        PhoneNumbers.Normalize(raw).Should().Be(expected);
 
     [Fact]
     public void Recipient_masking_hides_the_middle()

@@ -45,7 +45,7 @@ public class Customer : AuditableEntity, ITenantScoped
 
     public void SetPhone(string phone)
     {
-        if (!CustomerPhone.TryNormalize(phone, out var normalized))
+        if (!PhoneNumbers.TryNormalizeUz(phone, out var normalized))
         {
             throw new DomainException(CustomerErrors.InvalidPhone);
         }

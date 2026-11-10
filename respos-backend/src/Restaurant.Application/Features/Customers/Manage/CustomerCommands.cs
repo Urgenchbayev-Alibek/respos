@@ -34,7 +34,7 @@ public sealed class SaveCustomerValidator : AbstractValidator<SaveCustomerComman
     public SaveCustomerValidator(IClock clock)
     {
         RuleFor(x => x.Phone).NotEmpty().MaximumLength(CommonRules.PhoneMaxLength)
-            .Must(p => CustomerPhone.TryNormalize(p, out _)).WithErrorCode("customer.invalid_phone")
+            .Must(p => PhoneNumbers.TryNormalizeUz(p, out _)).WithErrorCode("customer.invalid_phone")
             .WithMessage("Phone must be an Uzbekistan number (+998XXXXXXXXX).");
         RuleFor(x => x.Name).NotEmpty().MaximumLength(CommonRules.NameMaxLength);
         RuleFor(x => x.Birthday)
@@ -57,7 +57,7 @@ public sealed class SaveCustomerHandler(IApplicationDbContext db, ITenantContext
     public async Task<Result<CustomerDto>> HandleAsync(SaveCustomerCommand request, CancellationToken cancellationToken)
     {
         var orgId = tenant.RequireOrganizationId();
-        if (!CustomerPhone.TryNormalize(request.Phone, out var phone))
+        if (!PhoneNumbers.TryNormalizeUz(request.Phone, out var phone))
         {
             return CustomerErrors.InvalidPhone;
         }

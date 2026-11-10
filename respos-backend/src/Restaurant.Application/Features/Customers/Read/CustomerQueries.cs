@@ -50,7 +50,7 @@ public sealed class ListCustomersHandler(CustomerReadService reader) : IHandler<
         if (!string.IsNullOrWhiteSpace(request.Search))
         {
             var term = request.Search.Trim().ToLower();
-            var digits = CustomerPhone.SearchDigits(request.Search);
+            var digits = PhoneNumbers.SearchDigits(request.Search);
             rows = digits.Length >= 3
                 ? rows.Where(r => r.Customer.Phone.Contains(digits) || r.Customer.Name.ToLower().Contains(term))
                 : rows.Where(r => r.Customer.Name.ToLower().Contains(term));

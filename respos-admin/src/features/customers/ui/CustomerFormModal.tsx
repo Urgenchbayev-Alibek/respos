@@ -6,11 +6,12 @@ import { z } from 'zod';
 import { useSaveCustomer } from '@/entities/customer/customer.queries';
 import type { CustomerDto, CustomerGender } from '@/entities/customer/customer.types';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
+import { isUzPhone } from '@/shared/lib/phone';
 import { optionalString, requiredString, V } from '@/shared/lib/validation';
 import { Alert, Button, Checkbox, FormField, FormGrid, Input, Modal, Select, Textarea, useToast } from '@/shared/ui';
 
 const schema = z.object({
-  phone: z.string().trim().regex(/^\+?[\d\s\-()]{9,20}$/, V.phone),
+  phone: z.string().trim().refine(isUzPhone, V.phone),
   name: requiredString(200),
   birthday: z.string().optional(),
   gender: z.enum(['', 'male', 'female']),

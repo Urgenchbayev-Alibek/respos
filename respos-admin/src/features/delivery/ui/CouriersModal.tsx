@@ -7,9 +7,10 @@ import { z } from 'zod';
 import { useCouriers, useSaveCourier } from '@/entities/delivery/delivery.queries';
 import { telLink, type CourierDto } from '@/entities/delivery/delivery.types';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
+import { normalizePhone } from '@/shared/lib/phone';
 import { requiredString } from '@/shared/lib/validation';
 import { Alert, Button, EmptyState, ErrorState, FormField, IconButton, Input, Modal, Spinner, StatusBadge, Switch } from '@/shared/ui';
-import { deliveryPhoneSchema, normalizePhone } from '../model/delivery-form';
+import { deliveryPhoneSchema } from '../model/delivery-form';
 import styles from './Delivery.module.css';
 
 const courierSchema = z.object({ name: requiredString(200), phone: deliveryPhoneSchema, isActive: z.boolean() });

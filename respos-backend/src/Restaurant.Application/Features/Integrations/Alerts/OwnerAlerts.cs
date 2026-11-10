@@ -4,6 +4,7 @@ using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Common.Handlers;
 using Restaurant.Application.Features.Integrations.Common;
 using Restaurant.Application.Features.Integrations.Outbound;
+using Restaurant.Domain.Common;
 using Restaurant.Domain.Enums;
 
 namespace Restaurant.Application.Features.Integrations.Alerts;

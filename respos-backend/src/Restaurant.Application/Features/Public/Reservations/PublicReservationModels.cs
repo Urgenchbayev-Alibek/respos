@@ -2,7 +2,6 @@ using System.Globalization;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using Restaurant.Application.Common.Validation;
-using Restaurant.Application.Features.Integrations.Common;
 using Restaurant.Application.Features.Reservations.Common;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Enums;

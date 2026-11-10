@@ -1,4 +1,5 @@
 using FluentValidation;
+using Restaurant.Domain.Common;
 
 namespace Restaurant.Application.Common.Validation;
 
@@ -30,4 +31,8 @@ public static class CommonRules
     /// <summary>Optional phone: null/empty is valid (FluentValidation skips null for Matches).</summary>
     public static IRuleBuilderOptions<T, string?> ValidPhone<T>(this IRuleBuilder<T, string?> rule) =>
         rule.MaximumLength(PhoneMaxLength).Matches(@"^(\+?[0-9 ()\-]{5,32})?$");
+
+    /// <summary>Required phone that <see cref="PhoneNumbers.Normalize"/> accepts (E.164 after normalization).</summary>
+    public static IRuleBuilderOptions<T, string> NormalizablePhone<T>(this IRuleBuilder<T, string> rule) =>
+        rule.NotEmpty().MaximumLength(PhoneMaxLength).Must(p => PhoneNumbers.Normalize(p) is not null).WithMessage("Phone number is invalid.");
 }

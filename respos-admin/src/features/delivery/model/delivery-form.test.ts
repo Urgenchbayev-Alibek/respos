@@ -1,22 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { boardColumnOf, telLink } from '@/entities/delivery/delivery.types';
 import { tableMenuUrl } from '@/features/qr-menu/model/qr';
-import { minutesSince, normalizePhone } from './delivery-form';
+import { minutesSince } from './delivery-form';
 
 describe('delivery helpers', () => {
-  it.each([
-    ['90 123-45-67', '+998901234567'],
-    ['+998 (90) 123 45 67', '+998901234567'],
-    ['998901234567', '+998901234567'],
-    ['+7 701 123 45 67', '+77011234567'],
-    ['12345', null],
-    ['+99890123', null],
-    ['90abc', null],
-    ['', null],
-  ])('normalizes %s like the server', (input, expected) => {
-    expect(normalizePhone(input)).toBe(expected);
-  });
-
   it('groups closed statuses into the done column', () => {
     expect(boardColumnOf('delivered')).toBe('done');
     expect(boardColumnOf('cancelled')).toBe('done');

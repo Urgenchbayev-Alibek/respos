@@ -6,39 +6,8 @@ using Restaurant.UnitTests.Orders;
 
 namespace Restaurant.UnitTests.Customers;
 
-public sealed class CustomerPhoneTests
+public sealed class CustomerDomainTests
 {
-    [Theory]
-    [InlineData("+998 90 123 45 67", "+998901234567")]
-    [InlineData("998901234567", "+998901234567")]
-    [InlineData("90 123-45-67", "+998901234567")]
-    [InlineData("(93) 765 43 21", "+998937654321")]
-    [InlineData("  +998(71)2001020 ", "+998712001020")]
-    public void Valid_numbers_are_normalized(string input, string expected)
-    {
-        CustomerPhone.TryNormalize(input, out var normalized).Should().BeTrue();
-        normalized.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData("12345")]
-    [InlineData("+7 900 123 45 67")]
-    [InlineData("+901234567")]
-    [InlineData("90123456a7")]
-    [InlineData("99890123456789")]
-    [InlineData("90+1234567")]
-    public void Invalid_numbers_are_rejected(string? input) =>
-        CustomerPhone.TryNormalize(input, out _).Should().BeFalse();
-
-    [Theory]
-    [InlineData("+998 90 123", "99890123")]
-    [InlineData("998901234567", "901234567")]
-    [InlineData("90-12", "9012")]
-    public void Search_digits_drop_a_full_country_code_only(string term, string expected) =>
-        CustomerPhone.SearchDigits(term).Should().Be(expected);
-
     [Fact]
     public void Customer_tags_are_cleaned_and_birthday_key_is_set()
     {
@@ -180,5 +149,26 @@ public sealed class OrderLoyaltyTests
         order.LoyaltyDiscountAmount.Should().Be(8000m);
         order.DiscountAmount.Should().Be(8000m);
         order.Total.Should().Be(0m);
+    }
+
+    [Fact]
+    public void Points_cannot_be_redeemed_or_returned_while_the_order_is_split()
+    {
+        var order = OrderTestData.OrderWithItems(Pricing, (45000m, 2m));
+        order.AttachCustomer(Guid.NewGuid());
+        order.ApplyLoyaltyDiscount(4000m, Pricing);
+        order.SplitEqually(2);
+        var bills = order.Bills.Sum(b => b.Amount);
+
+        FluentActions.Invoking(() => order.ClearLoyaltyDiscount(Pricing)).Should().Throw<DomainException>()
+            .Which.Error.Should().Be(OrderBillErrors.SplitActive);
+        order.MergeBills();
+        order.ClearLoyaltyDiscount(Pricing);
+        order.SplitEqually(2);
+        FluentActions.Invoking(() => order.ApplyLoyaltyDiscount(1000m, Pricing)).Should().Throw<DomainException>()
+            .Which.Error.Should().Be(OrderBillErrors.SplitActive);
+
+        bills.Should().Be(86000m * 1.1m);
+        order.Bills.Sum(b => b.Amount).Should().Be(order.Total);
     }
 }

@@ -1,4 +1,4 @@
-using Restaurant.Application.Features.Delivery.Common;
+using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Delivery;
 using Restaurant.Domain.Entities.Identity;
 using Restaurant.Domain.Entities.Orders;
@@ -108,18 +108,6 @@ public sealed class DeliveryDomainTests
         dineIn.DeliveryFee.Should().Be(0m);
         dineIn.Total.Should().Be(totalBefore);
     }
-
-    [Theory]
-    [InlineData("90 123-45-67", "+998901234567")]
-    [InlineData("+998 (90) 123 45 67", "+998901234567")]
-    [InlineData("998901234567", "+998901234567")]
-    [InlineData("+7 701 123 45 67", "+77011234567")]
-    [InlineData("12345", null)]
-    [InlineData("+99890123", null)]
-    [InlineData("90abc", null)]
-    [InlineData("", null)]
-    public void Phones_are_normalized_to_e164(string input, string? expected) =>
-        PhoneNumbers.Normalize(input).Should().Be(expected);
 
     [Fact]
     public void Branch_slug_is_transliterated_and_valid()

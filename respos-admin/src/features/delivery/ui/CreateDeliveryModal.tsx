@@ -11,8 +11,9 @@ import { ItemOptionsSheet } from '@/features/waiter-order/ui/ItemOptionsSheet';
 import { PosMenu } from '@/features/waiter-order/ui/PosMenu';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
+import { normalizePhone } from '@/shared/lib/phone';
 import { Alert, Button, EmptyState, ErrorState, FormField, IconButton, Input, Modal, PageLoader, Select, Textarea, useToast } from '@/shared/ui';
-import { DELIVERY_DETAIL_FIELDS, deliveryDetailsSchema, normalizePhone, type DeliveryDetailsValues } from '../model/delivery-form';
+import { DELIVERY_DETAIL_FIELDS, deliveryDetailsSchema, type DeliveryDetailsValues } from '../model/delivery-form';
 import styles from './Delivery.module.css';
 
 export interface CreateDeliveryModalProps {
