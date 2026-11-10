@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// RestaurantOS end-to-end smoke scenario (spec §16) against a running API.
+// RestaurantOS end-to-end smoke scenario (spec §16 + v2 modules F1–F7) against a running API.
 // Usage: cd scripts/e2e && npm install && node e2e-smoke.mjs   (E2E_API_URL, default http://localhost:5080/api/v1)
 // Needs the Development demo seed (demo users / Demo123!). Prints ✔/✘ per step, exits 1 on failure.
 import { randomUUID } from 'node:crypto';
@@ -7,6 +7,9 @@ import { writeFile } from 'node:fs/promises';
 import { API, Listener, StepError, balances, check, eq, latencies, login, money, step, summary, todayIn } from './lib.mjs';
 import { paymentSteps } from './steps-payment.mjs';
 import { extraSteps } from './steps-extras.mjs';
+import { guestSteps } from './steps-v2-guests.mjs';
+import { branchSteps } from './steps-v2-branches.mjs';
+import { staffSteps } from './steps-v2-staff.mjs';
 import { perfReport } from './perf.mjs';
 
 const ctx = { run: Date.now().toString(36), metrics: {} };
@@ -16,7 +19,7 @@ const today = () => todayIn(ctx.timezone);
 async function connect(label, client, { kitchen = false } = {}) {
   const listener = new Listener(label, client.token).listen(
     'KitchenTicketCreated', 'KitchenTicketUpdated', 'OrderUpdated', 'OrderItemReady', 'TableUpdated',
-    'PaymentRegistered', 'NotificationCreated', 'StockLow');
+    'PaymentRegistered', 'NotificationCreated', 'StockLow', 'WaiterCalled', 'DeliveryUpdated');
   await listener.start();
   await listener.invoke('JoinBranch', client.branchId);
   if (kitchen) await listener.invoke('JoinKitchenStation', client.branchId, null);
@@ -199,6 +202,10 @@ async function scenario() {
 
   await paymentSteps(ctx);
   await extraSteps(ctx);
+  // v2 modules (F1–F7)
+  await guestSteps(ctx);
+  await branchSteps(ctx);
+  await staffSteps(ctx);
 }
 
 let exitCode = 0;
