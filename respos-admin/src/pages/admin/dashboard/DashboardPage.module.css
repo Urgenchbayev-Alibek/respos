@@ -5,12 +5,6 @@
   margin-bottom: var(--space-5);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  gap: var(--space-4);
-}
-
 .shift {
   display: flex;
   flex-direction: column;
@@ -77,8 +71,14 @@
   background: var(--color-primary);
 }
 
-@media (max-width: 1023px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.periodBar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-4);
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
 }

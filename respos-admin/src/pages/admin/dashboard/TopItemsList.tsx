@@ -4,7 +4,13 @@ import { useFormatters } from '@/shared/hooks/use-formatters';
 import { EmptyState, Skeleton } from '@/shared/ui';
 import styles from './DashboardPage.module.css';
 
-export function TopItemsList({ items, loading }: { items: DashboardDto['topItems'] | undefined; loading: boolean }) {
+export interface TopItemsListProps {
+  items: DashboardDto['topItems'] | undefined;
+  loading: boolean;
+  emptyTitle?: string;
+}
+
+export function TopItemsList({ items, loading, emptyTitle }: TopItemsListProps) {
   const { t } = useTranslation('dashboard');
   const format = useFormatters();
 
@@ -17,7 +23,7 @@ export function TopItemsList({ items, loading }: { items: DashboardDto['topItems
       </div>
     );
   }
-  if (!items || items.length === 0) return <EmptyState compact title={t('noTopItems')} />;
+  if (!items || items.length === 0) return <EmptyState compact title={emptyTitle ?? t('noTopItems')} />;
 
   const max = Math.max(...items.map((item) => item.revenue), 1);
   return (

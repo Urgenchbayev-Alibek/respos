@@ -1,0 +1,117 @@
+{
+  "empty": "Ma’lumot yoʻq",
+  "emptyPeriod": "Davr uchun ma’lumot yoʻq",
+  "tabs": {
+    "abc": "ABC tahlil",
+    "foodCost": "Food cost",
+    "waiters": "Ofitsiantlar",
+    "heatmap": "Issiqlik xaritasi",
+    "discounts": "Chegirmalar va bekor qilishlar"
+  },
+  "export": {
+    "menu": "Eksport",
+    "csv": "CSV",
+    "xlsx": "Excel (XLSX)",
+    "pdf": "PDF / chop etish",
+    "failed": "Hisobotni yuklab boʻlmadi"
+  },
+  "delta": {
+    "noBase": "taqqoslash yoʻq",
+    "hint": "oldingi davrga nisbatan",
+    "previousPeriod": "{{from}} – {{to}} davri bilan taqqoslash"
+  },
+  "kpi": {
+    "revenue": "Tushum",
+    "orders": "Buyurtmalar",
+    "averageCheck": "Oʻrtacha chek",
+    "itemsSold": "Sotilgan pozitsiyalar",
+    "discounts": "Chegirmalar"
+  },
+  "abc": {
+    "class": "Sinf",
+    "share": "Ulush",
+    "cumulative": "Jamlangan ulush",
+    "metric": "ABC koʻrsatkichi",
+    "metrics": {
+      "revenue": "Tushum boʻyicha",
+      "quantity": "Miqdor boʻyicha",
+      "margin": "Marja boʻyicha"
+    },
+    "legend": "A — birinchi 80 %, B — keyingi 15 %, C — oxirgi 5 %",
+    "chartTitle": "Taomlar ulushi (top-15)",
+    "chartLabel": "Taomlarning ABC sinflari boʻyicha ulushi diagrammasi"
+  },
+  "columns": {
+    "item": "Taom",
+    "quantity": "Miqdor",
+    "revenue": "Tushum",
+    "margin": "Marja",
+    "category": "Toifa",
+    "price": "Narx",
+    "waiter": "Ofitsiant",
+    "orders": "Buyurtmalar",
+    "averageCheck": "Oʻrtacha chek",
+    "itemsSold": "Pozitsiyalar",
+    "cancellations": "Bekor qilishlar",
+    "discounts": "Chegirmalar",
+    "tips": "Choychaqa",
+    "reason": "Sabab",
+    "items": "Pozitsiyalar",
+    "amount": "Summa"
+  },
+  "foodCost": {
+    "recipeCost": "Tannarx",
+    "percent": "Food cost",
+    "noRecipe": "Texkarta yoʻq",
+    "notes": "Izoh",
+    "missingConversion": "Birlik konvertatsiyasi yoʻq",
+    "threshold": "Food cost chegarasi, %",
+    "alert": "Food cost {{threshold}} % dan yuqori taomlar: {{count}}"
+  },
+  "heatmap": {
+    "metric": "Koʻrsatkich",
+    "orders": "Buyurtmalar",
+    "revenue": "Tushum",
+    "caption": "Hafta kunlari va soatlar boʻyicha savdo (filial vaqt mintaqasi)",
+    "weekday": "Kun"
+  },
+  "weekdays": {
+    "1": "Du",
+    "2": "Se",
+    "3": "Ch",
+    "4": "Pa",
+    "5": "Ju",
+    "6": "Sh",
+    "7": "Ya"
+  },
+  "discounts": {
+    "noReason": "Sababsiz",
+    "discountedOrders": "Chegirmali buyurtmalar",
+    "discountsAmount": "Chegirmalar summasi",
+    "cancelledOrders": "Bekor qilingan buyurtmalar",
+    "cancelledItems": "Bekor qilingan pozitsiyalar",
+    "byReason": "Bekor qilish sabablari",
+    "discountsByWaiter": "Ofitsiantlar boʻyicha chegirmalar",
+    "cancellationsByWaiter": "Ofitsiantlar boʻyicha bekor qilishlar"
+  },
+  "zReport": {
+    "column": "Z-hisobot",
+    "action": "Z-hisobot"
+  },
+  "dashboard": {
+    "period": "Dashboard davri",
+    "periods": {
+      "today": "Bugun",
+      "7d": "7 kun",
+      "30d": "30 kun"
+    },
+    "topItems": "Top-5 taom",
+    "bottomItems": "Eng kam sotilgan 5 taom",
+    "noSales": "Davr davomida savdo boʻlmadi",
+    "noBottomItems": "Taqqoslash uchun taomlar yetarli emas",
+    "foodCostTitle": "Food cost",
+    "foodCostOk": "Barcha taomlar {{threshold}} % doirasida",
+    "foodCostHint": "Tannarx narxning {{threshold}} % idan yuqori:",
+    "openReports": "Hisobotlarni ochish"
+  }
+}

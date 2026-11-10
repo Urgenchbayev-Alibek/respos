@@ -81,8 +81,10 @@ export interface CashShiftReportRowDto {
   difference: number | null;
 }
 
-/** Names accepted by `GET /reports/{name}/export?format=csv`. */
+/** Names accepted by `GET /reports/{name}/export?format=csv|xlsx|pdf` (pdf: print layout, see PRINTABLE_REPORTS). */
 export const REPORT_EXPORT_NAMES = [
   'sales', 'top-items', 'sales-by-category', 'payment-methods', 'stock', 'low-stock', 'stock-movements', 'cash-shifts',
+  'sales-summary', 'abc', 'food-cost', 'waiters', 'heatmap', 'discounts-cancellations', 'z-report',
 ] as const;
+export const PRINTABLE_REPORTS: readonly ReportExportName[] = ['sales-summary', 'z-report'];
 export type ReportExportName = (typeof REPORT_EXPORT_NAMES)[number];

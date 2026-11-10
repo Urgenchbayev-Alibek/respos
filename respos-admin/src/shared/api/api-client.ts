@@ -18,6 +18,8 @@ export interface RequestOptions {
   /** Override X-Branch-Id (null = do not send). Defaults to the current branch. */
   branchId?: string | null;
   headers?: Record<string, string>;
+  /** `blob` returns the raw body as a Blob (file downloads); errors are still parsed as ProblemDetails. */
+  responseType?: 'json' | 'blob';
 }
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -145,6 +147,7 @@ export async function request<T>(method: Method, path: string, options: RequestO
     response = await send(method, path, options);
   }
 
+  if (response.ok && options.responseType === 'blob') return (await response.blob()) as T;
   const data = await parseBody(response);
   if (!response.ok) throw apiErrorFromProblem(response.status, data, response.headers.get('X-Correlation-Id'));
   return data as T;

@@ -18,3 +18,4 @@
 | [0011](0011-no-mediatr-plain-handlers.md) | Без MediatR: `IHandler<TRequest,TResponse>` через DI scanning | Accepted |
 | [0012](0012-platform-break-glass-access.md) | Платформенный break-glass доступ (30 мин, read-only, аудит) | Accepted |
 | [0013](0013-idempotency-replay-store-and-db-keys.md) | Idempotency: HTTP replay store + DB unique keys | Accepted |
+| [0015](0015-report-exports-xlsx-closedxml-pdf-browser-print.md) | Экспорт отчётов: XLSX (ClosedXML, MIT), PDF через печать браузера (не QuestPDF) | Accepted |

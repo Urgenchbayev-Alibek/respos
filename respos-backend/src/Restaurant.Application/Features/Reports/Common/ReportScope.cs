@@ -71,5 +71,5 @@ public static class ReportErrors
     public static readonly Error NotFound = Error.NotFound("report.not_found", "Report not found.");
 
     public static readonly Error UnsupportedFormat =
-        Error.Validation("report.unsupported_format", "Only format=csv is supported.");
+        Error.Validation("report.unsupported_format", "Supported formats: csv, xlsx; pdf (print layout) only for sales-summary and z-report.");
 }

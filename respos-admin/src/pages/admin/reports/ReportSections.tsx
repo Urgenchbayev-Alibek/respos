@@ -20,6 +20,7 @@ import type {
 import styles from '@/features/reports/ui/reports.module.css';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { StatusBadge, type DataTableColumn } from '@/shared/ui';
+import { ExportMenu } from '@/features/reports/ui/ExportMenu';
 import { TableReport } from './TableReport';
 import { formatUnit } from '@/shared/lib/format-unit';
 
@@ -145,6 +146,7 @@ export function CashShiftsReport({ period }: Props) {
       cell: (row) =>
         row.difference ? <StatusBadge tone={row.difference < 0 ? 'danger' : 'warning'}>{format.money(row.difference)}</StatusBadge> : num(format.money(row.difference)),
     },
+    { key: 'z', header: t('analytics:zReport.column'), cell: (row) => <ExportMenu name="z-report" params={{ shiftId: row.id }} label={t('analytics:zReport.action')} /> },
   ];
   return <TableReport title={t('tabs.shifts')} exportName="cash-shifts" period={period} query={query} columns={columns} getRowId={(row) => row.id} />;
 }

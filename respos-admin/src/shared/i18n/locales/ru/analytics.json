@@ -1,0 +1,117 @@
+{
+  "empty": "Нет данных",
+  "emptyPeriod": "Нет данных за период",
+  "tabs": {
+    "abc": "ABC-анализ",
+    "foodCost": "Фудкост",
+    "waiters": "Официанты",
+    "heatmap": "Тепловая карта",
+    "discounts": "Скидки и отмены"
+  },
+  "export": {
+    "menu": "Экспорт",
+    "csv": "CSV",
+    "xlsx": "Excel (XLSX)",
+    "pdf": "PDF / печать",
+    "failed": "Не удалось выгрузить отчёт"
+  },
+  "delta": {
+    "noBase": "нет базы",
+    "hint": "к предыдущему периоду",
+    "previousPeriod": "Сравнение с периодом {{from}} – {{to}}"
+  },
+  "kpi": {
+    "revenue": "Выручка",
+    "orders": "Заказов",
+    "averageCheck": "Средний чек",
+    "itemsSold": "Продано позиций",
+    "discounts": "Скидки"
+  },
+  "abc": {
+    "class": "Класс",
+    "share": "Доля",
+    "cumulative": "Накопл. доля",
+    "metric": "Показатель ABC",
+    "metrics": {
+      "revenue": "По выручке",
+      "quantity": "По количеству",
+      "margin": "По марже"
+    },
+    "legend": "A — первые 80 %, B — следующие 15 %, C — последние 5 %",
+    "chartTitle": "Вклад блюд (топ-15)",
+    "chartLabel": "Диаграмма вклада блюд по классам ABC"
+  },
+  "columns": {
+    "item": "Блюдо",
+    "quantity": "Кол-во",
+    "revenue": "Выручка",
+    "margin": "Маржа",
+    "category": "Категория",
+    "price": "Цена",
+    "waiter": "Официант",
+    "orders": "Заказов",
+    "averageCheck": "Средний чек",
+    "itemsSold": "Позиций",
+    "cancellations": "Отмены",
+    "discounts": "Скидки",
+    "tips": "Чаевые",
+    "reason": "Причина",
+    "items": "Позиций",
+    "amount": "Сумма"
+  },
+  "foodCost": {
+    "recipeCost": "Себестоимость",
+    "percent": "Фудкост",
+    "noRecipe": "Нет техкарты",
+    "notes": "Примечание",
+    "missingConversion": "Нет пересчёта единиц",
+    "threshold": "Порог фудкоста, %",
+    "alert": "Блюд с фудкостом выше {{threshold}} %: {{count}}"
+  },
+  "heatmap": {
+    "metric": "Показатель",
+    "orders": "Заказы",
+    "revenue": "Выручка",
+    "caption": "Продажи по дням недели и часам (часовой пояс филиала)",
+    "weekday": "День"
+  },
+  "weekdays": {
+    "1": "Пн",
+    "2": "Вт",
+    "3": "Ср",
+    "4": "Чт",
+    "5": "Пт",
+    "6": "Сб",
+    "7": "Вс"
+  },
+  "discounts": {
+    "noReason": "Без причины",
+    "discountedOrders": "Заказов со скидкой",
+    "discountsAmount": "Сумма скидок",
+    "cancelledOrders": "Отменённых заказов",
+    "cancelledItems": "Отменённых позиций",
+    "byReason": "Причины отмен",
+    "discountsByWaiter": "Скидки по официантам",
+    "cancellationsByWaiter": "Отмены по официантам"
+  },
+  "zReport": {
+    "column": "Z-отчёт",
+    "action": "Z-отчёт"
+  },
+  "dashboard": {
+    "period": "Период дашборда",
+    "periods": {
+      "today": "Сегодня",
+      "7d": "7 дней",
+      "30d": "30 дней"
+    },
+    "topItems": "Топ-5 блюд",
+    "bottomItems": "Аутсайдеры (5 блюд)",
+    "noSales": "За период продаж не было",
+    "noBottomItems": "Недостаточно блюд для сравнения",
+    "foodCostTitle": "Фудкост",
+    "foodCostOk": "Все блюда в пределах {{threshold}} %",
+    "foodCostHint": "Себестоимость выше {{threshold}} % от цены:",
+    "openReports": "Открыть отчёты"
+  }
+}

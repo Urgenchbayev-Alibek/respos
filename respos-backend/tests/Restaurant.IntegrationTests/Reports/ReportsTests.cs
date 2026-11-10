@@ -66,7 +66,8 @@ public sealed class ReportsTests(ApiFactory factory) : ApiTestBase(factory)
         var owner = ClientWithBranch(await LoginAsAsync(org.User), org.BranchId);
         (await owner.GetAsync("/api/v1/reports/sales?from=2026-10-11&to=2026-10-10")).StatusCode.Should().Be(HttpStatusCode.BadRequest);
         (await owner.GetAsync("/api/v1/reports/nope/export?format=csv")).StatusCode.Should().Be(HttpStatusCode.NotFound);
-        (await owner.GetAsync("/api/v1/reports/sales/export?format=xlsx")).StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        (await owner.GetAsync("/api/v1/reports/sales/export?format=docx")).StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        (await owner.GetAsync("/api/v1/reports/sales/export?format=pdf")).StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
         var waiter = ClientWithBranch(await LoginAsAsync(await AddUserAsync(org, SystemRoles.Waiter)), org.BranchId);
         (await waiter.GetAsync("/api/v1/reports/sales")).StatusCode.Should().Be(HttpStatusCode.Forbidden);

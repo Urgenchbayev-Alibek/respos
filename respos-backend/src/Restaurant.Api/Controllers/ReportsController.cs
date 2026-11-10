@@ -11,7 +11,7 @@ using Restaurant.Domain.Constants;
 
 namespace Restaurant.Api.Controllers;
 
-/// <summary>Dashboard + reports (branch-scoped, branch timezone, server-calculated). All require <c>reports.read</c>.</summary>
+/// <summary>Dashboard + reports (branch-scoped, branch timezone, server-calculated). All require <c>reports.read</c>; export also <c>reports.export</c>.</summary>
 [RequireBranch]
 [HasPermission(Permissions.Reports.Read)]
 public sealed class ReportsController : ApiControllerBase
@@ -65,15 +65,27 @@ public sealed class ReportsController : ApiControllerBase
         [FromQuery] ReportPeriodQuery query, [FromServices] CashShiftsReportHandler handler, CancellationToken ct) =>
         OkOrProblem(await handler.HandleAsync(query, ct));
 
-    /// <summary><c>text/csv</c> (UTF-8 with BOM). Names: sales, top-items, sales-by-category, payment-methods, stock, low-stock, stock-movements, cash-shifts.</summary>
+    /// <summary>
+    /// Requires <c>reports.export</c> (+ <c>reports.read</c>). <c>format=csv</c> → <c>text/csv</c> (UTF-8 BOM), <c>xlsx</c> → OOXML workbook,
+    /// <c>pdf</c> → print-ready HTML (sales-summary, z-report; browser prints to PDF, ADR-0015). Names: see ExportReportHandler.Names.
+    /// </summary>
     [HttpGet(RoutePrefix + "reports/{name}/export")]
-    [Produces("text/csv", "application/json")]
+    [HasPermission(Permissions.Reports.Export)]
+    [Produces("text/csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "text/html", "application/json")]
     public async Task<IActionResult> Export(
         string name, [FromQuery] ExportReportQuery query, [FromServices] ExportReportHandler handler, CancellationToken ct)
     {
         var result = await handler.HandleAsync(query with { Name = name }, ct);
-        return result.IsSuccess
-            ? File(result.Value.Content, result.Value.ContentType, result.Value.FileName)
-            : Problem(result.Error);
+        if (result.IsFailure)
+        {
+            return Problem(result.Error);
+        }
+
+        if (result.Value.ContentType.StartsWith("text/html", StringComparison.Ordinal))
+        {
+            Response.Headers.ContentSecurityPolicy = "default-src 'none'; style-src 'unsafe-inline'; img-src data:";
+        }
+
+        return File(result.Value.Content, result.Value.ContentType, result.Value.FileName);
     }
 }
