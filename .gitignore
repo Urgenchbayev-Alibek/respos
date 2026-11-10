@@ -24,3 +24,5 @@ Thumbs.db
 .claude/settings.local.json
 .claude/worktrees/
 .vercel/
+# design capture harness: saved browser sessions
+scripts/design-shots/.auth/
