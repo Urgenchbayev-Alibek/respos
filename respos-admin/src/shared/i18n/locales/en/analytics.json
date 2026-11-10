@@ -1,0 +1,117 @@
+{
+  "empty": "No data",
+  "emptyPeriod": "No data for the period",
+  "tabs": {
+    "abc": "ABC analysis",
+    "foodCost": "Food cost",
+    "waiters": "Waiters",
+    "heatmap": "Heatmap",
+    "discounts": "Discounts & cancellations"
+  },
+  "export": {
+    "menu": "Export",
+    "csv": "CSV",
+    "xlsx": "Excel (XLSX)",
+    "pdf": "PDF / print",
+    "failed": "Could not export the report"
+  },
+  "delta": {
+    "noBase": "no base",
+    "hint": "vs previous period",
+    "previousPeriod": "Compared with {{from}} – {{to}}"
+  },
+  "kpi": {
+    "revenue": "Revenue",
+    "orders": "Orders",
+    "averageCheck": "Average check",
+    "itemsSold": "Items sold",
+    "discounts": "Discounts"
+  },
+  "abc": {
+    "class": "Class",
+    "share": "Share",
+    "cumulative": "Cumulative",
+    "metric": "ABC metric",
+    "metrics": {
+      "revenue": "By revenue",
+      "quantity": "By quantity",
+      "margin": "By margin"
+    },
+    "legend": "A — first 80 %, B — next 15 %, C — last 5 %",
+    "chartTitle": "Contribution by item (top 15)",
+    "chartLabel": "Bar chart of item contribution coloured by ABC class"
+  },
+  "columns": {
+    "item": "Item",
+    "quantity": "Qty",
+    "revenue": "Revenue",
+    "margin": "Margin",
+    "category": "Category",
+    "price": "Price",
+    "waiter": "Waiter",
+    "orders": "Orders",
+    "averageCheck": "Average check",
+    "itemsSold": "Items",
+    "cancellations": "Cancellations",
+    "discounts": "Discounts",
+    "tips": "Tips",
+    "reason": "Reason",
+    "items": "Items",
+    "amount": "Amount"
+  },
+  "foodCost": {
+    "recipeCost": "Portion cost",
+    "percent": "Food cost",
+    "noRecipe": "No recipe",
+    "notes": "Notes",
+    "missingConversion": "Missing unit conversion",
+    "threshold": "Food cost threshold, %",
+    "alert": "Dishes with food cost above {{threshold}} %: {{count}}"
+  },
+  "heatmap": {
+    "metric": "Metric",
+    "orders": "Orders",
+    "revenue": "Revenue",
+    "caption": "Sales by weekday and hour (branch timezone)",
+    "weekday": "Day"
+  },
+  "weekdays": {
+    "1": "Mon",
+    "2": "Tue",
+    "3": "Wed",
+    "4": "Thu",
+    "5": "Fri",
+    "6": "Sat",
+    "7": "Sun"
+  },
+  "discounts": {
+    "noReason": "No reason",
+    "discountedOrders": "Discounted orders",
+    "discountsAmount": "Discounts total",
+    "cancelledOrders": "Cancelled orders",
+    "cancelledItems": "Cancelled items",
+    "byReason": "Cancellation reasons",
+    "discountsByWaiter": "Discounts by waiter",
+    "cancellationsByWaiter": "Cancellations by waiter"
+  },
+  "zReport": {
+    "column": "Z-report",
+    "action": "Z-report"
+  },
+  "dashboard": {
+    "period": "Dashboard period",
+    "periods": {
+      "today": "Today",
+      "7d": "7 days",
+      "30d": "30 days"
+    },
+    "topItems": "Top 5 dishes",
+    "bottomItems": "Bottom 5 dishes",
+    "noSales": "No sales in the period",
+    "noBottomItems": "Not enough dishes to compare",
+    "foodCostTitle": "Food cost",
+    "foodCostOk": "All dishes are within {{threshold}} %",
+    "foodCostHint": "Cost above {{threshold}} % of the price:",
+    "openReports": "Open reports"
+  }
+}

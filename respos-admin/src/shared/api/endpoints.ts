@@ -109,6 +109,7 @@ export const ENDPOINTS = {
     action: (purchaseId: string, action: 'submit' | 'cancel' | 'receive') => `/purchases/${id(purchaseId)}/${action}`,
   },
   dashboard: '/dashboard',
+  dashboardOverview: '/dashboard/overview',
   reports: {
     sales: '/reports/sales',
     topItems: '/reports/top-items',
@@ -118,6 +119,13 @@ export const ENDPOINTS = {
     lowStock: '/reports/low-stock',
     stockMovements: '/reports/stock-movements',
     cashShifts: '/reports/cash-shifts',
+    salesSummary: '/reports/sales-summary',
+    abc: '/reports/abc',
+    foodCost: '/reports/food-cost',
+    waiters: '/reports/waiters',
+    heatmap: '/reports/heatmap',
+    discountsCancellations: '/reports/discounts-cancellations',
+    zReport: '/reports/z-report',
     export: (name: string) => `/reports/${id(name)}/export`,
   },
   notifications: {

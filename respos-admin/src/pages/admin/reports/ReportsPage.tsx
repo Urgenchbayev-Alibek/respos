@@ -13,14 +13,21 @@ import {
   StockReports,
   TopItemsReport,
 } from './ReportSections';
+import { AbcReport, FoodCostReport } from './AbcFoodCostReports';
 import { SalesReport } from './SalesReport';
+import { DiscountsCancellationsReport, HeatmapReport, WaitersReport } from './StaffHeatmapReports';
 
 const TABS = ['sales', 'items', 'categories', 'payments', 'stock', 'movements', 'shifts'] as const;
-type ReportTab = (typeof TABS)[number];
+/** F5 analytics tabs (labels in the `analytics` namespace). */
+const ANALYTICS_TABS = ['abc', 'foodCost', 'waiters', 'heatmap', 'discounts'] as const;
+type ReportTab = (typeof TABS)[number] | (typeof ANALYTICS_TABS)[number];
+const isAnalyticsTab = (tab: ReportTab) => (ANALYTICS_TABS as readonly string[]).includes(tab);
+const PERIODLESS: readonly ReportTab[] = ['stock', 'foodCost'];
 
 /** Server-calculated reports for the current branch, period in branch timezone. */
 export function ReportsPage() {
   const { t } = useTranslation('reports');
+  const { t: ta } = useTranslation('analytics');
   const { timeZone } = useFormatters();
   const [tab, setTab] = useState<ReportTab>('sales');
   const [preset, setPreset] = useState<PeriodPreset>('7d');
@@ -31,18 +38,19 @@ export function ReportsPage() {
     if (next !== 'custom') setPeriod(presetPeriod(next, timeZone));
   };
   const valid = isValidPeriod(period);
-  const usesPeriod = tab !== 'stock';
+  const usesPeriod = !PERIODLESS.includes(tab);
+  const tabLabel = (id: ReportTab) => (isAnalyticsTab(id) ? ta(`tabs.${id}`) : t(`tabs.${id}`));
 
   return (
     <>
       <PageHeader title={t('title')} description={t('subtitle')} />
-      <Tabs ariaLabel={t('title')} items={TABS.map((id) => ({ id, label: t(`tabs.${id}`) }))} value={tab} onChange={(id) => setTab(id as ReportTab)} />
+      <Tabs ariaLabel={t('title')} items={[...TABS, ...ANALYTICS_TABS].map((id) => ({ id, label: tabLabel(id) }))} value={tab} onChange={(id) => setTab(id as ReportTab)} />
       {usesPeriod && (
         <Toolbar>
           <PeriodPicker preset={preset} period={period} onPresetChange={changePreset} onCustomChange={setPeriod} />
         </Toolbar>
       )}
-      <div role="tabpanel" aria-label={t(`tabs.${tab}`)}>
+      <div role="tabpanel" aria-label={tabLabel(tab)}>
         {usesPeriod && !valid ? (
           <Alert>{t('period.invalid')}</Alert>
         ) : (
@@ -54,6 +62,11 @@ export function ReportsPage() {
             {tab === 'stock' && <StockReports />}
             {tab === 'movements' && <MovementTotalsReport period={period} />}
             {tab === 'shifts' && <CashShiftsReport period={period} />}
+            {tab === 'abc' && <AbcReport period={period} />}
+            {tab === 'foodCost' && <FoodCostReport />}
+            {tab === 'waiters' && <WaitersReport period={period} />}
+            {tab === 'heatmap' && <HeatmapReport period={period} />}
+            {tab === 'discounts' && <DiscountsCancellationsReport period={period} />}
           </>
         )}
       </div>

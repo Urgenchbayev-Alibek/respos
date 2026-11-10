@@ -10,6 +10,7 @@ using Restaurant.Application.Abstractions.Files;
 using Restaurant.Application.Abstractions.Idempotency;
 using Restaurant.Application.Abstractions.Payments;
 using Restaurant.Application.Abstractions.Persistence;
+using Restaurant.Application.Abstractions.Reports;
 using Restaurant.Application.Abstractions.Security;
 using Restaurant.Application.Common.Options;
 using Restaurant.Application.Features.Auth.Common;
@@ -23,6 +24,7 @@ using Restaurant.Infrastructure.Persistence.Context;
 using Restaurant.Infrastructure.Persistence.DomainEvents;
 using Restaurant.Infrastructure.Persistence.Interceptors;
 using Restaurant.Infrastructure.Persistence.Seed;
+using Restaurant.Infrastructure.Reports;
 using Restaurant.Infrastructure.Services;
 using IAppPasswordHasher = Restaurant.Application.Abstractions.Security.IPasswordHasher;
 
@@ -65,6 +67,7 @@ public static class DependencyInjection
         services.AddSingleton<IPaymentProvider, ManualPaymentProvider>();
         services.AddSingleton<IFileStorage, LocalFileStorage>();
         services.AddSingleton<IEmailSender, LogEmailSender>();
+        services.AddSingleton<ISpreadsheetWriter, ClosedXmlSpreadsheetWriter>();
         services.AddScoped<IAuditLogger, AuditLogger>();
         services.AddScoped<IIdempotencyService, IdempotencyService>();
 

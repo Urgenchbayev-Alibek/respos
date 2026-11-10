@@ -141,6 +141,13 @@ Every `code` the API can return (collected from all modules' `*Errors.cs`, valid
 - **Reports, notifications, platform**: `demo_request.not_found`, `notification.not_found`, `report.invalid_period`, `report.not_found`, `report.unsupported_format`
 - **SignalR hub errors** (`HubException` message): `tenant.branch_forbidden`, `auth.forbidden`, `kitchen_station.not_found`.
 
+## Report exports & licensing (F5)
+
+`GET /reports/{name}/export?format=csv|xlsx|pdf` (`reports.export`). XLSX uses **ClosedXML** (MIT) behind
+`ISpreadsheetWriter`; "pdf" is print-ready HTML printed by the browser (ADR-0015). **QuestPDF is deliberately not used**:
+its Community license is free only for companies with < 1 M USD annual revenue — adopting it later requires a paid license
+review. Contract: `respos-contracts/v2/F5-analytics.md`.
+
 ## Known limitations
 
 - `User.Status` is global: blocking a user in one org also blocks them in their other orgs (MVP: one org per user).

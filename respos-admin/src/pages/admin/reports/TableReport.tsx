@@ -1,7 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import type { ReportExportName, ReportPeriod } from '@/entities/report/report.types';
-import { ExportButton } from '@/features/reports/ui/ExportButton';
+import { ExportMenu } from '@/features/reports/ui/ExportMenu';
 import { Card, DataTable, type DataTableColumn } from '@/shared/ui';
 
 export interface TableReportProps<T> {
@@ -19,7 +19,7 @@ export function TableReport<T>({ title, exportName, period, query, columns, getR
   const rows = query.data;
   const ids = new Map<T, string>((rows ?? []).map((row, index) => [row, getRowId(row, index)]));
   return (
-    <Card title={title} flush actions={<ExportButton name={exportName} period={period} />}>
+    <Card title={title} flush actions={<ExportMenu name={exportName} period={period} />}>
       <DataTable
         caption={title}
         columns={columns}

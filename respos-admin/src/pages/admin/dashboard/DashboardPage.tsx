@@ -1,24 +1,39 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { Armchair, Banknote, ClipboardList, Receipt, TriangleAlert, Wallet } from 'lucide-react';
+import clsx from 'clsx';
+import { Armchair, ClipboardList, TriangleAlert } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { dashboardKeys, useDashboard } from '@/entities/dashboard/dashboard.queries';
+import { dashboardOverviewKeys, useDashboardOverview } from '@/entities/report/analytics.queries';
+import type { DashboardPeriod } from '@/entities/report/analytics.types';
+import reportStyles from '@/features/reports/ui/reports.module.css';
 import { ROUTES } from '@/shared/constants/routes';
 import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { useRealtimeEvent } from '@/shared/realtime';
 import { Card, DemoBadge, EmptyState, ErrorState, PageHeader, StatCard, StatusBadge } from '@/shared/ui';
-import { TopItemsList } from './TopItemsList';
+import { DishesCards, FoodCostAlertCard, OverviewKpis } from './DashboardOverviewCards';
 import styles from './DashboardPage.module.css';
 
+const PERIODS: DashboardPeriod[] = ['today', '7d', '30d'];
+
+/** Owner dashboard v2: period KPIs (Δ %, sparklines), live operations, top/bottom dishes, food-cost alerts. */
 export function DashboardPage() {
   const { t } = useTranslation('dashboard');
+  const { t: ta } = useTranslation('analytics');
   const format = useFormatters();
   const { branch } = useCurrentBranch();
   const queryClient = useQueryClient();
-  const { data, isLoading, error, refetch } = useDashboard();
+  const [period, setPeriod] = useState<DashboardPeriod>('today');
+  const live = useDashboard();
+  const overview = useDashboardOverview(period);
+  const data = live.data;
 
-  const invalidate = () => void queryClient.invalidateQueries({ queryKey: dashboardKeys.all });
+  const invalidate = () => {
+    void queryClient.invalidateQueries({ queryKey: dashboardKeys.all });
+    void queryClient.invalidateQueries({ queryKey: dashboardOverviewKeys.all });
+  };
   useRealtimeEvent('OrderUpdated', invalidate);
   useRealtimeEvent('PaymentRegistered', invalidate);
   useRealtimeEvent('StockLow', invalidate);
@@ -27,7 +42,7 @@ export function DashboardPage() {
     <PageHeader
       title={t('title')}
       description={branch ? t('subtitle', { branch: branch.name }) : undefined}
-      meta={data?.isDemoData ? <DemoBadge title={t('demoHint')} /> : undefined}
+      meta={data?.isDemoData || overview.data?.isDemoData ? <DemoBadge title={t('demoHint')} /> : undefined}
     />
   );
 
@@ -40,23 +55,41 @@ export function DashboardPage() {
     );
   }
 
-  if (error && !data) {
+  if (live.error && !data) {
     return (
       <>
         {header}
-        <ErrorState error={error} title={t('loadError')} onRetry={() => void refetch()} />
+        <ErrorState error={live.error} title={t('loadError')} onRetry={() => void live.refetch()} />
       </>
     );
   }
 
-  const loading = isLoading || !data;
+  const loading = live.isLoading || !data;
+  const overviewLoading = !overview.data;
   return (
     <>
       {header}
+      <div className={styles.periodBar}>
+        <div role="group" aria-label={ta('dashboard.period')} className={reportStyles.segmented}>
+          {PERIODS.map((value) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={period === value}
+              className={clsx(reportStyles.segment, period === value && reportStyles.segmentActive)}
+              onClick={() => setPeriod(value)}
+            >
+              {ta(`dashboard.periods.${value}`)}
+            </button>
+          ))}
+        </div>
+      </div>
+      {overview.error && !overview.data ? (
+        <ErrorState error={overview.error} onRetry={() => void overview.refetch()} />
+      ) : (
+        <OverviewKpis data={overview.data} loading={overviewLoading} />
+      )}
       <div className={styles.stats}>
-        <StatCard label={t('salesToday')} value={format.money(data?.salesToday)} icon={<Banknote />} loading={loading} />
-        <StatCard label={t('ordersToday')} value={data?.ordersToday ?? 0} icon={<Receipt />} loading={loading} />
-        <StatCard label={t('averageCheck')} value={format.money(data?.averageCheck)} icon={<Wallet />} loading={loading} />
         <StatCard label={t('activeOrders')} value={data?.activeOrders ?? 0} icon={<ClipboardList />} loading={loading} />
         <StatCard
           label={t('tablesOccupied')}
@@ -73,10 +106,9 @@ export function DashboardPage() {
           loading={loading}
         />
       </div>
-      <div className={styles.grid}>
-        <Card title={t('topItems')}>
-          <TopItemsList items={data?.topItems} loading={loading} />
-        </Card>
+      <div className={styles.grid3}>
+        <DishesCards data={overview.data} loading={overviewLoading} />
+        <FoodCostAlertCard data={overview.data} loading={overviewLoading} />
         <Card title={t('shift')}>
           {loading ? null : data.currentShift ? (
             <div className={styles.shift}>

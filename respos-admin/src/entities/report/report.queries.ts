@@ -1,11 +1,10 @@
-import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type {
   CashShiftReportRowDto,
   MovementTotalDto,
   PaymentMethodTotalDto,
-  ReportExportName,
   ReportPeriod,
   SalesByCategoryDto,
   SalesReportDto,
@@ -43,30 +42,3 @@ export const useMovementTotalsReport = (period: ReportPeriod) =>
   useReport<MovementTotalDto[]>('stock-movements', ENDPOINTS.reports.stockMovements, { ...period });
 export const useCashShiftsReport = (period: ReportPeriod) =>
   useReport<CashShiftReportRowDto[]>('cash-shifts', ENDPOINTS.reports.cashShifts, { ...period });
-
-/** Saves a Blob as a file via a temporary object URL. */
-function saveBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-}
-
-/** CSV export through the api-client (auth + branch headers apply), then downloaded as a file. */
-export function useExportReport() {
-  return useMutation({
-    mutationFn: async ({ name, period }: { name: ReportExportName; period?: ReportPeriod }) => {
-      const csv = await apiClient.get<string>(ENDPOINTS.reports.export(name), {
-        params: { format: 'csv', ...period },
-        headers: { Accept: 'text/csv' },
-      });
-      const suffix = period ? `_${period.from}_${period.to}` : '';
-      // response.text() strips the server's UTF-8 BOM; restore it so Excel reads Cyrillic correctly.
-      saveBlob(new Blob(['﻿', csv ?? ''], { type: 'text/csv;charset=utf-8' }), `${name}${suffix}.csv`);
-    },
-  });
-}
