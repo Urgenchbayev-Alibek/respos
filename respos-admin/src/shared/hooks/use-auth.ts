@@ -9,10 +9,18 @@ export interface LoginInput {
   organizationId?: string;
 }
 
+/** PIN quick login on a registered shared device (ADR-0014). */
+export interface PinLoginInput {
+  userId: string;
+  pin: string;
+}
+
 export interface AuthContextValue {
   status: AuthStatus;
   user: MeDto | null;
   login: (input: LoginInput) => Promise<MeDto>;
+  /** Shared device: `POST /auth/pin-login` (device cookie) → branch-scoped session. */
+  pinLogin: (input: PinLoginInput) => Promise<MeDto>;
   logout: () => Promise<void>;
   switchOrganization: (organizationId: string) => Promise<void>;
   /** Re-reads `GET /auth/me` (after profile/role changes). */

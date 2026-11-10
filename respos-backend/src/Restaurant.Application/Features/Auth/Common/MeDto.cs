@@ -22,5 +22,10 @@ public sealed record MeDto(
 /// <summary>Login/refresh response body. The refresh token itself travels only in the httpOnly cookie.</summary>
 public sealed record AuthResponse(string AccessToken, DateTime ExpiresAt, MeDto User);
 
+/// <summary>
+/// Restriction of a session issued by PIN quick login (ADR-0014): bound to one branch and device, shorter lifetime.
+/// </summary>
+public sealed record SessionScope(Guid BranchId, Guid DeviceId, TimeSpan RefreshLifetime);
+
 /// <summary>Result of issuing a session: response body + raw refresh token for the cookie.</summary>
 public sealed record AuthSession(AuthResponse Response, string RefreshToken, DateTime RefreshTokenExpiresAt);

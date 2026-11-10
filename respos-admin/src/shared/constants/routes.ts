@@ -7,6 +7,8 @@ export const ROUTES = {
   acceptInvitation: '/accept-invitation',
   forbidden: '/403',
   profile: '/profile',
+  /** Shared-device lock screen (PIN quick login, F6). */
+  device: '/device',
   admin: {
     root: '/admin',
     dashboard: '/admin',
@@ -35,6 +37,11 @@ export const ROUTES = {
     customers: '/admin/customers',
     customerDetail: '/admin/customers/:customerId',
     loyalty: '/admin/customers/loyalty',
+    staff: '/admin/staff',
+    staffTimesheet: '/admin/staff/timesheet',
+    staffSchedule: '/admin/staff/schedule',
+    staffMembers: '/admin/staff/members',
+    staffDevices: '/admin/staff/devices',
   },
   waiter: {
     root: '/waiter',

@@ -10,6 +10,9 @@ public sealed class JwtOptions
     public const string TenantAccessClaim = "tenant_access";
     public const string ReadOnlyTenantAccess = "read_only";
 
+    /// <summary>PIN quick-login session (ADR-0014): the only branch this access token may use.</summary>
+    public const string BranchScopeClaim = "branch_scope";
+
     public string Issuer { get; set; } = "respos";
     public string Audience { get; set; } = "respos";
 

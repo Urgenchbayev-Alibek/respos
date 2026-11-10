@@ -21,4 +21,17 @@ public sealed class AuthOptions
     public string RefreshCookieSameSite { get; set; } = "Lax";
 
     public bool RefreshCookieSecure { get; set; } = true;
+
+    /// <summary>PIN quick login (ADR-0014): wrong PINs per user before <see cref="PinLockoutMinutes"/> lockout.</summary>
+    public int PinMaxFailedAttempts { get; set; } = 5;
+    public int PinLockoutMinutes { get; set; } = 15;
+
+    /// <summary>Wrong PINs (any user) on one shared device before the device is locked for <see cref="PinLockoutMinutes"/>.</summary>
+    public int DeviceMaxFailedPinAttempts { get; set; } = 10;
+
+    /// <summary>Lifetime of a shared-device registration (cookie <c>device_token</c>).</summary>
+    public int DeviceTokenDays { get; set; } = 180;
+
+    /// <summary>Refresh-token lifetime of a PIN session (shorter than password sessions).</summary>
+    public int PinSessionHours { get; set; } = 12;
 }

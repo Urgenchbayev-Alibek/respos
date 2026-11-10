@@ -1,0 +1,205 @@
+{
+  "nav": {
+    "title": "Staff"
+  },
+  "tabs": {
+    "entries": "Time entries",
+    "timesheet": "Timesheet",
+    "schedule": "Schedule",
+    "members": "Employees & PIN",
+    "devices": "Shared devices"
+  },
+  "clock": {
+    "clockIn": "Clock in",
+    "clockOut": "Clock out",
+    "clockedIn": "Clocked in",
+    "clockedOut": "Clocked out",
+    "onShift": "On shift since {{time}} · {{worked}}",
+    "otherBranch": "Your shift is open in another branch",
+    "clockOutTitle": "Clock out?",
+    "clockOutHint": "Worked {{worked}}. Enter your break, if any.",
+    "breakMinutes": "Break, min"
+  },
+  "lock": {
+    "title": "Who is working?",
+    "pinEntered": "Digits entered: {{count}}",
+    "erase": "Erase",
+    "enter": "Sign in",
+    "back": "Choose another employee",
+    "noStaff": "No employees with a PIN",
+    "noStaffHint": "An employee sets a PIN in their profile, or a manager does it in the Staff section.",
+    "chooseUser": "Choose yourself",
+    "other": "Other sign-in options",
+    "passwordLogin": "Sign in with password",
+    "switchUser": "Switch user"
+  },
+  "fields": {
+    "employee": "Employee",
+    "chooseEmployee": "Choose an employee",
+    "allEmployees": "All employees",
+    "clockIn": "Clock in",
+    "clockOut": "Clock out",
+    "clockInDate": "Clock-in date",
+    "clockInTime": "Clock-in time",
+    "clockOutDate": "Clock-out date",
+    "clockOutTime": "Clock-out time",
+    "clockOutHint": "Leave the time empty if the shift is still running",
+    "breakMinutes": "Break, min",
+    "note": "Note",
+    "reason": "Reason for the change",
+    "worked": "Worked",
+    "planned": "Planned",
+    "difference": "Difference",
+    "entries": "Entries",
+    "edited": "Corrected",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "start": "Start",
+    "end": "End",
+    "roleNote": "Role / area",
+    "email": "Email",
+    "roles": "Roles",
+    "actions": "Actions"
+  },
+  "entries": {
+    "subtitle": "Clock-in and clock-out records of the branch. Corrections are kept in the audit log.",
+    "add": "Add entry",
+    "open": "On shift",
+    "openOnly": "Open only",
+    "empty": "No entries for this period",
+    "saved": "Entry saved",
+    "editTitle": "Correct entry",
+    "createTitle": "New entry",
+    "auditHint": "Times are in the branch time zone. The change and its reason are written to the audit log."
+  },
+  "timesheet": {
+    "subtitle": "Hours per employee: planned vs actual.",
+    "export": "Download CSV",
+    "empty": "No data for this period",
+    "yes": "Yes"
+  },
+  "schedule": {
+    "subtitle": "Planned shifts for the week. Click a cell to add a shift.",
+    "add": "Add shift",
+    "prevWeek": "Previous week",
+    "nextWeek": "Next week",
+    "noMembers": "No employees in this branch",
+    "addFor": "Add shift: {{name}}, {{date}}",
+    "weekday": {
+      "0": "Mon",
+      "1": "Tue",
+      "2": "Wed",
+      "3": "Thu",
+      "4": "Fri",
+      "5": "Sat",
+      "6": "Sun"
+    },
+    "saved": "Shift saved",
+    "deleted": "Shift deleted",
+    "editTitle": "Edit shift",
+    "createTitle": "New shift",
+    "overnightHint": "If the end is earlier than the start, the shift ends the next day.",
+    "myTitle": "My schedule (14 days)",
+    "myEmpty": "No shifts planned"
+  },
+  "members": {
+    "subtitle": "Branch employees and PINs for quick sign-in on shared devices.",
+    "pin": "PIN",
+    "pinNotAllowed": "Password only",
+    "pinLocked": "Locked until {{time}}",
+    "pinSet": "Set",
+    "pinMissing": "Not set",
+    "setPin": "Set PIN",
+    "resetPin": "Reset PIN",
+    "pinReset": "PIN reset",
+    "resetPinTitle": "Reset PIN for {{name}}?",
+    "resetPinMessage": "The employee cannot sign in with a PIN until a new one is set.",
+    "pinSaved": "PIN saved",
+    "setPinTitle": "PIN for {{name}}"
+  },
+  "devices": {
+    "subtitle": "Branch tablets and terminals with PIN quick sign-in. Revoking a device ends all its sessions.",
+    "name": "Name",
+    "namePlaceholder": "For example, Hall tablet",
+    "state": "Status",
+    "active": "Active",
+    "locked": "Temporarily locked",
+    "revoked": "Revoked",
+    "created": "Registered",
+    "lastUsed": "Last sign-in",
+    "expires": "Valid until",
+    "revoke": "Revoke",
+    "revokedToast": "Device revoked",
+    "forgotten": "Shared device mode turned off",
+    "registerThis": "Make this device shared",
+    "thisIsShared": "This browser works as a shared branch device.",
+    "exitShared": "Turn off shared device mode",
+    "showRevoked": "Show revoked",
+    "empty": "No shared devices",
+    "revokeTitle": "Revoke {{name}}?",
+    "revokeMessage": "All PIN sessions on this device end and PIN sign-in stops working.",
+    "registerTitle": "Shared device",
+    "registerHint": "This browser receives a protected device key. You will be signed out, and employees will sign in with a PIN.",
+    "register": "Register"
+  },
+  "pin": {
+    "title": "Quick sign-in PIN",
+    "notAllowed": "Owners, administrators and platform admins sign in with a password only.",
+    "isSet": "A PIN is set. You can change or remove it.",
+    "notSet": "No PIN yet. With a PIN you can sign in quickly on shared branch devices.",
+    "currentPassword": "Current password",
+    "new": "New PIN",
+    "confirm": "Repeat PIN",
+    "policy": "4–6 digits, not all the same and not a sequence (not 1111 or 1234).",
+    "remove": "Remove PIN",
+    "removed": "PIN removed",
+    "change": "Change PIN",
+    "set": "Set PIN",
+    "saved": "PIN saved"
+  },
+  "roles": {
+    "owner": "Owner",
+    "admin": "Administrator",
+    "manager": "Manager",
+    "waiter": "Waiter",
+    "cook": "Cook",
+    "cashier": "Cashier",
+    "stockkeeper": "Stockkeeper",
+    "accountant": "Accountant"
+  },
+  "validation": {
+    "pinWeak": "PIN: 4–6 digits, not all the same and not a sequence",
+    "pinMismatch": "PINs do not match",
+    "shiftSameTime": "Shift start and end must differ"
+  },
+  "errors": {
+    "time_entry": {
+      "not_found": "Time entry not found",
+      "already_open": "The shift has already started",
+      "not_open": "There is no open shift in this branch",
+      "invalid_period": "Clock-out must be after clock-in and not in the future",
+      "invalid_break": "The break cannot be longer than the worked time"
+    },
+    "shift": {
+      "not_found": "Shift not found",
+      "overlap": "The employee already has a shift at this time",
+      "invalid_time": "Shift start and end must differ",
+      "invalid_period": "Invalid period (up to 62 days)"
+    },
+    "staff": {
+      "member_not_found": "Employee not found in this branch"
+    },
+    "device": {
+      "not_found": "Device not found",
+      "invalid": "This device is not registered or was revoked",
+      "locked": "Too many wrong PINs on this device. Try again later."
+    },
+    "pin": {
+      "invalid": "Wrong PIN",
+      "locked": "PIN sign-in is temporarily locked (15 minutes)",
+      "not_allowed": "PIN sign-in is not allowed for this role; use your password",
+      "weak": "PIN: 4–6 digits, not all the same and not a sequence"
+    }
+  }
+}

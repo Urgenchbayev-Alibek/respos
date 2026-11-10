@@ -34,7 +34,7 @@ public sealed record GetMeQuery;
 public sealed class GetMeHandler(ITenantContext tenant, MeBuilder meBuilder) : IHandler<GetMeQuery, MeDto>
 {
     public async Task<Result<MeDto>> HandleAsync(GetMeQuery request, CancellationToken cancellationToken) =>
-        await meBuilder.BuildAsync(tenant.RequireUserId(), tenant.OrganizationId, cancellationToken);
+        await meBuilder.BuildAsync(tenant.RequireUserId(), tenant.OrganizationId, cancellationToken, tenant.SessionBranchId);
 }
 
 public sealed record SwitchOrganizationCommand(Guid OrganizationId)

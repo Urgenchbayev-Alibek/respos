@@ -5,6 +5,7 @@ using Restaurant.Application.Abstractions.Clock;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Common.Handlers;
 using Restaurant.Application.Features.Auth.Common;
+using Restaurant.Application.Features.Staff.Pin;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Identity;
 using Restaurant.Domain.Enums;
@@ -12,7 +13,11 @@ using Restaurant.Domain.Enums;
 namespace Restaurant.Application.Features.Auth.Refresh;
 
 /// <param name="RefreshToken">Raw token from the httpOnly cookie.</param>
-public sealed record RefreshCommand(string? RefreshToken);
+public sealed record RefreshCommand(string? RefreshToken)
+{
+    /// <summary>Raw shared-device credential (cookie <c>device_token</c>); required to refresh PIN sessions (ADR-0014).</summary>
+    public string? DeviceToken { get; init; }
+}
 
 /// <summary>
 /// Rotates the refresh token. Presenting an already revoked token = reuse → the whole family is revoked (audited),
@@ -24,6 +29,7 @@ public sealed record RefreshCommand(string? RefreshToken);
 public sealed class RefreshHandler(
     IApplicationDbContext db,
     SessionIssuer sessions,
+    PinSessionGuard pinSessions,
     IAuditLogger audit,
     IClock clock,
     IOptions<AuthOptions> options) : IHandler<RefreshCommand, AuthSession>
@@ -69,7 +75,15 @@ public sealed class RefreshHandler(
                 return AuthErrors.InvalidRefreshToken;
             }
 
-            var session = await TryRotateAsync(user, token, now, cancellationToken);
+            // PIN session (ADR-0014): same active device + still eligible, keeps its branch scope and absolute expiry.
+            var scope = await pinSessions.ResolveScopeAsync(token, user, request.DeviceToken, now, cancellationToken);
+            if (scope.IsFailure)
+            {
+                await RevokeIfActiveAsync(token.Id, null, now, cancellationToken);
+                return AuthErrors.InvalidRefreshToken;
+            }
+
+            var session = await TryRotateAsync(user, token, scope.Value, now, cancellationToken);
             if (session is not null)
             {
                 return session;
@@ -86,10 +100,11 @@ public sealed class RefreshHandler(
     /// Issues the replacement and claims <paramref name="token"/> in one transaction. The conditional UPDATE takes the
     /// row lock; a concurrent claimer blocks, then matches 0 rows → returns null (the caller follows the successor).
     /// </summary>
-    private Task<AuthSession?> TryRotateAsync(User user, RefreshToken token, DateTime now, CancellationToken cancellationToken) =>
+    private Task<AuthSession?> TryRotateAsync(
+        User user, RefreshToken token, SessionScope? scope, DateTime now, CancellationToken cancellationToken) =>
         db.ExecuteInTransactionAsync<AuthSession?>(async ct =>
         {
-            var (session, replacement) = await sessions.IssueWithTokenAsync(user, token.OrganizationId, token.FamilyId, ct);
+            var (session, replacement) = await sessions.IssueWithTokenAsync(user, token.OrganizationId, token.FamilyId, ct, scope);
             if (await RevokeIfActiveAsync(token.Id, replacement.Id, now, ct) == 0)
             {
                 db.RefreshTokens.Remove(replacement); // Added → Detached: nothing is inserted

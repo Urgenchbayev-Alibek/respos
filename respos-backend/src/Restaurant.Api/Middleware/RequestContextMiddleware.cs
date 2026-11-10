@@ -28,7 +28,8 @@ public sealed class RequestContextMiddleware(RequestDelegate next)
         var organizationId = TryGuid(user.FindFirstValue(JwtOptions.OrganizationClaim));
         var isPlatformAdmin = string.Equals(user.FindFirstValue(JwtOptions.PlatformAdminClaim), "true", StringComparison.OrdinalIgnoreCase);
         var isReadOnlyTenantAccess = user.FindFirstValue(JwtOptions.TenantAccessClaim) == JwtOptions.ReadOnlyTenantAccess;
-        requestContext.SetUser(userId, organizationId, isPlatformAdmin, isReadOnlyTenantAccess);
+        var sessionBranchId = TryGuid(user.FindFirstValue(JwtOptions.BranchScopeClaim));
+        requestContext.SetUser(userId, organizationId, isPlatformAdmin, isReadOnlyTenantAccess, sessionBranchId);
     }
 
     private static Guid? TryGuid(string? value) => Guid.TryParse(value, out var id) ? id : null;

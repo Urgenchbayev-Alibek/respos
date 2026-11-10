@@ -51,7 +51,7 @@ export function useDashboardOverview(period: DashboardPeriod) {
 
 const EXTENSIONS: Record<ExportFormat, string> = { csv: 'csv', xlsx: 'xlsx', pdf: 'html' };
 
-function saveBlob(blob: Blob, fileName: string) {
+export function saveBlob(blob: Blob, fileName: string) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;

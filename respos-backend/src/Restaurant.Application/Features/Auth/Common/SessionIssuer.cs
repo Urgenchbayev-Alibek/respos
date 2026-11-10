@@ -32,8 +32,9 @@ public sealed class SessionIssuer(
         return session;
     }
 
+    /// <param name="scope">PIN quick-login restriction (branch claim, shorter refresh lifetime); null for password sessions.</param>
     public async Task<(AuthSession Session, RefreshToken Token)> IssueWithTokenAsync(
-        User user, Guid? organizationId, Guid? familyId, CancellationToken ct)
+        User user, Guid? organizationId, Guid? familyId, CancellationToken ct, SessionScope? scope = null)
     {
         var now = clock.UtcNow;
         var raw = tokenGenerator.Generate();
@@ -44,13 +45,13 @@ public sealed class SessionIssuer(
             TokenHash = tokenGenerator.Hash(raw),
             FamilyId = familyId ?? Guid.NewGuid(),
             CreatedAt = now,
-            ExpiresAt = now.AddDays(options.Value.RefreshTokenDays),
+            ExpiresAt = scope is null ? now.AddDays(options.Value.RefreshTokenDays) : now.Add(scope.RefreshLifetime),
             CreatedByIp = request.IpAddress,
         };
         db.RefreshTokens.Add(refresh);
 
-        var access = tokens.CreateAccessToken(user, organizationId);
-        var me = await meBuilder.BuildAsync(user.Id, organizationId, ct);
+        var access = tokens.CreateAccessToken(user, organizationId, scope?.BranchId);
+        var me = await meBuilder.BuildAsync(user.Id, organizationId, ct, scope?.BranchId);
         var session = new AuthSession(new AuthResponse(access.Token, access.ExpiresAt, me), raw, refresh.ExpiresAt);
         return (session, refresh);
     }

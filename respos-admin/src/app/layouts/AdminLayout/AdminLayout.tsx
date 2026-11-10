@@ -12,6 +12,7 @@ import { BranchSwitcher } from '@/widgets/topbar/BranchSwitcher';
 import { LanguageSwitcher } from '@/widgets/topbar/LanguageSwitcher';
 import { NotificationsBell } from '@/widgets/topbar/NotificationsBell';
 import { OrgSwitcher } from '@/widgets/topbar/OrgSwitcher';
+import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { SideNav } from '../parts/SideNav';
@@ -71,6 +72,7 @@ export function AdminLayout() {
           <OrgSwitcher />
           <BranchSwitcher />
           <span className={styles.spacer} />
+          <TimeClockButton />
           <LanguageSwitcher />
           <NotificationsBell />
           <UserMenu />

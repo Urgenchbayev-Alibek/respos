@@ -14,7 +14,8 @@ public sealed record AccessToken(string Token, DateTime ExpiresAt);
 /// <summary>Issues signed JWT access tokens (claims: sub, org, platform_admin, email).</summary>
 public interface ITokenService
 {
-    AccessToken CreateAccessToken(User user, Guid? organizationId);
+    /// <param name="branchScope">PIN quick-login session (ADR-0014): the token may only use this branch.</param>
+    AccessToken CreateAccessToken(User user, Guid? organizationId, Guid? branchScope = null);
 
     /// <summary>Break-glass token: platform admin, read-only access to <paramref name="organizationId"/>, no refresh token.</summary>
     AccessToken CreateTenantAccessToken(User user, Guid organizationId, TimeSpan lifetime);

@@ -8,6 +8,8 @@ import { ShortcutsOverlay } from '@/widgets/shortcuts/ShortcutsOverlay';
 import { BranchSwitcher } from '@/widgets/topbar/BranchSwitcher';
 import { ConnectionStatus } from '@/widgets/topbar/ConnectionStatus';
 import { LanguageSwitcher } from '@/widgets/topbar/LanguageSwitcher';
+import { SwitchUserButton } from '@/widgets/topbar/SwitchUserButton';
+import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { SkipLink } from '../parts/SkipLink';
@@ -67,6 +69,8 @@ export function WorkspaceLayout({ workspace, nav = [], showBranch = true, showCo
         {showConnection && <ConnectionStatus />}
         {topbarExtra}
         <ShortcutsOverlay />
+        {showBranch && <TimeClockButton />}
+        <SwitchUserButton />
         <LanguageSwitcher />
         <UserMenu />
       </header>

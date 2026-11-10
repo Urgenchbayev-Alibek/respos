@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useChangePassword } from '@/features/auth/api/auth.api';
 import { changePasswordSchema, type ChangePasswordValues } from '@/features/auth/model/auth-schemas';
+import { MyPinCard, MyScheduleCard } from '@/features/staff/ui/ProfileStaffCards';
 import { LANGUAGES, type Language } from '@/shared/constants/locale';
 import { useCurrentUser } from '@/shared/hooks/use-auth';
 import { changeLanguage } from '@/shared/i18n';
@@ -65,6 +66,8 @@ export function ProfilePage() {
             </FormActions>
           </FormGrid>
         </Card>
+        <MyPinCard />
+        <MyScheduleCard />
       </div>
     </div>
   );

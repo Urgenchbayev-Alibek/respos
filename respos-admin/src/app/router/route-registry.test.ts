@@ -21,7 +21,7 @@ describe('route registry', () => {
     },
   );
 
-  it.each(['/login', '/forgot-password', '/reset-password', '/accept-invitation', '/profile', '/kitchen', '/admin/roles/new'])(
+  it.each(['/login', '/forgot-password', '/reset-password', '/accept-invitation', '/profile', '/kitchen', '/admin/roles/new', '/device'])(
     'registers %s',
     (path) => {
       const leaf = (matchRoutes(routes, path) ?? []).at(-1);

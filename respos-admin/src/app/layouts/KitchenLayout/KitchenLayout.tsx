@@ -5,6 +5,8 @@ import { useFormatters } from '@/shared/hooks/use-formatters';
 import { BranchSwitcher } from '@/widgets/topbar/BranchSwitcher';
 import { ConnectionStatus } from '@/widgets/topbar/ConnectionStatus';
 import { FullscreenToggle } from '@/widgets/topbar/FullscreenToggle';
+import { SwitchUserButton } from '@/widgets/topbar/SwitchUserButton';
+import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { WorkspaceSwitcher } from '../parts/WorkspaceSwitcher';
@@ -39,6 +41,8 @@ export function KitchenLayout() {
           {format.time(now)}
         </time>
         <FullscreenToggle size="lg" />
+        <TimeClockButton />
+        <SwitchUserButton />
         <WorkspaceSwitcher current="kitchen" />
         <UserMenu showTheme={false} />
       </header>

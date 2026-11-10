@@ -15,6 +15,9 @@ public interface ITenantContext
     /// <summary>Break-glass platform session for <see cref="OrganizationId"/>: read-only (only *.read permissions, GET requests).</summary>
     bool IsReadOnlyTenantAccess { get; }
 
+    /// <summary>PIN quick-login session (ADR-0014): the only branch the current user may access, else null.</summary>
+    Guid? SessionBranchId { get; }
+
     /// <summary>Current user id or throws 401 <c>auth.unauthenticated</c>.</summary>
     Guid RequireUserId();
 

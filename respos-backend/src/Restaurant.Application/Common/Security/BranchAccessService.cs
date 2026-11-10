@@ -44,6 +44,12 @@ internal sealed class BranchAccessService(IApplicationDbContext db, ITenantConte
                 .Any(a => a.UserId == userId && a.BranchId == b.Id && a.OrganizationId == organizationId));
         }
 
+        // PIN quick-login session (ADR-0014): the token is bound to the device's branch.
+        if (tenant.SessionBranchId is { } scopedBranch && tenant.UserId == userId)
+        {
+            query = query.Where(b => b.Id == scopedBranch);
+        }
+
         return await query
             .OrderBy(b => b.CreatedAt).ThenBy(b => b.Name)
             .Select(b => new BranchSummary(b.Id, b.Name, b.Timezone))
