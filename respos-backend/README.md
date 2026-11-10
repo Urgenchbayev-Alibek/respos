@@ -114,7 +114,7 @@ Touch only your module's files. Nothing has to be registered centrally.
 - **Errors**: RFC 7807 + `code` + `correlationId` (+ camelCase `errors` for validation). `ErrorType` → 400/401/403/404/409/422/429/500.
   DbUpdateConcurrency → 409 `concurrency.conflict` (Order/StockBalance use `xmin`), unique violation → 409 `conflict.duplicate`.
 - **Auth**: JWT 15 min (`sub`, `org`, `platform_admin`), refresh token in httpOnly cookie `refresh_token` (path `/api/v1/auth`,
-  SameSite from `Auth:RefreshCookieSameSite`, default Lax), SHA-256 hashed, rotated each refresh; reuse revokes the family.
+  SameSite from `Auth:RefreshCookieSameSite`, default Lax), SHA-256 hashed, rotated each refresh (atomic conditional update); reuse revokes the family, except within the grace window (ADR-0003).
   Lockout 5 failures → 15 min. Permissions are loaded from DB per request (cached in scope); blocked users/suspended orgs lose them immediately.
 - **Rate limits**: login 5/min per IP+email, `auth` policy 20/min/IP (refresh, forgot/reset, accept), public demo requests 5/hour/IP, global 300/min per user/IP.
 - **Health**: `/health/live`, `/health/ready` (DB). **Swagger**: `/swagger` (Development or `Swagger:Enabled`).
@@ -145,7 +145,7 @@ Every `code` the API can return (collected from all modules' `*Errors.cs`, valid
 
 - `User.Status` is global: blocking a user in one org also blocks them in their other orgs (MVP: one org per user).
 - `POST /users` returns `user.email_taken` for an e-mail that exists in another org; use invitations for existing people.
-- Two concurrent refreshes with the same cookie (two tabs) trigger reuse detection → sign-in again.
+- Concurrent refreshes with the same cookie (two tabs / retry) are handled by the reuse grace window (`Auth:RefreshReuseGraceSeconds`, 15 s, ADR-0003); reuse after the window still revokes the family.
 - Idempotency records are written after the action commits (separate statement); `Payment.IdempotencyKey` (unique per org) is the DB safety net.
 - Break-glass: `POST /platform/organizations/{id}/access` issues a 30-min JWT with claim `tenant_access=read_only` (no refresh);
   it gets only org `*.read` permissions, all branches, and GET/HEAD requests only. Every grant is audited (`platform.tenant_access.granted`).

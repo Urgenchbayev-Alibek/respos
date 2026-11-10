@@ -140,6 +140,7 @@ Seed__PlatformAdminPassword=<секрет>                                  # б
 | `Auth__PasswordResetTokenMinutes`, `Auth__InvitationDays` | `60`, `7` | сроки токенов сброса/приглашений |
 | `Auth__MaxFailedLoginAttempts`, `Auth__LockoutMinutes` | `5`, `15` | блокировка входа |
 | `Auth__RefreshCookieSameSite` | `Lax` | `Lax` / `Strict` / `None` |
+| `Auth__RefreshReuseGraceSeconds` | `15` | Окно (сек), в котором повторное предъявление только что ротированного refresh-токена считается гонкой вкладок, а не кражей (ADR-0003). `0` — выключить |
 | `Auth__RefreshCookieSecure` | `true` | `false` только для локального HTTP |
 | `Frontend__AllowedOrigins` | `[]` | CORS allowlist (с credentials) |
 | `Frontend__AppUrl` | `http://localhost:5173` | URL admin-приложения для ссылок в письмах |

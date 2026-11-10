@@ -28,8 +28,11 @@ public sealed class RefreshHandler(
     IClock clock,
     IOptions<AuthOptions> options) : IHandler<RefreshCommand, AuthSession>
 {
-    /// <summary>Bound on grace hops / lost rotation races per request (N tabs refreshing at once).</summary>
-    private const int MaxAttempts = 5;
+    /// <summary>
+    /// Bound on loop steps per request: each lost rotation race costs two (re-read + hop to the successor), so this
+    /// tolerates ~8 tabs refreshing the same cookie at once; beyond that → 401 (without revoking the family).
+    /// </summary>
+    private const int MaxSteps = 16;
 
     public async Task<Result<AuthSession>> HandleAsync(RefreshCommand request, CancellationToken cancellationToken)
     {
@@ -40,7 +43,7 @@ public sealed class RefreshHandler(
             return AuthErrors.InvalidRefreshToken;
         }
 
-        for (var attempt = 0; attempt < MaxAttempts; attempt++)
+        for (var step = 0; step < MaxSteps; step++)
         {
             if (token.IsRevoked)
             {
