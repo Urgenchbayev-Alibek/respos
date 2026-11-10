@@ -49,6 +49,12 @@
   font-weight: 800;
 }
 
+.headSide {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
 .timer {
   font-size: 1.2em;
   font-weight: 800;

@@ -38,7 +38,7 @@ export function PosMenu({ categories, onPick }: PosMenuProps) {
   return (
     <section className={styles.menu} aria-label={t('menu.title')}>
       <div className={styles.search}>
-        <SearchInput value={search} onChange={setSearch} placeholder={t('menu.search')} />
+        <SearchInput value={search} onChange={setSearch} placeholder={t('menu.search')} data-shortcut="menu-search" />
       </div>
       {!query && (
         <div className={styles.categories} role="group" aria-label={t('menu.categories')}>

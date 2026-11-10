@@ -6,7 +6,7 @@
   border: 1px dashed var(--color-warning);
   border-radius: var(--radius-sm);
   background: var(--color-warning-subtle);
-  color: #92400e;
+  color: var(--tone-warning-fg);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;

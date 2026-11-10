@@ -21,4 +21,5 @@ export const STORAGE_KEYS = {
   branchId: 'respos.branchId',
   language: 'respos.language',
   sidebarCollapsed: 'respos.sidebarCollapsed',
+  theme: 'respos.theme',
 } as const;

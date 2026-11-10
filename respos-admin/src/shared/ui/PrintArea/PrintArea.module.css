@@ -1,0 +1,74 @@
+/* 80 mm thermal receipt printers: ~72 mm printable width. Only used while a PrintArea print job runs. */
+.root {
+  display: none;
+}
+
+@page thermal {
+  size: 80mm 200mm;
+  size: 80mm auto;
+  margin: 0;
+}
+
+@media print {
+  :global(body[data-print-thermal]) > *:not(.root) {
+    display: none !important;
+  }
+
+  :global(body[data-print-thermal]) {
+    background: #fff;
+  }
+
+  .root {
+    display: block;
+    page: thermal;
+    width: 80mm;
+    padding: 3mm 4mm;
+    background: #fff;
+    color: #000;
+    font-family: var(--font-family);
+    font-size: 12px;
+    line-height: 1.35;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .root * {
+    color: #000 !important;
+    background: transparent !important;
+    border-color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  .root h1,
+  .root h2,
+  .root h3 {
+    margin: 0 0 1mm;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .root p {
+    margin: 0;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2mm;
+}
+
+.value {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.strong {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.divider {
+  margin: 1.5mm 0;
+  border: 0;
+  border-top: 1px dashed #000;
+}

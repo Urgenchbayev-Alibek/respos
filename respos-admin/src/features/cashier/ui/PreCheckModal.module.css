@@ -28,23 +28,3 @@
   text-align: center;
   text-transform: uppercase;
 }
-
-@media print {
-  :global(body *) {
-    visibility: hidden;
-  }
-
-  .sheet,
-  .sheet * {
-    visibility: visible;
-  }
-
-  .sheet {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 80mm;
-    max-width: none;
-    color: #000;
-  }
-}

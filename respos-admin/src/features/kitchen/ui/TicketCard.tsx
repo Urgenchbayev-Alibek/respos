@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Printer } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type {
@@ -8,7 +9,10 @@ import type {
   TicketItemAction,
 } from '@/entities/kitchen-ticket/kitchen-ticket.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
+import { IconButton } from '@/shared/ui';
+import { printKitchenTicket } from '../model/print-ticket';
 import { formatElapsed, getTicketElapsedMs, getTimerLevel } from '../model/ticket-timer';
+import { KitchenTicketPrint } from './KitchenTicketPrint';
 import styles from './TicketCard.module.css';
 import { TicketItemRow } from './TicketItemRow';
 
@@ -44,9 +48,16 @@ export function TicketCard({ ticket, now, highlighted, canUpdate, pending, onAct
         <h3 className={styles.title}>
           #{ticket.number} · {place}
         </h3>
-        <span className={styles.timer} data-level={level} title={t(`timer.${level}`)}>
-          <span className="visually-hidden">{t('timer.label')} </span>
-          {formatElapsed(elapsed)}
+        <span className={styles.headSide}>
+          <span className={styles.timer} data-level={level} title={t(`timer.${level}`)}>
+            <span className="visually-hidden">{t('timer.label')} </span>
+            {formatElapsed(elapsed)}
+          </span>
+          <IconButton
+            label={t('ux:print.ticketAria', { number: ticket.number })}
+            icon={<Printer />}
+            onClick={() => printKitchenTicket(ticket.id)}
+          />
         </span>
       </div>
       <p className={styles.meta}>
@@ -69,6 +80,7 @@ export function TicketCard({ ticket, now, highlighted, canUpdate, pending, onAct
           />
         ))}
       </ul>
+      <KitchenTicketPrint ticket={ticket} />
       {canUpdate && <TicketActions ticket={ticket} pending={pending} byItem={byItem} onToggleByItem={() => setByItem((v) => !v)} onAction={onAction} />}
     </article>
   );

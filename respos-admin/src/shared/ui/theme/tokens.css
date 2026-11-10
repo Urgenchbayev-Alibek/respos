@@ -1,5 +1,7 @@
 /* RestaurantOS design tokens — shared with landing + docs/design. Change values here only. */
-:root {
+/* KDS re-declares the light base so it never inherits the admin dark palette (it has its own dark set below). */
+:root,
+[data-theme='kds'] {
   /* Brand (saffron) */
   --color-primary: #e85d2a;
   --color-primary-hover: #cf4d1d;
@@ -28,6 +30,7 @@
   --color-danger: #dc2626;
   --color-danger-hover: #b91c1c;
   --color-danger-subtle: #fee2e2;
+  --color-on-danger: #ffffff;
   --color-info: #2563eb;
   --color-info-subtle: #dbeafe;
   --color-neutral-subtle: #f1f5f9;
@@ -93,6 +96,57 @@
   --z-modal: 50;
   --z-toast: 60;
   --transition: 150ms ease;
+}
+
+/* Admin dark theme (html[data-theme='dark'], set by shared/lib/theme.ts). All text pairs ≥ 4.5:1 (WCAG AA). */
+:root[data-theme='dark'] {
+  --color-primary: #f97316;
+  --color-primary-hover: #fb923c;
+  --color-primary-subtle: #431407;
+  /* On dark surfaces the strong accent is light; filled controls switch to dark text (≈ 8:1). */
+  --color-primary-strong: #fb923c;
+  --color-primary-strong-hover: #fdba74;
+  --color-on-primary: #0f172a;
+
+  --color-text: #f1f5f9;
+  --color-text-muted: #cbd5e1;
+  --color-text-subtle: #94a3b8;
+  --color-border: #334155;
+  --color-border-strong: #475569;
+  --color-bg: #0b1220;
+  --color-surface: #162032;
+  --color-surface-muted: #1f2b40;
+  --color-overlay: rgb(2 6 23 / 0.7);
+
+  --color-success: #4ade80;
+  --color-success-subtle: #052e16;
+  --color-warning: #fbbf24;
+  --color-warning-subtle: #422006;
+  --color-danger: #f87171;
+  --color-danger-hover: #fca5a5;
+  --color-danger-subtle: #450a0a;
+  --color-on-danger: #0f172a;
+  --color-info: #60a5fa;
+  --color-info-subtle: #172554;
+  --color-neutral-subtle: #1f2b40;
+
+  --tone-neutral-fg: #cbd5e1;
+  --tone-neutral-bg: #1e293b;
+  --tone-info-fg: #93c5fd;
+  --tone-info-bg: #1e3a8a;
+  --tone-success-fg: #86efac;
+  --tone-success-bg: #14532d;
+  --tone-warning-fg: #fcd34d;
+  --tone-warning-bg: #78350f;
+  --tone-danger-fg: #fca5a5;
+  --tone-danger-bg: #7f1d1d;
+  --tone-primary-fg: #fdba74;
+  --tone-primary-bg: #7c2d12;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.5), 0 2px 4px rgb(0 0 0 / 0.3);
+  --focus-ring: 0 0 0 3px rgb(251 146 60 / 0.55);
+  color-scheme: dark;
 }
 
 /* Workspace density: waiter/cashier/stock are touch-first (≥ 44px controls). */

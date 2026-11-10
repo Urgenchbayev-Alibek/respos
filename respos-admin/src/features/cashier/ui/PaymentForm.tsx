@@ -78,10 +78,11 @@ export function PaymentForm({ order, onPaid }: PaymentFormProps) {
         name="method"
         render={({ field }) => (
           <div className={styles.methods} role="group" aria-label={t('pay.method')}>
-            {PAYMENT_METHODS.map((value) => (
+            {PAYMENT_METHODS.map((value, index) => (
               <button
                 key={value}
                 type="button"
+                data-shortcut={`pay-method-${index + 1}`}
                 className={styles.method}
                 aria-pressed={field.value === value}
                 disabled={pending}
@@ -126,7 +127,7 @@ export function PaymentForm({ order, onPaid }: PaymentFormProps) {
           )}
         </>
       )}
-      <Button type="submit" variant="primary" size="lg" fullWidth loading={pending}>
+      <Button type="submit" variant="primary" size="lg" fullWidth loading={pending} data-shortcut="pay-submit">
         {t('pay.submit', { amount: format.money(amount) })}
       </Button>
       <p className={styles.disclaimer}>{t('pay.disclaimer')}</p>

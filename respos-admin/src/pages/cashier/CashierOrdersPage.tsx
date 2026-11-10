@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { PaymentPanel } from '@/features/cashier/ui/PaymentPanel';
 import { PayableOrderList } from '@/features/cashier/ui/PayableOrderList';
 import { ShiftBanner } from '@/features/cash-shifts/ui/ShiftBanner';
+import { useCashierShortcuts } from '@/features/cashier/model/use-cashier-shortcuts';
 import { BREAKPOINTS, useMediaQuery } from '@/shared/hooks/use-media-query';
 import { EmptyState } from '@/shared/ui';
 import styles from './CashierOrdersPage.module.css';
@@ -16,6 +17,7 @@ export function CashierOrdersPage() {
   const isNarrow = useMediaQuery(BREAKPOINTS.tabletDown);
   const orderId = searchParams.get('orderId');
   useCashierRealtime();
+  useCashierShortcuts();
 
   const select = (id: string | null) => setSearchParams(id ? { orderId: id } : {}, { replace: !id });
   const showList = !isNarrow || !orderId;

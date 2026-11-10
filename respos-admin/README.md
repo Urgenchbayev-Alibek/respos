@@ -119,8 +119,39 @@ Design tokens: `src/shared/ui/theme/tokens.css`. Filled buttons / small white te
 `--color-primary` (#E85D2A) is for accents, borders, icons and large headings. `[data-workspace=waiter|cashier|stock]` → 16px,
 44px touch targets; `[data-theme=kds]` → dark, 20px base.
 
+## UX platform (F8)
+
+- **PWA** — `vite-plugin-pwa` (generateSW, `registerType: 'prompt'`). Manifest + icons in `public/` (PNG icons rendered
+  from `favicon.svg`). The service worker precaches build assets only; there is **no runtime caching** — `/api`, `/hubs`
+  and any cross-origin API requests always go to the network. A new build shows «Доступна новая версия — обновить»
+  (`app/pwa/PwaUpdatePrompt`, production only); `app/pwa/OfflineBanner` shows while `navigator.onLine` is false.
+  `vercel.json` serves `sw.js`/`manifest.webmanifest` with `no-cache`.
+- **Theme** — user menu → system / light / dark, stored per device (`respos.theme`, `shared/lib/theme.ts`,
+  `useTheme()`); resolved value on `<html data-theme="light|dark">` (applied before first paint in `index.html`).
+  Dark tokens: `:root[data-theme='dark']` in `tokens.css` (AA contrast). Filled accents use `--color-on-primary` /
+  `--color-on-danger`, never hard-coded `#fff`. KDS always uses its own dark set (`[data-theme='kds']`).
+- **Fullscreen** — `widgets/topbar/FullscreenToggle` (`useFullscreen`) on KDS and waiter topbars.
+- **Printing (80 mm thermal)** — `<PrintArea id>` + `printArea(id)` from `@/shared/ui`: content is rendered only during
+  the print job, everything else is hidden, `@page thermal { size: 80mm auto; margin: 0 }`, black on white. Used by the
+  KDS ticket (printer button on each card), the cashier pre-check («Печать (80 мм)», also on Ctrl+P while open) and the
+  cash shift drawer («Печать Z-отчёта» / X-report for an open shift).
+- **Keyboard shortcuts** — `useShortcuts([...])` (`shared/hooks/use-shortcuts.ts`); `?` or the keyboard button in the
+  topbar lists the shortcuts of the current screen. Plain keys never fire while typing in a field, Enter never hijacks
+  a focused button, nothing fires while a dialog is open. Targets are `data-shortcut="…"` attributes.
+
+  | Screen | Key | Action |
+  |---|---|---|
+  | Cashier | `F2` | focus order search |
+  | Cashier | `Enter` | pay (submit the payment form) |
+  | Cashier | `1` / `2` / `3` | payment method cash / card / other |
+  | Waiter order | `/` | focus menu search |
+  | Waiter order | `Ctrl+Enter` | send to kitchen |
+  | Any with shortcuts | `?` | show / hide shortcuts help |
+- **Locales** — `shared/i18n/locales.parity.test.ts` fails if a namespace is missing in ru/uz/en, key sets differ
+  (plural suffixes normalised) or `en` contains Cyrillic text. New namespaces must ship all three files.
+
 ## Auth
 
 Access token in memory only (`session-store.ts`); on start `POST /auth/refresh` (httpOnly cookie) restores the session and the
-token is refreshed 60 s before expiry. 401 → single-flight refresh → retry once → otherwise logout. Branch id and language
-are the only things kept in `localStorage`.
+token is refreshed 60 s before expiry. 401 → single-flight refresh → retry once → otherwise logout. Branch id, language and
+theme are the only things kept in `localStorage`.

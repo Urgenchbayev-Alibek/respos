@@ -8,6 +8,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+  background: var(--color-bg);
 }
 
 body {
@@ -21,7 +23,7 @@ body {
 }
 
 [data-workspace],
-[data-theme] {
+[data-theme='kds'] {
   font-size: var(--font-size-base);
   color: var(--color-text);
   background: var(--color-bg);
