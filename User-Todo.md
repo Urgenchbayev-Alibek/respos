@@ -25,8 +25,8 @@
 - [ ] **T1. Версия .NET.** На машине установлены .NET 8 и 9 SDK; используется **.NET 8 LTS**. Важно: поддержка .NET 8 заканчивается 10.11.2026 → рекомендую установить **.NET 10 LTS SDK**, после этого смена `TargetFramework` на `net10.0` + обновление пакетов (≈1 час работы). Установить .NET 10?
 - [ ] **T2. Авторизация.** Выбрано: короткий access JWT (в памяти браузера) + refresh token в httpOnly cookie с ротацией (ADR-0003).
 - [ ] **T3. Хостинг backend + PostgreSQL** (раздел 11): нужно выбрать платформу (Render / Railway / Fly.io / Azure / VPS в UZ) и зарегистрировать аккаунты — это можете сделать только вы. Для реального ресторана рекомендую платный VPS/managed Postgres с бэкапами.
-- [ ] **T4. Vercel** для `respos-admin` и `respos-landing`: нужен ваш аккаунт и подключение GitHub-репозитория. Конфиги (`vercel.json`) подготовлены.
-- [ ] **T5. GitHub-репозиторий.** Локально создан git-репозиторий (без push). Создайте пустой репозиторий на GitHub и пришлите URL — тогда заработает CI (`.github/workflows`).
+- [x] **T4. Vercel** — РАЗВЁРНУТО 10.11.2026: https://respos-landing.vercel.app и https://respos-admin.vercel.app (CLI). Для автодеплоя при push установите Vercel GitHub App на репозиторий и подключите проекты (Settings → Git). После хостинга backend задайте в Vercel `VITE_API_BASE_URL`, `VITE_HUB_URL` (admin) и `VITE_API_BASE_URL` (landing) и сделайте redeploy. для `respos-admin` и `respos-landing`: нужен ваш аккаунт и подключение GitHub-репозитория. Конфиги (`vercel.json`) подготовлены.
+- [x] **T5. GitHub-репозиторий.** — https://github.com/Urgenchbayev-Alibek/respos (public). Локально создан git-репозиторий (без push). Создайте пустой репозиторий на GitHub и пришлите URL — тогда заработает CI (`.github/workflows`).
 - [ ] **T6. Email (восстановление пароля, приглашения).** Сейчас заглушка (письмо пишется в лог, в Development — ссылка показывается админу). Какой SMTP/провайдер использовать?
 - [ ] **T7. Название продукта и домен.** Рабочее «RestaurantOS», папка «ResPOS». Финальное название и домен?
 - [ ] **T8. Мобильное приложение / Telegram-бот.** По ТЗ в MVP не входят (адаптивный веб). Нужны позже?
