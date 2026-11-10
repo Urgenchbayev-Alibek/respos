@@ -72,7 +72,7 @@ export class PageMonitor {
 }
 
 const PERMISSION_CODE =
-  /^[a-z-]+(\.[a-z]+)*\.(read|create|update|deactivate|manage|cancel|apply|transfer|adjust|receive|open|close|refund)$/;
+  /^[a-z-]+(\.[a-z]+)*\.(read|create|update|deactivate|manage|cancel|apply|transfer|adjust|receive|open|close|refund|split|export|redeem|timeclock)$/;
 
 /** Any i18n key that leaked to the screen (e.g. `orders.status.draft`, `nav:items.menu`). */
 export async function expectNoRawI18nKeys(page: Page, where: string): Promise<void> {

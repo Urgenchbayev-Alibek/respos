@@ -10,13 +10,16 @@ const PAGES: Partial<Record<Role, string[]>> = {
     '/admin/menu', '/admin/kitchen-stations', '/admin/orders', '/admin/inventory', '/admin/recipes', '/admin/suppliers',
     '/admin/purchases', '/admin/payments', '/admin/cash-shifts', '/admin/reports', '/admin/notifications',
     '/admin/audit-logs', '/admin/settings', '/profile',
+    // v2
+    '/admin/customers', '/admin/customers/loyalty', '/admin/delivery', '/admin/tables/qr', '/admin/staff', '/admin/staff/timesheet',
+    '/admin/staff/schedule', '/admin/staff/members', '/admin/staff/devices', '/admin/integrations', '/admin/integrations/outbound',
   ],
-  manager: ['/admin', '/admin/orders', '/admin/reports'],
-  waiter: ['/waiter', '/waiter/orders', '/waiter/reservations', '/profile'],
+  manager: ['/admin', '/admin/orders', '/admin/reports', '/admin/customers', '/admin/delivery', '/admin/staff'],
+  waiter: ['/waiter', '/waiter/orders', '/waiter/reservations', '/waiter/calls', '/profile'],
   cook: ['/kitchen'],
-  cashier: ['/cashier', '/cashier/shift', '/cashier/payments'],
+  cashier: ['/cashier', '/cashier/shift', '/cashier/payments', '/cashier/delivery'],
   stock: ['/stock', '/stock/purchases', '/stock/counts', '/stock/suppliers', '/stock/recipes'],
-  superadmin: ['/platform', '/platform/plans', '/platform/feature-flags', '/platform/system', '/platform/demo-requests'],
+  superadmin: ['/platform', '/platform/plans', '/platform/feature-flags', '/platform/system', '/platform/demo-requests', '/platform/integration-errors'],
 };
 
 for (const [role, paths] of Object.entries(PAGES) as [Role, string[]][]) {

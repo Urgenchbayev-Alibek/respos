@@ -1,6 +1,6 @@
 // v2 E2E: branch menu overrides (F4), stock transfers (F4), purchase suggestions (F4).
 import { randomUUID } from 'node:crypto';
-import { Client, check, eq, money, qty, step } from './lib.mjs';
+import { API, Client, check, eq, money, qty, step } from './lib.mjs';
 
 export const SECOND_BRANCH = 'Ташкент — Чиланзар';
 
@@ -27,6 +27,12 @@ export async function branchSteps(ctx) {
     check((await ctx.managerB2.ok(`/orders/${order.id}`)).id === order.id, 'order not readable in the 2nd branch');
     eq((await ctx.manager.get(`/orders/${order.id}`)).status, 404, 'order of the 2nd branch is not visible in the main branch');
     await ctx.managerB2.post(`/orders/${order.id}/cancel`, { reason: 'e2e override check' }, { expect: 200 });
+    // the guest's QR menu of that branch must show the same price as its POS
+    const slug = (await ctx.admin.ok('/branches')).find((b) => b.id === second.id)?.slug;
+    check(slug, '2nd branch has no public slug');
+    const publicMenu = await fetch(`${API}/public/menu/${slug}`).then((r) => r.json());
+    const publicItem = publicMenu.categories.flatMap((c) => c.items).find((i) => i.id === overridden.id);
+    eq(money(publicItem?.price), money(overridden.price), 'public QR menu price == branch POS price');
     return `${overridden.name}: ${mainItems.get(overridden.id)} → ${overridden.price} in "${SECOND_BRANCH}"`;
   });
 
