@@ -1,5 +1,5 @@
-import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
+import { qrSvg } from '@/shared/lib/qr';
 
 export interface QrCodeProps {
   value: string;
@@ -15,7 +15,7 @@ export function QrCode({ value, alt, size = 200, className }: QrCodeProps) {
 
   useEffect(() => {
     let active = true;
-    QRCode.toString(value, { type: 'svg', margin: 1, errorCorrectionLevel: 'M', color: { dark: '#000000', light: '#ffffff' } })
+    qrSvg(value)
       .then((markup) => {
         if (active) setSvg(markup);
       })

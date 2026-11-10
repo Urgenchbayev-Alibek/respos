@@ -19,6 +19,7 @@
     "reports": "Reports",
     "notifications": "Notifications",
     "auditLogs": "Audit log",
+    "integrations": "Integrations",
     "settings": "Settings"
   },
   "waiter": {

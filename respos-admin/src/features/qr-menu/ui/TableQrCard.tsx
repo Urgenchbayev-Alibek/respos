@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { qrSvg } from '../model/qr';
+import { qrSvg } from '@/shared/lib/qr';
 import styles from './QrSheet.module.css';
 
 export interface TableQrCardProps {

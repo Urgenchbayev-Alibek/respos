@@ -11,6 +11,17 @@ describe('route registry', () => {
     expect(ADMIN_NAV.length).toBeGreaterThanOrEqual(18);
   });
 
+  it('lists the v2 admin modules with their permissions', () => {
+    const byId = Object.fromEntries(ADMIN_NAV.map((item) => [item.id, item.anyOf]));
+    expect(byId).toMatchObject({
+      customers: ['customers.read'],
+      delivery: ['delivery.read'],
+      staff: ['staff.manage'],
+      integrations: ['integrations.manage'],
+    });
+    expect(ADMIN_NAV.map((item) => item.id).slice(-2)).toEqual(['integrations', 'settings']);
+  });
+
   it.each([...ADMIN_NAV, ...WAITER_NAV, ...CASHIER_NAV, ...STOCK_NAV, ...PLATFORM_NAV].map((item) => [item.path]))(
     'every nav item resolves to a registered page: %s',
     (path) => {

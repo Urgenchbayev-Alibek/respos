@@ -113,6 +113,6 @@ Same public slug as the QR menu (F3 `Branch.Slug`, case-insensitive). The earlie
 
 - Admin: `/admin/integrations` (cards per integration: status «Не подключено» / «Подключено» / «Ошибка», form with masked
   secrets, «Отправить тест»), `/admin/integrations/outbound` (delivery log + error log); entry link on `/admin/settings`
-  (sidebar unchanged — `ADMIN_NAV` length test). Platform: `/platform/integration-errors` (nav item added). i18n namespace `integrations`.
+  and the admin sidebar item «Интеграции» (`integrations.manage`, added at merge). Platform: `/platform/integration-errors` (nav item added). i18n namespace `integrations`.
 - Landing: `/booking` «Забронировать стол» (date, guests, slots from availability, name, phone, comment, honeypot, success
   state); branch slug from `VITE_PUBLIC_BRANCH_SLUG` (default `demo`) — when set empty the page shows «Онлайн-бронирование пока не подключено».
