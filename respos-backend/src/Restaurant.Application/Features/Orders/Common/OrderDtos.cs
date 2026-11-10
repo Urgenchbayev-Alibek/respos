@@ -61,6 +61,9 @@ public sealed record OrderDto(
 
     /// <summary>F2: bills ordered by number (empty when not split).</summary>
     public IReadOnlyList<OrderBillDto> Bills { get; init; } = [];
+
+    /// <summary>F3: delivery fee included in <see cref="Total"/> (0 unless <c>type = delivery</c>).</summary>
+    public decimal DeliveryFee { get; init; }
 }
 
 /// <summary>Body item of <c>POST /orders</c> and <c>POST /orders/{id}/items</c>.</summary>

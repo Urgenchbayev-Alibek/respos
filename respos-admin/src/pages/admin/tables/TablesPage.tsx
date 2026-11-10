@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { Plus } from 'lucide-react';
+import { Plus, QrCode } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useDiningAreas } from '@/entities/dining-area/dining-area.queries';
 import { tableKeys, useTables } from '@/entities/table/table.queries';
 import type { TableDto } from '@/entities/table/table.types';
@@ -11,6 +12,7 @@ import { TableFormModal } from '@/features/floor/ui/TableFormModal';
 import { TableRowActions } from '@/features/floor/ui/TableRowActions';
 import { TableTile } from '@/features/floor/ui/TableTile';
 import { PERMISSIONS } from '@/shared/constants/permissions';
+import { ROUTES } from '@/shared/constants/routes';
 import { TABLE_STATUSES, type TableStatus } from '@/shared/constants/statuses';
 import { usePermissions } from '@/shared/hooks/use-permissions';
 import { useRealtimeEvent } from '@/shared/realtime';
@@ -27,6 +29,7 @@ export function TablesPage() {
   const { hasPermission } = usePermissions();
   const canManage = hasPermission(PERMISSIONS.tables.manage);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [view, setView] = useState<View>('floor');
   const [areaId, setAreaId] = useState(ALL_AREAS);
   const [status, setStatus] = useState<TableStatus | ''>('');
@@ -96,9 +99,14 @@ export function TablesPage() {
         description={t('subtitle')}
         actions={
           canManage && (
-            <Button variant="primary" icon={<Plus />} disabled={noAreas} onClick={() => setEditing('new')}>
-              {t('actions.addTable')}
-            </Button>
+            <>
+              <Button icon={<QrCode />} onClick={() => navigate(ROUTES.admin.tableQr)}>
+                {t('qrMenu:sheet.open')}
+              </Button>
+              <Button variant="primary" icon={<Plus />} disabled={noAreas} onClick={() => setEditing('new')}>
+                {t('actions.addTable')}
+              </Button>
+            </>
           )
         }
       />

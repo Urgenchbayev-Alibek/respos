@@ -7,6 +7,8 @@ export interface BranchDto {
   phone: string | null;
   timezone: string;
   isActive: boolean;
+  /** Public QR-menu slug (F3). */
+  slug?: string | null;
 }
 
 export interface BranchInput {

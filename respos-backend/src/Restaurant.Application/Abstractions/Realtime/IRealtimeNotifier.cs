@@ -34,6 +34,9 @@ public static class RealtimeEvents
     public const string PaymentRegistered = "PaymentRegistered";
     public const string NotificationCreated = "NotificationCreated";
     public const string StockLow = "StockLow";
+    public const string DeliveryUpdated = "DeliveryUpdated";
+    public const string WaiterCalled = "WaiterCalled";
+    public const string WaiterCallUpdated = "WaiterCallUpdated";
 }
 
 public static class RealtimeNotifierExtensions

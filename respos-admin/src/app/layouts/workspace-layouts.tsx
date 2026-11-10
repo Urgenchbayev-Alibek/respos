@@ -1,10 +1,16 @@
 import { CASHIER_NAV, PLATFORM_NAV, STOCK_NAV, WAITER_NAV } from '@/app/navigation/workspace.nav';
+import { WaiterCallAlerts } from '@/features/waiter-calls/WaiterCallAlerts';
 import { FullscreenToggle } from '@/widgets/topbar/FullscreenToggle';
 import { WorkspaceLayout } from './WorkspaceLayout/WorkspaceLayout';
 
 /** Waiter workspace: tablet-first, bottom nav on phones, live connection indicator, fullscreen toggle. */
 export function WaiterLayout() {
-  return <WorkspaceLayout workspace="waiter" nav={WAITER_NAV} showConnection topbarExtra={<FullscreenToggle />} />;
+  return (
+    <>
+      <WaiterCallAlerts />
+      <WorkspaceLayout workspace="waiter" nav={WAITER_NAV} showConnection topbarExtra={<FullscreenToggle />} />
+    </>
+  );
 }
 
 export function CashierLayout() {

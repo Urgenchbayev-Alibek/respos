@@ -21,7 +21,8 @@
   },
   "type": {
     "dine_in": "Dine-in",
-    "takeaway": "Takeaway"
+    "takeaway": "Takeaway",
+    "delivery": "Delivery"
   },
   "tableLabel": "Table {{number}}",
   "guests": "Guests: {{guests}}",

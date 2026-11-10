@@ -1,0 +1,97 @@
+{
+  "nav": "Yetkazib berish",
+  "title": "Yetkazib berish",
+  "subtitle": "Yetkazib berish buyurtmalari: qabul qilishdan mijozga topshirishgacha.",
+  "columns": {
+    "new": "Yangi",
+    "accepted": "Qabul qilingan",
+    "cooking": "Tayyorlanmoqda",
+    "ready": "Tayyor",
+    "on_the_way": "Yoʻlda",
+    "done": "Yakunlangan"
+  },
+  "status": {
+    "new": "Yangi",
+    "accepted": "Qabul qilingan",
+    "cooking": "Tayyorlanmoqda",
+    "ready": "Tayyor",
+    "on_the_way": "Yoʻlda",
+    "delivered": "Yetkazildi",
+    "cancelled": "Bekor qilingan"
+  },
+  "actions": {
+    "accepted": "Qabul qilish",
+    "cooking": "Tayyorlanmoqda",
+    "ready": "Tayyor",
+    "on_the_way": "Joʻnatish",
+    "delivered": "Yetkazildi",
+    "cancelled": "Bekor qilish"
+  },
+  "card": {
+    "label": "Yetkazib berish {{number}}",
+    "inStatus": "Joriy holatdagi vaqt",
+    "minutes": "{{count}} daq",
+    "entrance": "{{value}}-podyezd",
+    "floor": "{{value}}-qavat",
+    "apartment": "{{value}}-xonadon",
+    "fee": "Yetkazib berish",
+    "total": "Jami",
+    "remaining": "Toʻlanadi",
+    "paid": "Toʻlangan",
+    "cancelReason": "Bekor qilish sababi: {{reason}}"
+  },
+  "courier": {
+    "none": "Kuryersiz"
+  },
+  "fields": {
+    "customerName": "Mijoz ismi",
+    "customerPhone": "Telefon",
+    "address": "Manzil",
+    "entrance": "Podyezd",
+    "floor": "Qavat",
+    "apartment": "Xonadon",
+    "comment": "Izoh",
+    "courier": "Kuryer"
+  },
+  "create": {
+    "title": "Yangi yetkazib berish",
+    "submit": "Buyurtma yaratish",
+    "cart": "Buyurtma tarkibi",
+    "cartEmpty": "Oʻngdagi menyudan taom tanlang",
+    "preview": "Taxminan: {{amount}} + yetkazib berish (yakuniy summani server hisoblaydi)",
+    "increase": "Koʻproq",
+    "decrease": "Kamroq",
+    "remove": "Olib tashlash",
+    "itemsRequired": "Kamida bitta taom qoʻshing.",
+    "created": "{{number}} buyurtma yaratildi"
+  },
+  "cancel": {
+    "title": "{{number}} yetkazib berish bekor qilinsinmi?",
+    "message": "Buyurtma va uning oshxonadagi pozitsiyalari bekor qilinadi.",
+    "reason": "Bekor qilish sababi"
+  },
+  "couriers": {
+    "title": "Kuryerlar",
+    "empty": "Hozircha kuryerlar yoʻq",
+    "inactive": "Faol emas",
+    "edit": "Tahrirlash: {{name}}",
+    "editTitle": "Kuryerni tahrirlash",
+    "add": "Kuryer qoʻshish",
+    "name": "Ism",
+    "phone": "Telefon",
+    "active": "Faol"
+  },
+  "settings": {
+    "title": "QR-menyu va yetkazib berish",
+    "slug": "Ochiq menyu manzili",
+    "slugHint": "Havola: /menu/{{slug}} — lotin harflari, raqamlar va chiziqchalar",
+    "fee": "Yetkazib berish narxi",
+    "feeHint": "Har bir yangi yetkazib berish buyurtmasiga qoʻshiladi",
+    "openMenu": "Ochiq menyuni ochish",
+    "saved": "Sozlamalar saqlandi"
+  },
+  "empty": {
+    "title": "Yetkazib berish buyurtmalari yoʻq",
+    "description": "«Yangi yetkazib berish» tugmasi bilan buyurtma yarating."
+  }
+}

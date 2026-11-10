@@ -1,0 +1,112 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pickerList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-height: 60vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  break-inside: avoid;
+  page-break-inside: avoid;
+  text-align: center;
+}
+
+.restaurant {
+  font-weight: var(--font-weight-semibold);
+}
+
+.qr {
+  width: 160px;
+  height: 160px;
+}
+
+.qr svg {
+  width: 100%;
+  height: 100%;
+}
+
+.table {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* A4: only the sheet is printed, 3 cards per row, black on white regardless of theme. */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  :global(body *) {
+    visibility: hidden;
+  }
+
+  .sheet,
+  .sheet * {
+    visibility: visible;
+  }
+
+  .sheet {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8mm;
+  }
+
+  .card {
+    border-color: #999;
+    background: #fff;
+    color: #000;
+  }
+
+  .hint {
+    color: #333;
+  }
+}

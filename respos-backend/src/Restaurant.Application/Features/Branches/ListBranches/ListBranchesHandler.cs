@@ -18,7 +18,7 @@ public sealed class ListBranchesHandler(IApplicationDbContext db, ITenantContext
         tenant.RequireOrganizationId();
         var branches = await db.Branches.AsNoTracking()
             .OrderBy(b => b.CreatedAt).ThenBy(b => b.Name)
-            .Select(b => new BranchDto(b.Id, b.Name, b.Address, b.Phone, b.Timezone, b.IsActive))
+            .Select(b => new BranchDto(b.Id, b.Name, b.Address, b.Phone, b.Timezone, b.IsActive) { Slug = b.Slug })
             .ToListAsync(cancellationToken);
         return branches;
     }

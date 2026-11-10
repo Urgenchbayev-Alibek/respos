@@ -15,7 +15,8 @@ public sealed class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
 {
     public CreateOrderValidator()
     {
-        RuleFor(x => x.Type).IsInEnum();
+        RuleFor(x => x.Type).IsInEnum()
+            .NotEqual(OrderType.Delivery).WithMessage("Create delivery orders with POST /delivery/orders.");
         RuleFor(x => x.TableId).NotEmpty().When(x => x.Type == OrderType.DineIn).WithMessage("Dine-in orders require a table.");
         RuleFor(x => x.GuestCount).InclusiveBetween(0, 100);
         RuleFor(x => x.Comment).MaximumLength(1000);

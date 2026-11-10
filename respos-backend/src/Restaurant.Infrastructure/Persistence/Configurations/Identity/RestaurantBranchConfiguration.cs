@@ -28,6 +28,8 @@ internal sealed class RestaurantBranchConfiguration : IEntityTypeConfiguration<R
         builder.Property(e => e.Address).HasMaxLength(ReasonLength);
         builder.Property(e => e.Phone).HasMaxLength(PhoneLength);
         builder.Property(e => e.Timezone).HasMaxLength(CodeLength).IsRequired();
+        builder.Property(e => e.Slug).HasMaxLength(BranchSlug.MaxLength);
+        builder.HasIndex(e => e.Slug).IsUnique();
         builder.HasOne(e => e.Settings).WithOne(s => s.Branch)
             .HasForeignKey<BranchSettings>(s => s.BranchId).OnDelete(DeleteBehavior.Cascade);
     }

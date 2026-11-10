@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Application.Abstractions.Clock;
 using Restaurant.Application.Abstractions.Context;
@@ -15,6 +16,9 @@ namespace Restaurant.Application.Features.Orders.Common;
 public sealed class OrderWriter(
     IApplicationDbContext db, ITenantContext tenant, IClock clock, IRealtimeNotifier realtime, OrderReadService reader)
 {
+    private const int MaxNumberAttempts = 5;
+    private const string UniqueViolation = "23505";
+
     /// <summary>Tracked order of the current branch with items + modifiers (null → 404, also for other tenants).</summary>
     public Task<Order?> LoadAsync(Guid orderId, CancellationToken ct)
     {
@@ -68,6 +72,26 @@ public sealed class OrderWriter(
             branchId = order.BranchId,
             occurredAt = clock.UtcNow,
         });
+
+    /// <summary>
+    /// Saves a newly added order; the unique index (branch, business date, number) + renumber-and-retry make the
+    /// sequential number concurrency-safe.
+    /// </summary>
+    public async Task SaveNewOrderAsync(Order order, DateOnly businessDate, CancellationToken ct)
+    {
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                await db.SaveChangesAsync(ct);
+                return;
+            }
+            catch (DbUpdateException ex) when (attempt < MaxNumberAttempts && ex.InnerException is DbException { SqlState: UniqueViolation })
+            {
+                order.Renumber(await NextNumberAsync(businessDate, ct));
+            }
+        }
+    }
 
     /// <summary>Commits the unit of work and returns the fresh DTO.</summary>
     public async Task<Result<OrderDto>> SaveAndReadAsync(Order order, CancellationToken ct)

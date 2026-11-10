@@ -60,6 +60,7 @@
     "system_protected": "System roles cannot be changed or deleted."
   },
   "order": {
+    "invalid_delivery_fee": "Invalid delivery fee.",
     "invalid_status_transition": "Invalid order status change.",
     "closed": "The order is already closed.",
     "has_payments": "The order has payments — refund them first.",
@@ -155,6 +156,7 @@
     "not_found": "Unit not found."
   },
   "branch": {
+    "slug_taken": "This menu address is already taken.",
     "last_active": "You cannot deactivate the last active branch.",
     "not_found": "Branch not found."
   },
@@ -271,5 +273,23 @@
     "source_branch_required": "This action is performed from the source branch.",
     "destination_branch_required": "A transfer can only be received in the destination branch.",
     "invalid_status_transition": "This transfer status change is not allowed."
+  },
+  "delivery": {
+    "not_found": "Delivery order not found.",
+    "closed": "The delivery is already completed or cancelled.",
+    "courier_required": "Assign a courier first.",
+    "cancel_reason_required": "Enter a cancellation reason.",
+    "items_required": "Add at least one dish.",
+    "invalid_status_transition": "This delivery status change is not allowed."
+  },
+  "courier": {
+    "not_found": "Courier not found.",
+    "inactive": "The courier is inactive."
+  },
+  "public_menu": {
+    "not_found": "Menu not found."
+  },
+  "waiter_call": {
+    "not_found": "Call not found."
   }
 }

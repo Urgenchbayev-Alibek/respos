@@ -47,7 +47,11 @@ public sealed record ReceiptDto(
     DateTime PrintedAt,
     string? Footer,
     bool IsFiscal,
-    string FiscalNotice);
+    string FiscalNotice)
+{
+    /// <summary>Delivery fee included in <see cref="Total"/> (0 unless <c>type = delivery</c>).</summary>
+    public decimal DeliveryFee { get; init; }
+}
 
 /// <summary><c>GET /orders/{id}/receipt</c>: pre-check data (cancelled items excluded), marked "Не является фискальным чеком".</summary>
 public sealed class GetReceiptHandler(IApplicationDbContext db, ITenantContext tenant, IClock clock, OrderReadService reader)
@@ -84,6 +88,9 @@ public sealed class GetReceiptHandler(IApplicationDbContext db, ITenantContext t
             order.Subtotal, order.DiscountType, order.DiscountValue, order.DiscountAmount,
             branch.Service, order.ServiceChargeAmount, branch.Tax, order.TaxAmount, order.Total, order.PaidAmount, order.RemainingAmount,
             order.Payments.Select(p => new ReceiptPaymentDto(p.Method, p.Amount, p.RefundedAmount)).ToList(),
-            order.OpenedAt, order.ClosedAt, clock.UtcNow, branch.Footer, IsFiscal: false, FiscalNotice);
+            order.OpenedAt, order.ClosedAt, clock.UtcNow, branch.Footer, IsFiscal: false, FiscalNotice)
+        {
+            DeliveryFee = order.DeliveryFee,
+        };
     }
 }

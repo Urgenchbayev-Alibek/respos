@@ -11,7 +11,7 @@ public partial class Order
     /// subtotal = sum(lineTotal of non-cancelled items); discount ≤ subtotal;
     /// serviceCharge = round((subtotal − discount) × service%/100, 2);
     /// tax = round((subtotal − discount + serviceCharge) × tax%/100, 2);
-    /// total = subtotal − discount + serviceCharge + tax.
+    /// total = subtotal − discount + serviceCharge + tax + deliveryFee (0 unless delivery, see Order.Delivery.cs).
     /// </summary>
     public void RecalculateTotals(OrderPricingSettings settings)
     {
@@ -25,7 +25,7 @@ public partial class Order
         var discounted = Subtotal - DiscountAmount;
         ServiceChargeAmount = Money.Percent(discounted, settings.ServiceChargePercent);
         TaxAmount = Money.Percent(discounted + ServiceChargeAmount, settings.TaxPercent);
-        Total = discounted + ServiceChargeAmount + TaxAmount;
+        Total = discounted + ServiceChargeAmount + TaxAmount + DeliveryFee;
     }
 
     public void ApplyDiscount(DiscountType type, decimal value, OrderPricingSettings settings)

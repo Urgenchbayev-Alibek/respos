@@ -21,7 +21,8 @@
   },
   "type": {
     "dine_in": "Zalda",
-    "takeaway": "Olib ketish"
+    "takeaway": "Olib ketish",
+    "delivery": "Yetkazib berish"
   },
   "tableLabel": "{{number}}-stol",
   "guests": "Mehmonlar: {{guests}}",

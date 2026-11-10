@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { useBranches, useBranchSettings } from '@/entities/branch/branch.queries';
 import { BranchSettingsForm } from '@/features/branches/ui/BranchSettingsForm';
+import { DeliverySettingsCard } from '@/features/delivery/ui/DeliverySettingsCard';
 import { ROUTES } from '@/shared/constants/routes';
 import { ErrorState, PageHeader, PageLoader } from '@/shared/ui';
 
@@ -27,6 +28,7 @@ export function BranchSettingsPage() {
       {settings.isLoading && <PageLoader />}
       {settings.error && <ErrorState error={settings.error} onRetry={() => void settings.refetch()} />}
       {settings.data && <BranchSettingsForm key={branchId} branchId={branchId} settings={settings.data} />}
+      {settings.data && <DeliverySettingsCard branchId={branchId} />}
     </>
   );
 }

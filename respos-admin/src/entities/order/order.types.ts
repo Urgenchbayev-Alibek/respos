@@ -5,8 +5,8 @@ import { ORDER_STATUSES, type OrderItemStatus, type OrderStatus } from '@/shared
 import type { Guid, Iso8601 } from '@/shared/types/api-response';
 import type { PageParams } from '@/shared/types/pagination';
 
-export type OrderType = 'dine_in' | 'takeaway';
-export const ORDER_TYPES: readonly OrderType[] = ['dine_in', 'takeaway'];
+export type OrderType = 'dine_in' | 'takeaway' | 'delivery';
+export const ORDER_TYPES: readonly OrderType[] = ['dine_in', 'takeaway', 'delivery'];
 
 /** Backend `Orders/Common/OrderDtos.cs` OrderItemDto. */
 export interface OrderItemDto {

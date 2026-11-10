@@ -7,7 +7,10 @@ namespace Restaurant.Application.Features.Branches.Common;
 
 public sealed record BranchDto(Guid Id, string Name, string? Address, string? Phone, string Timezone, bool IsActive)
 {
-    public static BranchDto From(RestaurantBranch b) => new(b.Id, b.Name, b.Address, b.Phone, b.Timezone, b.IsActive);
+    /// <summary>Public QR-menu slug (<c>/menu/{slug}</c>); edited via <c>PUT /branches/{id}/delivery-settings</c>.</summary>
+    public string? Slug { get; init; }
+
+    public static BranchDto From(RestaurantBranch b) => new(b.Id, b.Name, b.Address, b.Phone, b.Timezone, b.IsActive) { Slug = b.Slug };
 }
 
 public sealed record BranchSettingsDto(

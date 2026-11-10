@@ -20,6 +20,7 @@ public static class OrderErrors
     public static readonly Error InvalidRefundAmount = Error.BusinessRule("payment.invalid_refund_amount", "Refund amount is invalid.");
 
     public static readonly Error MenuItemUnavailable = Error.BusinessRule("order.menu_item_unavailable", "The menu item is archived or not available now.");
+    public static readonly Error InvalidDeliveryFee = Error.Validation("order.invalid_delivery_fee", "Delivery fee is invalid for this order.");
     public static readonly Error NotDineIn = Error.BusinessRule("order.not_dine_in", "Only dine-in orders can be moved to another table.");
     public static readonly Error TableNotFound = Error.NotFound("table.not_found", "Table not found.");
     public static readonly Error TableUnavailable = Error.BusinessRule("table.unavailable", "The table is unavailable.");
