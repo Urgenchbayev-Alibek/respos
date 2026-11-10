@@ -11,9 +11,9 @@ import styles from './BookingForm.module.css';
 const GUEST_OPTIONS = Array.from({ length: 20 }, (_, i) => i + 1);
 
 /** Online table reservation: date + guests → free slots → contact details → pending reservation. */
-export function BookingForm({ branchId }: { branchId: string }) {
+export function BookingForm({ branchSlug }: { branchSlug: string }) {
   const { t } = useTranslation();
-  const booking = useBooking(branchId);
+  const booking = useBooking(branchSlug);
   const { values, errors, formError, submitting, created, availability, availabilityState } = booking;
   const successRef = useRef<HTMLHeadingElement>(null);
 

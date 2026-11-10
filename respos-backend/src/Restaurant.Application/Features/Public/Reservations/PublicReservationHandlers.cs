@@ -29,9 +29,12 @@ public sealed class PublicBookingContext(IApplicationDbContext db, IOptions<Rese
 
     public DateTime NotBeforeUtc => clock.UtcNow.AddMinutes(Options.MinLeadMinutes);
 
-    public async Task<RestaurantBranch?> FindBranchAsync(Guid branchId, CancellationToken ct) =>
-        await db.Branches.IgnoreQueryFilters().AsNoTracking()
-            .FirstOrDefaultAsync(b => b.Id == branchId && b.IsActive && b.Organization!.Status == OrganizationStatus.Active, ct);
+    public async Task<RestaurantBranch?> FindBranchAsync(string branchSlug, CancellationToken ct)
+    {
+        var slug = branchSlug.Trim().ToLowerInvariant();
+        return await db.Branches.IgnoreQueryFilters().AsNoTracking()
+            .FirstOrDefaultAsync(b => b.Slug == slug && b.IsActive && b.Organization!.Status == OrganizationStatus.Active, ct);
+    }
 
     /// <summary>Date must be between branch-local today and today + MaxDaysAhead.</summary>
     public bool IsBookableDate(DateOnly date, TimeZoneInfo zone)
@@ -46,7 +49,7 @@ public sealed class PublicAvailabilityHandler(PublicBookingContext booking, Rese
 {
     public async Task<Result<PublicAvailabilityDto>> HandleAsync(PublicAvailabilityQuery request, CancellationToken cancellationToken)
     {
-        var branch = await booking.FindBranchAsync(request.BranchId, cancellationToken);
+        var branch = await booking.FindBranchAsync(request.BranchSlug, cancellationToken);
         if (branch is null)
         {
             return BranchErrors.NotFound;
@@ -62,7 +65,7 @@ public sealed class PublicAvailabilityHandler(PublicBookingContext booking, Rese
             ? []
             : await availability.SlotsAsync(branch.OrganizationId, branch.Id, request.Date, zone, booking.Grid, request.Guests,
                 booking.NotBeforeUtc, cancellationToken);
-        return new PublicAvailabilityDto(branch.Id, branch.Name, request.Date, branch.Timezone, booking.Grid.DurationMinutes,
+        return new PublicAvailabilityDto(branch.Slug!, branch.Name, request.Date, branch.Timezone, booking.Grid.DurationMinutes,
             booking.Options.MaxOnlineGuests, slots.Select(s => new PublicSlotDto(s.Time, s.StartsAt, s.FreeTables.Count > 0)).ToList());
     }
 }
@@ -85,7 +88,7 @@ public sealed class CreatePublicReservationHandler(
 
     public async Task<Result<PublicReservationCreatedDto>> HandleAsync(CreatePublicReservationCommand request, CancellationToken cancellationToken)
     {
-        var branch = await booking.FindBranchAsync(request.BranchId, cancellationToken);
+        var branch = await booking.FindBranchAsync(request.BranchSlug, cancellationToken);
         if (branch is null)
         {
             return BranchErrors.NotFound;

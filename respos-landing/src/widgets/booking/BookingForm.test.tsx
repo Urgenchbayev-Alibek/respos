@@ -5,10 +5,10 @@ import { BookingPage } from '@/pages/BookingPage';
 import { jsonResponse, renderWithRouter } from '@/test/renderApp';
 import { BookingForm } from './BookingForm';
 
-const BRANCH = '11111111-2222-3333-4444-555555555555';
+const BRANCH = 'demo';
 
 const availability = {
-  branchId: BRANCH,
+  branchSlug: BRANCH,
   branchName: 'Центр',
   date: '2026-12-01',
   timezone: 'Asia/Tashkent',
@@ -45,7 +45,7 @@ describe('BookingForm', () => {
   it('shows free slots, books and shows the pending success state', async () => {
     const fetchMock = mockApi(() => ok(created));
     const user = userEvent.setup();
-    renderWithRouter(<BookingForm branchId={BRANCH} />);
+    renderWithRouter(<BookingForm branchSlug={BRANCH} />);
 
     expect(await screen.findByRole('radio', { name: /18:00/ })).toBeDisabled();
     await fill(user);
@@ -61,7 +61,7 @@ describe('BookingForm', () => {
   it('validates time, name and phone without sending', async () => {
     const fetchMock = mockApi(() => ok(created));
     const user = userEvent.setup();
-    renderWithRouter(<BookingForm branchId={BRANCH} />);
+    renderWithRouter(<BookingForm branchSlug={BRANCH} />);
     await screen.findByRole('radio', { name: '19:00' });
     await user.click(screen.getByRole('button', { name: 'Забронировать' }));
 
@@ -74,7 +74,7 @@ describe('BookingForm', () => {
   it('asks to pick another time when the slot was just taken', async () => {
     mockApi(() => jsonResponse({ status: 409, code: 'reservation.slot_unavailable', title: 'No free table' }, 409));
     const user = userEvent.setup();
-    renderWithRouter(<BookingForm branchId={BRANCH} />);
+    renderWithRouter(<BookingForm branchSlug={BRANCH} />);
     await fill(user);
     await user.click(screen.getByRole('button', { name: 'Забронировать' }));
 
@@ -83,7 +83,7 @@ describe('BookingForm', () => {
   });
 
   it('shows a friendly notice when the branch is not configured', () => {
-    renderWithRouter(<BookingPage branchId={null} />);
+    renderWithRouter(<BookingPage branchSlug={null} />);
     expect(screen.getByRole('heading', { name: 'Онлайн-бронирование пока не подключено' })).toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
   });

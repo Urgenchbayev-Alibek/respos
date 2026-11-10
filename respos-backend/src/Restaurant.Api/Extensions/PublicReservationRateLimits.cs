@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace Restaurant.Api.Extensions;
 
 /// <summary>
-/// F7 rate limits for anonymous reservation endpoints, partitioned per client IP AND branch:
+/// F7 rate limits for anonymous reservation endpoints, partitioned per client IP AND branch slug:
 /// <c>RateLimiting:PublicReservationsPerHour</c> (default 10) for POST, <c>RateLimiting:PublicAvailabilityPerMinute</c> (60) for GET.
 /// </summary>
 public static class PublicReservationRateLimits
@@ -27,7 +27,7 @@ public static class PublicReservationRateLimits
     }
 
     private static string Key(HttpContext http) =>
-        RateLimitingExtensions.ClientIp(http) + "|" + (http.Request.RouteValues["branchId"]?.ToString() ?? string.Empty);
+        RateLimitingExtensions.ClientIp(http) + "|" + ((http.Request.RouteValues["branchSlug"]?.ToString() ?? string.Empty).ToLowerInvariant());
 
     private static FixedWindowRateLimiterOptions Window(int permits, TimeSpan window) => new()
     {

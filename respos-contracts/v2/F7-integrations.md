@@ -67,14 +67,14 @@ IntegrationErrorDto = { id, organizationId, organizationName /* platform only */
   Free = active, non-archived, not `unavailable` table with `capacity ≥ guests` and no **pending/confirmed/seated** reservation
   overlapping `[startsAt, endsAt)` (half-open, BR-5.2). Slots before "now" have no free tables.
 
-### Public online reservations (anonymous) — keyed by **branch id** for now
+### Public online reservations (anonymous) — keyed by the **branch slug**
 
-> The orchestrator will switch these routes to the branch slug once `Branch.Slug` (F3) is merged:
-> `/public/branches/{branchId}/…` → `/public/reservations/{branchSlug}` (handlers only need a branch lookup change).
+Same public slug as the QR menu (F3 `Branch.Slug`, case-insensitive). The earlier id-keyed routes were removed at merge
+(a GUID in the path → 404 `branch.not_found`); the response carries `branchSlug` instead of `branchId`.
 
-- `GET /public/branches/{branchId}/availability?date=&guests=` (rate limit `RateLimiting:PublicAvailabilityPerMinute`, 60/min per IP+branch) →
-  `{ branchId, branchName, date, timezone, durationMinutes, maxGuests, slots: { time, startsAt, available }[] }` (no table data).
-- `POST /public/branches/{branchId}/reservations` (rate limit `RateLimiting:PublicReservationsPerHour`, 10/hour per IP+branch → 429 `rate_limit.exceeded`)
+- `GET /public/branches/{branchSlug}/availability?date=&guests=` (rate limit `RateLimiting:PublicAvailabilityPerMinute`, 60/min per IP+slug) →
+  `{ branchSlug, branchName, date, timezone, durationMinutes, maxGuests, slots: { time, startsAt, available }[] }` (no table data).
+- `POST /public/branches/{branchSlug}/reservations` (rate limit `RateLimiting:PublicReservationsPerHour`, 10/hour per IP+slug → 429 `rate_limit.exceeded`)
   `{ date: 'YYYY-MM-DD', time: 'HH:mm' (branch-local), guests, name, phone, comment?, website /* honeypot */ }` → **201**
   `{ reservationId, status: 'pending', startsAt, endsAt, guests, branchName }`.
   Creates a `pending` reservation on the smallest free table that fits (per-branch advisory lock), notifies branch users
@@ -115,4 +115,4 @@ IntegrationErrorDto = { id, organizationId, organizationName /* platform only */
   secrets, «Отправить тест»), `/admin/integrations/outbound` (delivery log + error log); entry link on `/admin/settings`
   (sidebar unchanged — `ADMIN_NAV` length test). Platform: `/platform/integration-errors` (nav item added). i18n namespace `integrations`.
 - Landing: `/booking` «Забронировать стол» (date, guests, slots from availability, name, phone, comment, honeypot, success
-  state); branch from `VITE_PUBLIC_BRANCH_ID` — when empty the page shows «Онлайн-бронирование пока не подключено».
+  state); branch slug from `VITE_PUBLIC_BRANCH_SLUG` (default `demo`) — when set empty the page shows «Онлайн-бронирование пока не подключено».

@@ -9,11 +9,11 @@ using Restaurant.Domain.Enums;
 
 namespace Restaurant.Application.Features.Public.Reservations;
 
-/// <summary><c>GET /public/branches/{branchId}/availability?date=&amp;guests=</c> (anonymous).</summary>
+/// <summary><c>GET /public/branches/{branchSlug}/availability?date=&amp;guests=</c> (anonymous; slug = F3 <c>Branch.Slug</c>).</summary>
 public sealed record PublicAvailabilityQuery
 {
     [JsonIgnore]
-    public Guid BranchId { get; init; }
+    public string BranchSlug { get; init; } = string.Empty;
     public DateOnly Date { get; init; }
     public int Guests { get; init; } = 2;
 }
@@ -31,17 +31,17 @@ public sealed class PublicAvailabilityQueryValidator : AbstractValidator<PublicA
 public sealed record PublicSlotDto(string Time, DateTime StartsAt, bool Available);
 
 public sealed record PublicAvailabilityDto(
-    Guid BranchId, string BranchName, DateOnly Date, string Timezone, int DurationMinutes, int MaxGuests, IReadOnlyList<PublicSlotDto> Slots);
+    string BranchSlug, string BranchName, DateOnly Date, string Timezone, int DurationMinutes, int MaxGuests, IReadOnlyList<PublicSlotDto> Slots);
 
 /// <summary>
-/// <c>POST /public/branches/{branchId}/reservations</c>. <c>date</c> + <c>time</c> are branch-local (<c>YYYY-MM-DD</c>, <c>HH:mm</c>).
+/// <c>POST /public/branches/{branchSlug}/reservations</c>. <c>date</c> + <c>time</c> are branch-local (<c>YYYY-MM-DD</c>, <c>HH:mm</c>).
 /// <c>website</c> is a honeypot: when filled the request is answered like a success but nothing is stored.
 /// </summary>
 public sealed record CreatePublicReservationCommand(
     DateOnly Date, string Time, int Guests, string Name, string Phone, string? Comment, string? Website)
 {
     [JsonIgnore]
-    public Guid BranchId { get; init; }
+    public string BranchSlug { get; init; } = string.Empty;
 
     public TimeOnly? LocalTime =>
         TimeOnly.TryParseExact(Time, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var t) ? t : null;

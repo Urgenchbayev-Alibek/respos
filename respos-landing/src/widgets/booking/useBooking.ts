@@ -59,7 +59,7 @@ const errorKeyFor = (error: unknown): BookingFormError => {
   return error instanceof NetworkError ? 'booking.errors.network' : 'booking.errors.server';
 };
 
-export function useBooking(branchId: string) {
+export function useBooking(branchSlug: string) {
   const { i18n } = useTranslation();
   const [values, setValues] = useState<BookingValues>(emptyValues);
   const [errors, setErrors] = useState<BookingErrors>({});
@@ -77,14 +77,14 @@ export function useBooking(branchId: string) {
   useEffect(() => {
     if (!values.date) return undefined;
     const controller = new AbortController();
-    fetchAvailability(branchId, values.date, Number(values.guests), controller.signal)
+    fetchAvailability(branchSlug, values.date, Number(values.guests), controller.signal)
       .then((result) => setLoaded({ key: requestKey, data: result }))
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return;
         setLoaded({ key: requestKey, data: null });
       });
     return () => controller.abort();
-  }, [branchId, values.date, values.guests, requestKey]);
+  }, [branchSlug, values.date, values.guests, requestKey]);
 
   const set = (field: keyof BookingValues, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value, ...(field === 'date' || field === 'guests' ? { time: '' } : {}) }));
@@ -109,7 +109,7 @@ export function useBooking(branchId: string) {
     setFormError(null);
     setSubmitting(true);
     try {
-      const result = await createPublicReservation(branchId, {
+      const result = await createPublicReservation(branchSlug, {
         date: values.date,
         time: values.time,
         guests: Number(values.guests),

@@ -10,8 +10,8 @@ import { BookingForm } from '@/widgets/booking/BookingForm';
 import bookingStyles from '@/widgets/booking/BookingForm.module.css';
 import styles from './Pages.module.css';
 
-/** «Забронировать стол». The branch comes from VITE_PUBLIC_BRANCH_ID (switches to the branch slug once it exists). */
-export function BookingPage({ branchId = env.publicBranchId }: { branchId?: string | null }) {
+/** «Забронировать стол». The branch is the public slug from VITE_PUBLIC_BRANCH_SLUG (default `demo`; empty → notice). */
+export function BookingPage({ branchSlug = env.publicBranchSlug }: { branchSlug?: string | null }) {
   const { t } = useTranslation();
   usePageMeta(t('meta.booking.title'), t('meta.booking.description'));
   return (
@@ -19,8 +19,8 @@ export function BookingPage({ branchId = env.publicBranchId }: { branchId?: stri
       <Section headingLevel="h1" title={t('booking.title')} lead={t('booking.lead')} />
       <Container className={styles.pageBody}>
         <div className={styles.formCard}>
-          {branchId ? (
-            <BookingForm branchId={branchId} />
+          {branchSlug ? (
+            <BookingForm branchSlug={branchSlug} />
           ) : (
             <div className={bookingStyles.notice} role="status">
               <CalendarX aria-hidden="true" width={40} height={40} />

@@ -33,7 +33,7 @@ export interface PublicSlot {
 }
 
 export interface PublicAvailability {
-  branchId: string;
+  branchSlug: string;
   branchName: string;
   date: string;
   timezone: string;
@@ -62,14 +62,14 @@ export interface PublicReservationCreated {
   branchName: string;
 }
 
-const branchPath = (branchId: string) => `/public/branches/${encodeURIComponent(branchId)}`;
+const branchPath = (branchSlug: string) => `/public/branches/${encodeURIComponent(branchSlug)}`;
 
-export const fetchAvailability = (branchId: string, date: string, guests: number, signal?: AbortSignal): Promise<PublicAvailability> =>
-  apiRequest<PublicAvailability>(`${branchPath(branchId)}/availability?date=${encodeURIComponent(date)}&guests=${guests}`, { signal });
+export const fetchAvailability = (branchSlug: string, date: string, guests: number, signal?: AbortSignal): Promise<PublicAvailability> =>
+  apiRequest<PublicAvailability>(`${branchPath(branchSlug)}/availability?date=${encodeURIComponent(date)}&guests=${guests}`, { signal });
 
 export const createPublicReservation = (
-  branchId: string,
+  branchSlug: string,
   payload: PublicReservationPayload,
   language?: string,
 ): Promise<PublicReservationCreated> =>
-  apiRequest<PublicReservationCreated>(`${branchPath(branchId)}/reservations`, { method: 'POST', body: payload, language });
+  apiRequest<PublicReservationCreated>(`${branchPath(branchSlug)}/reservations`, { method: 'POST', body: payload, language });

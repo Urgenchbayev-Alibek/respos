@@ -28,13 +28,22 @@ public sealed class PublicReservationTests(ApiFactory factory) : ApiTestBase(fac
         return (org, owner);
     }
 
-    private Task<HttpResponseMessage> BookAsync(Guid branchId, string time, string phone = "90 123 45 67", string? website = null, string? date = null) =>
-        CreateClient().PostAsJsonAsync($"/api/v1/public/branches/{branchId}/reservations",
+    /// <summary>Public routes are keyed by the branch slug (generated on branch creation, F3).</summary>
+    private async Task<string> SlugAsync(Guid branchId)
+    {
+        var slug = string.Empty;
+        await WithDbAsync(async (db, _) =>
+            slug = await db.Branches.IgnoreQueryFilters().Where(b => b.Id == branchId).Select(b => b.Slug!).SingleAsync());
+        return slug;
+    }
+
+    private async Task<HttpResponseMessage> BookAsync(Guid branchId, string time, string phone = "90 123 45 67", string? website = null, string? date = null) =>
+        await CreateClient().PostAsJsonAsync($"/api/v1/public/branches/{await SlugAsync(branchId)}/reservations",
             new { date = date ?? BookingDate, time, guests = 2, name = "Гость", phone, comment = "Окно", website }, Json);
 
     private async Task<Dictionary<string, bool>> SlotsAsync(Guid branchId)
     {
-        var body = await ReadJsonAsync(await CreateClient().GetAsync($"/api/v1/public/branches/{branchId}/availability?date={BookingDate}&guests=2"));
+        var body = await ReadJsonAsync(await CreateClient().GetAsync($"/api/v1/public/branches/{await SlugAsync(branchId)}/availability?date={BookingDate}&guests=2"));
         return body.GetProperty("slots").EnumerateArray().ToDictionary(s => s.GetProperty("time").GetString()!, s => s.GetProperty("available").GetBoolean());
     }
 
@@ -111,7 +120,10 @@ public sealed class PublicReservationTests(ApiFactory factory) : ApiTestBase(fac
         (await ReadErrorCodeAsync(past)).Should().Be("reservation.invalid_date");
         (await ReadErrorCodeAsync(await BookAsync(org.BranchId, "19:10"))).Should().Be("reservation.invalid_time");
         (await ReadErrorCodeAsync(await BookAsync(org.BranchId, "03:00"))).Should().Be("reservation.invalid_time");
-        (await BookAsync(Guid.NewGuid(), "19:00")).StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var unknown = await CreateClient().PostAsJsonAsync("/api/v1/public/branches/no-such-branch/reservations",
+            new { date = BookingDate, time = "19:00", guests = 2, name = "Гость", phone = "901234567" }, Json);
+        unknown.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        (await ReadErrorCodeAsync(unknown)).Should().Be("branch.not_found");
     }
 
     [Fact]
@@ -135,9 +147,15 @@ public sealed class PublicReservationTests(ApiFactory factory) : ApiTestBase(fac
     public async Task Public_availability_never_exposes_table_ids()
     {
         var (org, _) = await SetupAsync(tables: 2);
-        var text = await (await CreateClient().GetAsync($"/api/v1/public/branches/{org.BranchId}/availability?date={BookingDate}&guests=2"))
+        var slug = await SlugAsync(org.BranchId);
+        var text = await (await CreateClient().GetAsync($"/api/v1/public/branches/{slug.ToUpperInvariant()}/availability?date={BookingDate}&guests=2"))
             .Content.ReadAsStringAsync();
         var json = JsonDocument.Parse(text).RootElement;
+        json.GetProperty("branchSlug").GetString().Should().Be(slug, "slugs are case-insensitive");
+        text.Should().NotContain(org.BranchId.ToString(), "the public API never needs internal ids");
+        var byId = await CreateClient().GetAsync($"/api/v1/public/branches/{org.BranchId}/availability?date={BookingDate}&guests=2");
+        byId.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        (await ReadErrorCodeAsync(byId)).Should().Be("branch.not_found");
         json.GetProperty("slots")[0].EnumerateObject().Select(p => p.Name).Should().BeEquivalentTo("time", "startsAt", "available");
         text.Should().NotContain("freeTables");
     }
