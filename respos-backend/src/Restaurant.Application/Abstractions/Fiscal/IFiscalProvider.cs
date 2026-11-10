@@ -11,7 +11,7 @@ public interface IFiscalProvider
 {
     string Code { get; }
 
-    IntegrationStatus Status { get; }
+    PaymentProviderStatus Status { get; }
 
     Task<FiscalReceiptResult> RegisterAsync(FiscalReceiptRequest request, CancellationToken cancellationToken = default);
 }

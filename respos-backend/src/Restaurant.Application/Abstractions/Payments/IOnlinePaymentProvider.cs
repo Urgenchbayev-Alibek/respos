@@ -19,7 +19,7 @@ public sealed record ProviderCallbackResponse(int StatusCode, string Body, strin
 public interface IOnlinePaymentProvider : IPaymentProvider
 {
     /// <summary>NotConnected when credentials are missing (or the adapter is a skeleton); Test / Connected otherwise.</summary>
-    IntegrationStatus Status { get; }
+    PaymentProviderStatus Status { get; }
 
     /// <summary>False for adapter skeletons that must not be enabled (Uzum).</summary>
     bool IsImplemented { get; }

@@ -15,7 +15,7 @@ internal sealed class UzumProvider : OnlineProviderBase, IOnlinePaymentProvider
 
     public override string Code => ProviderCode;
 
-    public IntegrationStatus Status => IntegrationStatus.NotConnected;
+    public PaymentProviderStatus Status => PaymentProviderStatus.NotConnected;
 
     public bool IsImplemented => false;
 

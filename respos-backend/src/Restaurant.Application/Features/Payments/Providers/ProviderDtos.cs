@@ -9,14 +9,14 @@ namespace Restaurant.Application.Features.Payments.Providers;
 /// </summary>
 public sealed record PaymentProviderDto(
     string Code,
-    IntegrationStatus Status,
+    PaymentProviderStatus Status,
     bool IsImplemented,
     bool IsConfigured,
     bool IsEnabled,
     bool IsAvailable,
     string CallbackPath);
 
-public sealed record FiscalStatusDto(string Code, IntegrationStatus Status);
+public sealed record FiscalStatusDto(string Code, PaymentProviderStatus Status);
 
 /// <summary>Provider-initiated payment. <c>paymentUrl</c> is also the QR payload. <c>totalAmount = amount + tipAmount</c>.</summary>
 public sealed record PaymentIntentDto(

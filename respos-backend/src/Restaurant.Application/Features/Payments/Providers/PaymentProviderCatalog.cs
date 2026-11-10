@@ -17,7 +17,7 @@ public sealed class PaymentProviderCatalog(IEnumerable<IOnlinePaymentProvider> p
         providers.FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
 
     public static bool IsUsable(IOnlinePaymentProvider provider) =>
-        provider.IsImplemented && provider.Status != IntegrationStatus.NotConnected;
+        provider.IsImplemented && provider.Status != PaymentProviderStatus.NotConnected;
 
     public async Task<IReadOnlyList<PaymentProviderDto>> ListAsync(CancellationToken ct)
     {
@@ -29,8 +29,8 @@ public sealed class PaymentProviderCatalog(IEnumerable<IOnlinePaymentProvider> p
         return providers.Select(p =>
         {
             var isEnabled = enabled.Contains(p.Code);
-            return new PaymentProviderDto(p.Code, p.IsImplemented ? p.Status : IntegrationStatus.NotConnected, p.IsImplemented,
-                p.Status != IntegrationStatus.NotConnected, isEnabled, isEnabled && IsUsable(p), string.Format(null, CallbackPathTemplate, p.Code));
+            return new PaymentProviderDto(p.Code, p.IsImplemented ? p.Status : PaymentProviderStatus.NotConnected, p.IsImplemented,
+                p.Status != PaymentProviderStatus.NotConnected, isEnabled, isEnabled && IsUsable(p), string.Format(null, CallbackPathTemplate, p.Code));
         }).ToList();
     }
 

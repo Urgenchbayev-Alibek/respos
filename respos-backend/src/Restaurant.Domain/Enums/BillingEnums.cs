@@ -9,4 +9,4 @@ public enum OrderBillStatus { Open, Paid }
 public enum PaymentIntentStatus { Pending, Completed, Cancelled }
 
 /// <summary>Honest integration status shown in UI: «Не подключено» / «Тестовый режим» / «Подключено».</summary>
-public enum IntegrationStatus { NotConnected, Test, Connected }
+public enum PaymentProviderStatus { NotConnected, Test, Connected }

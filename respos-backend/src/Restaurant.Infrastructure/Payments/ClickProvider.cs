@@ -36,8 +36,8 @@ internal sealed class ClickProvider(IOptions<PaymentProvidersOptions> options, P
 
     public override string Code => ProviderCode;
 
-    public IntegrationStatus Status =>
-        !Config.IsConfigured ? IntegrationStatus.NotConnected : Config.TestMode ? IntegrationStatus.Test : IntegrationStatus.Connected;
+    public PaymentProviderStatus Status =>
+        !Config.IsConfigured ? PaymentProviderStatus.NotConnected : Config.TestMode ? PaymentProviderStatus.Test : PaymentProviderStatus.Connected;
 
     public bool IsImplemented => true;
 

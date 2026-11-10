@@ -8,7 +8,7 @@ internal sealed class NoFiscalProvider : IFiscalProvider
 {
     public string Code => "none";
 
-    public IntegrationStatus Status => IntegrationStatus.NotConnected;
+    public PaymentProviderStatus Status => PaymentProviderStatus.NotConnected;
 
     public Task<FiscalReceiptResult> RegisterAsync(FiscalReceiptRequest request, CancellationToken cancellationToken = default) =>
         Task.FromResult(new FiscalReceiptResult(false, null, "fiscal.not_connected"));
