@@ -70,7 +70,7 @@ public sealed class LoyaltySettingsController : ApiControllerBase
         OkOrProblem(await handler.HandleAsync(new GetLoyaltySettingsQuery(), ct));
 
     [HttpPut]
-    [HasPermission(Permissions.Customers.Manage)]
+    [HasPermission(Permissions.Settings.Manage)]
     [ProducesResponseType<LoyaltySettingsDto>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(
         [FromBody] UpdateLoyaltySettingsCommand command, [FromServices] UpdateLoyaltySettingsHandler handler, CancellationToken ct) =>

@@ -109,6 +109,12 @@ public sealed class PinLoginTests(ApiFactory factory) : ApiTestBase(factory)
         (await ClientWithBranch(session, org.BranchId).GetAsync("/api/v1/staff/time-clock/me")).StatusCode.Should().Be(HttpStatusCode.OK);
         var other = await ClientWithBranch(session, secondBranch).GetAsync("/api/v1/staff/time-clock/me");
         other.StatusCode.Should().Be(HttpStatusCode.Forbidden, "PIN session is bound to the device branch");
+        foreach (var url in new[] { "/api/v1/orders", "/api/v1/delivery/orders", "/api/v1/waiter-calls", "/api/v1/menu/pos" })
+        {
+            (await session.GetAsync(url)).StatusCode.Should().Be(HttpStatusCode.Forbidden, $"{url} of another branch (v2 modules share the scope)");
+        }
+
+        (await ClientWithBranch(session, org.BranchId).GetAsync("/api/v1/delivery/orders")).StatusCode.Should().Be(HttpStatusCode.OK);
 
         // The PIN session refreshes on the device (device cookie present) …
         (await device.PostAsync($"{Auth}/refresh", null)).StatusCode.Should().Be(HttpStatusCode.OK);

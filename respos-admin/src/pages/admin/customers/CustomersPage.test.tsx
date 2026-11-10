@@ -63,7 +63,7 @@ describe('LoyaltySettingsPage', () => {
         return HttpResponse.json(body);
       }),
     );
-    const auth = makeAuth(makeUser({ permissions: ['customers.read', 'customers.manage'] }));
+    const auth = makeAuth(makeUser({ permissions: ['customers.read', 'settings.manage'] }));
     renderWithProviders(<LoyaltySettingsPage />, { auth });
     const user = userEvent.setup();
 
@@ -78,5 +78,18 @@ describe('LoyaltySettingsPage', () => {
       expect(saved).toEqual({ isEnabled: true, earnPercent: 7, maxRedeemPercent: 30, minOrderAmount: 0, pointsExpiryDays: 90 }),
     );
     expect(await screen.findByText('Настройки сохранены')).toBeInTheDocument();
+  });
+
+  it('is read-only with customers.manage alone (program changes need settings.manage)', async () => {
+    server.use(
+      http.get(api('/loyalty/settings'), () =>
+        HttpResponse.json({ isEnabled: true, earnPercent: 5, maxRedeemPercent: 30, minOrderAmount: 0, pointsExpiryDays: null }),
+      ),
+    );
+    const auth = makeAuth(makeUser({ permissions: ['customers.read', 'customers.manage'] }));
+    renderWithProviders(<LoyaltySettingsPage />, { auth });
+
+    expect(await screen.findByRole('switch')).toBeDisabled();
+    expect(screen.queryByRole('button', { name: 'Сохранить' })).not.toBeInTheDocument();
   });
 });

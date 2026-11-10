@@ -26,7 +26,7 @@ Stats are computed in SQL from **paid** orders of the org linked to the guest: v
 
 - `GET /loyalty/settings` [customers.read | customers.manage | loyalty.redeem] → `LoyaltySettingsDto { isEnabled, earnPercent, maxRedeemPercent, minOrderAmount, pointsExpiryDays|null }`
   (defaults until saved: disabled, 5 %, 30 %, 0, null)
-- `PUT /loyalty/settings` [customers.manage] same body → 200. Percents 0–100, minOrderAmount ≥ 0, expiry 1–3650 days or null (never). Audited `loyalty.settings_updated`.
+- `PUT /loyalty/settings` [settings.manage] (owner/admin — waiter, cashier and manager hold `customers.manage` but must not change the program) same body → 200. Percents 0–100, minOrderAmount ≥ 0, expiry 1–3650 days or null (never). Audited `loyalty.settings_updated`.
 
 Rules: earn = `floor(order.total × earnPercent / 100)` on full payment; redeem ≤ `floor((subtotal − manual discount) × maxRedeemPercent / 100)`,
 ≤ balance, ≤ remaining due; both require `subtotal ≥ minOrderAmount` and the program enabled.
@@ -71,6 +71,6 @@ Realtime: every mutation above sends `OrderUpdated` after commit (no new events)
 
 ## Known limitations
 
-- Cashier role has no `customers.manage` → can search/attach guests but not create them (quick create is shown only with `customers.manage`).
+- Cashier and waiter roles hold `customers.manage` (search, attach and quick-create guests); changing the loyalty program needs `settings.manage`.
 - Max-% rule is enforced at redeem time; cancelling items afterwards only clamps the points discount to the new subtotal.
 - Earned points are not shown on the receipt/pre-check (receipt DTO unchanged; `discountAmount` includes the points part).

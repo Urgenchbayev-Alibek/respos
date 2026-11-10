@@ -18,6 +18,7 @@ public partial class Order
     public void SetDeliveryFee(decimal fee, OrderPricingSettings settings)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         if (!IsDelivery || fee < 0)
         {
             throw new DomainException(OrderErrors.InvalidDeliveryFee);

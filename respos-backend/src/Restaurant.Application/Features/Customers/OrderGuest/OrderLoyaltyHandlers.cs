@@ -49,7 +49,8 @@ public sealed class GetOrderLoyaltyHandler(ITenantContext tenant, OrderWriter wr
             points = summaries.TryGetValue(customerId, out var summary) ? summary.Points : 0m;
         }
 
-        var canRedeem = order.CustomerId is not null && !order.IsClosed && order.LoyaltyDiscountAmount == 0 && settings.Qualifies(order.Subtotal);
+        var canRedeem = order.CustomerId is not null && !order.IsClosed && !order.IsSplit && order.LoyaltyDiscountAmount == 0
+            && settings.Qualifies(order.Subtotal);
         var maxRedeemable = canRedeem ? RedeemRules.MaxFor(order, settings, points) : 0m;
         var expectedEarn = order.CustomerId is not null && settings.Qualifies(order.Subtotal) ? settings.PointsFor(order.Total) : 0m;
         return new OrderLoyaltyDto(settings.IsEnabled, order.CustomerId, points, maxRedeemable, order.LoyaltyDiscountAmount, expectedEarn,
@@ -67,7 +68,7 @@ internal static class RedeemRules
 /// <summary>
 /// <c>POST /orders/{id}/loyalty/redeem</c> [loyalty.redeem]: pays part of the bill with points (1 point = 1 currency unit)
 /// as a loyalty discount. Rules: program enabled, customer attached, subtotal ≥ min order, points ≤ balance and
-/// ≤ max % of (subtotal − manual discount). One active redemption per order. Audited.
+/// ≤ max % of (subtotal − manual discount). One active redemption per order; not on a split order (merge first). Audited.
 /// </summary>
 public sealed class RedeemPointsHandler(
     ITenantContext tenant, IClock clock, IAuditLogger audit, OrderWriter writer, LoyaltyLedger ledger)
@@ -90,6 +91,11 @@ public sealed class RedeemPointsHandler(
         if (order.IsClosed)
         {
             return OrderErrors.OrderClosed;
+        }
+
+        if (order.IsSplit)
+        {
+            return OrderBillErrors.SplitActive;
         }
 
         if (order.CustomerId is not { } customerId)
@@ -143,6 +149,11 @@ public sealed class CancelRedemptionHandler(
         if (order.CustomerId is not { } customerId)
         {
             return LoyaltyErrors.NothingRedeemed;
+        }
+
+        if (order.IsSplit)
+        {
+            return OrderBillErrors.SplitActive;
         }
 
         order.ClearLoyaltyDiscount(await writer.PricingAsync(cancellationToken));

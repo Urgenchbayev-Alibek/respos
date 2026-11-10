@@ -111,8 +111,11 @@ public sealed class CustomersTests(ApiFactory factory) : CustomersTestBase(facto
         var accountant = await BranchClientAsync(org, await AddUserAsync(org, SystemRoles.Accountant));
 
         (await cook.GetAsync("/api/v1/customers")).StatusCode.Should().Be(HttpStatusCode.Forbidden);
-        (await cashier.PostAsJsonAsync("/api/v1/customers", new { phone = "901110000", name = "X" }, Json)).StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await accountant.PostAsJsonAsync("/api/v1/customers", new { phone = "901110000", name = "X" }, Json)).StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await cashier.PostAsJsonAsync("/api/v1/customers", new { phone = "901110000", name = "Гость кассира" }, Json)).StatusCode.Should().Be(HttpStatusCode.Created);
         (await cashier.PutAsJsonAsync("/api/v1/loyalty/settings", new { isEnabled = true, earnPercent = 1, maxRedeemPercent = 1, minOrderAmount = 0 }, Json))
+            .StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await waiter.PutAsJsonAsync("/api/v1/loyalty/settings", new { isEnabled = true, earnPercent = 50, maxRedeemPercent = 100, minOrderAmount = 0 }, Json))
             .StatusCode.Should().Be(HttpStatusCode.Forbidden);
         (await accountant.PostAsJsonAsync($"/api/v1/orders/{orderId}/customer", new { customerId }, Json)).StatusCode.Should().Be(HttpStatusCode.Forbidden);
         (await accountant.PostAsJsonAsync($"/api/v1/orders/{orderId}/loyalty/redeem", new { points = 1 }, Json)).StatusCode.Should().Be(HttpStatusCode.Forbidden);

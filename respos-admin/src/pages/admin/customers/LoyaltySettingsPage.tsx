@@ -44,7 +44,7 @@ export function LoyaltySettingsPage() {
   const toast = useToast();
   const navigate = useNavigate();
   const { hasPermission } = usePermissions();
-  const canManage = hasPermission(PERMISSIONS.customers.manage);
+  const canManage = hasPermission(PERMISSIONS.settings.manage);
   const query = useLoyaltySettings();
   const save = useSaveLoyaltySettings();
   const [serverError, setServerError] = useState<string | null>(null);

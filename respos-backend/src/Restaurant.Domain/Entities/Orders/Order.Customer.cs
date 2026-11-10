@@ -47,9 +47,11 @@ public partial class Order
     /// <summary>Base for the "max % of bill payable by points" rule: subtotal − manual discount.</summary>
     public decimal LoyaltyBase => Math.Max(0m, Subtotal - ManualDiscountAmount);
 
+    /// <summary>Not allowed on a split order: bill amounts are fixed shares of the total (409 <c>order.split_active</c>).</summary>
     public void ApplyLoyaltyDiscount(decimal amount, OrderPricingSettings settings)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         if (CustomerId is null)
         {
             throw new DomainException(LoyaltyErrors.NoCustomer);
@@ -77,6 +79,7 @@ public partial class Order
     public decimal ClearLoyaltyDiscount(OrderPricingSettings settings)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         var amount = LoyaltyDiscountAmount;
         if (amount <= 0)
         {
