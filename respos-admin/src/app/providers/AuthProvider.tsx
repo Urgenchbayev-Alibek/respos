@@ -1,9 +1,16 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { STAFF_ENDPOINTS } from '@/entities/staff/staff.endpoints';
 import { apiClient, refreshSession } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import { sessionStore } from '@/shared/api/session-store';
-import { AuthContext, type AuthContextValue, type AuthStatus, type LoginInput } from '@/shared/hooks/use-auth';
+import {
+  AuthContext,
+  type AuthContextValue,
+  type AuthStatus,
+  type LoginInput,
+  type PinLoginInput,
+} from '@/shared/hooks/use-auth';
 import { hasStoredLanguage, i18n } from '@/shared/i18n';
 import { hubManager } from '@/shared/realtime';
 import type { AuthResponse, MeDto } from '@/shared/types/api-response';
@@ -83,6 +90,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [applySession, queryClient],
   );
 
+  const pinLogin = useCallback(
+    async (input: PinLoginInput) => {
+      const auth = await apiClient.post<AuthResponse>(STAFF_ENDPOINTS.auth.pinLogin, input, { skipAuth: true, branchId: null });
+      queryClient.clear();
+      // The PIN session is bound to the device branch (the only branch in `user.branches`).
+      sessionStore.setBranchId(auth.user.branches[0]?.id ?? null);
+      applySession(auth);
+      return auth.user;
+    },
+    [applySession, queryClient],
+  );
+
   const logout = useCallback(async () => {
     try {
       await apiClient.post(ENDPOINTS.auth.logout, undefined, { branchId: null });
@@ -108,8 +127,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ ...state, login, logout, switchOrganization, reloadUser }),
-    [state, login, logout, switchOrganization, reloadUser],
+    () => ({ ...state, login, pinLogin, logout, switchOrganization, reloadUser }),
+    [state, login, pinLogin, logout, switchOrganization, reloadUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

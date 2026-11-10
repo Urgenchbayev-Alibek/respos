@@ -30,6 +30,7 @@ export function makeAuth(user: MeDto | null, overrides: Partial<AuthContextValue
     status: user ? 'authenticated' : 'unauthenticated',
     user,
     login: async () => user as MeDto,
+    pinLogin: async () => user as MeDto,
     logout: async () => undefined,
     switchOrganization: async () => undefined,
     reloadUser: async () => undefined,

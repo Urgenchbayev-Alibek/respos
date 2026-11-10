@@ -1,0 +1,205 @@
+{
+  "nav": {
+    "title": "Xodimlar"
+  },
+  "tabs": {
+    "entries": "Ish vaqti hisobi",
+    "timesheet": "Tabel",
+    "schedule": "Jadval",
+    "members": "Xodimlar va PIN",
+    "devices": "Umumiy qurilmalar"
+  },
+  "clock": {
+    "clockIn": "Smenani boshlash",
+    "clockOut": "Smenani tugatish",
+    "clockedIn": "Smena boshlandi",
+    "clockedOut": "Smena tugadi",
+    "onShift": "{{time}} dan smenada · {{worked}}",
+    "otherBranch": "Smena boshqa filialda ochiq",
+    "clockOutTitle": "Smenani tugatasizmi?",
+    "clockOutHint": "{{worked}} ishlandi. Tanaffus bo‘lsa, kiriting.",
+    "breakMinutes": "Tanaffus, daqiqa"
+  },
+  "lock": {
+    "title": "Kim ishlaydi?",
+    "pinEntered": "Kiritilgan raqamlar: {{count}}",
+    "erase": "O‘chirish",
+    "enter": "Kirish",
+    "back": "Boshqa xodimni tanlash",
+    "noStaff": "PIN-kodli xodimlar yo‘q",
+    "noStaffHint": "Xodim PIN-kodni profilda o‘rnatadi yoki menejer «Xodimlar» bo‘limida.",
+    "chooseUser": "O‘zingizni tanlang",
+    "other": "Boshqa kirish usullari",
+    "passwordLogin": "Parol bilan kirish",
+    "switchUser": "Foydalanuvchini almashtirish"
+  },
+  "fields": {
+    "employee": "Xodim",
+    "chooseEmployee": "Xodimni tanlang",
+    "allEmployees": "Barcha xodimlar",
+    "clockIn": "Kelish",
+    "clockOut": "Ketish",
+    "clockInDate": "Kelish sanasi",
+    "clockInTime": "Kelish vaqti",
+    "clockOutDate": "Ketish sanasi",
+    "clockOutTime": "Ketish vaqti",
+    "clockOutHint": "Smena davom etsa, vaqtni bo‘sh qoldiring",
+    "breakMinutes": "Tanaffus, daqiqa",
+    "note": "Izoh",
+    "reason": "O‘zgartirish sababi",
+    "worked": "Ishlangan",
+    "planned": "Jadval bo‘yicha",
+    "difference": "Farq",
+    "entries": "Belgilar",
+    "edited": "Tuzatilgan",
+    "from": "Dan",
+    "to": "Gacha",
+    "date": "Sana",
+    "start": "Boshlanishi",
+    "end": "Tugashi",
+    "roleNote": "Rol / uchastka",
+    "email": "Email",
+    "roles": "Rollar",
+    "actions": "Amallar"
+  },
+  "entries": {
+    "subtitle": "Filial xodimlarining kelish-ketish belgilari. Tuzatishlar audit jurnalida saqlanadi.",
+    "add": "Belgi qo‘shish",
+    "open": "Smenada",
+    "openOnly": "Faqat ochiqlar",
+    "empty": "Davr uchun belgilar yo‘q",
+    "saved": "Belgi saqlandi",
+    "editTitle": "Belgini tuzatish",
+    "createTitle": "Yangi belgi",
+    "auditHint": "Vaqt filial vaqt mintaqasi bo‘yicha. O‘zgartirish va sabab audit jurnaliga yoziladi."
+  },
+  "timesheet": {
+    "subtitle": "Xodimlar bo‘yicha soatlar: jadval va haqiqiy.",
+    "export": "CSV yuklab olish",
+    "empty": "Davr uchun ma’lumot yo‘q",
+    "yes": "Ha"
+  },
+  "schedule": {
+    "subtitle": "Haftalik rejali smenalar. Smena qo‘shish uchun katakni bosing.",
+    "add": "Smena qo‘shish",
+    "prevWeek": "Oldingi hafta",
+    "nextWeek": "Keyingi hafta",
+    "noMembers": "Filialda xodimlar yo‘q",
+    "addFor": "Smena qo‘shish: {{name}}, {{date}}",
+    "weekday": {
+      "0": "Du",
+      "1": "Se",
+      "2": "Ch",
+      "3": "Pa",
+      "4": "Ju",
+      "5": "Sh",
+      "6": "Ya"
+    },
+    "saved": "Smena saqlandi",
+    "deleted": "Smena o‘chirildi",
+    "editTitle": "Smenani o‘zgartirish",
+    "createTitle": "Yangi smena",
+    "overnightHint": "Tugash vaqti boshlanishdan oldin bo‘lsa, smena ertasi kuni tugaydi.",
+    "myTitle": "Mening jadvalim (14 kun)",
+    "myEmpty": "Smenalar rejalashtirilmagan"
+  },
+  "members": {
+    "subtitle": "Filial xodimlari va umumiy qurilmalarda tez kirish uchun PIN-kodlar.",
+    "pin": "PIN",
+    "pinNotAllowed": "Faqat parol",
+    "pinLocked": "{{time}} gacha bloklangan",
+    "pinSet": "O‘rnatilgan",
+    "pinMissing": "O‘rnatilmagan",
+    "setPin": "PIN o‘rnatish",
+    "resetPin": "PIN-ni bekor qilish",
+    "pinReset": "PIN bekor qilindi",
+    "resetPinTitle": "PIN bekor qilinsinmi: {{name}}?",
+    "resetPinMessage": "Xodim yangi PIN o‘rnatmaguncha PIN bilan kira olmaydi.",
+    "pinSaved": "PIN saqlandi",
+    "setPinTitle": "PIN: {{name}}"
+  },
+  "devices": {
+    "subtitle": "PIN bilan tez kiriladigan filial planshetlari va terminallari. Qurilmani bekor qilish uning barcha seanslarini tugatadi.",
+    "name": "Nomi",
+    "namePlaceholder": "Masalan, «Zal plansheti»",
+    "state": "Holat",
+    "active": "Faol",
+    "locked": "Vaqtincha bloklangan",
+    "revoked": "Bekor qilingan",
+    "created": "Ulangan",
+    "lastUsed": "Oxirgi kirish",
+    "expires": "Amal qilish muddati",
+    "revoke": "Bekor qilish",
+    "revokedToast": "Qurilma bekor qilindi",
+    "forgotten": "Umumiy qurilma rejimi o‘chirildi",
+    "registerThis": "Bu qurilmani umumiy qilish",
+    "thisIsShared": "Bu brauzer filialning umumiy qurilmasi sifatida ishlaydi.",
+    "exitShared": "Umumiy qurilma rejimini o‘chirish",
+    "showRevoked": "Bekor qilinganlarni ko‘rsatish",
+    "empty": "Umumiy qurilmalar yo‘q",
+    "revokeTitle": "«{{name}}» bekor qilinsinmi?",
+    "revokeMessage": "Ushbu qurilmadagi barcha PIN seanslar tugaydi, PIN bilan kirish mumkin bo‘lmaydi.",
+    "registerTitle": "Umumiy qurilma",
+    "registerHint": "Brauzer himoyalangan qurilma kalitini oladi. Siz akkauntdan chiqasiz, xodimlar PIN bilan kiradi.",
+    "register": "Ulash"
+  },
+  "pin": {
+    "title": "Tez kirish uchun PIN",
+    "notAllowed": "Egalar, administratorlar va platforma administratorlari faqat parol bilan kiradi.",
+    "isSet": "PIN o‘rnatilgan. Uni almashtirish yoki o‘chirish mumkin.",
+    "notSet": "PIN o‘rnatilmagan. U bilan filialning umumiy qurilmalarida tez kirish mumkin.",
+    "currentPassword": "Joriy parol",
+    "new": "Yangi PIN",
+    "confirm": "PIN-ni takrorlang",
+    "policy": "4–6 raqam, bir xil va ketma-ket emas (1111, 1234 emas).",
+    "remove": "PIN-ni o‘chirish",
+    "removed": "PIN o‘chirildi",
+    "change": "PIN-ni almashtirish",
+    "set": "PIN o‘rnatish",
+    "saved": "PIN saqlandi"
+  },
+  "roles": {
+    "owner": "Egasi",
+    "admin": "Administrator",
+    "manager": "Menejer",
+    "waiter": "Ofitsiant",
+    "cook": "Oshpaz",
+    "cashier": "Kassir",
+    "stockkeeper": "Omborchi",
+    "accountant": "Buxgalter"
+  },
+  "validation": {
+    "pinWeak": "PIN: 4–6 raqam, bir xil va ketma-ket emas",
+    "pinMismatch": "PIN-kodlar mos kelmadi",
+    "shiftSameTime": "Smena boshlanishi va tugashi bir xil bo‘lmasligi kerak"
+  },
+  "errors": {
+    "time_entry": {
+      "not_found": "Belgi topilmadi",
+      "already_open": "Smena allaqachon boshlangan",
+      "not_open": "Bu filialda ochiq smena yo‘q",
+      "invalid_period": "Ketish kelishdan keyin va kelajakda bo‘lmasligi kerak",
+      "invalid_break": "Tanaffus ishlangan vaqtdan ko‘p bo‘lmasligi kerak"
+    },
+    "shift": {
+      "not_found": "Smena topilmadi",
+      "overlap": "Xodimda bu vaqtda smena bor",
+      "invalid_time": "Smena boshlanishi va tugashi bir xil bo‘lmasligi kerak",
+      "invalid_period": "Noto‘g‘ri davr (62 kundan oshmasin)"
+    },
+    "staff": {
+      "member_not_found": "Xodim bu filialda topilmadi"
+    },
+    "device": {
+      "not_found": "Qurilma topilmadi",
+      "invalid": "Qurilma ulanmagan yoki bekor qilingan",
+      "locked": "Qurilmada noto‘g‘ri PIN juda ko‘p. Keyinroq urinib ko‘ring."
+    },
+    "pin": {
+      "invalid": "PIN noto‘g‘ri",
+      "locked": "PIN bilan kirish vaqtincha bloklangan (15 daqiqa)",
+      "not_allowed": "Bu rol uchun PIN bilan kirish taqiqlangan — paroldan foydalaning",
+      "weak": "PIN: 4–6 raqam, bir xil va ketma-ket emas"
+    }
+  }
+}

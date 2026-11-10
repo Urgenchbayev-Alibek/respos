@@ -20,7 +20,8 @@ public sealed class MeBuilder(IApplicationDbContext db, IPermissionService permi
             .Select(uo => new OrganizationRefDto(uo.OrganizationId, uo.Organization!.Name))
             .ToListAsync(ct);
 
-    public async Task<MeDto> BuildAsync(Guid userId, Guid? organizationId, CancellationToken ct)
+    /// <param name="branchScope">PIN session (ADR-0014): only this branch is listed.</param>
+    public async Task<MeDto> BuildAsync(Guid userId, Guid? organizationId, CancellationToken ct, Guid? branchScope = null)
     {
         var user = await db.Users.AsNoTracking().FirstAsync(u => u.Id == userId, ct);
         var organizations = await GetActiveOrganizationsAsync(userId, ct);
@@ -37,6 +38,7 @@ public sealed class MeBuilder(IApplicationDbContext db, IPermissionService permi
                 .FirstOrDefaultAsync(ct);
             roles = await permissions.GetRoleCodesAsync(userId, orgId, ct);
             branches = (await branchAccess.GetAccessibleBranchesAsync(userId, orgId, ct))
+                .Where(b => branchScope == null || b.Id == branchScope)
                 .Select(b => new MeBranchDto(b.Id, b.Name, b.Timezone))
                 .ToList();
         }

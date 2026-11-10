@@ -14,13 +14,13 @@ public sealed class JwtTokenService(IOptions<JwtOptions> options, IClock clock) 
 {
     private readonly JsonWebTokenHandler _handler = new();
 
-    public AccessToken CreateAccessToken(User user, Guid? organizationId) =>
-        Create(user, organizationId, TimeSpan.FromMinutes(options.Value.AccessTokenMinutes), readOnlyTenantAccess: false);
+    public AccessToken CreateAccessToken(User user, Guid? organizationId, Guid? branchScope = null) =>
+        Create(user, organizationId, TimeSpan.FromMinutes(options.Value.AccessTokenMinutes), readOnlyTenantAccess: false, branchScope);
 
     public AccessToken CreateTenantAccessToken(User user, Guid organizationId, TimeSpan lifetime) =>
-        Create(user, organizationId, lifetime, readOnlyTenantAccess: true);
+        Create(user, organizationId, lifetime, readOnlyTenantAccess: true, branchScope: null);
 
-    private AccessToken Create(User user, Guid? organizationId, TimeSpan lifetime, bool readOnlyTenantAccess)
+    private AccessToken Create(User user, Guid? organizationId, TimeSpan lifetime, bool readOnlyTenantAccess, Guid? branchScope)
     {
         var settings = options.Value;
         var now = clock.UtcNow;
@@ -36,6 +36,11 @@ public sealed class JwtTokenService(IOptions<JwtOptions> options, IClock clock) 
         if (organizationId is { } orgId)
         {
             claims.Add(new Claim(JwtOptions.OrganizationClaim, orgId.ToString()));
+        }
+
+        if (branchScope is { } scopedBranch)
+        {
+            claims.Add(new Claim(JwtOptions.BranchScopeClaim, scopedBranch.ToString()));
         }
 
         if (readOnlyTenantAccess)

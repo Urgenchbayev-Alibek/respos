@@ -8,6 +8,7 @@ import {
   CalendarClock,
   ChefHat,
   ClipboardList,
+  Clock,
   CookingPot,
   FileClock,
   LayoutDashboard,
@@ -22,7 +23,7 @@ import { PERMISSIONS as P } from '@/shared/constants/permissions';
 import { ROUTES } from '@/shared/constants/routes';
 import type { NavItem } from './nav-types';
 
-/** Admin sidebar — the 18 sections of spec §5.1, in spec order. */
+/** Admin sidebar — the 18 sections of spec §5.1 in spec order, plus v2 sections (F6 staff). */
 export const ADMIN_NAV: readonly NavItem[] = [
   { id: 'dashboard', labelKey: 'nav:admin.dashboard', path: ROUTES.admin.dashboard, icon: LayoutDashboard, anyOf: [], end: true },
   { id: 'branches', labelKey: 'nav:admin.branches', path: ROUTES.admin.branches, icon: Building2, anyOf: [P.branches.read] },
@@ -39,6 +40,7 @@ export const ADMIN_NAV: readonly NavItem[] = [
   { id: 'payments', labelKey: 'nav:admin.payments', path: ROUTES.admin.payments, icon: Banknote, anyOf: [P.payments.read] },
   { id: 'cashShifts', labelKey: 'nav:admin.cashShifts', path: ROUTES.admin.cashShifts, icon: Wallet, anyOf: [P.cashShifts.read] },
   { id: 'reports', labelKey: 'nav:admin.reports', path: ROUTES.admin.reports, icon: LineChart, anyOf: [P.reports.read] },
+  { id: 'staff', labelKey: 'staff:nav.title', path: ROUTES.admin.staff, icon: Clock, anyOf: [P.staff.manage] },
   { id: 'notifications', labelKey: 'nav:admin.notifications', path: ROUTES.admin.notifications, icon: Bell, anyOf: [P.notifications.read] },
   { id: 'auditLogs', labelKey: 'nav:admin.auditLogs', path: ROUTES.admin.auditLogs, icon: FileClock, anyOf: [P.audit.read] },
   { id: 'settings', labelKey: 'nav:admin.settings', path: ROUTES.admin.settings, icon: Settings, anyOf: [P.settings.manage] },

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { LoginForm } from '@/features/auth/ui/LoginForm';
+import { sharedDeviceFlag } from '@/features/shared-device/model/shared-device';
 import { ROUTES } from '@/shared/constants/routes';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { PageLoader } from '@/shared/ui';
@@ -19,6 +20,10 @@ export function LoginPage() {
 
   if (status === 'loading') return <PageLoader />;
   if (status === 'authenticated') return <Navigate to={target} replace />;
+  // Shared device (F6): the lock screen with PIN login is the default; `?password=1` forces the password form.
+  if (sharedDeviceFlag.isSet() && !new URLSearchParams(location.search).has('password')) {
+    return <Navigate to={ROUTES.device} replace />;
+  }
 
   return (
     <AuthCard title={t('auth:login.title')} subtitle={t('auth:login.subtitle')}>

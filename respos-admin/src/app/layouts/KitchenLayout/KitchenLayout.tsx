@@ -6,6 +6,8 @@ import { useFormatters } from '@/shared/hooks/use-formatters';
 import { IconButton } from '@/shared/ui';
 import { BranchSwitcher } from '@/widgets/topbar/BranchSwitcher';
 import { ConnectionStatus } from '@/widgets/topbar/ConnectionStatus';
+import { SwitchUserButton } from '@/widgets/topbar/SwitchUserButton';
+import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { WorkspaceSwitcher } from '../parts/WorkspaceSwitcher';
@@ -57,6 +59,8 @@ export function KitchenLayout() {
           icon={fullscreen ? <Minimize /> : <Maximize />}
           onClick={toggleFullscreen}
         />
+        <TimeClockButton />
+        <SwitchUserButton />
         <WorkspaceSwitcher current="kitchen" />
         <UserMenu />
       </header>

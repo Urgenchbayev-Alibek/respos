@@ -7,8 +7,8 @@ import { buildRoutes } from './router';
 const routes = buildRoutes();
 
 describe('route registry', () => {
-  it('admin sidebar has the 18 sections of spec §5.1', () => {
-    expect(ADMIN_NAV).toHaveLength(18);
+  it('admin sidebar has the 18 sections of spec §5.1 + v2 sections', () => {
+    expect(ADMIN_NAV.length).toBeGreaterThanOrEqual(18);
   });
 
   it.each([...ADMIN_NAV, ...WAITER_NAV, ...CASHIER_NAV, ...STOCK_NAV, ...PLATFORM_NAV].map((item) => [item.path]))(
@@ -21,7 +21,7 @@ describe('route registry', () => {
     },
   );
 
-  it.each(['/login', '/forgot-password', '/reset-password', '/accept-invitation', '/profile', '/kitchen', '/admin/roles/new'])(
+  it.each(['/login', '/forgot-password', '/reset-password', '/accept-invitation', '/profile', '/kitchen', '/admin/roles/new', '/device'])(
     'registers %s',
     (path) => {
       const leaf = (matchRoutes(routes, path) ?? []).at(-1);

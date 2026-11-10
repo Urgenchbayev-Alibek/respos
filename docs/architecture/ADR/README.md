@@ -18,3 +18,4 @@
 | [0011](0011-no-mediatr-plain-handlers.md) | Без MediatR: `IHandler<TRequest,TResponse>` через DI scanning | Accepted |
 | [0012](0012-platform-break-glass-access.md) | Платформенный break-glass доступ (30 мин, read-only, аудит) | Accepted |
 | [0013](0013-idempotency-replay-store-and-db-keys.md) | Idempotency: HTTP replay store + DB unique keys | Accepted |
+| [0014](0014-pin-quick-login-shared-devices.md) | PIN quick login только на зарегистрированных общих устройствах | Accepted |

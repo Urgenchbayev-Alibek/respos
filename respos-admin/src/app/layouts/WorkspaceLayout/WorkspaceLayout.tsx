@@ -7,6 +7,8 @@ import type { WorkspaceId } from '@/app/navigation/workspaces';
 import { BranchSwitcher } from '@/widgets/topbar/BranchSwitcher';
 import { ConnectionStatus } from '@/widgets/topbar/ConnectionStatus';
 import { LanguageSwitcher } from '@/widgets/topbar/LanguageSwitcher';
+import { SwitchUserButton } from '@/widgets/topbar/SwitchUserButton';
+import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { SkipLink } from '../parts/SkipLink';
@@ -65,6 +67,8 @@ export function WorkspaceLayout({ workspace, nav = [], showBranch = true, showCo
         <span className={styles.spacer} />
         {showConnection && <ConnectionStatus />}
         {topbarExtra}
+        {showBranch && <TimeClockButton />}
+        <SwitchUserButton />
         <LanguageSwitcher />
         <UserMenu />
       </header>

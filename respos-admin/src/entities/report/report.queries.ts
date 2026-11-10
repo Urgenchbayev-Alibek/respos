@@ -45,7 +45,7 @@ export const useCashShiftsReport = (period: ReportPeriod) =>
   useReport<CashShiftReportRowDto[]>('cash-shifts', ENDPOINTS.reports.cashShifts, { ...period });
 
 /** Saves a Blob as a file via a temporary object URL. */
-function saveBlob(blob: Blob, fileName: string) {
+export function saveBlob(blob: Blob, fileName: string) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;

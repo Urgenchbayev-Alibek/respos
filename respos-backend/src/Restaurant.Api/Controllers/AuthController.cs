@@ -18,8 +18,8 @@ namespace Restaurant.Api.Controllers;
 [Route(RoutePrefix + "auth")]
 public sealed class AuthController(IOptions<AuthOptions> authOptions) : ApiControllerBase
 {
-    public const string RefreshCookieName = "refresh_token";
-    public const string RefreshCookiePath = "/api/v1/auth";
+    public const string RefreshCookieName = AuthCookies.RefreshName;
+    public const string RefreshCookiePath = AuthCookies.Path;
 
     [HttpPost("login")]
     [AllowAnonymous]
@@ -34,7 +34,8 @@ public sealed class AuthController(IOptions<AuthOptions> authOptions) : ApiContr
     [ProducesResponseType<AuthResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Refresh([FromServices] RefreshHandler handler, CancellationToken ct)
     {
-        var result = await handler.HandleAsync(new RefreshCommand(ReadRefreshCookie()), ct);
+        var command = new RefreshCommand(ReadRefreshCookie()) { DeviceToken = AuthCookies.Read(Request, AuthCookies.DeviceName) };
+        var result = await handler.HandleAsync(command, ct);
         if (result.IsFailure)
         {
             ClearRefreshCookie();
@@ -101,24 +102,9 @@ public sealed class AuthController(IOptions<AuthOptions> authOptions) : ApiContr
         return Ok(result.Value.Response);
     }
 
-    private string? ReadRefreshCookie() => Request.Cookies.TryGetValue(RefreshCookieName, out var value) ? value : null;
+    private string? ReadRefreshCookie() => AuthCookies.Read(Request, RefreshCookieName);
 
     private void ClearRefreshCookie() => Response.Cookies.Delete(RefreshCookieName, CookieOptions(null));
 
-    private CookieOptions CookieOptions(DateTime? expires)
-    {
-        var settings = authOptions.Value;
-        var sameSite = Enum.TryParse<SameSiteMode>(settings.RefreshCookieSameSite, ignoreCase: true, out var parsed)
-            ? parsed
-            : SameSiteMode.Lax;
-        return new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = settings.RefreshCookieSecure || sameSite == SameSiteMode.None,
-            SameSite = sameSite,
-            Path = RefreshCookiePath,
-            Expires = expires,
-            IsEssential = true,
-        };
-    }
+    private CookieOptions CookieOptions(DateTime? expires) => AuthCookies.Options(authOptions.Value, expires);
 }
