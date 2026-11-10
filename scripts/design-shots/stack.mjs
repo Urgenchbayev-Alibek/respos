@@ -98,13 +98,18 @@ function run(command, args) {
   }
 }
 
+/** One retry: a busy machine (build, capture run) can miss a single probe. */
 async function isUp(url) {
-  try {
-    const response = await fetch(url, { signal: AbortSignal.timeout(3000) });
-    return response.ok;
-  } catch {
-    return false;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
+      if (response.ok) return true;
+    } catch {
+      // not answering yet
+    }
+    if (attempt === 0) await sleep(1000);
   }
+  return false;
 }
 
 async function waitFor(label, check, timeoutMs) {
