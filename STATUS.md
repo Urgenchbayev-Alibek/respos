@@ -12,3 +12,9 @@
   - Admin app: all 18 admin sections + waiter, KDS, cashier, stock, platform. lint/typecheck OK, **159 tests passed**, build OK.
   - `scripts/check-file-length.mjs`: 966 files, none > 500 lines.
 - 03:40 — Wave 3: frontend↔backend DTO alignment; live E2E (9-step spec scenario + SignalR) with backend fixes.
+- ~04:00 — Contract alignment (frontend ↔ real DTOs, contract v1.2). Live API E2E (spec §16, 18 steps + SignalR) passes; bugs fixed (cross-tenant payment check, platform scope, reservation status filter, table logic dedupe).
+- ~04:10 — Order discount / table transfer / item edit UI. Docs synced with implementation (business rules, ERD, ADR 0011–0013).
+- ~04:50 — Playwright UI smoke vs real API: 26/26 (all roles, realtime KDS, payment, stock); 6 UI/backend bugs fixed. Production hardening merged (housekeeping job, forwarded headers/HSTS/security headers, fail-fast config, hub error logging).
+- ~05:10 — Refresh-token grace window (multi-tab), frontend refresh retry without logout, localized units/entity types, uz apostrophes. Docker image verified in Production mode (after repairing a Docker layer corrupted by the full C: drive).
+- Totals at this point: backend 150 unit + 114 integration; admin 180; landing 27; all builds/lints green; 1028 files ≤ 500 lines.
+- 05:15 — Final regression on a fresh DB (E2E + UI smoke) in progress. See `HANDOFF.md`.
