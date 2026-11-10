@@ -52,6 +52,7 @@ public static class Permissions
         public const string Cancel = "orders.cancel";
         public const string DiscountApply = "orders.discount.apply";
         public const string Transfer = "orders.transfer";
+        public const string Split = "orders.split";
     }
 
     public static class Kitchen
@@ -66,6 +67,7 @@ public static class Permissions
         public const string Read = "inventory.read";
         public const string Manage = "inventory.manage";
         public const string Adjust = "inventory.adjust";
+        public const string Transfer = "inventory.transfer";
     }
 
     public static class Recipes
@@ -104,6 +106,31 @@ public static class Permissions
     public static class Reports
     {
         public const string Read = "reports.read";
+        public const string Export = "reports.export";
+    }
+
+    public static class Customers
+    {
+        public const string Read = "customers.read";
+        public const string Manage = "customers.manage";
+        public const string LoyaltyRedeem = "loyalty.redeem";
+    }
+
+    public static class Delivery
+    {
+        public const string Read = "delivery.read";
+        public const string Manage = "delivery.manage";
+    }
+
+    public static class Staff
+    {
+        public const string TimeClock = "staff.timeclock";
+        public const string Manage = "staff.manage";
+    }
+
+    public static class Integrations
+    {
+        public const string Manage = "integrations.manage";
     }
 
     public static class Notifications

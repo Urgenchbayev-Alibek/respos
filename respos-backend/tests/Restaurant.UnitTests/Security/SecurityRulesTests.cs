@@ -63,7 +63,7 @@ public sealed class PermissionCatalogTests
     [Fact]
     public void Catalog_matches_contract_counts()
     {
-        PermissionCatalog.OrganizationCodes.Should().HaveCount(43);
+        PermissionCatalog.OrganizationCodes.Should().HaveCount(54);
         PermissionCatalog.PlatformCodes.Should().HaveCount(7);
     }
 
@@ -87,7 +87,7 @@ public sealed class PermissionCatalogTests
             .And.NotContain([Permissions.Users.Create, Permissions.Settings.Manage, Permissions.Payments.Create]);
         SystemRoles.Get(SystemRoles.Accountant).Permissions.Should().Contain(Permissions.Notifications.Read);
         SystemRoles.Get(SystemRoles.Cook).Permissions.Should()
-            .BeEquivalentTo([Permissions.Kitchen.Read, Permissions.Kitchen.StatusUpdate, Permissions.Menu.Read, Permissions.Notifications.Read]);
+            .BeEquivalentTo([Permissions.Kitchen.Read, Permissions.Kitchen.StatusUpdate, Permissions.Menu.Read, Permissions.Notifications.Read, Permissions.Delivery.Read, Permissions.Staff.TimeClock]);
         SystemRoles.AllBranchRoles.Should().BeEquivalentTo([SystemRoles.Owner, SystemRoles.Admin]);
     }
 }

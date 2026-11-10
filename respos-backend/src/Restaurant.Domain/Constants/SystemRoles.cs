@@ -28,23 +28,31 @@ public static class SystemRoles
         [
             P.Tables.Read, P.Reservations.Read, P.Reservations.Manage, P.Menu.Read, P.Orders.Read,
             P.Orders.Create, P.Orders.Update, P.Kitchen.Read, P.Notifications.Read,
+            P.Orders.Split, P.Customers.Read, P.Customers.Manage, P.Customers.LoyaltyRedeem, P.Delivery.Read,
+            P.Staff.TimeClock,
         ]),
-        new(Cook, "Повар", [P.Kitchen.Read, P.Kitchen.StatusUpdate, P.Menu.Read, P.Notifications.Read]),
+        new(Cook, "Повар",
+        [
+            P.Kitchen.Read, P.Kitchen.StatusUpdate, P.Menu.Read, P.Notifications.Read, P.Delivery.Read,
+            P.Staff.TimeClock,
+        ]),
         new(Cashier, "Кассир",
         [
             P.Orders.Read, P.Menu.Read, P.Tables.Read, P.Payments.Read, P.Payments.Create, P.Payments.Refund,
             P.CashShifts.Read, P.CashShifts.Open, P.CashShifts.Close, P.Notifications.Read,
+            P.Orders.Split, P.Customers.Read, P.Customers.LoyaltyRedeem, P.Delivery.Read, P.Delivery.Manage,
+            P.Staff.TimeClock,
         ]),
         new(Stockkeeper, "Кладовщик",
         [
             P.Inventory.Read, P.Inventory.Manage, P.Inventory.Adjust, P.Recipes.Read, P.Suppliers.Read,
             P.Suppliers.Manage, P.Purchases.Read, P.Purchases.Manage, P.Purchases.Receive, P.Menu.Read,
-            P.Notifications.Read,
+            P.Notifications.Read, P.Inventory.Transfer, P.Staff.TimeClock,
         ]),
         new(Accountant, "Бухгалтер/Аудитор",
         [
             P.Reports.Read, P.Payments.Read, P.CashShifts.Read, P.Audit.Read, P.Inventory.Read, P.Purchases.Read,
-            P.Notifications.Read,
+            P.Notifications.Read, P.Reports.Export, P.Customers.Read, P.Staff.TimeClock,
         ]),
     ];
 
@@ -62,6 +70,8 @@ public static class SystemRoles
             P.Tables.Manage, P.Reservations.Manage, P.Menu.Manage,
             P.Orders.Create, P.Orders.Update, P.Orders.Cancel, P.Orders.DiscountApply, P.Orders.Transfer,
             P.Kitchen.StatusUpdate, P.Kitchen.StationsManage,
+            P.Orders.Split, P.Customers.Manage, P.Customers.LoyaltyRedeem, P.Delivery.Manage, P.Inventory.Transfer,
+            P.Reports.Export, P.Staff.TimeClock, P.Staff.Manage,
         ];
         return reads.Concat(extra).Distinct(StringComparer.Ordinal).ToArray();
     }
