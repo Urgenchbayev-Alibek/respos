@@ -76,6 +76,7 @@ public sealed class ZReportHandler(IApplicationDbContext db, ITenantContext tena
             .Select(g => new { Method = g.Key, Count = g.Count(), Amount = g.Sum(r => r.Amount) })
             .ToListAsync(cancellationToken);
         var orders = await db.Payments.Where(p => p.CashShiftId == shift.Id).Select(p => p.OrderId).Distinct().CountAsync(cancellationToken);
+        var tips = await db.Payments.Where(p => p.CashShiftId == shift.Id).SumAsync(p => p.TipAmount, cancellationToken);
 
         var methods = payments.Select(p => p.Method).Union(refunds.Select(r => r.Method)).Order()
             .Select(method =>
@@ -93,6 +94,6 @@ public sealed class ZReportHandler(IApplicationDbContext db, ITenantContext tena
         return new ZReportDto(
             shift.Id, branch.Name, BranchTime.Resolve(branch.Timezone).Id, shift.Status, shift.OpenedAt, shift.OpenedByName,
             shift.ClosedAt, shift.ClosedByName, shift.OpeningAmount, methods, totalPayments, totalRefunds, totalPayments - totalRefunds,
-            orders, TipsAmount: 0m, shift.ExpectedCashAmount, shift.ActualCashAmount, shift.Difference);
+            orders, TipsAmount: tips, shift.ExpectedCashAmount, shift.ActualCashAmount, shift.Difference);
     }
 }

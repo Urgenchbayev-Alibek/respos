@@ -11,7 +11,7 @@ namespace Restaurant.Application.Features.Reports.Analytics;
 /// <c>GET /reports/waiters?from=&amp;to=</c> — per waiter (order owner), by business date, SQL aggregates:
 /// paid orders, revenue (Σ total − refunds), average check, items sold (non-cancelled lines of paid orders),
 /// cancelled orders, cancelled lines in orders that were not cancelled as a whole, discounts given (Σ discountAmount of paid orders).
-/// <c>tipsAmount</c> = 0: payments have no tip column yet (F2 adds it; then sum it here by order waiter).
+/// <c>tipsAmount</c> = Σ payment tips of paid orders, attributed to the order waiter (tips are not revenue).
 /// </summary>
 public sealed class WaiterPerformanceHandler(IApplicationDbContext db, ReportScope scope)
     : IHandler<ReportPeriodQuery, IReadOnlyList<WaiterPerformanceDto>>
@@ -30,6 +30,12 @@ public sealed class WaiterPerformanceHandler(IApplicationDbContext db, ReportSco
                 join p in db.Payments on r.PaymentId equals p.Id
                 join o in paid on p.OrderId equals o.Id
                 group r.Amount by o.WaiterId into g
+                select new { WaiterId = g.Key, Amount = g.Sum() })
+            .ToDictionaryAsync(x => x.WaiterId, x => x.Amount, cancellationToken);
+        var tips = await (
+                from p in db.Payments
+                join o in paid on p.OrderId equals o.Id
+                group p.TipAmount by o.WaiterId into g
                 select new { WaiterId = g.Key, Amount = g.Sum() })
             .ToDictionaryAsync(x => x.WaiterId, x => x.Amount, cancellationToken);
         var items = await (
@@ -64,7 +70,7 @@ public sealed class WaiterPerformanceHandler(IApplicationDbContext db, ReportSco
                 return new WaiterPerformanceDto(
                     id, names.GetValueOrDefault(id, string.Empty), orders, revenue, ReportMath.AverageCheck(revenue, orders),
                     items.GetValueOrDefault(id), cancelledOrders.GetValueOrDefault(id), cancelledItems.GetValueOrDefault(id),
-                    s?.Discounts ?? 0m, TipsAmount: 0m);
+                    s?.Discounts ?? 0m, TipsAmount: tips.GetValueOrDefault(id));
             })
             .OrderByDescending(w => w.Revenue).ThenBy(w => w.Name, StringComparer.CurrentCulture)
             .ToList();

@@ -9,6 +9,7 @@ public partial class Order
     public void AddItem(OrderItem item, OrderPricingSettings settings, Guid? changedBy, DateTime utcNow)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         item.OrderId = Id;
         Items.Add(item);
         RecalculateTotals(settings);
@@ -103,6 +104,16 @@ public partial class Order
             throw new DomainException(OrderErrors.NotPayable(Status));
         }
 
+        if (IsSplit)
+        {
+            throw new DomainException(OrderBillErrors.BillRequired);
+        }
+
+        ApplyPayment(amount, changedBy, utcNow);
+    }
+
+    private void ApplyPayment(decimal amount, Guid? changedBy, DateTime utcNow)
+    {
         if (amount > RemainingAmount)
         {
             throw new DomainException(OrderErrors.PaymentExceedsDue);

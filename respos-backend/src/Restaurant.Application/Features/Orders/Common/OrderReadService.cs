@@ -37,6 +37,7 @@ public sealed class OrderReadService(IApplicationDbContext db, ITenantContext te
             .Where(o => orderIds.Contains(o.Id))
             .Include(o => o.Items).ThenInclude(i => i.Modifiers)
             .Include(o => o.History)
+            .Include(o => o.Bills).ThenInclude(b => b.Items)
             .AsSplitQuery()
             .ToListAsync(ct);
         var payments = await db.Payments.AsNoTracking()
@@ -59,7 +60,11 @@ public sealed class OrderReadService(IApplicationDbContext db, ITenantContext te
         var byId = orders.ToDictionary(o => o.Id);
         return orderIds
             .Where(byId.ContainsKey)
-            .Select(id => Map(byId[id], tables, names, paymentsByOrder[id].Select(p => PaymentDto.From(p, names, byId[id].Number)).ToList(), guests))
+            .Select(id => Map(byId[id], tables, names, paymentsByOrder[id].Select(p => PaymentDto.From(p, names, byId[id].Number)).ToList(), guests) with
+            {
+                IsSplit = byId[id].IsSplit,
+                Bills = byId[id].Bills.OrderBy(b => b.Number).Select(OrderBillDto.From).ToList(),
+            })
             .ToList();
     }
 

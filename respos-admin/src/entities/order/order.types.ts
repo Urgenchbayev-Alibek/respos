@@ -1,4 +1,5 @@
 import type { OrderCustomerDto } from '@/entities/customer/customer.types';
+import type { OrderBillDto } from '@/entities/billing/billing.types';
 import type { PaymentDto } from '@/entities/payment/payment.types';
 import { ORDER_STATUSES, type OrderItemStatus, type OrderStatus } from '@/shared/constants/statuses';
 import type { Guid, Iso8601 } from '@/shared/types/api-response';
@@ -79,6 +80,10 @@ export interface OrderDto extends OrderSummaryDto {
   customer?: OrderCustomerDto | null;
   /** F1: part of `discountAmount` paid with loyalty points. */
   loyaltyDiscountAmount?: number;
+  /** F2: true while split into bills (items/discount locked server-side). */
+  isSplit?: boolean;
+  /** F2: bills by number; empty when not split. */
+  bills?: OrderBillDto[];
 }
 
 /** `GET /orders`: `status` = comma list, `from`/`to` = UTC instants (openedAt), `search` = order number. */

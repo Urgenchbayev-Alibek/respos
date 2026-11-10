@@ -30,6 +30,7 @@ const auth = makeAuth(makeUser({ permissions: ['orders.read', 'payments.create',
 function mockOrderAndShift(currentShift: unknown = shift) {
   server.use(
     http.get(api('/orders/o1'), () => HttpResponse.json(order)),
+    http.get(api('/payments/providers'), () => HttpResponse.json([])),
     http.get(api('/cash-shifts/current'), () =>
       currentShift ? HttpResponse.json(currentShift) : new HttpResponse(null, { status: 204 }),
     ),

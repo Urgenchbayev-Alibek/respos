@@ -54,7 +54,14 @@ public sealed record OrderDto(
     IReadOnlyList<PaymentDto> Payments,
     IReadOnlyList<OrderHistoryDto> History,
     OrderCustomerDto? Customer,
-    decimal LoyaltyDiscountAmount);
+    decimal LoyaltyDiscountAmount)
+{
+    /// <summary>F2: true while the order is split into bills (items/discount locked).</summary>
+    public bool IsSplit { get; init; }
+
+    /// <summary>F2: bills ordered by number (empty when not split).</summary>
+    public IReadOnlyList<OrderBillDto> Bills { get; init; } = [];
+}
 
 /// <summary>Body item of <c>POST /orders</c> and <c>POST /orders/{id}/items</c>.</summary>
 public sealed record AddItemRequest(

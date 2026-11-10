@@ -1,0 +1,29 @@
+.card {
+  margin-top: 16px;
+}
+
+.total {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}

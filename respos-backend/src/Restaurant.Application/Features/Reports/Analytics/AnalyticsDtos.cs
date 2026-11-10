@@ -43,8 +43,7 @@ public sealed record FoodCostItemDto(
 public sealed record FoodCostReportDto(decimal ThresholdPercent, int AboveThresholdCount, IReadOnlyList<FoodCostItemDto> Items);
 
 /// <summary>
-/// <c>tipsAmount</c> is always 0 until payments carry tips (F2 <c>Payment.TipAmount</c>); the field is part of the
-/// contract so the UI and exports do not change when tips are added.
+/// <c>tipsAmount</c> = Σ payment tips of the waiter's paid orders (tips are not revenue).
 /// </summary>
 public sealed record WaiterPerformanceDto(
     Guid WaiterId,

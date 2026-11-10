@@ -21,6 +21,10 @@ export interface PaymentDto {
   createdAt: Iso8601;
   createdBy: Guid | null;
   createdByName: string | null;
+  /** F2: bill of a split order. */
+  billId?: Guid | null;
+  /** F2: tip on top of `amount` (not revenue). */
+  tipAmount?: number;
 }
 
 /** `POST /payments/{id}/refunds` → 201 RefundDto; `payment` is the refunded payment after the refund. */
@@ -51,6 +55,10 @@ export interface CreatePaymentInput {
   method: PaymentMethod;
   amount: number;
   externalReference?: string;
+  /** F2: required when the order is split. */
+  billId?: Guid;
+  /** F2: optional tip (≥ 0). */
+  tipAmount?: number;
 }
 
 export interface CreateRefundInput {

@@ -11,6 +11,12 @@ namespace Restaurant.Application.Features.Payments.Common;
 public sealed record CashShiftTotals(decimal CashPayments, decimal CashRefunds, IReadOnlyList<CashShiftMethodTotalDto> ByMethod)
 {
     public static readonly CashShiftTotals Empty = new(0m, 0m, []);
+
+    public decimal Tips { get; init; }
+    public decimal CashTips { get; init; }
+
+    /// <summary>Cash that should be in the drawer besides the opening amount (cash tips included).</summary>
+    public decimal CashIn => CashPayments + CashTips;
 }
 
 /// <summary>Shift totals (payments − refunds per method, cash in/out) and DTO mapping for the current branch.</summary>
@@ -35,7 +41,7 @@ public sealed class CashShiftReadService(IApplicationDbContext db, ITenantContex
         var payments = await db.Payments.AsNoTracking()
             .Where(p => shiftIds.Contains(p.CashShiftId))
             .GroupBy(p => new { p.CashShiftId, p.Method })
-            .Select(g => new { g.Key.CashShiftId, g.Key.Method, Amount = g.Sum(p => p.Amount) })
+            .Select(g => new { g.Key.CashShiftId, g.Key.Method, Amount = g.Sum(p => p.Amount), Tips = g.Sum(p => p.TipAmount) })
             .ToListAsync(ct);
         var refunds = await db.Refunds.AsNoTracking()
             .Where(r => shiftIds.Contains(r.CashShiftId))
@@ -50,14 +56,18 @@ public sealed class CashShiftReadService(IApplicationDbContext db, ITenantContex
             var byMethod = Enum.GetValues<PaymentMethod>()
                 .Select(m => new CashShiftMethodTotalDto(m, Paid(m) - Refunded(m)))
                 .ToList();
-            return new CashShiftTotals(Paid(PaymentMethod.Cash), Refunded(PaymentMethod.Cash), byMethod);
+            return new CashShiftTotals(Paid(PaymentMethod.Cash), Refunded(PaymentMethod.Cash), byMethod)
+            {
+                Tips = payments.Where(p => p.CashShiftId == id).Sum(p => p.Tips),
+                CashTips = payments.Where(p => p.CashShiftId == id && p.Method == PaymentMethod.Cash).Sum(p => p.Tips),
+            };
         });
     }
 
     public async Task<decimal> ExpectedCashAsync(CashShift shift, CancellationToken ct)
     {
         var totals = (await TotalsAsync([shift.Id], ct))[shift.Id];
-        return CashShift.CalculateExpectedCash(shift.OpeningAmount, totals.CashPayments, totals.CashRefunds);
+        return CashShift.CalculateExpectedCash(shift.OpeningAmount, totals.CashIn, totals.CashRefunds);
     }
 
     public async Task<CashShiftDto?> GetAsync(Guid shiftId, CancellationToken ct)
@@ -74,12 +84,16 @@ public sealed class CashShiftReadService(IApplicationDbContext db, ITenantContex
         {
             var t = totals.GetValueOrDefault(s.Id) ?? CashShiftTotals.Empty;
             var expected = s.Status == CashShiftStatus.Open
-                ? CashShift.CalculateExpectedCash(s.OpeningAmount, t.CashPayments, t.CashRefunds)
+                ? CashShift.CalculateExpectedCash(s.OpeningAmount, t.CashIn, t.CashRefunds)
                 : s.ExpectedCashAmount;
             return new CashShiftDto(
                 s.Id, s.Status, s.OpenedBy, names.GetValueOrDefault(s.OpenedBy), s.OpenedAt, s.OpeningAmount,
                 s.ClosedBy, s.ClosedBy is { } by ? names.GetValueOrDefault(by) : null, s.ClosedAt,
-                expected, s.ActualCashAmount, s.Difference, s.Comment, t.CashPayments, t.CashRefunds, t.ByMethod);
+                expected, s.ActualCashAmount, s.Difference, s.Comment, t.CashPayments, t.CashRefunds, t.ByMethod)
+            {
+                TipsAmount = t.Tips,
+                CashTipsAmount = t.CashTips,
+            };
         }).ToList();
     }
 }

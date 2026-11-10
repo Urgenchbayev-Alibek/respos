@@ -72,7 +72,14 @@
     "item_not_found": "Order item not found.",
     "menu_item_unavailable": "This dish is currently unavailable.",
     "not_dine_in": "Only dine-in orders can be moved to another table.",
-    "not_found": "Order not found."
+    "not_found": "Order not found.",
+    "bill_not_found": "Bill not found.",
+    "already_split": "The order is already split — merge the bills first.",
+    "not_split": "The order is not split into bills.",
+    "split_active": "The order is split into bills: merge the bills to change items or the discount.",
+    "invalid_split": "Invalid split: 2 to 20 bills, each greater than zero.",
+    "split_mismatch": "Bill amounts must add up exactly to the order total.",
+    "bill_paid": "This bill is already paid."
   },
   "reservation": {
     "time_conflict": "The table is already reserved for this time.",
@@ -89,7 +96,16 @@
     "invalid_refund_amount": "The refund exceeds the refundable amount.",
     "not_found": "Payment not found.",
     "provider_failed": "The payment provider rejected the operation. Try another method.",
-    "refund_reason_required": "Specify the refund reason."
+    "refund_reason_required": "Specify the refund reason.",
+    "bill_required": "The order is split — choose the bill to pay.",
+    "intent_not_found": "Online payment not found.",
+    "intent_not_pending": "The online payment is already completed or cancelled.",
+    "intent_pending": "An online payment is pending for this order — wait for it or cancel it.",
+    "intent_transaction_mismatch": "The online payment is bound to another provider transaction.",
+    "provider_not_found": "Payment provider not found.",
+    "provider_not_configured": "The provider is not connected on the server (no keys).",
+    "provider_not_enabled": "The provider is not enabled for this branch.",
+    "nothing_due": "Nothing is left to pay."
   },
   "stock": {
     "insufficient": "Insufficient stock."

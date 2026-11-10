@@ -57,11 +57,19 @@ public sealed class RefundPaymentHandler(
             return CashShiftErrors.NotOpen;
         }
 
-        var order = await db.Orders.FirstAsync(o => o.Id == payment.OrderId, cancellationToken);
+        var order = await db.Orders.Include(o => o.Bills).FirstAsync(o => o.Id == payment.OrderId, cancellationToken);
         var reason = request.Reason.Trim();
         var refund = payment.AddRefund(request.Amount, reason, shift.Id);
         db.Refunds.Add(refund);
-        order.RegisterRefund(request.Amount);
+        if (payment.BillId is { } billId)
+        {
+            order.RegisterBillRefund(billId, request.Amount);
+        }
+        else
+        {
+            order.RegisterRefund(request.Amount);
+        }
+
         var result = await gateway.RefundAsync(payment, request.Amount, cancellationToken);
         if (!result.Succeeded)
         {

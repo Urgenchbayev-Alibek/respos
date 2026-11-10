@@ -21,6 +21,7 @@ public partial class Order
     public void UpdateItem(Guid orderItemId, decimal quantity, string? comment, OrderPricingSettings settings)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         var item = GetItem(orderItemId);
         item.SetQuantity(quantity);
         item.Comment = comment;
@@ -31,6 +32,7 @@ public partial class Order
     public OrderItem CancelItem(Guid orderItemId, string reason, OrderPricingSettings settings, Guid? changedBy, DateTime utcNow)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         var item = GetItem(orderItemId);
         item.Cancel(reason);
         RecalculateTotals(settings);
