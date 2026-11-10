@@ -40,7 +40,7 @@ public static class SystemRoles
         [
             P.Orders.Read, P.Menu.Read, P.Tables.Read, P.Payments.Read, P.Payments.Create, P.Payments.Refund,
             P.CashShifts.Read, P.CashShifts.Open, P.CashShifts.Close, P.Notifications.Read,
-            P.Orders.Split, P.Customers.Read, P.Customers.LoyaltyRedeem, P.Delivery.Read, P.Delivery.Manage,
+            P.Orders.Split, P.Customers.Read, P.Customers.Manage, P.Customers.LoyaltyRedeem, P.Delivery.Read, P.Delivery.Manage,
             P.Staff.TimeClock,
         ]),
         new(Stockkeeper, "Кладовщик",
