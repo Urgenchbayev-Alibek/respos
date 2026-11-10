@@ -64,7 +64,9 @@ export function PaymentPanel({ orderId, onBack }: PaymentPanelProps) {
           <StatusBadge domain="order" status={order.status} />{' '}
           {t('orders.meta', { waiter: order.waiterName ?? '—', guests: order.guestCount, time: format.time(order.openedAt) })}
         </p>
-        <OrderGuestBar order={order} />
+        <div className={styles.guest}>
+          <OrderGuestBar order={order} />
+        </div>
         <OrderSummary order={order} />
         <h3 className={styles.section}>{t('orderPayments.title')}</h3>
         <OrderPaymentsList payments={order.payments} />

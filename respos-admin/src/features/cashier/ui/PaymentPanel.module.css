@@ -9,6 +9,10 @@
   color: var(--color-text-muted);
 }
 
+.guest {
+  margin-bottom: var(--space-3);
+}
+
 .section {
   margin: var(--space-4) 0 var(--space-2);
   font-size: var(--font-size-lg);
