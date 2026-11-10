@@ -1,3 +1,4 @@
+import type { OrderBillDto } from '@/entities/billing/billing.types';
 import type { PaymentDto } from '@/entities/payment/payment.types';
 import { ORDER_STATUSES, type OrderItemStatus, type OrderStatus } from '@/shared/constants/statuses';
 import type { Guid, Iso8601 } from '@/shared/types/api-response';
@@ -74,6 +75,10 @@ export interface OrderDto extends OrderSummaryDto {
   cancelReason: string | null;
   payments: PaymentDto[];
   history: OrderHistoryEntry[];
+  /** F2: true while split into bills (items/discount locked server-side). */
+  isSplit?: boolean;
+  /** F2: bills by number; empty when not split. */
+  bills?: OrderBillDto[];
 }
 
 /** `GET /orders`: `status` = comma list, `from`/`to` = UTC instants (openedAt), `search` = order number. */

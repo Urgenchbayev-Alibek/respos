@@ -1,0 +1,43 @@
+.picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.bill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.bill[aria-pressed='true'] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
+}
+
+.bill:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.bill:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.paid {
+  color: var(--color-success);
+}
+
+.due {
+  color: var(--color-text-muted);
+}

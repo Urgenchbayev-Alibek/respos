@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useBranches } from '@/entities/branch/branch.queries';
 import { useOrganization } from '@/entities/organization/organization.queries';
 import { OrganizationForm } from '@/features/organization/ui/OrganizationForm';
+import { PaymentProvidersCard } from '@/features/payment-providers/ui/PaymentProvidersCard';
 import { buildPath, ROUTES } from '@/shared/constants/routes';
 import { Card, ErrorState, PageHeader, PageLoader } from '@/shared/ui';
 import styles from './SettingsPage.module.css';
@@ -37,6 +38,7 @@ export function SettingsPage() {
             ))}
           </ul>
         </Card>
+        <PaymentProvidersCard />
       </div>
     </>
   );

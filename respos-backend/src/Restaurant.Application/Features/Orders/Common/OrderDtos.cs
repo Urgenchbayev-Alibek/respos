@@ -51,7 +51,14 @@ public sealed record OrderDto(
     DateTime OpenedAt,
     DateTime? ClosedAt,
     IReadOnlyList<PaymentDto> Payments,
-    IReadOnlyList<OrderHistoryDto> History);
+    IReadOnlyList<OrderHistoryDto> History)
+{
+    /// <summary>F2: true while the order is split into bills (items/discount locked).</summary>
+    public bool IsSplit { get; init; }
+
+    /// <summary>F2: bills ordered by number (empty when not split).</summary>
+    public IReadOnlyList<OrderBillDto> Bills { get; init; } = [];
+}
 
 /// <summary>Body item of <c>POST /orders</c> and <c>POST /orders/{id}/items</c>.</summary>
 public sealed record AddItemRequest(

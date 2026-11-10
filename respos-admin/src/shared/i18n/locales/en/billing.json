@@ -1,0 +1,102 @@
+{
+  "split": {
+    "action": "Split bill",
+    "title": "Split bill {{number}}",
+    "description": "Total {{total}}. Amounts are calculated by the server; the rounding remainder goes to the last bill.",
+    "modeLabel": "Split method",
+    "modes": {
+      "equal": "Equally",
+      "items": "By items",
+      "custom": "Custom amounts"
+    },
+    "parts": "Number of parts",
+    "preview": "Preview: {{amounts}}",
+    "bill": "Bill {{number}}",
+    "addBill": "Add bill",
+    "removeBill": "Remove bill {{number}}",
+    "amountsSum": "Allocated {{sum}} of {{total}}",
+    "mismatch": "Bill amounts must add up to the order total",
+    "itemsHint": "Set how much of each item moves to the new bills. Everything not allocated stays on the last bill.",
+    "quantityFor": "Quantity of “{{name}}” on bill {{number}}",
+    "available": "of {{quantity}}",
+    "restBill": "The rest goes to the last bill",
+    "nothingAllocated": "Move at least one item",
+    "submit": "Split",
+    "done": "Bill split",
+    "merge": "Merge bills",
+    "mergeTitle": "Merge the bills?",
+    "mergeDescription": "The bills will be removed and the order is paid as a whole again. Only possible while no bill has payments.",
+    "merged": "Bills merged",
+    "locked": "The order is split into bills: items and the discount are locked until the bills are merged."
+  },
+  "bills": {
+    "title": "Bills",
+    "bill": "Bill {{number}}",
+    "status": {
+      "open": "Due",
+      "paid": "Paid"
+    },
+    "remaining": "Remaining {{amount}}",
+    "pay": "Pay bill",
+    "paying": "Paying bill {{number}} · remaining {{amount}}",
+    "chooseBill": "Choose a bill to pay"
+  },
+  "tip": {
+    "label": "Tip",
+    "hint": "Not revenue; credited to the order's waiter",
+    "total": "Customer pays incl. tip: {{amount}}"
+  },
+  "online": {
+    "title": "Online payment (QR / link)",
+    "status": {
+      "not_connected": "Not connected",
+      "test": "Test mode",
+      "connected": "Connected"
+    },
+    "disabled": "Disabled for this branch",
+    "skeleton": "Adapter skeleton",
+    "createLink": "{{provider}} QR / link",
+    "waiting": "Waiting for the customer to pay…",
+    "completed": "Payment confirmed by the provider",
+    "cancelled": "Online payment cancelled",
+    "expired": "The link has expired",
+    "openLink": "Open link",
+    "cancel": "Cancel online payment",
+    "amount": "Amount due: {{amount}}",
+    "noneAvailable": "No online providers are enabled for this branch.",
+    "qrAlt": "QR code to pay with {{provider}}",
+    "newLink": "New link"
+  },
+  "providers": {
+    "payme": "Payme",
+    "click": "Click",
+    "uzum": "Uzum"
+  },
+  "settings": {
+    "title": "Payment providers",
+    "description": "Provider keys are set only via server environment variables. Enabling applies to the current branch.",
+    "enable": "Enable {{provider}} for this branch",
+    "notConfiguredHint": "No keys on the server — cannot be enabled.",
+    "skeletonHint": "Adapter not implemented (no verified documentation).",
+    "callback": "Callback URL: {{path}}",
+    "saved": "Provider settings saved",
+    "fiscalTitle": "Fiscalization",
+    "fiscalProvider": "Fiscal adapter: {{code}}",
+    "fiscalHint": "Pre-checks are not fiscal receipts until fiscalization is connected."
+  },
+  "shift": {
+    "tips": "Tips (all methods)",
+    "cashTips": "Of which cash (in the drawer)"
+  },
+  "tipsReport": {
+    "title": "Tips by waiter",
+    "total": "Total tips: {{amount}}",
+    "waiter": "Waiter",
+    "amount": "Amount",
+    "count": "Payments",
+    "empty": "No tips in this period",
+    "from": "From",
+    "to": "To",
+    "unknownWaiter": "—"
+  }
+}

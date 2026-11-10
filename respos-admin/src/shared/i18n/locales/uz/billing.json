@@ -1,0 +1,102 @@
+{
+  "split": {
+    "action": "Hisobni boʻlish",
+    "title": "{{number}} hisobini boʻlish",
+    "description": "Jami {{total}}. Summalarni server hisoblaydi; yaxlitlash qoldigʻi oxirgi hisobga oʻtadi.",
+    "modeLabel": "Boʻlish usuli",
+    "modes": {
+      "equal": "Teng",
+      "items": "Pozitsiyalar boʻyicha",
+      "custom": "Oʻz summalari"
+    },
+    "parts": "Qismlar soni",
+    "preview": "Taxminan: {{amounts}}",
+    "bill": "{{number}}-hisob",
+    "addBill": "Hisob qoʻshish",
+    "removeBill": "{{number}}-hisobni olib tashlash",
+    "amountsSum": "{{total}} dan {{sum}} taqsimlandi",
+    "mismatch": "Hisoblar yigʻindisi buyurtma jamiga teng boʻlishi kerak",
+    "itemsHint": "Har bir pozitsiyadan yangi hisoblarga qanchasini oʻtkazishni koʻrsating. Taqsimlanmagani oxirgi hisobda qoladi.",
+    "quantityFor": "{{number}}-hisobdagi «{{name}}» soni",
+    "available": "{{quantity}} dan",
+    "restBill": "Qoldiq — oxirgi hisobga",
+    "nothingAllocated": "Kamida bitta pozitsiyani oʻtkazing",
+    "submit": "Boʻlish",
+    "done": "Hisob boʻlindi",
+    "merge": "Hisoblarni birlashtirish",
+    "mergeTitle": "Hisoblar birlashtirilsinmi?",
+    "mergeDescription": "Hisoblar oʻchiriladi, buyurtma yana toʻliq toʻlanadi. Faqat hisoblar boʻyicha toʻlov boʻlmasa mumkin.",
+    "merged": "Hisoblar birlashtirildi",
+    "locked": "Buyurtma hisoblarga boʻlingan: hisoblar birlashtirilmaguncha pozitsiyalar va chegirma bloklangan."
+  },
+  "bills": {
+    "title": "Hisoblar",
+    "bill": "{{number}}-hisob",
+    "status": {
+      "open": "Toʻlanadi",
+      "paid": "Toʻlangan"
+    },
+    "remaining": "Qoldi {{amount}}",
+    "pay": "Hisobni toʻlash",
+    "paying": "{{number}}-hisob toʻlovi · qoldi {{amount}}",
+    "chooseBill": "Toʻlov uchun hisobni tanlang"
+  },
+  "tip": {
+    "label": "Choychaqa",
+    "hint": "Tushumga kirmaydi; buyurtma ofitsiantiga yoziladi",
+    "total": "Mijoz choychaqa bilan toʻlaydi: {{amount}}"
+  },
+  "online": {
+    "title": "Onlayn toʻlov (QR / havola)",
+    "status": {
+      "not_connected": "Ulanmagan",
+      "test": "Test rejimi",
+      "connected": "Ulangan"
+    },
+    "disabled": "Filial uchun oʻchirilgan",
+    "skeleton": "Adapter qolipi",
+    "createLink": "{{provider}} QR / havola",
+    "waiting": "Mijoz toʻlovini kutyapmiz…",
+    "completed": "Toʻlov provayder tomonidan tasdiqlandi",
+    "cancelled": "Onlayn toʻlov bekor qilindi",
+    "expired": "Havola muddati tugadi",
+    "openLink": "Havolani ochish",
+    "cancel": "Onlayn toʻlovni bekor qilish",
+    "amount": "Toʻlanadi: {{amount}}",
+    "noneAvailable": "Bu filial uchun onlayn provayderlar yoqilmagan.",
+    "qrAlt": "{{provider}} orqali toʻlov uchun QR-kod",
+    "newLink": "Yangi havola"
+  },
+  "providers": {
+    "payme": "Payme",
+    "click": "Click",
+    "uzum": "Uzum"
+  },
+  "settings": {
+    "title": "Toʻlov provayderlari",
+    "description": "Provayder kalitlari faqat server muhit oʻzgaruvchilari orqali beriladi. Yoqish joriy filialga tegishli.",
+    "enable": "{{provider}}ni filial uchun yoqish",
+    "notConfiguredHint": "Serverda kalitlar yoʻq — yoqib boʻlmaydi.",
+    "skeletonHint": "Adapter amalga oshirilmagan (tasdiqlangan hujjat yoʻq).",
+    "callback": "Callback manzili: {{path}}",
+    "saved": "Provayder sozlamalari saqlandi",
+    "fiscalTitle": "Fiskallashtirish",
+    "fiscalProvider": "Fiskal adapter: {{code}}",
+    "fiscalHint": "Fiskallashtirish ulanmaguncha oldindan cheklar fiskal chek hisoblanmaydi."
+  },
+  "shift": {
+    "tips": "Choychaqalar (barcha usullar)",
+    "cashTips": "Shu jumladan naqd (kassada)"
+  },
+  "tipsReport": {
+    "title": "Ofitsiantlar boʻyicha choychaqalar",
+    "total": "Jami choychaqa: {{amount}}",
+    "waiter": "Ofitsiant",
+    "amount": "Summa",
+    "count": "Toʻlovlar",
+    "empty": "Davr uchun choychaqa yoʻq",
+    "from": "Dan",
+    "to": "Gacha",
+    "unknownWaiter": "—"
+  }
+}

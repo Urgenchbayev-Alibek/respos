@@ -55,6 +55,12 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("RateLimiting:AuthPerMinute", "100000");
         builder.UseSetting("RateLimiting:DemoRequestsPerHour", "5");
         builder.UseSetting("FileStorage:LocalRoot", Path.Combine(Path.GetTempPath(), "respos-tests-storage"));
+        // F2: fake provider credentials (tests only) so Payme/Click callbacks can be exercised end to end.
+        builder.UseSetting("PaymentProviders:Payme:MerchantId", "test-merchant");
+        builder.UseSetting("PaymentProviders:Payme:Key", "test-payme-key");
+        builder.UseSetting("PaymentProviders:Click:ServiceId", "1001");
+        builder.UseSetting("PaymentProviders:Click:MerchantId", "2002");
+        builder.UseSetting("PaymentProviders:Click:SecretKey", "test-click-secret");
         builder.ConfigureServices(services =>
         {
             services.AddControllers().AddApplicationPart(typeof(ApiFactory).Assembly);

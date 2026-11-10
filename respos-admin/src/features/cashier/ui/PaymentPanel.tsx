@@ -6,10 +6,13 @@ import type { PayableOrderDto } from '@/entities/payment/payable-order.types';
 import { usePayableOrder } from '@/entities/payment/payment.queries';
 import type { PaymentDto } from '@/entities/payment/payment.types';
 import { formatOrderNumber } from '@/features/payments/model/payment-labels';
+import { SplitBillActions } from '@/features/split-bill/ui/SplitBillActions';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
 import { Alert, Button, Card, EmptyState, ErrorState, PageLoader, StatusBadge } from '@/shared/ui';
+import { BillPicker } from './BillPicker';
+import { OnlinePayPanel } from './OnlinePayPanel';
 import { OrderPaymentsList } from './OrderPaymentsList';
 import { OrderSummary } from './OrderSummary';
 import { PaymentForm } from './PaymentForm';
@@ -46,9 +49,12 @@ export function PaymentPanel({ orderId, onBack }: PaymentPanelProps) {
       <Card
         title={`${t('orders.order')} ${formatOrderNumber(order.number)} · ${place}`}
         actions={
-          <Button icon={<Printer />} onClick={() => setPrecheckOpen(true)}>
-            {t('precheck.open')}
-          </Button>
+          <div className={styles.actions}>
+            <SplitBillActions order={order} size="sm" />
+            <Button icon={<Printer />} onClick={() => setPrecheckOpen(true)}>
+              {t('precheck.open')}
+            </Button>
+          </div>
         }
       >
         <p className={styles.meta}>
@@ -78,6 +84,10 @@ function PayArea({ order, lastPayment, onPaid }: PayAreaProps) {
   const format = useFormatters();
   const { hasPermission } = usePermissions();
   const shift = useCurrentShift();
+  const [billId, setBillId] = useState<string | null>(null);
+  const bills = order.isSplit ? (order.bills ?? []) : [];
+  const openBills = bills.filter((b) => b.status === 'open');
+  const bill = order.isSplit ? (openBills.find((b) => b.id === billId) ?? openBills[0] ?? null) : null;
   const fullyPaid = order.status === 'paid' || order.remainingAmount <= 0;
   const success = lastPayment && (
     <Alert tone="success">
@@ -101,7 +111,23 @@ function PayArea({ order, lastPayment, onPaid }: PayAreaProps) {
   return (
     <div className={styles.success}>
       {success}
-      <PaymentForm order={order} onPaid={onPaid} />
+      {order.isSplit && (
+        <>
+          <h3 className={styles.section}>{t('billing:bills.title')}</h3>
+          <BillPicker bills={bills} selectedId={bill?.id ?? null} onSelect={setBillId} />
+          {bill && (
+            <p className={styles.meta}>
+              {t('billing:bills.paying', { number: bill.number, amount: format.money(bill.remainingAmount) })}
+            </p>
+          )}
+        </>
+      )}
+      {(!order.isSplit || bill) && (
+        <>
+          <PaymentForm order={order} bill={bill} onPaid={onPaid} />
+          <OnlinePayPanel order={order} bill={bill} />
+        </>
+      )}
     </div>
   );
 }

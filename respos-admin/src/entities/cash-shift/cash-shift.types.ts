@@ -25,6 +25,10 @@ export interface CashShiftDto {
   cashPaymentsAmount: number;
   cashRefundsAmount: number;
   totalsByMethod: { method: PaymentMethod; amount: number }[];
+  /** F2: Σ tips of the shift (separate line, not revenue). */
+  tipsAmount?: number;
+  /** F2: cash tips — included in `expectedCashAmount`. */
+  cashTipsAmount?: number;
 }
 
 /** Kept for readability at call sites: the detail endpoint returns the same DTO. */

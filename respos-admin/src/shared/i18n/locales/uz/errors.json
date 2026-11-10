@@ -72,7 +72,14 @@
     "item_not_found": "Buyurtma pozitsiyasi topilmadi.",
     "menu_item_unavailable": "Bu taom hozir mavjud emas.",
     "not_dine_in": "Faqat zaldagi buyurtmani boshqa stolga oʻtkazish mumkin.",
-    "not_found": "Buyurtma topilmadi."
+    "not_found": "Buyurtma topilmadi.",
+    "bill_not_found": "Hisob topilmadi.",
+    "already_split": "Buyurtma allaqachon boʻlingan — avval hisoblarni birlashtiring.",
+    "not_split": "Buyurtma hisoblarga boʻlinmagan.",
+    "split_active": "Buyurtma hisoblarga boʻlingan: pozitsiyalar yoki chegirmani oʻzgartirish uchun hisoblarni birlashtiring.",
+    "invalid_split": "Notoʻgʻri boʻlish: 2 dan 20 gacha hisob, har biri noldan katta.",
+    "split_mismatch": "Hisoblar yigʻindisi buyurtma jamiga teng boʻlishi kerak.",
+    "bill_paid": "Bu hisob allaqachon toʻlangan."
   },
   "reservation": {
     "time_conflict": "Stol bu vaqtga allaqachon bron qilingan.",
@@ -89,7 +96,16 @@
     "invalid_refund_amount": "Qaytarish summasi qaytarish mumkin boʻlgan summadan oshib ketdi.",
     "not_found": "Toʻlov topilmadi.",
     "provider_failed": "Toʻlov provayderi amalni rad etdi. Boshqa usulni sinab koʻring.",
-    "refund_reason_required": "Qaytarish sababini koʻrsating."
+    "refund_reason_required": "Qaytarish sababini koʻrsating.",
+    "bill_required": "Buyurtma boʻlingan — toʻlov uchun hisobni tanlang.",
+    "intent_not_found": "Onlayn toʻlov topilmadi.",
+    "intent_not_pending": "Onlayn toʻlov allaqachon yakunlangan yoki bekor qilingan.",
+    "intent_pending": "Buyurtma boʻyicha onlayn toʻlov kutilmoqda — kuting yoki bekor qiling.",
+    "intent_transaction_mismatch": "Onlayn toʻlov provayderning boshqa tranzaksiyasiga bogʻlangan.",
+    "provider_not_found": "Toʻlov provayderi topilmadi.",
+    "provider_not_configured": "Provayder serverda ulanmagan (kalitlar yoʻq).",
+    "provider_not_enabled": "Provayder ushbu filial uchun yoqilmagan.",
+    "nothing_due": "Toʻlanadigan summa yoʻq."
   },
   "stock": {
     "insufficient": "Omborda qoldiq yetarli emas."

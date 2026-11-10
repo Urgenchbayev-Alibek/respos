@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PAYMENT_METHODS, type PaymentMethod } from '@/entities/payment/payment.types';
 import { PaymentsTable } from '@/features/payments/ui/PaymentsTable';
+import { TipsReportCard } from '@/features/tips/ui/TipsReportCard';
+import { PERMISSIONS } from '@/shared/constants/permissions';
+import { usePermissions } from '@/shared/hooks/use-permissions';
 import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { dateRangeToUtc } from '@/shared/lib/zoned-time';
 import { Button, DemoBadge, Input, PageHeader, Select, Toolbar } from '@/shared/ui';
@@ -19,6 +22,7 @@ export function PaymentsPage() {
   const { t } = useTranslation('payments');
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const { branch } = useCurrentBranch();
+  const { hasPermission } = usePermissions();
   const update = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((current) => ({ ...current, [key]: value }));
   const dirty = Boolean(filters.from || filters.to || filters.method);
@@ -53,6 +57,7 @@ export function PaymentsPage() {
       <PaymentsTable
         filters={{ ...dateRangeToUtc(filters.from, filters.to, branch?.timezone), method: filters.method || undefined }}
       />
+      {hasPermission(PERMISSIONS.reports.read) && <TipsReportCard from={filters.from || undefined} to={filters.to || undefined} />}
     </>
   );
 }

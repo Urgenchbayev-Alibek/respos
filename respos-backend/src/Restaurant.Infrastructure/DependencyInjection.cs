@@ -19,6 +19,7 @@ using Restaurant.Infrastructure.Files;
 using Restaurant.Infrastructure.Housekeeping;
 using Restaurant.Infrastructure.Identity;
 using Restaurant.Infrastructure.Idempotency;
+using Restaurant.Infrastructure.Payments;
 using Restaurant.Infrastructure.Persistence.Context;
 using Restaurant.Infrastructure.Persistence.DomainEvents;
 using Restaurant.Infrastructure.Persistence.Interceptors;
@@ -63,6 +64,7 @@ public static class DependencyInjection
         services.AddSingleton<ISecureTokenGenerator, SecureTokenGenerator>();
         services.AddSingleton<ITokenService, JwtTokenService>();
         services.AddSingleton<IPaymentProvider, ManualPaymentProvider>();
+        services.AddPaymentProviders(configuration);
         services.AddSingleton<IFileStorage, LocalFileStorage>();
         services.AddSingleton<IEmailSender, LogEmailSender>();
         services.AddScoped<IAuditLogger, AuditLogger>();

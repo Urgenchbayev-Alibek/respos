@@ -1,0 +1,57 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2, 8px);
+}
+
+.grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.bill {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-3, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.bill legend {
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  flex-wrap: wrap;
+}
+
+.qty {
+  width: 96px;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.warning {
+  color: var(--color-danger);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 8px);
+}

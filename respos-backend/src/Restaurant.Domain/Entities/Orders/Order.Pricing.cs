@@ -31,6 +31,7 @@ public partial class Order
     public void ApplyDiscount(DiscountType type, decimal value, OrderPricingSettings settings)
     {
         EnsureNotClosed();
+        EnsureNotSplit();
         if (value < 0 || (type == DiscountType.Percent && value > 100))
         {
             throw new DomainException(OrderErrors.InvalidDiscount);
