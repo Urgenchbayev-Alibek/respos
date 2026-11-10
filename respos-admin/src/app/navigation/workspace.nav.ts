@@ -12,6 +12,7 @@ import {
   Inbox,
   LayoutGrid,
   Layers,
+  PlugZap,
   Package,
   Receipt,
   ShoppingCart,
@@ -51,4 +52,5 @@ export const PLATFORM_NAV: readonly NavItem[] = [
   { id: 'featureFlags', labelKey: 'nav:platform.featureFlags', path: ROUTES.platform.featureFlags, icon: Flag, anyOf: [P.platform.featureFlagsManage] },
   { id: 'system', labelKey: 'nav:platform.system', path: ROUTES.platform.system, icon: Activity, anyOf: [P.platform.systemRead] },
   { id: 'demoRequests', labelKey: 'nav:platform.demoRequests', path: ROUTES.platform.demoRequests, icon: Inbox, anyOf: [P.platform.demoRequestsRead] },
+  { id: 'integrationErrors', labelKey: 'nav:platform.integrationErrors', path: ROUTES.platform.integrationErrors, icon: PlugZap, anyOf: [P.platform.systemRead] },
 ];

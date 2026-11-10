@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
         services.AddApiAuthentication();
         services.AddApiRateLimiting(configuration);
         services.AddPublicMenu(configuration);
+        services.AddPublicReservationRateLimits(configuration);
         services.AddApiSwagger();
         services.AddHealthChecks().AddDbContextCheck<AppDbContext>("database", tags: ["ready"]);
         services.AddCors(options => options.AddPolicy(CorsPolicy, policy => policy

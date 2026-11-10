@@ -44,6 +44,8 @@ export const ROUTES = {
     staffSchedule: '/admin/staff/schedule',
     staffMembers: '/admin/staff/members',
     staffDevices: '/admin/staff/devices',
+    integrations: '/admin/integrations',
+    integrationsOutbound: '/admin/integrations/outbound',
   },
   waiter: {
     root: '/waiter',
@@ -72,6 +74,7 @@ export const ROUTES = {
     featureFlags: '/platform/feature-flags',
     system: '/platform/system',
     demoRequests: '/platform/demo-requests',
+    integrationErrors: '/platform/integration-errors',
   },
 } as const;
 

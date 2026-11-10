@@ -88,7 +88,11 @@
     "invalid_status_transition": "This action is not allowed for the reservation's current status.",
     "not_editable": "Only pending or confirmed reservations can be changed.",
     "not_found": "Reservation not found.",
-    "table_required": "Assign a table before seating the guests."
+    "table_required": "Assign a table before seating the guests.",
+    "slot_unavailable": "No free table at this time — choose another slot",
+    "invalid_date": "The date is in the past or too far ahead",
+    "invalid_time": "The time is outside booking hours",
+    "too_many_guests": "For large parties please call the restaurant"
   },
   "payment": {
     "duplicate": "The payment is already registered.",
@@ -291,5 +295,9 @@
   },
   "waiter_call": {
     "not_found": "Call not found."
+  },
+  "integration": {
+    "not_found": "Unknown integration",
+    "not_configured": "Enable and save the integration settings first"
   }
 }

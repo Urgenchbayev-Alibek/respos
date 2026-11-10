@@ -156,6 +156,13 @@ export const ENDPOINTS = {
     unreadCount: '/notifications/unread-count',
   },
   auditLogs: '/audit-logs',
+  integrations: {
+    list: '/integrations',
+    one: (type: string) => `/integrations/${id(type)}`,
+    test: (type: string) => `/integrations/${id(type)}/test`,
+    outboundMessages: '/integrations/outbound-messages',
+    errors: '/integrations/errors',
+  },
   platform: {
     organizations: '/platform/organizations',
     organizationAction: (orgId: string, action: 'suspend' | 'activate' | 'subscription' | 'access') =>
@@ -168,5 +175,6 @@ export const ENDPOINTS = {
     systemEvents: '/platform/system-events',
     demoRequests: '/platform/demo-requests',
     demoRequestStatus: (requestId: string) => `/platform/demo-requests/${id(requestId)}/status`,
+    integrationErrors: '/platform/integration-errors',
   },
 } as const;

@@ -1,4 +1,5 @@
 using Restaurant.Domain.Enums;
+using Restaurant.Domain.Events;
 using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Domain.Entities.Payments;
@@ -31,6 +32,7 @@ public partial class Payment
             Reason = reason.Trim(),
         };
         Refunds.Add(refund);
+        Raise(new PaymentRefundedDomainEvent(Id, OrganizationId, BranchId, amount, refund.Reason));
         return refund;
     }
 }

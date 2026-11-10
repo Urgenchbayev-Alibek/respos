@@ -43,7 +43,8 @@
     "plans": "Plans",
     "featureFlags": "Feature flags",
     "system": "System",
-    "demoRequests": "Demo requests"
+    "demoRequests": "Demo requests",
+    "integrationErrors": "Integration errors"
   },
   "workspaces": {
     "admin": "Admin panel",

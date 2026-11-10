@@ -26,6 +26,7 @@ Only public, non-secret values (everything in `VITE_*` ends up in the browser bu
 |---|---|---|
 | `VITE_API_BASE_URL` | `http://localhost:5080/api/v1` | Backend API base (incl. `/api/v1`) |
 | `VITE_ADMIN_APP_URL` | `http://localhost:5173` | Target of the "Войти" link (RestaurantOS web app) |
+| `VITE_PUBLIC_BRANCH_ID` | `3f2c…` (GUID) | Branch for online reservations on `/booking` (empty → "not connected" notice) |
 
 ## Quality checks
 

@@ -1,0 +1,137 @@
+{
+  "title": "Интеграции",
+  "subtitle": "Telegram-уведомления владельцу, SMS гостям и почта для приглашений",
+  "settingsLink": "Настроить интеграции",
+  "saved": "Настройки интеграции сохранены",
+  "enabled": "Включено",
+  "secretPlaceholder": "Оставьте пустым, чтобы не менять",
+  "lastError": "Последняя ошибка ({{at}}): {{error}}",
+  "lastSuccess": "Последняя успешная отправка: {{at}}",
+  "status": {
+    "connected": "Подключено",
+    "error": "Ошибка",
+    "not_configured": "Не подключено",
+    "notConfiguredHint": "Интеграция выключена или не настроена — сообщения не отправляются"
+  },
+  "types": {
+    "telegram": {
+      "title": "Telegram-бот",
+      "description": "Уведомления владельцу: итоги дня, низкие остатки, крупные возвраты, онлайн-брони, расхождения в кассе."
+    },
+    "sms_eskiz": {
+      "title": "SMS (Eskiz.uz)",
+      "description": "SMS гостю при подтверждении брони (только номера Узбекистана)."
+    },
+    "smtp": {
+      "title": "Почта (SMTP)",
+      "description": "Письма с приглашениями сотрудников. Без SMTP письма только записываются в журнал сервера."
+    }
+  },
+  "fields": {
+    "telegram": {
+      "botToken": "Токен бота",
+      "chatIds": "ID чатов",
+      "dailySummaryEnabled": "Итоги дня",
+      "dailySummaryTime": "Время итогов дня",
+      "lowStockEnabled": "Низкий остаток на складе",
+      "onlineReservationEnabled": "Новая онлайн-бронь",
+      "shiftDifferenceEnabled": "Смена закрыта с расхождением",
+      "bigRefundEnabled": "Крупный возврат",
+      "bigRefundThreshold": "Порог крупного возврата"
+    },
+    "sms_eskiz": {
+      "email": "E-mail аккаунта Eskiz",
+      "password": "Пароль / секретный ключ Eskiz",
+      "from": "Имя отправителя",
+      "reservationConfirmationEnabled": "SMS при подтверждении брони"
+    },
+    "smtp": {
+      "host": "SMTP-сервер",
+      "port": "Порт",
+      "useSsl": "SSL при подключении",
+      "username": "Логин",
+      "password": "Пароль",
+      "fromEmail": "Адрес отправителя",
+      "fromName": "Имя отправителя"
+    }
+  },
+  "hints": {
+    "telegram": {
+      "botToken": "Получите у @BotFather. Хранится в зашифрованном виде.",
+      "chatIds": "Через запятую; бот должен быть добавлен в чат",
+      "dailySummaryTime": "ЧЧ:ММ по времени каждого филиала"
+    },
+    "sms_eskiz": {
+      "from": "Одобренное Eskiz имя (по умолчанию 4546)"
+    },
+    "smtp": {
+      "useSsl": "Включите для порта 465; иначе используется STARTTLS"
+    }
+  },
+  "test": {
+    "send": "Отправить тест",
+    "success": "Тестовое сообщение отправлено",
+    "failed": "Не удалось отправить: {{error}}",
+    "saveFirst": "Сначала включите и сохраните настройки",
+    "recipientHint": "Тест использует сохранённые настройки",
+    "recipient": {
+      "sms_eskiz": "Телефон для теста",
+      "smtp": "E-mail для теста"
+    }
+  },
+  "validation": {
+    "time": "Укажите время в формате ЧЧ:ММ"
+  },
+  "tabs": {
+    "settings": "Настройки",
+    "outbound": "Журнал отправок"
+  },
+  "columns": {
+    "createdAt": "Создано",
+    "channel": "Канал",
+    "kind": "Событие",
+    "summary": "Сообщение",
+    "status": "Статус",
+    "attempts": "Попытки",
+    "lastError": "Ошибка",
+    "integration": "Интеграция",
+    "message": "Текст ошибки",
+    "organization": "Организация"
+  },
+  "channels": {
+    "telegram": "Telegram",
+    "sms": "SMS",
+    "email": "E-mail"
+  },
+  "outboundStatus": {
+    "pending": "В очереди",
+    "sent": "Отправлено",
+    "failed": "Ошибка",
+    "skipped": "Пропущено"
+  },
+  "kinds": {
+    "daily_summary": "Итоги дня",
+    "low_stock": "Низкий остаток",
+    "big_refund": "Крупный возврат",
+    "shift_difference": "Расхождение в кассе",
+    "online_reservation": "Онлайн-бронь",
+    "reservation_confirmed": "Подтверждение брони",
+    "email": "Письмо",
+    "test": "Тест"
+  },
+  "filters": {
+    "allStatuses": "Все статусы",
+    "allChannels": "Все каналы"
+  },
+  "outbound": {
+    "title": "Журнал отправок",
+    "subtitle": "Очередь сообщений с повторами; получатели скрыты",
+    "empty": "Сообщений пока нет"
+  },
+  "errors": {
+    "title": "Ошибки интеграций",
+    "empty": "Ошибок нет",
+    "platformTitle": "Ошибки интеграций",
+    "platformSubtitle": "Сбои доставки Telegram, SMS и почты во всех организациях"
+  }
+}

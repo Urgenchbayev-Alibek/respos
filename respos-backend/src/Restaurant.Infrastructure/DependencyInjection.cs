@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Restaurant.Application.Abstractions.Audit;
 using Restaurant.Application.Abstractions.Clock;
 using Restaurant.Application.Abstractions.Context;
-using Restaurant.Application.Abstractions.Email;
 using Restaurant.Application.Abstractions.Files;
 using Restaurant.Application.Abstractions.Idempotency;
 using Restaurant.Application.Abstractions.Payments;
@@ -19,6 +18,7 @@ using Restaurant.Infrastructure.Context;
 using Restaurant.Infrastructure.Files;
 using Restaurant.Infrastructure.Housekeeping;
 using Restaurant.Infrastructure.Identity;
+using Restaurant.Infrastructure.Integrations;
 using Restaurant.Infrastructure.Idempotency;
 using Restaurant.Infrastructure.Payments;
 using Restaurant.Infrastructure.Persistence.Context;
@@ -68,7 +68,6 @@ public static class DependencyInjection
         services.AddSingleton<IPaymentProvider, ManualPaymentProvider>();
         services.AddPaymentProviders(configuration);
         services.AddSingleton<IFileStorage, LocalFileStorage>();
-        services.AddSingleton<IEmailSender, LogEmailSender>();
         services.AddSingleton<ISpreadsheetWriter, ClosedXmlSpreadsheetWriter>();
         services.AddScoped<IAuditLogger, AuditLogger>();
         services.AddScoped<IIdempotencyService, IdempotencyService>();
@@ -76,6 +75,7 @@ public static class DependencyInjection
         services.AddScoped<HousekeepingCleaner>();
         services.AddHostedService<HousekeepingService>();
 
+        services.AddIntegrations(configuration);
         services.AddDatabaseSeeding();
         return services;
     }

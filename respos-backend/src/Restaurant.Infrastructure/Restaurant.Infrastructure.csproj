@@ -19,5 +19,6 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" />
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
     <PackageReference Include="ClosedXML" />
+    <PackageReference Include="MailKit" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,9 @@ import { useBranches } from '@/entities/branch/branch.queries';
 import { useOrganization } from '@/entities/organization/organization.queries';
 import { OrganizationForm } from '@/features/organization/ui/OrganizationForm';
 import { PaymentProvidersCard } from '@/features/payment-providers/ui/PaymentProvidersCard';
+import { PERMISSIONS as P } from '@/shared/constants/permissions';
 import { buildPath, ROUTES } from '@/shared/constants/routes';
+import { usePermissions } from '@/shared/hooks/use-permissions';
 import { Card, ErrorState, PageHeader, PageLoader } from '@/shared/ui';
 import styles from './SettingsPage.module.css';
 
@@ -14,6 +16,7 @@ export function SettingsPage() {
   const { t } = useTranslation('settings');
   const organization = useOrganization();
   const branches = useBranches();
+  const { hasPermission } = usePermissions();
 
   return (
     <>
@@ -39,6 +42,21 @@ export function SettingsPage() {
           </ul>
         </Card>
         <PaymentProvidersCard />
+        {hasPermission(P.integrations.manage) && (
+          <Card title={t('integrations:title')} flush>
+            <ul className={styles.list}>
+              <li>
+                <Link to={ROUTES.admin.integrations} className={styles.link}>
+                  <span>
+                    <strong>{t('integrations:settingsLink')}</strong>
+                    <small className={styles.muted}>{t('integrations:subtitle')}</small>
+                  </span>
+                  <ChevronRight aria-hidden="true" />
+                </Link>
+              </li>
+            </ul>
+          </Card>
+        )}
       </div>
     </>
   );

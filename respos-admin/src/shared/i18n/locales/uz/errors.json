@@ -88,7 +88,11 @@
     "invalid_status_transition": "Bu amal bronning joriy holatida mumkin emas.",
     "not_editable": "Faqat kutilayotgan yoki tasdiqlangan bronlarni oʻzgartirish mumkin.",
     "not_found": "Bron topilmadi.",
-    "table_required": "Mehmonlarni oʻtqazishdan oldin stol belgilang."
+    "table_required": "Mehmonlarni oʻtqazishdan oldin stol belgilang.",
+    "slot_unavailable": "Bu vaqtga bo'sh stol yo'q — boshqasini tanlang",
+    "invalid_date": "Sana o'tib ketgan yoki juda uzoqda",
+    "invalid_time": "Vaqt bron qilish soatlaridan tashqarida",
+    "too_many_guests": "Katta guruh uchun restoranga qo'ng'iroq qiling"
   },
   "payment": {
     "duplicate": "Toʻlov allaqachon roʻyxatga olingan.",
@@ -291,5 +295,9 @@
   },
   "waiter_call": {
     "not_found": "Chaqiruv topilmadi."
+  },
+  "integration": {
+    "not_found": "Noma'lum integratsiya",
+    "not_configured": "Avval integratsiya sozlamalarini yoqing va saqlang"
   }
 }

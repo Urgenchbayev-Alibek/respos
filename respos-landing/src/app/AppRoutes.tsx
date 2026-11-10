@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { BookingPage } from '@/pages/BookingPage';
 import { ContactsPage } from '@/pages/ContactsPage';
 import { DemoPage } from '@/pages/DemoPage';
 import { FaqPage } from '@/pages/FaqPage';
@@ -22,6 +23,7 @@ export function AppRoutes() {
         <Route path={ROUTES.faq} element={<FaqPage />} />
         <Route path={ROUTES.contacts} element={<ContactsPage />} />
         <Route path={ROUTES.demo} element={<DemoPage />} />
+        <Route path={ROUTES.booking} element={<BookingPage />} />
         <Route path={ROUTES.privacy} element={<PrivacyPage />} />
         <Route path={ROUTES.terms} element={<TermsPage />} />
         <Route path="*" element={<NotFoundPage />} />

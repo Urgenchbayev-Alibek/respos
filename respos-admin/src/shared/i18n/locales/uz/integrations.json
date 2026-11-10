@@ -1,0 +1,137 @@
+{
+  "title": "Integratsiyalar",
+  "subtitle": "Egasiga Telegram bildirishnomalari, mehmonlarga SMS va takliflar uchun pochta",
+  "settingsLink": "Integratsiyalarni sozlash",
+  "saved": "Integratsiya sozlamalari saqlandi",
+  "enabled": "Yoqilgan",
+  "secretPlaceholder": "O'zgartirmaslik uchun bo'sh qoldiring",
+  "lastError": "Oxirgi xato ({{at}}): {{error}}",
+  "lastSuccess": "Oxirgi muvaffaqiyatli yuborish: {{at}}",
+  "status": {
+    "connected": "Ulangan",
+    "error": "Xato",
+    "not_configured": "Ulanmagan",
+    "notConfiguredHint": "Integratsiya o'chirilgan yoki sozlanmagan — xabarlar yuborilmaydi"
+  },
+  "types": {
+    "telegram": {
+      "title": "Telegram-bot",
+      "description": "Egasiga bildirishnomalar: kun yakuni, kam qoldiqlar, yirik qaytarishlar, onlayn bronlar, kassadagi farqlar."
+    },
+    "sms_eskiz": {
+      "title": "SMS (Eskiz.uz)",
+      "description": "Bron tasdiqlanganda mehmonga SMS (faqat O'zbekiston raqamlari)."
+    },
+    "smtp": {
+      "title": "Pochta (SMTP)",
+      "description": "Xodimlarni taklif qilish xatlari. SMTP bo'lmasa, xatlar faqat server jurnaliga yoziladi."
+    }
+  },
+  "fields": {
+    "telegram": {
+      "botToken": "Bot tokeni",
+      "chatIds": "Chat ID lari",
+      "dailySummaryEnabled": "Kun yakuni",
+      "dailySummaryTime": "Kun yakuni vaqti",
+      "lowStockEnabled": "Omborda kam qoldiq",
+      "onlineReservationEnabled": "Yangi onlayn bron",
+      "shiftDifferenceEnabled": "Smena farq bilan yopildi",
+      "bigRefundEnabled": "Yirik qaytarish",
+      "bigRefundThreshold": "Yirik qaytarish chegarasi"
+    },
+    "sms_eskiz": {
+      "email": "Eskiz akkaunti e-maili",
+      "password": "Eskiz paroli / maxfiy kaliti",
+      "from": "Yuboruvchi nomi",
+      "reservationConfirmationEnabled": "Bron tasdiqlanganda SMS"
+    },
+    "smtp": {
+      "host": "SMTP-server",
+      "port": "Port",
+      "useSsl": "Ulanishda SSL",
+      "username": "Login",
+      "password": "Parol",
+      "fromEmail": "Yuboruvchi manzili",
+      "fromName": "Yuboruvchi nomi"
+    }
+  },
+  "hints": {
+    "telegram": {
+      "botToken": "@BotFather dan oling. Shifrlangan holda saqlanadi.",
+      "chatIds": "Vergul bilan; bot chatga qo'shilgan bo'lishi kerak",
+      "dailySummaryTime": "Har bir filial vaqti bo'yicha SS:DD"
+    },
+    "sms_eskiz": {
+      "from": "Eskiz tasdiqlagan nom (standart 4546)"
+    },
+    "smtp": {
+      "useSsl": "465-port uchun yoqing; aks holda STARTTLS ishlatiladi"
+    }
+  },
+  "test": {
+    "send": "Test yuborish",
+    "success": "Test xabar yuborildi",
+    "failed": "Yuborib bo'lmadi: {{error}}",
+    "saveFirst": "Avval sozlamalarni yoqing va saqlang",
+    "recipientHint": "Test saqlangan sozlamalardan foydalanadi",
+    "recipient": {
+      "sms_eskiz": "Test uchun telefon",
+      "smtp": "Test uchun e-mail"
+    }
+  },
+  "validation": {
+    "time": "Vaqtni SS:DD formatida kiriting"
+  },
+  "tabs": {
+    "settings": "Sozlamalar",
+    "outbound": "Yuborishlar jurnali"
+  },
+  "columns": {
+    "createdAt": "Yaratilgan",
+    "channel": "Kanal",
+    "kind": "Hodisa",
+    "summary": "Xabar",
+    "status": "Holat",
+    "attempts": "Urinishlar",
+    "lastError": "Xato",
+    "integration": "Integratsiya",
+    "message": "Xato matni",
+    "organization": "Tashkilot"
+  },
+  "channels": {
+    "telegram": "Telegram",
+    "sms": "SMS",
+    "email": "E-mail"
+  },
+  "outboundStatus": {
+    "pending": "Navbatda",
+    "sent": "Yuborildi",
+    "failed": "Xato",
+    "skipped": "O'tkazib yuborildi"
+  },
+  "kinds": {
+    "daily_summary": "Kun yakuni",
+    "low_stock": "Kam qoldiq",
+    "big_refund": "Yirik qaytarish",
+    "shift_difference": "Kassadagi farq",
+    "online_reservation": "Onlayn bron",
+    "reservation_confirmed": "Bron tasdig'i",
+    "email": "Xat",
+    "test": "Test"
+  },
+  "filters": {
+    "allStatuses": "Barcha holatlar",
+    "allChannels": "Barcha kanallar"
+  },
+  "outbound": {
+    "title": "Yuborishlar jurnali",
+    "subtitle": "Qayta urinishli xabarlar navbati; qabul qiluvchilar yashirilgan",
+    "empty": "Hozircha xabarlar yo'q"
+  },
+  "errors": {
+    "title": "Integratsiya xatolari",
+    "empty": "Xatolar yo'q",
+    "platformTitle": "Integratsiya xatolari",
+    "platformSubtitle": "Barcha tashkilotlarda Telegram, SMS va pochta yetkazish xatolari"
+  }
+}

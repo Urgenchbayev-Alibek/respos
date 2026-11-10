@@ -7,6 +7,7 @@ export const common = {
     faq: 'Вопросы',
     contacts: 'Контакты',
     demo: 'Запросить демо',
+    booking: 'Забронировать стол',
     login: 'Войти',
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
@@ -88,6 +89,10 @@ export const common = {
     demo: {
       title: 'Заявка на демонстрацию',
       description: 'Оставьте заявку — покажем RestaurantOS на примере вашего ресторана.',
+    },
+    booking: {
+      title: 'Забронировать стол',
+      description: 'Онлайн-бронирование столика: выберите дату, время и количество гостей.',
     },
     privacy: { title: 'Политика конфиденциальности', description: 'Черновик политики конфиденциальности RestaurantOS.' },
     terms: { title: 'Пользовательское соглашение', description: 'Черновик пользовательского соглашения RestaurantOS.' },

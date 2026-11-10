@@ -50,6 +50,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("Auth:RefreshCookieSecure", "false");
         builder.UseSetting("Database:MigrateOnStartup", "true");
         builder.UseSetting("Housekeeping:Enabled", "false"); // tests call HousekeepingCleaner directly
+        builder.UseSetting("Integrations:BackgroundEnabled", "false"); // F7 tests run the dispatcher / daily summary directly
         builder.UseSetting("Seed:PlatformAdminPassword", TestPassword);
         builder.UseSetting("RateLimiting:GlobalPermitPerMinute", "100000");
         builder.UseSetting("RateLimiting:AuthPerMinute", "100000");

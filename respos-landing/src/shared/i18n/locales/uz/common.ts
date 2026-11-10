@@ -10,6 +10,7 @@ export const common: Messages<typeof ruCommon> = {
     faq: 'Savollar',
     contacts: 'Aloqa',
     demo: 'Demo so‘rash',
+    booking: 'Stol band qilish',
     login: 'Kirish',
     openMenu: 'Menyuni ochish',
     closeMenu: 'Menyuni yopish',
@@ -91,6 +92,10 @@ export const common: Messages<typeof ruCommon> = {
     demo: {
       title: 'Namoyishga ariza',
       description: 'Ariza qoldiring — RestaurantOS’ni restoraningiz misolida ko‘rsatamiz.',
+    },
+    booking: {
+      title: 'Stol band qilish',
+      description: 'Onlayn stol band qilish: sana, vaqt va mehmonlar sonini tanlang.',
     },
     privacy: { title: 'Maxfiylik siyosati', description: 'RestaurantOS maxfiylik siyosati loyihasi.' },
     terms: { title: 'Foydalanuvchi kelishuvi', description: 'RestaurantOS foydalanuvchi kelishuvi loyihasi.' },

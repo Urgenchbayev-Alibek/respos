@@ -1,0 +1,137 @@
+{
+  "title": "Integrations",
+  "subtitle": "Owner Telegram alerts, guest SMS and e-mail for invitations",
+  "settingsLink": "Configure integrations",
+  "saved": "Integration settings saved",
+  "enabled": "Enabled",
+  "secretPlaceholder": "Leave empty to keep the current value",
+  "lastError": "Last error ({{at}}): {{error}}",
+  "lastSuccess": "Last successful delivery: {{at}}",
+  "status": {
+    "connected": "Connected",
+    "error": "Error",
+    "not_configured": "Not connected",
+    "notConfiguredHint": "The integration is off or not configured — nothing is sent"
+  },
+  "types": {
+    "telegram": {
+      "title": "Telegram bot",
+      "description": "Owner alerts: daily summary, low stock, big refunds, online reservations, cash differences."
+    },
+    "sms_eskiz": {
+      "title": "SMS (Eskiz.uz)",
+      "description": "Guest SMS when a reservation is confirmed (Uzbek numbers only)."
+    },
+    "smtp": {
+      "title": "E-mail (SMTP)",
+      "description": "Staff invitation e-mails. Without SMTP, e-mails are only written to the server log."
+    }
+  },
+  "fields": {
+    "telegram": {
+      "botToken": "Bot token",
+      "chatIds": "Chat IDs",
+      "dailySummaryEnabled": "Daily summary",
+      "dailySummaryTime": "Daily summary time",
+      "lowStockEnabled": "Low stock",
+      "onlineReservationEnabled": "New online reservation",
+      "shiftDifferenceEnabled": "Shift closed with a cash difference",
+      "bigRefundEnabled": "Big refund",
+      "bigRefundThreshold": "Big refund threshold"
+    },
+    "sms_eskiz": {
+      "email": "Eskiz account e-mail",
+      "password": "Eskiz password / secret key",
+      "from": "Sender name",
+      "reservationConfirmationEnabled": "SMS on reservation confirmation"
+    },
+    "smtp": {
+      "host": "SMTP host",
+      "port": "Port",
+      "useSsl": "SSL on connect",
+      "username": "Username",
+      "password": "Password",
+      "fromEmail": "Sender address",
+      "fromName": "Sender name"
+    }
+  },
+  "hints": {
+    "telegram": {
+      "botToken": "Get it from @BotFather. Stored encrypted.",
+      "chatIds": "Comma-separated; the bot must be added to the chat",
+      "dailySummaryTime": "HH:mm in each branch's time zone"
+    },
+    "sms_eskiz": {
+      "from": "Name approved by Eskiz (default 4546)"
+    },
+    "smtp": {
+      "useSsl": "Turn on for port 465; otherwise STARTTLS is used"
+    }
+  },
+  "test": {
+    "send": "Send test",
+    "success": "Test message sent",
+    "failed": "Sending failed: {{error}}",
+    "saveFirst": "Enable and save the settings first",
+    "recipientHint": "The test uses the saved settings",
+    "recipient": {
+      "sms_eskiz": "Test phone number",
+      "smtp": "Test e-mail"
+    }
+  },
+  "validation": {
+    "time": "Enter the time as HH:mm"
+  },
+  "tabs": {
+    "settings": "Settings",
+    "outbound": "Delivery log"
+  },
+  "columns": {
+    "createdAt": "Created",
+    "channel": "Channel",
+    "kind": "Event",
+    "summary": "Message",
+    "status": "Status",
+    "attempts": "Attempts",
+    "lastError": "Error",
+    "integration": "Integration",
+    "message": "Error text",
+    "organization": "Organization"
+  },
+  "channels": {
+    "telegram": "Telegram",
+    "sms": "SMS",
+    "email": "E-mail"
+  },
+  "outboundStatus": {
+    "pending": "Queued",
+    "sent": "Sent",
+    "failed": "Failed",
+    "skipped": "Skipped"
+  },
+  "kinds": {
+    "daily_summary": "Daily summary",
+    "low_stock": "Low stock",
+    "big_refund": "Big refund",
+    "shift_difference": "Cash difference",
+    "online_reservation": "Online reservation",
+    "reservation_confirmed": "Reservation confirmation",
+    "email": "E-mail",
+    "test": "Test"
+  },
+  "filters": {
+    "allStatuses": "All statuses",
+    "allChannels": "All channels"
+  },
+  "outbound": {
+    "title": "Delivery log",
+    "subtitle": "Message queue with retries; recipients are masked",
+    "empty": "No messages yet"
+  },
+  "errors": {
+    "title": "Integration errors",
+    "empty": "No errors",
+    "platformTitle": "Integration errors",
+    "platformSubtitle": "Telegram, SMS and e-mail delivery failures across all organizations"
+  }
+}

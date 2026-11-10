@@ -5,6 +5,7 @@ export const ROUTES = {
   faq: '/faq',
   contacts: '/contacts',
   demo: '/demo',
+  booking: '/booking',
   privacy: '/privacy',
   terms: '/terms',
   /** Public QR menu of a branch (`?table=N` enables call-waiter buttons). */
@@ -16,5 +17,6 @@ export const NAV_ITEMS = [
   { to: ROUTES.features, key: 'features' },
   { to: ROUTES.pricing, key: 'pricing' },
   { to: ROUTES.faq, key: 'faq' },
+  { to: ROUTES.booking, key: 'booking' },
   { to: ROUTES.contacts, key: 'contacts' },
 ] as const;
