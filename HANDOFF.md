@@ -48,3 +48,14 @@ cd respos-landing && npm install && npm run dev                   # :5174
 Правила для агентов — `CLAUDE.md` (лимит 500 строк/файл, decimal для денег, tenant/branch scope, права на бэке,
 SignalR только уведомляет). Новый модуль бэка — `respos-backend/README.md`, новая страница — `respos-admin/README.md`.
 Любое изменение API — сначала `respos-contracts/` + `CHANGELOG.md`.
+
+## v2 (10.11.2026) — что добавилось
+Гости и лояльность, разделение счёта и чаевые, доставка, QR-меню и вызов официанта, меню по филиалам, перемещения и
+предложения закупок, аналитика и XLSX, учёт времени/график/PIN-вход, интеграции (Telegram/SMS/SMTP) и онлайн-бронь, PWA и
+тёмная тема. Контракты модулей — `respos-contracts/v2/F1…F7`, итог слияния — `respos-contracts/CHANGELOG.md` (v2.0).
+- Одна миграция `V2Features` (только добавляет таблицы/колонки). Настройки и чек-лист v2 — `docs/deployment/DEPLOYMENT.md` §11.
+- **Внешние сервисы не подключены** (Payme, Click, Telegram, Eskiz SMS, SMTP — ждут реквизитов; Uzum — заготовка; фискализации нет).
+  Что нужно от владельца — `User-Todo.md`, раздел E.
+- Демо (только Development): второй филиал «Ташкент — Чиланзар»; PIN на общем планшете — официант `2580`, кассир `3690`, повар `1470`;
+  QR-меню `http://localhost:5174/menu/demo`, онлайн-бронь `http://localhost:5174/booking`.
+- Результаты проверок v2 — `STATUS.md` и `docs/testing/E2E_RESULTS.md`. v2 **не запушен и не развёрнут** (Vercel показывает MVP).

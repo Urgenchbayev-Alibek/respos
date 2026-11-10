@@ -253,3 +253,28 @@ pg_restore -c -h HOST -U USER -d respos_restore respos_YYYY-MM-DD.dump
 - [ ] Health checks подключены, алерт при падении
 - [ ] E2E-сценарий (`scripts/e2e`, [E2E_RESULTS](../testing/E2E_RESULTS.md)) пройден на staging — с демо-организацией (вне Development демо-seed не создаётся, данные готовятся вручную)
 - [ ] Метки «Демо» / «Не является фискальным чеком» видны; юридическая консультация (User-Todo C)
+
+## 11. Настройки v2 (внешние сервисы выключены, пока не заданы реквизиты)
+
+Обновление существующей БД: миграция `V2Features` только добавляет таблицы и колонки (новые обязательные колонки получают 0/`false`),
+проверена на чистой БД и поверх БД v1 с данными. Процедура — как в §5 (бэкап → скрипт/bundle → новая версия API).
+При первом старте v2 филиалы без публичного адреса получают `slug` автоматически (`BranchSlugSeeder`).
+
+| Переменная | Где | Назначение |
+|---|---|---|
+| `PaymentProviders__Payme__MerchantId`, `__Key`, `__TestMode` | backend | Payme; пусто → «Не подключено». Webhook: `POST /api/v1/payments/providers/payme/callback` |
+| `PaymentProviders__Click__ServiceId`, `__MerchantId`, `__SecretKey`, `__TestMode` | backend | Click; webhook: `POST /api/v1/payments/providers/click/callback` |
+| `Integrations__Smtp__Host`, `__Port`, `__UseSsl`, `__Username`, `__Password`, `__FromEmail`, `__FromName` | backend | SMTP платформы (приглашения, сброс пароля); пусто → письма пишутся в лог |
+| `DataProtection__KeysPath` | backend | каталог (том) для ключей шифрования секретов интеграций; не задано → таблица `data_protection_keys` |
+| `Integrations__BackgroundEnabled` | backend | `true` по умолчанию: фоновая отправка Telegram/SMS/e-mail и ежедневная сводка |
+| `VITE_LANDING_URL` | `respos-admin` (Vercel) | адрес лендинга для QR-кодов столов: `${VITE_LANDING_URL}/menu/{slug}?table=N` |
+| `VITE_PUBLIC_BRANCH_SLUG` | `respos-landing` (Vercel) | slug филиала для `/booking` (по умолчанию `demo`; пустое значение → «бронирование не подключено») |
+
+- Telegram, Eskiz SMS и SMTP организации настраиваются в приложении («Интеграции», право `integrations.manage`); секреты хранятся
+  зашифрованно (ASP.NET Data Protection) и клиенту возвращаются только в виде маски. **Ключи нужно сохранять вместе с БД** (бэкап
+  `data_protection_keys` или тома `KeysPath`): при их потере секреты придётся ввести заново.
+- Webhook-и платёжных провайдеров анонимные (подпись проверяется в адаптере) — URL `api.`-домена должен быть доступен провайдеру по HTTPS.
+- Домен лендинга должен быть в `Frontend__AllowedOrigins` (QR-меню, вызов официанта и онлайн-бронь идут с него на API).
+- Service worker админ-приложения кэширует только статику; после деплоя новая версия подхватывается при следующем открытии.
+- Чек-лист v2: миграция `V2Features` применена · ключи Data Protection в бэкапе · `VITE_LANDING_URL` и `VITE_PUBLIC_BRANCH_SLUG` заданы ·
+  провайдеры оплаты проверены в их песочницах до включения на филиале · демо-PIN отсутствуют (создаются только в Development).
