@@ -83,3 +83,25 @@ Tauri; Electron gives silent thermal printing). Design brief: `respos-desktop/DE
   launch → uninstall) and portable exe; language / dark theme / kiosk / shortcuts. Findings are verified, fixed and re-run.
 - After that: merge `v2/desktop` into `main`, add `respos-desktop` to `CLAUDE.md` layout and root `README.md`, push,
   note in `User-Todo.md` that the exe is unsigned (code-signing certificate needed to avoid the SmartScreen warning).
+
+## Night run plan — deadline 07:00, 2026-11-11 (owner: "finish everything, decide yourself")
+
+Running in parallel (each in its own worktree, nothing touches `main` until merge):
+
+| Track | Branch / worktree | Workflow run | State at 00:20 |
+|---|---|---|---|
+| Desktop exe (Electron) | `v2/desktop` / `.claude/worktrees/desktop` | `wf_50ba0042-ee5` | Package stage: installer (114 MB) + portable (104 MB) built, e2e in progress; then Review → Fix |
+| UI redesign with the design skills | `v2/design` / `.claude/worktrees/design` | `wf_c802a677-296` | Started: Baseline capture + 6 surface audits → Spec → Implement (5 partitions) → Review (4 lenses) → Finalize |
+
+Design skills: https://github.com/emilkowalski/skills installed globally in `~/.claude/skills/` (18 skills, content
+reviewed — Markdown only, no scripts). `emil-design-eng` + `apple-design` are mandatory for all UI work (rule also in
+the owner's global `CLAUDE.md`); project accessibility rules take precedence over motion advice.
+
+Order of the remaining steps:
+1. Desktop workflow done → start the **wide exe E2E matrix** (8 scenarios, parallel agents, own backend + DB each) on `v2/desktop`.
+2. Redesign workflow done → merge `v2/design` and `v2/desktop` into `main`; polish the desktop connection window with the
+   same design rules; rebuild the exe with the redesigned UI.
+3. Final full run on the merged code: backend, admin, landing suites; API E2E; UI smoke; all exe scenarios.
+4. Regroup commits **by topic** (owner request), push, redeploy Vercel, restart the local stack.
+5. Publish the before/after design gallery for the owner; update `README.md`, `CLAUDE.md` layout, `User-Todo.md`
+   (unsigned exe → code-signing certificate; backend hosting still needed).
