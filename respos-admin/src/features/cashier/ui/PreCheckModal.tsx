@@ -3,14 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { useOrderReceipt } from '@/entities/order/order.queries';
 import type { ReceiptDto } from '@/entities/order/receipt.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
-import { Button, ErrorState, Modal, PageLoader } from '@/shared/ui';
+import { Button, ErrorState, Modal, PageLoader, PrintArea, printArea } from '@/shared/ui';
 import { OrderSummary } from './OrderSummary';
 import styles from './PreCheckModal.module.css';
 
 /**
  * Pre-check (guest bill) from `GET /orders/{id}/receipt` (fresh server data, cancelled items excluded).
- * NOT a fiscal receipt (no online cash register in MVP).
+ * NOT a fiscal receipt (no online cash register in MVP). Prints as an 80 mm thermal slip (`PrintArea`).
  */
+const PRINT_ID = 'precheck';
+
 export function PreCheckModal({ orderId, onClose }: { orderId: string; onClose: () => void }) {
   const { t } = useTranslation('cashier');
   const receipt = useOrderReceipt(orderId);
@@ -23,8 +25,8 @@ export function PreCheckModal({ orderId, onClose }: { orderId: string; onClose: 
       footer={
         <>
           <Button onClick={onClose}>{t('common:actions.close')}</Button>
-          <Button variant="primary" icon={<Printer />} disabled={!receipt.data} onClick={() => window.print()}>
-            {t('precheck.print')}
+          <Button variant="primary" icon={<Printer />} disabled={!receipt.data} onClick={() => printArea(PRINT_ID)}>
+            {t('ux:print.precheck')}
           </Button>
         </>
       }
@@ -34,20 +36,25 @@ export function PreCheckModal({ orderId, onClose }: { orderId: string; onClose: 
       ) : receipt.isError ? (
         <ErrorState error={receipt.error} onRetry={() => void receipt.refetch()} />
       ) : (
-        <ReceiptSheet receipt={receipt.data} />
+        <>
+          <ReceiptSheet receipt={receipt.data} testId="precheck" />
+          <PrintArea id={PRINT_ID} defaultForPrint>
+            <ReceiptSheet receipt={receipt.data} />
+          </PrintArea>
+        </>
       )}
     </Modal>
   );
 }
 
-function ReceiptSheet({ receipt }: { receipt: ReceiptDto }) {
+function ReceiptSheet({ receipt, testId }: { receipt: ReceiptDto; testId?: string }) {
   const { t } = useTranslation('cashier');
   const format = useFormatters();
   const place = receipt.tableNumber ? t('orders.table', { number: receipt.tableNumber }) : t('orders.takeaway');
   const contacts = [receipt.branchAddress, receipt.branchPhone].filter(Boolean).join(' · ');
 
   return (
-    <div className={styles.sheet} data-testid="precheck">
+    <div className={styles.sheet} data-testid={testId}>
       <div className={styles.header}>
         <h3>{receipt.organizationName}</h3>
         <p className={styles.meta}>{receipt.branchName}</p>

@@ -1,0 +1,68 @@
+{
+  "theme": {
+    "system": "Theme: system",
+    "light": "Theme: light",
+    "dark": "Theme: dark"
+  },
+  "fullscreen": {
+    "enter": "Full screen",
+    "exit": "Exit full screen"
+  },
+  "pwa": {
+    "updateTitle": "A new version is available — update",
+    "updateDescription": "The page will reload. Unfinished actions on screen will be reset.",
+    "update": "Update",
+    "later": "Later",
+    "offline": "No internet connection. Data on screen may be out of date."
+  },
+  "print": {
+    "ticket": "Print ticket",
+    "ticketAria": "Print ticket #{{number}}",
+    "precheck": "Print (80 mm)",
+    "zReport": "Print Z-report",
+    "xReport": "Print X-report",
+    "printedAt": "Printed: {{time}}"
+  },
+  "kitchenTicket": {
+    "title": "Ticket #{{number}}",
+    "station": "Station: {{name}}",
+    "order": "Order #{{number}}",
+    "waiter": "Waiter: {{name}}",
+    "created": "Created: {{time}}",
+    "cancelled": "CANCELLED"
+  },
+  "zReport": {
+    "titleClosed": "Z-report",
+    "titleOpen": "X-report (shift open)",
+    "opened": "Opened",
+    "closed": "Closed",
+    "by": "Cashier",
+    "byMethod": "By payment method",
+    "noPayments": "No payments",
+    "total": "Total",
+    "cash": "Cash drawer",
+    "opening": "Opening float",
+    "cashPayments": "Cash payments",
+    "cashRefunds": "Cash refunds",
+    "expected": "Expected",
+    "actual": "Counted",
+    "difference": "Difference",
+    "comment": "Comment: {{comment}}",
+    "notFiscal": "Not a fiscal document"
+  },
+  "shortcuts": {
+    "title": "Keyboard shortcuts",
+    "description": "Keys without Ctrl do not fire while the cursor is in a text field.",
+    "empty": "There are no shortcuts on this screen.",
+    "toggleHelp": "Show or hide this help",
+    "cashier": {
+      "search": "Search orders",
+      "pay": "Pay",
+      "method": "Payment method: {{method}}"
+    },
+    "waiter": {
+      "search": "Search the menu",
+      "send": "Send to kitchen"
+    }
+  }
+}

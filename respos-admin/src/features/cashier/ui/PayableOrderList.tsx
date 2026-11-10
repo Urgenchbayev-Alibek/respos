@@ -23,7 +23,7 @@ export function PayableOrderList({ selectedId, onSelect }: PayableOrderListProps
   return (
     <section className={styles.panel} aria-label={t('orders.title')}>
       <h2>{t('orders.titleCount', { count: orders.length })}</h2>
-      <SearchInput value={search} onChange={setSearch} placeholder={t('orders.searchPlaceholder')} />
+      <SearchInput value={search} onChange={setSearch} placeholder={t('orders.searchPlaceholder')} data-shortcut="order-search" />
       {query.isPending ? (
         <Skeleton height={64} />
       ) : query.isError ? (

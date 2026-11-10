@@ -88,6 +88,7 @@ export function OrderPanel(props: OrderPanelProps) {
             icon={<ChefHat />}
             loading={sending}
             disabled={toSend === 0}
+            data-shortcut="send-to-kitchen"
             onClick={onSend}
           >
             {t('order.send', { n: toSend })}

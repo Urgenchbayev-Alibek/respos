@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet } from 'react-router-dom';
 import type { NavItem } from '@/app/navigation/nav-types';
 import type { WorkspaceId } from '@/app/navigation/workspaces';
+import { ShortcutsOverlay } from '@/widgets/shortcuts/ShortcutsOverlay';
 import { BranchSwitcher } from '@/widgets/topbar/BranchSwitcher';
 import { ConnectionStatus } from '@/widgets/topbar/ConnectionStatus';
 import { LanguageSwitcher } from '@/widgets/topbar/LanguageSwitcher';
@@ -65,6 +66,7 @@ export function WorkspaceLayout({ workspace, nav = [], showBranch = true, showCo
         <span className={styles.spacer} />
         {showConnection && <ConnectionStatus />}
         {topbarExtra}
+        <ShortcutsOverlay />
         <LanguageSwitcher />
         <UserMenu />
       </header>

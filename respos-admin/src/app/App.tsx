@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
+import { OfflineBanner } from './pwa/OfflineBanner';
+import { PwaUpdatePrompt } from './pwa/PwaUpdatePrompt';
 import { AppProviders } from './providers/AppProviders';
 import { createAppRouter } from './router/router';
 
@@ -8,6 +10,8 @@ export function App() {
   return (
     <AppProviders>
       <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      <OfflineBanner />
+      {import.meta.env.PROD && <PwaUpdatePrompt />}
     </AppProviders>
   );
 }

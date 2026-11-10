@@ -15,6 +15,8 @@ export { Drawer } from './Drawer/Drawer';
 export { ConfirmDialog } from './ConfirmDialog/ConfirmDialog';
 export { DataTable, type DataTableColumn } from './DataTable/DataTable';
 export { Pagination } from './Pagination/Pagination';
+export { PrintArea, PrintDivider, PrintRow } from './PrintArea/PrintArea';
+export { printArea } from './PrintArea/print-controller';
 export { StatusBadge } from './StatusBadge/StatusBadge';
 export { Card } from './Card/Card';
 export { StatCard } from './StatCard/StatCard';

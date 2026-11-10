@@ -1,0 +1,68 @@
+{
+  "theme": {
+    "system": "Mavzu: tizimdagidek",
+    "light": "Mavzu: yorugʻ",
+    "dark": "Mavzu: qorongʻi"
+  },
+  "fullscreen": {
+    "enter": "Toʻliq ekran rejimi",
+    "exit": "Toʻliq ekran rejimidan chiqish"
+  },
+  "pwa": {
+    "updateTitle": "Yangi versiya mavjud — yangilang",
+    "updateDescription": "Sahifa qayta yuklanadi. Ekrandagi tugallanmagan amallar bekor qilinadi.",
+    "update": "Yangilash",
+    "later": "Keyinroq",
+    "offline": "Internet aloqasi yoʻq. Ekrandagi maʼlumotlar eskirgan boʻlishi mumkin."
+  },
+  "print": {
+    "ticket": "Tiketni chop etish",
+    "ticketAria": "#{{number}} tiketni chop etish",
+    "precheck": "Chop etish (80 mm)",
+    "zReport": "Z-hisobotni chop etish",
+    "xReport": "X-hisobotni chop etish",
+    "printedAt": "Chop etildi: {{time}}"
+  },
+  "kitchenTicket": {
+    "title": "Tiket #{{number}}",
+    "station": "Stansiya: {{name}}",
+    "order": "Buyurtma #{{number}}",
+    "waiter": "Ofitsiant: {{name}}",
+    "created": "Yaratildi: {{time}}",
+    "cancelled": "BEKOR QILINDI"
+  },
+  "zReport": {
+    "titleClosed": "Z-hisobot",
+    "titleOpen": "X-hisobot (smena ochiq)",
+    "opened": "Ochildi",
+    "closed": "Yopildi",
+    "by": "Kassir",
+    "byMethod": "Toʻlov usullari boʻyicha",
+    "noPayments": "Toʻlovlar yoʻq",
+    "total": "Jami",
+    "cash": "Kassadagi naqd pul",
+    "opening": "Boshlangʻich qoldiq",
+    "cashPayments": "Naqd toʻlovlar",
+    "cashRefunds": "Naqd qaytarishlar",
+    "expected": "Kutilmoqda",
+    "actual": "Haqiqatda",
+    "difference": "Farq",
+    "comment": "Izoh: {{comment}}",
+    "notFiscal": "Fiskal hujjat emas"
+  },
+  "shortcuts": {
+    "title": "Tezkor tugmalar",
+    "description": "Ctrl’siz tugmalar kursor matn maydonida boʻlganda ishlamaydi.",
+    "empty": "Bu ekranda tezkor tugmalar yoʻq.",
+    "toggleHelp": "Ushbu yordamni koʻrsatish yoki yashirish",
+    "cashier": {
+      "search": "Buyurtmani qidirish",
+      "pay": "Toʻlash",
+      "method": "Toʻlov usuli: {{method}}"
+    },
+    "waiter": {
+      "search": "Menyudan qidirish",
+      "send": "Oshxonaga yuborish"
+    }
+  }
+}

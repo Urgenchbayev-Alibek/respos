@@ -11,6 +11,7 @@ import { OrderActions } from '@/features/order-actions/ui/OrderActions';
 import { cartQuantity, cartReducer } from '@/features/waiter-order/model/cart';
 import { useSubmitOrder, type NewOrderDraft } from '@/features/waiter-order/model/use-submit-order';
 import { useWaiterRealtime } from '@/features/waiter-order/model/use-waiter-realtime';
+import { useWaiterShortcuts } from '@/features/waiter-order/model/use-waiter-shortcuts';
 import { ItemOptionsSheet } from '@/features/waiter-order/ui/ItemOptionsSheet';
 import { OrderPanel } from '@/features/waiter-order/ui/OrderPanel';
 import { PosMenu } from '@/features/waiter-order/ui/PosMenu';
@@ -52,6 +53,7 @@ export function WaiterOrderPage() {
   const serve = useServeOrderItem();
   const serveAll = useServeAllItems();
   useWaiterRealtime();
+  useWaiterShortcuts();
 
   const data = order.data;
   const canEdit = data
