@@ -70,7 +70,8 @@ CourierDto = { id, name, phone, isActive }
 PublicMenuDto = {
   organizationName, currency, isDemo, branch: { slug, name, address, phone },
   categories: { id, name, nameUz, items: { id, name, nameUz, description, photoUrl, price, variants: { id, name, price }[] }[] }[]
-}  // only active, non-archived categories with ≥1 available, non-archived item of THAT branch's organization
+}  // only active, non-archived categories with ≥1 available, non-archived item of THAT branch's organization;
+   // prices, variant prices and availability are the BRANCH-effective values (F4 overrides via `BranchMenuResolver`, same as `/menu/pos`)
 WaiterCallDto = { id, tableId, tableNumber, reason, status, createdAt, acknowledgedAt, acknowledgedBy, acknowledgedByName }
 ```
 

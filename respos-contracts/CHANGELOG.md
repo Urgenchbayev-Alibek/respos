@@ -17,3 +17,6 @@
   - Loyalty redeem / cancel on a split order → 409 `order.split_active` (merge first); `maxRedeemable` is 0 while split.
   - One phone normalization for guests, delivery, couriers, reservations and SMS (`+998…`, other `+<8–15 digits>`; guests UZ only).
   - Admin sidebar gets «Интеграции» (`integrations.manage`).
+  - Per-branch menu overrides (F4) also drive the public QR menu (price, variant prices, stop-list) and the food-cost report /
+    dashboard food-cost alerts — a guest and the owner see the prices the branch POS actually charges.
+  - Admin totals / cashier summary / pre-check show the delivery fee line (rows add up to `total`); delivery orders are labelled «Доставка».

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurant.Domain.Constants;
 using Restaurant.Domain.Entities.Menu;
 using Restaurant.Domain.Enums;
+using Restaurant.IntegrationTests.Branches;
 using Restaurant.IntegrationTests.Infrastructure;
 using Restaurant.IntegrationTests.Orders;
 
@@ -64,6 +65,38 @@ public sealed class PublicMenuTests(ApiFactory factory) : PosTestBase(factory)
     }
 
     [Fact]
+    public async Task Public_menu_shows_the_branch_prices_and_stop_list_like_the_pos()
+    {
+        var org = await CreateOrgWithUserAsync(SystemRoles.Owner);
+        var seed = await SeedPosAsync(org);
+        var branch2 = await BranchTestData.AddBranchAsync(Factory, org);
+        var owner = await LoginAsAsync(org.User);
+        async Task OverrideAsync(Guid itemId, object body) =>
+            (await owner.PutAsJsonAsync($"/api/v1/menu/items/{itemId}/branches/{branch2}", body, Json))
+            .StatusCode.Should().Be(HttpStatusCode.OK);
+        await OverrideAsync(seed.PlovId, new { priceOverride = 50000m, variantPrices = new[] { new { variantId = seed.PlovHalfVariantId, price = 27000m } } });
+        await OverrideAsync(seed.TeaId, new { isAvailable = false, variantPrices = Array.Empty<object>() });
+        await OverrideAsync(seed.UnavailableId, new { isAvailable = true, variantPrices = Array.Empty<object>() });
+
+        var second = await PublicItemsAsync(branch2);
+        var main = await PublicItemsAsync(org.BranchId);
+
+        second["Плов"].GetProperty("price").GetDecimal().Should().Be(50000m, "the guest must see what the POS of this branch charges");
+        second["Плов"].GetProperty("variants")[0].GetProperty("price").GetDecimal().Should().Be(27000m);
+        second.Should().NotContainKey("Чай", "stop-listed in this branch");
+        second.Should().ContainKey("Стоп-лист", "sold only in this branch");
+        second.Should().NotContainKey("Архивное");
+        main["Плов"].GetProperty("price").GetDecimal().Should().Be(PlovPrice);
+        main["Плов"].GetProperty("variants")[0].GetProperty("price").GetDecimal().Should().Be(PlovHalfPrice);
+        main.Should().ContainKey("Чай").And.NotContainKey("Стоп-лист");
+
+        ClientWithBranch(owner, branch2);
+        var pos = (await ReadJsonAsync(await owner.GetAsync("/api/v1/menu/pos"))).EnumerateArray()
+            .SelectMany(c => c.GetProperty("items").EnumerateArray()).Single(i => i.GetProperty("id").GetGuid() == seed.PlovId);
+        pos.GetProperty("price").GetDecimal().Should().Be(second["Плов"].GetProperty("price").GetDecimal());
+    }
+
+    [Fact]
     public async Task Call_waiter_notifies_branch_realtime_dedups_validates_table_and_is_rate_limited()
     {
         var recorder = new RecordingHubContext();
@@ -106,13 +139,24 @@ public sealed class PublicMenuTests(ApiFactory factory) : PosTestBase(factory)
         (await stranger.PostAsync($"/api/v1/waiter-calls/{Id(call)}/acknowledge", null)).StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
-    private async Task<string> SlugAsync(TestOrg org)
+    private Task<string> SlugAsync(TestOrg org) => SlugAsync(org.BranchId);
+
+    private async Task<string> SlugAsync(Guid branchId)
     {
         string? slug = null;
         await WithDbAsync(async (db, _) =>
-            slug = await db.Branches.IgnoreQueryFilters().Where(b => b.Id == org.BranchId).Select(b => b.Slug).SingleAsync());
+            slug = await db.Branches.IgnoreQueryFilters().Where(b => b.Id == branchId).Select(b => b.Slug).SingleAsync());
         slug.Should().NotBeNullOrEmpty();
         return slug!;
+    }
+
+    private async Task<Dictionary<string, JsonElement>> PublicItemsAsync(Guid branchId)
+    {
+        var response = await CreateClient().GetAsync($"/api/v1/public/menu/{await SlugAsync(branchId)}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
+        return (await ReadJsonAsync(response)).GetProperty("categories").EnumerateArray()
+            .SelectMany(c => c.GetProperty("items").EnumerateArray())
+            .ToDictionary(i => i.GetProperty("name").GetString()!);
     }
 
     private static async Task<HttpClient> LoginAsync(WebApplicationFactory<Program> host, TestUser user)

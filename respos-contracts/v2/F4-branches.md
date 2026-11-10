@@ -18,7 +18,8 @@ money `numeric(18,2)`, quantities `numeric(18,3)`, ProblemDetails `code`. Permis
 
 Resolution (ONE place, `BranchMenuResolver`): effective `price = priceOverride ?? item.price`, variant price = branch variant
 price ?? variant price, `isAvailable = !archived && (override.isAvailable ?? item.isAvailable)`,
-`kitchenStationId = override.kitchenStationId ?? item.kitchenStationId`. Used by `GET /menu/pos` and by order item creation
+`kitchenStationId = override.kitchenStationId ?? item.kitchenStationId`. Also used by the public QR menu (`GET /public/menu/{slug}`) and the
+food-cost report / dashboard alerts (branch price). Used by `GET /menu/pos` and by order item creation
 (`POST /orders`, `POST /orders/{id}/items`): the price snapshot and the station snapshot come from the current branch, so
 send-to-kitchen routes to the branch's station (a station of another branch falls back to the branch's default station, as in v1).
 Existing order items keep their snapshots.

@@ -33,7 +33,7 @@ Item stats use non-cancelled lines (line totals, before the order-level discount
 - `FoodCostReportDto { thresholdPercent, aboveThresholdCount, items: FoodCostItemDto[] }`;
   `FoodCostItemDto { menuItemId, variantId|null, name, variantName|null, categoryName, price, hasRecipe, hasMissingConversions,
   recipeCost, foodCostPercent|null, marginAmount, marginPercent|null, isAboveThreshold }` — one row per non-archived item, or per
-  non-archived variant (variant price). recipeCost = Σ line qty × factor(line unit → ingredient base unit) × ingredient.costPrice,
+  non-archived variant (variant price). Prices are those of the current branch (F4 price overrides applied). recipeCost = Σ line qty × factor(line unit → ingredient base unit) × ingredient.costPrice,
   rounded to 2; lines without a conversion count 0 and set `hasMissingConversions`. foodCost % = cost / price × 100.
   Sorted: with recipe first, food cost % desc. (Threshold is a query param; a persisted per-org setting can be added later.)
 - `WaiterPerformanceDto { waiterId, name, ordersCount, revenue, averageCheck, itemsSold, cancelledOrders, cancelledItems, discountsAmount, tipsAmount }`

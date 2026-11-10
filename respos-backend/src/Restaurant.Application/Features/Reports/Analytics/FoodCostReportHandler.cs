@@ -1,7 +1,9 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Common.Handlers;
+using Restaurant.Application.Features.Menu.BranchOverrides;
 using Restaurant.Domain.Common;
 
 namespace Restaurant.Application.Features.Reports.Analytics;
@@ -23,28 +25,32 @@ public sealed class FoodCostQueryValidator : AbstractValidator<FoodCostQuery>
 }
 
 /// <summary>
-/// Food cost per dish (current menu, not period-bound): active recipe cost vs current price.
+/// Food cost per dish (current menu, not period-bound): active recipe cost vs the current price OF THIS BRANCH
+/// (per-branch price overrides applied by <see cref="BranchMenuResolver"/>, the same prices the POS charges).
 /// Items with variants get one row per non-archived variant (variant recipe, else the item recipe; variant price).
 /// foodCost % = cost / price × 100; margin = price − cost. Sorted by food cost % (highest first, no-recipe rows last).
 /// </summary>
-public sealed class FoodCostReportHandler(IApplicationDbContext db, RecipeCostCalculator costs)
+public sealed class FoodCostReportHandler(
+    IApplicationDbContext db, ITenantContext tenant, RecipeCostCalculator costs, BranchMenuResolver branchMenu)
     : IHandler<FoodCostQuery, FoodCostReportDto>
 {
     public async Task<Result<FoodCostReportDto>> HandleAsync(FoodCostQuery request, CancellationToken cancellationToken)
     {
         var threshold = request.SafeThreshold;
-        var items = await db.MenuItems.AsNoTracking()
+        var menuItems = await db.MenuItems.AsNoTracking()
+            .Include(m => m.Category)
+            .Include(m => m.Variants)
             .Where(m => !m.IsArchived)
-            .Select(m => new
-            {
-                m.Id,
-                m.Name,
-                m.Price,
-                CategoryName = m.Category!.Name,
-                Variants = m.Variants.Where(v => !v.IsArchived).OrderBy(v => v.Price)
-                    .Select(v => new { v.Id, v.Name, v.Price }).ToList(),
-            })
             .ToListAsync(cancellationToken);
+        await branchMenu.ApplyAsync(tenant.RequireBranchId(), menuItems, cancellationToken);
+        var items = menuItems.Select(m => new
+        {
+            m.Id,
+            m.Name,
+            m.Price,
+            CategoryName = m.Category!.Name,
+            Variants = m.Variants.Where(v => !v.IsArchived).OrderBy(v => v.Price).Select(v => new { v.Id, v.Name, v.Price }).ToList(),
+        });
 
         var rows = new List<FoodCostItemDto>();
         foreach (var item in items)

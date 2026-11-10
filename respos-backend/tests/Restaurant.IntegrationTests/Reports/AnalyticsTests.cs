@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using ClosedXML.Excel;
@@ -7,6 +8,7 @@ using Restaurant.Application.Features.Reports.Common;
 using Restaurant.Domain.Constants;
 using Restaurant.Domain.Enums;
 using Restaurant.Domain.Entities.Orders;
+using Restaurant.IntegrationTests.Branches;
 using Restaurant.IntegrationTests.Infrastructure;
 
 namespace Restaurant.IntegrationTests.Reports;
@@ -60,6 +62,27 @@ public sealed class AnalyticsTests(ApiFactory factory) : ApiTestBase(factory)
         var relaxed = await ReadJsonAsync(await client.GetAsync("/api/v1/reports/food-cost?threshold=60"));
         relaxed.GetProperty("aboveThresholdCount").GetInt32().Should().Be(0);
         (await client.GetAsync("/api/v1/reports/food-cost?threshold=0")).StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Food_cost_uses_the_price_override_of_the_current_branch()
+    {
+        var (org, menu) = await SeedAsync();
+        var branch2 = await BranchTestData.AddBranchAsync(Factory, org);
+        var client = await LoginAsAsync(org.User);
+        var saved = await client.PutAsJsonAsync($"/api/v1/menu/items/{menu.Plov.Id}/branches/{branch2}",
+            new { priceOverride = 25_000m, variantPrices = Array.Empty<object>() }, Json);
+        saved.StatusCode.Should().Be(HttpStatusCode.OK, await saved.Content.ReadAsStringAsync());
+
+        async Task<JsonElement> PlovAsync(Guid branchId) =>
+            (await ReadJsonAsync(await ClientWithBranch(client, branchId).GetAsync("/api/v1/reports/food-cost")))
+            .GetProperty("items").EnumerateArray().Single(r => r.GetProperty("name").GetString() == "Плов");
+
+        (await PlovAsync(org.BranchId)).GetProperty("foodCostPercent").GetDecimal().Should().Be(10m);
+        var second = await PlovAsync(branch2);
+        second.GetProperty("price").GetDecimal().Should().Be(25_000m, "the report is branch-scoped: margin comes from the price this branch charges");
+        second.GetProperty("foodCostPercent").GetDecimal().Should().Be(20m);
+        second.GetProperty("marginAmount").GetDecimal().Should().Be(20_000m);
     }
 
     [Fact]

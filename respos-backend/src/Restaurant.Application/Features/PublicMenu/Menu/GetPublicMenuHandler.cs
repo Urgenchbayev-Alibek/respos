@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Common.Handlers;
+using Restaurant.Application.Features.Menu.BranchOverrides;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Delivery;
 
@@ -36,7 +37,8 @@ public sealed record PublicMenuResult(PublicMenuDto Menu, string ETag);
 /// that organization's data (explicit OrganizationId, query filters bypassed). Cached in memory for
 /// <see cref="CacheDuration"/>; unknown/inactive branch or suspended organization → 404 <c>public_menu.not_found</c>.
 /// </summary>
-public sealed class GetPublicMenuHandler(IApplicationDbContext db, IMemoryCache cache) : IHandler<GetPublicMenuQuery, PublicMenuResult>
+public sealed class GetPublicMenuHandler(IApplicationDbContext db, IMemoryCache cache, BranchMenuResolver branchMenu)
+    : IHandler<GetPublicMenuQuery, PublicMenuResult>
 {
     public static readonly TimeSpan CacheDuration = TimeSpan.FromSeconds(60);
 
@@ -67,7 +69,7 @@ public sealed class GetPublicMenuHandler(IApplicationDbContext db, IMemoryCache 
             .Where(b => b.Slug == slug && b.IsActive && b.Organization!.Status == Domain.Enums.OrganizationStatus.Active)
             .Select(b => new
             {
-                b.OrganizationId, b.Slug, b.Name, b.Address, b.Phone,
+                b.Id, b.OrganizationId, b.Slug, b.Name, b.Address, b.Phone,
                 OrgName = b.Organization!.Name, b.Organization.Currency, b.Organization.IsDemo,
             })
             .FirstOrDefaultAsync(ct);
@@ -83,11 +85,13 @@ public sealed class GetPublicMenuHandler(IApplicationDbContext db, IMemoryCache 
             .ToListAsync(ct);
         var categoryIds = categories.Select(c => c.Id).ToList();
         var items = await db.MenuItems.IgnoreQueryFilters().AsNoTracking()
-            .Where(i => i.OrganizationId == branch.OrganizationId && categoryIds.Contains(i.CategoryId) && i.IsAvailable && !i.IsArchived)
+            .Where(i => i.OrganizationId == branch.OrganizationId && categoryIds.Contains(i.CategoryId) && !i.IsArchived)
             .Include(i => i.Variants)
             .OrderBy(i => i.Name)
             .ToListAsync(ct);
-        var byCategory = items.ToLookup(i => i.CategoryId);
+        // Branch price / stop-list overrides (F4) decide what THIS branch sells and for how much — same values as the POS.
+        await branchMenu.ApplyPublicAsync(branch.OrganizationId, branch.Id, items, ct);
+        var byCategory = items.Where(i => i.IsAvailable).ToLookup(i => i.CategoryId);
 
         return new PublicMenuDto(
             branch.OrgName, branch.Currency, branch.IsDemo,
