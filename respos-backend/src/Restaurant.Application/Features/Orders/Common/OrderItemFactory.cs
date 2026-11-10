@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Common.Handlers;
+using Restaurant.Application.Features.Menu.BranchOverrides;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Menu;
 using Restaurant.Domain.Entities.Orders;
@@ -10,10 +12,11 @@ namespace Restaurant.Application.Features.Orders.Common;
 /// <summary>
 /// Turns <see cref="AddItemRequest"/>s into order items with snapshots (BR-6.2/6.3): name, variant name,
 /// unit price = variant price else item price, modifiers with price deltas. Validates availability (BR-6.5 → 422)
-/// and modifier groups min/max/required (BR-6.4 → 400 validation.failed).
+/// and modifier groups min/max/required (BR-6.4 → 400 validation.failed). Price, availability and kitchen station are the
+/// current branch's effective values (<see cref="BranchMenuResolver"/>); the station snapshot drives send-to-kitchen routing.
 /// </summary>
 [ScopedService]
-public sealed class OrderItemFactory(IApplicationDbContext db)
+public sealed class OrderItemFactory(IApplicationDbContext db, ITenantContext tenant, BranchMenuResolver branchMenu)
 {
     public async Task<Result<List<OrderItem>>> BuildAsync(IReadOnlyList<AddItemRequest> requests, DateTime branchLocalNow, CancellationToken ct)
     {
@@ -25,6 +28,7 @@ public sealed class OrderItemFactory(IApplicationDbContext db)
             .Include(m => m.ModifierGroups).ThenInclude(g => g.ModifierGroup!).ThenInclude(g => g.Options)
             .AsSplitQuery()
             .ToDictionaryAsync(m => m.Id, ct);
+        await branchMenu.ApplyAsync(tenant.RequireBranchId(), menuItems.Values, ct);
 
         var items = new List<OrderItem>(requests.Count);
         for (var index = 0; index < requests.Count; index++)

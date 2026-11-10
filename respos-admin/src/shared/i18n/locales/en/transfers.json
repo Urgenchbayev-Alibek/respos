@@ -1,0 +1,74 @@
+{
+  "title": "Transfers",
+  "empty": "No transfers yet",
+  "actions": {
+    "create": "New transfer",
+    "edit": "Edit",
+    "cancel": "Cancel transfer",
+    "send": "Send",
+    "receive": "Receive"
+  },
+  "columns": {
+    "number": "No.",
+    "direction": "Direction",
+    "route": "From → to",
+    "status": "Status",
+    "lineCount": "Lines",
+    "totalCost": "Cost",
+    "createdAt": "Created",
+    "sentAt": "Sent",
+    "receivedAt": "Received",
+    "ingredient": "Ingredient",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "unitCost": "Unit cost",
+    "actions": "Actions"
+  },
+  "direction": {
+    "outgoing": "Outgoing",
+    "incoming": "Incoming"
+  },
+  "status": {
+    "draft": "Draft",
+    "sent": "Sent",
+    "received": "Received",
+    "cancelled": "Cancelled"
+  },
+  "filters": {
+    "allDirections": "All directions",
+    "allStatuses": "All statuses"
+  },
+  "fields": {
+    "from": "From",
+    "to": "To",
+    "selectBranch": "Select branch",
+    "comment": "Comment",
+    "selectIngredient": "Select ingredient"
+  },
+  "form": {
+    "createTitle": "New transfer",
+    "editTitle": "Transfer No. {{number}}",
+    "saveDraft": "Save draft",
+    "noDestinations": "There are no other branches available for a transfer.",
+    "addLine": "Add line",
+    "removeLine": "Remove line"
+  },
+  "toast": {
+    "created": "Transfer draft created",
+    "updated": "Transfer saved",
+    "send": "Transfer sent, stock written off",
+    "cancel": "Transfer cancelled",
+    "receive": "Transfer received, stock added",
+    "failed": "The action failed"
+  },
+  "detail": {
+    "title": "Transfer No. {{number}}",
+    "draftHint": "A draft is visible to the sending branch only. Stock changes when it is sent.",
+    "lines": "Lines"
+  },
+  "confirmCancel": {
+    "title": "Cancel the transfer?",
+    "message": "The draft will be cancelled.",
+    "sentMessage": "The goods return to the sending branch stock."
+  }
+}

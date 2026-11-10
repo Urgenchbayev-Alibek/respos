@@ -20,7 +20,9 @@ public sealed record IngredientDto(
     decimal Quantity,
     decimal MinQuantity,
     bool IsLow,
-    bool IsArchived);
+    bool IsArchived,
+    Guid? DefaultSupplierId = null,
+    string? DefaultSupplierName = null);
 
 public sealed record StockMovementDto(
     Guid Id,

@@ -12,8 +12,9 @@ public sealed record ListIngredientsQuery : PageQuery
     public bool IncludeArchived { get; init; }
 }
 
-/// <summary>Create (Id null) or update. <c>MinQuantity</c> applies to the current branch.</summary>
-public sealed record SaveIngredientCommand(string Name, string? Sku, Guid? CategoryId, Guid BaseUnitId, decimal CostPrice, decimal? MinQuantity)
+/// <summary>Create (Id null) or update. <c>MinQuantity</c> applies to the current branch; <c>DefaultSupplierId</c> groups purchase suggestions.</summary>
+public sealed record SaveIngredientCommand(
+    string Name, string? Sku, Guid? CategoryId, Guid BaseUnitId, decimal CostPrice, decimal? MinQuantity, Guid? DefaultSupplierId = null)
 {
     public Guid? Id { get; init; }
 }

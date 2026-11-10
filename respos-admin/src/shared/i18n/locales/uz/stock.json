@@ -6,7 +6,8 @@
     "movements": "Harakatlar",
     "counts": "Inventarizatsiya",
     "units": "Oʻlchov birliklari",
-    "categories": "Toifalar"
+    "categories": "Toifalar",
+    "transfers": "Ko'chirishlar"
   },
   "columns": {
     "ingredient": "Ingredient",
@@ -51,7 +52,9 @@
     "unitKind": "Turi",
     "fromUnit": "Birlikdan (1 ×)",
     "toUnit": "Birlikka",
-    "factor": "Koeffitsient"
+    "factor": "Koeffitsient",
+    "defaultSupplier": "Asosiy ta'minotchi",
+    "noSupplier": "Tanlanmagan"
   },
   "filters": {
     "allCategories": "Barcha toifalar",
@@ -92,7 +95,8 @@
     "order": "Buyurtma",
     "purchase": "Xarid",
     "manual": "Qoʻlda",
-    "inventory_count": "Inventarizatsiya"
+    "inventory_count": "Inventarizatsiya",
+    "transfer": "Ko'chirish"
   },
   "unitKind": {
     "mass": "Massa",

@@ -30,5 +30,7 @@ internal sealed class IngredientConfiguration : IEntityTypeConfiguration<Ingredi
             .HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(e => e.BaseUnit).WithMany()
             .HasForeignKey(e => e.BaseUnitId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(e => e.DefaultSupplier).WithMany()
+            .HasForeignKey(e => e.DefaultSupplierId).OnDelete(DeleteBehavior.Restrict);
     }
 }

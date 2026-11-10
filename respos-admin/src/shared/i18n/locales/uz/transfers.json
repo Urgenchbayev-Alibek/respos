@@ -1,0 +1,74 @@
+{
+  "title": "Ko'chirishlar",
+  "empty": "Hozircha ko'chirishlar yo'q",
+  "actions": {
+    "create": "Yangi ko'chirish",
+    "edit": "Tahrirlash",
+    "cancel": "Bekor qilish",
+    "send": "Yuborish",
+    "receive": "Qabul qilish"
+  },
+  "columns": {
+    "number": "№",
+    "direction": "Yo'nalish",
+    "route": "Qayerdan → qayerga",
+    "status": "Holat",
+    "lineCount": "Pozitsiyalar",
+    "totalCost": "Tannarx",
+    "createdAt": "Yaratilgan",
+    "sentAt": "Yuborilgan",
+    "receivedAt": "Qabul qilingan",
+    "ingredient": "Ingredient",
+    "quantity": "Miqdor",
+    "unit": "O'lch.",
+    "unitCost": "Birlik narxi",
+    "actions": "Amallar"
+  },
+  "direction": {
+    "outgoing": "Chiquvchi",
+    "incoming": "Kiruvchi"
+  },
+  "status": {
+    "draft": "Qoralama",
+    "sent": "Yuborilgan",
+    "received": "Qabul qilingan",
+    "cancelled": "Bekor qilingan"
+  },
+  "filters": {
+    "allDirections": "Barcha yo'nalishlar",
+    "allStatuses": "Barcha holatlar"
+  },
+  "fields": {
+    "from": "Qayerdan",
+    "to": "Qayerga",
+    "selectBranch": "Filialni tanlang",
+    "comment": "Izoh",
+    "selectIngredient": "Ingredientni tanlang"
+  },
+  "form": {
+    "createTitle": "Yangi ko'chirish",
+    "editTitle": "Ko'chirish № {{number}}",
+    "saveDraft": "Qoralamani saqlash",
+    "noDestinations": "Ko'chirish uchun boshqa filiallar mavjud emas.",
+    "addLine": "Pozitsiya qo'shish",
+    "removeLine": "Pozitsiyani o'chirish"
+  },
+  "toast": {
+    "created": "Ko'chirish qoralamasi yaratildi",
+    "updated": "Ko'chirish saqlandi",
+    "send": "Ko'chirish yuborildi, qoldiq hisobdan chiqarildi",
+    "cancel": "Ko'chirish bekor qilindi",
+    "receive": "Ko'chirish qabul qilindi, qoldiq kirim qilindi",
+    "failed": "Amalni bajarib bo'lmadi"
+  },
+  "detail": {
+    "title": "Ko'chirish № {{number}}",
+    "draftHint": "Qoralamani faqat yuboruvchi filial ko'radi. Qoldiqlar yuborilgandan keyin o'zgaradi.",
+    "lines": "Pozitsiyalar"
+  },
+  "confirmCancel": {
+    "title": "Ko'chirish bekor qilinsinmi?",
+    "message": "Qoralama bekor qilinadi.",
+    "sentMessage": "Tovar yuboruvchi filial qoldig'iga qaytariladi."
+  }
+}

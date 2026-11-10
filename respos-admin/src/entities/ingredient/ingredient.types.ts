@@ -15,6 +15,9 @@ export interface IngredientDto {
   minQuantity: number;
   isLow: boolean;
   isArchived: boolean;
+  /** Supplier that groups purchase suggestions (F4). */
+  defaultSupplierId?: Guid | null;
+  defaultSupplierName?: string | null;
 }
 
 export interface IngredientListParams extends PageParams {
@@ -30,6 +33,7 @@ export interface IngredientInput {
   costPrice: number;
   /** Current-branch minimum; omitted = unchanged. */
   minQuantity?: number | null;
+  defaultSupplierId?: string | null;
 }
 
 export interface IngredientCategoryDto {

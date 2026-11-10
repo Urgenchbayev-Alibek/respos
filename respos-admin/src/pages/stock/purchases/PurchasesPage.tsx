@@ -1,10 +1,11 @@
-import { Plus } from 'lucide-react';
+import { Lightbulb, Plus } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePurchases } from '@/entities/purchase/purchase.queries';
 import type { PurchaseDto } from '@/entities/purchase/purchase.types';
 import { useSupplierOptions } from '@/entities/supplier/supplier.queries';
+import { PurchaseSuggestionsModal } from '@/features/purchase-suggestions/ui/PurchaseSuggestionsModal';
 import { PurchaseFormModal } from '@/features/purchases/ui/PurchaseFormModal';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { PURCHASE_STATUSES, type PurchaseStatus } from '@/shared/constants/statuses';
@@ -32,6 +33,7 @@ export function PurchasesPage() {
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [page, setPage] = useState(1);
   const [creating, setCreating] = useState(false);
+  const [suggesting, setSuggesting] = useState(false);
   const suppliers = useSupplierOptions();
   const query = usePurchases({
     page,
@@ -64,9 +66,12 @@ export function PurchasesPage() {
         title={t('title')}
         description={t('subtitle')}
         actions={
-          hasPermission(PERMISSIONS.purchases.manage) && (
-            <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>{t('actions.create')}</Button>
-          )
+          <>
+            <Button icon={<Lightbulb />} onClick={() => setSuggesting(true)}>{t('purchaseSuggestions:open')}</Button>
+            {hasPermission(PERMISSIONS.purchases.manage) && (
+              <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>{t('actions.create')}</Button>
+            )}
+          </>
         }
       />
       <Toolbar
@@ -102,6 +107,7 @@ export function PurchasesPage() {
         pagination={query.data && { page, pageSize: query.data.pageSize, totalCount: query.data.totalCount, onPageChange: setPage }}
       />
       <PurchaseFormModal open={creating} onClose={() => setCreating(false)} onSaved={open} />
+      <PurchaseSuggestionsModal open={suggesting} onClose={() => setSuggesting(false)} />
     </>
   );
 }

@@ -1,0 +1,23 @@
+{
+  "title": "Xarid takliflari",
+  "description": "Minimumdan past va sarf prognozi bo'yicha ingredientlar ({{lookback}} kunlik o'rtacha sarf × zaxira kunlari). Ochiq xaridlar hisobga olinadi.",
+  "coverageDays": "Zaxira kunlari",
+  "coverageHint": "0 — faqat minimumgacha to'ldirish",
+  "noSupplier": "Asosiy ta'minotchisiz",
+  "noSupplierHint": "Bu pozitsiyalarni buyurtma qilish uchun ingredient kartasida asosiy ta'minotchini ko'rsating.",
+  "columns": {
+    "include": "Qo'shish",
+    "ingredient": "Ingredient",
+    "stock": "Qoldiq / min.",
+    "onOrder": "Buyurtmada",
+    "avgDaily": "Kunlik sarf",
+    "suggested": "Buyurtma",
+    "lastPrice": "Oxirgi narx"
+  },
+  "apply": "Qoralamalar yaratish ({{count}})",
+  "applied": "Yaratilgan xarid qoralamalari: {{count}}",
+  "comment": "Xarid takliflaridan yaratildi",
+  "empty": "Barcha qoldiqlar me'yorda — xarid kerak emas.",
+  "invalidQuantity": "Miqdor noldan katta bo'lishi kerak.",
+  "open": "Takliflar"
+}

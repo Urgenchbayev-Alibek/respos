@@ -245,5 +245,15 @@
     "already_redeemed": "Points are already redeemed — cancel the redemption first",
     "redemption_active": "Cancel the points redemption to change the guest",
     "nothing_redeemed": "No points were redeemed on this order"
+  },
+  "stock_transfer": {
+    "not_found": "Transfer not found.",
+    "not_editable": "Only a draft transfer can be edited.",
+    "empty": "Add at least one line.",
+    "same_branch": "Source and destination branches must differ.",
+    "destination_not_found": "The destination branch was not found or is inactive.",
+    "source_branch_required": "This action is performed from the source branch.",
+    "destination_branch_required": "A transfer can only be received in the destination branch.",
+    "invalid_status_transition": "This transfer status change is not allowed."
   }
 }

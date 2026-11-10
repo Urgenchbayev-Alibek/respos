@@ -10,6 +10,7 @@ using Restaurant.Application.Common.Models;
 using Restaurant.Application.Features.Inventory.Common;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Inventory;
+using Restaurant.Domain.Entities.Procurement;
 
 namespace Restaurant.Application.Features.Inventory.Ingredients;
 
@@ -73,6 +74,12 @@ public sealed class SaveIngredientHandler(
             return InventoryErrors.CategoryNotFound;
         }
 
+        if (request.DefaultSupplierId is { } supplierId
+            && !await db.Suppliers.AnyAsync(sp => sp.Id == supplierId && !sp.IsArchived, cancellationToken))
+        {
+            return ProcurementErrors.SupplierNotFound;
+        }
+
         Ingredient? ingredient;
         if (request.Id is { } id)
         {
@@ -99,13 +106,14 @@ public sealed class SaveIngredientHandler(
         ingredient.CategoryId = request.CategoryId;
         ingredient.BaseUnitId = request.BaseUnitId;
         ingredient.CostPrice = request.CostPrice;
+        ingredient.DefaultSupplierId = request.DefaultSupplierId;
         if (request.MinQuantity is { } min)
         {
             (await ledger.GetOrCreateBalanceAsync(orgId, branchId, ingredient.Id, cancellationToken)).MinQuantity = min;
         }
 
         audit.Log(request.Id is null ? "ingredient.created" : "ingredient.updated", nameof(Ingredient), ingredient.Id,
-            new { ingredient.Name, ingredient.Sku, ingredient.CategoryId, ingredient.BaseUnitId, ingredient.CostPrice });
+            new { ingredient.Name, ingredient.Sku, ingredient.CategoryId, ingredient.BaseUnitId, ingredient.CostPrice, ingredient.DefaultSupplierId });
         await db.SaveChangesAsync(cancellationToken);
         return (await reader.GetAsync(branchId, ingredient.Id, cancellationToken))!;
     }

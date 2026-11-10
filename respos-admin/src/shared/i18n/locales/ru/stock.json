@@ -6,7 +6,8 @@
     "movements": "Движения",
     "counts": "Инвентаризация",
     "units": "Единицы",
-    "categories": "Категории"
+    "categories": "Категории",
+    "transfers": "Перемещения"
   },
   "columns": {
     "ingredient": "Ингредиент",
@@ -51,7 +52,9 @@
     "unitKind": "Вид",
     "fromUnit": "Из единицы (1 ×)",
     "toUnit": "В единицу",
-    "factor": "Коэффициент"
+    "factor": "Коэффициент",
+    "defaultSupplier": "Поставщик по умолчанию",
+    "noSupplier": "Не выбран"
   },
   "filters": {
     "allCategories": "Все категории",
@@ -92,7 +95,8 @@
     "order": "Заказ",
     "purchase": "Закупка",
     "manual": "Вручную",
-    "inventory_count": "Инвентаризация"
+    "inventory_count": "Инвентаризация",
+    "transfer": "Перемещение"
   },
   "unitKind": {
     "mass": "Масса",

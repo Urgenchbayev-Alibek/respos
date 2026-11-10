@@ -1,0 +1,21 @@
+{
+  "title": "\"{{name}}\" by branch",
+  "description": "An empty field means the value from the main menu. Price, stop-list and kitchen station are set per branch.",
+  "openNamed": "By branch: {{name}}",
+  "overridden": "Customized",
+  "inherited": "As in menu",
+  "available": "On sale",
+  "stopped": "Stop-list",
+  "inherit": "As in menu",
+  "inheritStation": "As in menu / default station",
+  "fields": {
+    "price": "Branch price",
+    "basePrice": "Menu: {{price}}",
+    "availability": "Availability",
+    "station": "Kitchen station",
+    "variantPrice": "\"{{name}}\" price"
+  },
+  "reset": "Reset",
+  "saved": "Settings for branch \"{{branch}}\" saved",
+  "resetDone": "Branch \"{{branch}}\" uses the main menu"
+}

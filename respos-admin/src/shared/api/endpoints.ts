@@ -53,6 +53,9 @@ export const ENDPOINTS = {
     modifierGroups: '/menu/modifier-groups',
     modifierGroup: (groupId: string) => `/menu/modifier-groups/${id(groupId)}`,
     pos: '/menu/pos',
+    itemBranches: (itemId: string) => `/menu/items/${id(itemId)}/branches`,
+    itemBranch: (itemId: string, branchId: string) => `/menu/items/${id(itemId)}/branches/${id(branchId)}`,
+    branchAvailability: (itemId: string) => `/menu/branch-availability/${id(itemId)}`,
   },
   orders: {
     list: '/orders',
@@ -96,6 +99,9 @@ export const ENDPOINTS = {
     counts: '/stock/counts',
     count: (countId: string) => `/stock/counts/${id(countId)}`,
     countComplete: (countId: string) => `/stock/counts/${id(countId)}/complete`,
+    transfers: '/stock/transfers',
+    transfer: (transferId: string) => `/stock/transfers/${id(transferId)}`,
+    transferAction: (transferId: string, action: 'send' | 'receive' | 'cancel') => `/stock/transfers/${id(transferId)}/${action}`,
   },
   recipes: { list: '/recipes', one: (recipeId: string) => `/recipes/${id(recipeId)}`, history: '/recipes/history' },
   suppliers: {
@@ -107,6 +113,8 @@ export const ENDPOINTS = {
     list: '/purchases',
     one: (purchaseId: string) => `/purchases/${id(purchaseId)}`,
     action: (purchaseId: string, action: 'submit' | 'cancel' | 'receive') => `/purchases/${id(purchaseId)}/${action}`,
+    suggestions: '/purchases/suggestions',
+    suggestionsApply: '/purchases/suggestions/apply',
   },
   dashboard: '/dashboard',
   dashboardOverview: '/dashboard/overview',

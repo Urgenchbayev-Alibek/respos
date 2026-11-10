@@ -4,6 +4,7 @@ import { useForm, type Resolver } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useIngredientCategories, useSaveIngredient } from '@/entities/ingredient/ingredient.queries';
 import type { IngredientDto } from '@/entities/ingredient/ingredient.types';
+import { useSupplierOptions } from '@/entities/supplier/supplier.queries';
 import { unitOptions, useUnits } from '@/entities/unit/unit.queries';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
@@ -16,7 +17,7 @@ export interface IngredientFormModalProps {
   onClose: () => void;
 }
 
-const FIELDS = ['name', 'sku', 'categoryId', 'baseUnitId', 'costPrice'] as const;
+const FIELDS = ['name', 'sku', 'categoryId', 'baseUnitId', 'costPrice', 'defaultSupplierId'] as const;
 
 function initialValues(ingredient?: IngredientDto | null): IngredientFormValues {
   return {
@@ -25,6 +26,7 @@ function initialValues(ingredient?: IngredientDto | null): IngredientFormValues 
     categoryId: ingredient?.categoryId ?? '',
     baseUnitId: ingredient?.baseUnitId ?? '',
     costPrice: ingredient ? String(ingredient.costPrice) : '',
+    defaultSupplierId: ingredient?.defaultSupplierId ?? '',
   };
 }
 
@@ -34,6 +36,7 @@ export function IngredientFormModal({ open, ingredient, onClose }: IngredientFor
   const format = useFormatters();
   const categories = useIngredientCategories();
   const units = useUnits();
+  const suppliers = useSupplierOptions(open);
   const save = useSaveIngredient();
   const [serverError, setServerError] = useState<string | null>(null);
   const form = useForm<IngredientFormValues, unknown, IngredientFormOutput>({
@@ -54,7 +57,12 @@ export function IngredientFormModal({ open, ingredient, onClose }: IngredientFor
     try {
       await save.mutateAsync({
         id: ingredient?.id,
-        input: { ...values, categoryId: values.categoryId || null, costPrice: values.costPrice ?? 0 },
+        input: {
+          ...values,
+          categoryId: values.categoryId || null,
+          defaultSupplierId: values.defaultSupplierId || null,
+          costPrice: values.costPrice ?? 0,
+        },
       });
       toast.success(t(ingredient ? 'ingredients.updated' : 'ingredients.created'));
       onClose();
@@ -111,6 +119,13 @@ export function IngredientFormModal({ open, ingredient, onClose }: IngredientFor
         </FormField>
         <FormField label={t('fields.costPrice', { currency: format.currency })} error={errors.costPrice?.message}>
           <Input inputMode="decimal" autoComplete="off" {...register('costPrice')} />
+        </FormField>
+        <FormField label={t('fields.defaultSupplier')} error={errors.defaultSupplierId?.message}>
+          <Select
+            placeholder={t('fields.noSupplier')}
+            options={(suppliers.data?.items ?? []).map((supplier) => ({ value: supplier.id, label: supplier.name }))}
+            {...register('defaultSupplierId')}
+          />
         </FormField>
       </FormGrid>
     </Modal>
