@@ -1,6 +1,6 @@
 {
   "admin": {
-    "label": "Boshqaruv paneli bo’limlari",
+    "label": "Boshqaruv paneli boʻlimlari",
     "dashboard": "Bosh sahifa",
     "branches": "Filiallar",
     "users": "Xodimlar va rollar",
@@ -13,7 +13,7 @@
     "recipes": "Retseptlar",
     "suppliers": "Yetkazib beruvchilar",
     "purchases": "Xaridlar",
-    "payments": "To’lovlar",
+    "payments": "Toʻlovlar",
     "cashShifts": "Kassa smenalari",
     "reports": "Hisobotlar",
     "notifications": "Bildirishnomalar",
@@ -26,9 +26,9 @@
     "reservations": "Bronlar"
   },
   "cashier": {
-    "orders": "To’lovga",
+    "orders": "Toʻlovga",
     "shift": "Smena",
-    "payments": "To’lovlar"
+    "payments": "Toʻlovlar"
   },
   "stock": {
     "inventory": "Qoldiqlar",
@@ -57,7 +57,7 @@
     "switchBranch": "Filialni almashtirish",
     "organization": "Tashkilot",
     "switchOrganization": "Tashkilotni almashtirish",
-    "switchOrgFailed": "Tashkilotni almashtirib bo’lmadi",
+    "switchOrgFailed": "Tashkilotni almashtirib boʻlmadi",
     "language": "Interfeys tili",
     "profile": "Profil",
     "logout": "Chiqish",
@@ -66,19 +66,19 @@
     "switchWorkspace": "Ish joyini almashtirish",
     "notifications": "Bildirishnomalar",
     "expandSidebar": "Menyuni ochish",
-    "collapseSidebar": "Menyuni yig’ish",
+    "collapseSidebar": "Menyuni yigʻish",
     "openMenu": "Menyuni ochish"
   },
   "realtime": {
-    "disconnected": "Aloqa yo’q",
+    "disconnected": "Aloqa yoʻq",
     "connecting": "Ulanmoqda…",
     "connected": "Onlayn",
     "reconnecting": "Qayta ulanmoqda…"
   },
   "kitchen": {
-    "fullscreen": "To’liq ekran",
-    "exitFullscreen": "To’liq ekrandan chiqish"
+    "fullscreen": "Toʻliq ekran",
+    "exitFullscreen": "Toʻliq ekrandan chiqish"
   },
-  "skipToContent": "Asosiy qismga o’tish",
-  "sectionNav": "Bo’lim navigatsiyasi"
+  "skipToContent": "Asosiy qismga oʻtish",
+  "sectionNav": "Boʻlim navigatsiyasi"
 }

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { api, http, HttpResponse, problem, server } from '@/test/msw-server';
-import { apiClient, buildUrl } from './api-client';
+import { apiClient, buildUrl, REFRESH_RETRY_DELAYS_MS } from './api-client';
 import { ApiError } from './api-error';
 import { sessionStore } from './session-store';
 
@@ -92,6 +92,70 @@ describe('apiClient refresh on 401', () => {
     expect(onExpired).toHaveBeenCalledTimes(1);
     expect(sessionStore.getAccessToken()).toBeNull();
     unsubscribe();
+  });
+
+  it('logs out on 403 from refresh (revoked)', async () => {
+    sessionStore.setAccessToken('expired');
+    const onExpired = vi.fn();
+    const unsubscribe = sessionStore.onSessionExpired(onExpired);
+    server.use(
+      http.post(api('/auth/refresh'), () => problem(403, 'auth.token_revoked')),
+      http.get(api('/orders'), () => problem(401, 'auth.unauthenticated')),
+    );
+    await expect(apiClient.get('/orders')).rejects.toMatchObject({ status: 401 });
+    expect(onExpired).toHaveBeenCalledTimes(1);
+    unsubscribe();
+  });
+
+  it('retries refresh with backoff on 429/5xx and keeps the session', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout'] });
+    sessionStore.setAccessToken('expired');
+    const onExpired = vi.fn();
+    const onConnection = vi.fn();
+    const unsubscribe = [sessionStore.onSessionExpired(onExpired), sessionStore.onConnectionChange(onConnection)];
+    const statuses = [503, 429];
+    const refresh = vi.fn(() => {
+      const status = statuses.shift();
+      return status ? problem(status, 'server.error') : HttpResponse.json(authResponse('fresh'));
+    });
+    server.use(
+      http.post(api('/auth/refresh'), refresh),
+      http.get(api('/orders'), ({ request }) =>
+        request.headers.get('Authorization') === 'Bearer fresh' ? HttpResponse.json({ ok: 1 }) : problem(401, 'auth.unauthenticated'),
+      ),
+    );
+
+    const result = apiClient.get('/orders');
+    await vi.advanceTimersByTimeAsync(REFRESH_RETRY_DELAYS_MS[0] + REFRESH_RETRY_DELAYS_MS[1]);
+
+    await expect(result).resolves.toEqual({ ok: 1 });
+    expect(refresh).toHaveBeenCalledTimes(3);
+    expect(onExpired).not.toHaveBeenCalled();
+    expect(onConnection.mock.calls).toEqual([[false], [true]]);
+    unsubscribe.forEach((off) => off());
+    vi.useRealTimers();
+  });
+
+  it('gives up after the last backoff on network errors WITHOUT logging out', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout'] });
+    sessionStore.setAccessToken('expired');
+    const onExpired = vi.fn();
+    const unsubscribe = sessionStore.onSessionExpired(onExpired);
+    const refresh = vi.fn(() => HttpResponse.error());
+    server.use(
+      http.post(api('/auth/refresh'), refresh),
+      http.get(api('/orders'), () => problem(401, 'auth.unauthenticated')),
+    );
+
+    const result = apiClient.get('/orders').catch((error: unknown) => error);
+    await vi.advanceTimersByTimeAsync(REFRESH_RETRY_DELAYS_MS.reduce((sum, ms) => sum + ms, 0));
+
+    await expect(result).resolves.toMatchObject({ status: 0, code: 'network.error' });
+    expect(refresh).toHaveBeenCalledTimes(REFRESH_RETRY_DELAYS_MS.length + 1);
+    expect(onExpired).not.toHaveBeenCalled();
+    expect(sessionStore.getAccessToken()).toBe('expired');
+    unsubscribe();
+    vi.useRealTimers();
   });
 
   it('does not refresh for skipAuth requests (login)', async () => {

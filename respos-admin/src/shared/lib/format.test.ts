@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { formatCurrency, parseMoneyInput } from './format-currency';
 import { formatDate, formatDateTime, formatTime, minutesSince, toBranchDateString } from './format-date';
+import { formatUnit } from './format-unit';
+import { i18n } from '@/shared/i18n';
 
 /** Intl uses narrow/no-break spaces as group separators; normalize for assertions. */
 const normalize = (value: string) => value.replace(/\s/g, ' ');
@@ -70,5 +72,18 @@ describe('format-date (branch timezone)', () => {
 
   it('computes elapsed minutes', () => {
     expect(minutesSince('2026-11-10T10:00:00Z', new Date('2026-11-10T10:12:59Z'))).toBe(12);
+  });
+});
+
+describe('formatUnit', () => {
+  it('localizes known unit codes and keeps custom codes as-is', async () => {
+    await i18n.changeLanguage('ru');
+    expect(formatUnit('kg')).toBe('кг');
+    expect(formatUnit('pcs')).toBe('шт');
+    expect(formatUnit('box')).toBe('box');
+    expect(formatUnit(undefined)).toBe('');
+    await i18n.changeLanguage('uz');
+    expect(formatUnit('pcs')).toBe('dona');
+    await i18n.changeLanguage('ru');
   });
 });

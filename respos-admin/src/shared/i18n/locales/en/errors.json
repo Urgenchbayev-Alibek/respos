@@ -1,7 +1,10 @@
 {
   "unknown": "Something went wrong. Please try again.",
   "network": {
-    "error": "Cannot reach the server. Check your connection and retry."
+    "error": "Cannot reach the server. Check your connection and retry.",
+    "offline": "No connection to the server",
+    "retrying": "Retrying — you stay signed in.",
+    "restored": "Connection to the server restored"
   },
   "server": {
     "error": "Server error. We are looking into it."

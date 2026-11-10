@@ -41,7 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const delay = new Date(auth.expiresAt).getTime() - Date.now() - REFRESH_AHEAD_MS;
     if (Number.isFinite(delay)) {
       refreshTimer.current = setTimeout(() => {
-        void refreshSession().then((next) => (next?.user ? applySession(next) : undefined));
+        void refreshSession().then(
+          (next) => (next?.user ? applySession(next) : undefined),
+          // Server unreachable even after backoff: keep the session; the next 401 refreshes again.
+          (error: unknown) => console.warn('[auth] background refresh failed; session kept', error),
+        );
       }, Math.max(MIN_REFRESH_DELAY_MS, delay));
     }
   }, []);
@@ -49,11 +53,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Restore session on start: access token is memory-only, the refresh cookie survives reloads.
   useEffect(() => {
     let active = true;
-    void refreshSession().then((auth) => {
-      if (!active) return;
-      if (auth?.user) applySession(auth);
-      else setState({ status: 'unauthenticated', user: null });
-    });
+    void refreshSession()
+      .catch((error: unknown) => {
+        console.warn('[auth] session restore failed (server unreachable)', error);
+        return null;
+      })
+      .then((auth) => {
+        if (!active) return;
+        if (auth?.user) applySession(auth);
+        else setState({ status: 'unauthenticated', user: null });
+      });
     return () => {
       active = false;
     };

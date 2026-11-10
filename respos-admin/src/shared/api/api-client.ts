@@ -1,6 +1,6 @@
 import { env } from '@/shared/config/env';
 import type { AuthResponse } from '@/shared/types/api-response';
-import { apiErrorFromProblem, networkError } from './api-error';
+import { apiErrorFromProblem, isApiError, networkError } from './api-error';
 import { ENDPOINTS } from './endpoints';
 import { sessionStore } from './session-store';
 
@@ -79,23 +79,52 @@ async function send(method: Method, path: string, options: RequestOptions): Prom
   }
 }
 
+/** Backoff between refresh attempts when the server is unreachable / overloaded (429, 5xx, network). */
+export const REFRESH_RETRY_DELAYS_MS = [1_000, 3_000, 7_000] as const;
+
+/** Only these mean "the refresh token is invalid or revoked" → the user must sign in again. */
+const isInvalidRefresh = (status: number) => status === 401 || status === 403;
+/** Network error (status 0), timeout, rate limit, server errors: worth retrying. */
+const isRetryable = (error: unknown) =>
+  isApiError(error) && (error.status === 0 || error.status === 408 || error.status === 429 || error.status >= 500);
+
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+/** One attempt: AuthResponse on success, null when the refresh token is rejected; throws ApiError when transient. */
+async function attemptRefresh(): Promise<AuthResponse | null> {
+  const response = await send('POST', ENDPOINTS.auth.refresh, { skipAuth: true, branchId: null });
+  const data = await parseBody(response);
+  if (isInvalidRefresh(response.status)) return null;
+  if (!response.ok) throw apiErrorFromProblem(response.status, data, response.headers.get('X-Correlation-Id'));
+  const auth = data as AuthResponse | undefined;
+  if (!auth?.accessToken) return null;
+  sessionStore.setAccessToken(auth.accessToken);
+  return auth;
+}
+
 let refreshInFlight: Promise<AuthResponse | null> | null = null;
 
 /**
  * Single-flight refresh: concurrent 401s share ONE `POST /auth/refresh` (the refresh token rotates,
  * so parallel refreshes would trigger reuse detection and revoke the family).
+ * Resolves `null` only when the refresh token is invalid/revoked (401/403). On 429/5xx/network errors it
+ * retries with backoff (keeping the in-memory session) and finally rejects with the last ApiError.
  */
 export function refreshSession(): Promise<AuthResponse | null> {
   refreshInFlight ??= (async () => {
     try {
-      const response = await send('POST', ENDPOINTS.auth.refresh, { skipAuth: true, branchId: null });
-      if (!response.ok) return null;
-      const data = (await parseBody(response)) as AuthResponse | undefined;
-      if (!data?.accessToken) return null;
-      sessionStore.setAccessToken(data.accessToken);
-      return data;
-    } catch {
-      return null;
+      for (let attempt = 0; ; attempt += 1) {
+        try {
+          const auth = await attemptRefresh();
+          if (attempt > 0) sessionStore.notifyConnectionRestored();
+          return auth;
+        } catch (error) {
+          const delay = REFRESH_RETRY_DELAYS_MS[attempt];
+          if (delay === undefined || !isRetryable(error)) throw error;
+          if (attempt === 0) sessionStore.notifyConnectionLost();
+          await wait(delay);
+        }
+      }
     } finally {
       refreshInFlight = null;
     }
@@ -107,6 +136,7 @@ export async function request<T>(method: Method, path: string, options: RequestO
   let response = await send(method, path, options);
 
   if (response.status === 401 && !options.skipAuth) {
+    // Transient refresh failures reject here (network/server error) WITHOUT ending the session.
     const refreshed = await refreshSession();
     if (!refreshed) {
       sessionStore.notifySessionExpired();

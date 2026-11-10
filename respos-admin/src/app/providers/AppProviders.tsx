@@ -6,6 +6,7 @@ import { i18n } from '@/shared/i18n';
 import { ToastProvider } from '@/shared/ui';
 import { AuthProvider } from './AuthProvider';
 import { BranchProvider } from './BranchProvider';
+import { ConnectionToast } from './ConnectionToast';
 import { RealtimeProvider } from './RealtimeProvider';
 
 export interface AppProvidersProps {
@@ -21,6 +22,7 @@ export function AppProviders({ children, queryClient, realtime = true }: AppProv
     <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={client}>
         <ToastProvider>
+          <ConnectionToast />
           <AuthProvider>
             <BranchProvider>{realtime ? <RealtimeProvider>{children}</RealtimeProvider> : children}</BranchProvider>
           </AuthProvider>

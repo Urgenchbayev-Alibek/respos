@@ -1,12 +1,12 @@
 {
   "title": "Bronlar",
-  "subtitle": "Kunlik stol bronlari: tasdiqlash, o’tqazish, yakunlash, bekor qilish va kelmaslik.",
+  "subtitle": "Kunlik stol bronlari: tasdiqlash, oʻtqazish, yakunlash, bekor qilish va kelmaslik.",
   "actions": {
     "create": "Yangi bron",
-    "edit": "O’zgartirish",
+    "edit": "Oʻzgartirish",
     "menu": "Amallar: {{name}} broni",
     "confirm": "Tasdiqlash",
-    "seat": "O’tqazish",
+    "seat": "Oʻtqazish",
     "complete": "Yakunlash",
     "cancel": "Bronni bekor qilish",
     "no-show": "Kelishmadi"
@@ -15,9 +15,9 @@
   "nextDay": "Keyingi kun",
   "today": "Bugun",
   "views": {
-    "label": "Ko’rinish",
+    "label": "Koʻrinish",
     "day": "Kun",
-    "list": "Ro’yxat"
+    "list": "Roʻyxat"
   },
   "searchPlaceholder": "Mehmon ismi yoki telefoni",
   "filters": {
@@ -41,7 +41,7 @@
     "startTime": "Boshlanishi",
     "endTime": "Tugashi",
     "table": "Stol",
-    "tableHint": "Bo’sh qoldirib, stolni keyinroq belgilash mumkin.",
+    "tableHint": "Boʻsh qoldirib, stolni keyinroq belgilash mumkin.",
     "noTable": "Stolsiz",
     "preferredArea": "Afzal hudud",
     "anyArea": "Istalgan hudud",
@@ -49,23 +49,23 @@
   },
   "form": {
     "createTitle": "Yangi bron",
-    "editTitle": "Bronni o’zgartirish"
+    "editTitle": "Bronni oʻzgartirish"
   },
-  "tableOption": "{{number}}-stol · {{area}} · {{seats}} o’rin",
+  "tableOption": "{{number}}-stol · {{area}} · {{seats}} oʻrin",
   "noTable": "Stolsiz",
   "conflictField": "Bu stol shu vaqtga allaqachon bron qilingan",
   "conflictBadge": "kesishma",
-  "overdueHint": "Vaqt o’tdi — «Kelishmadi» deb belgilang yoki yakunlang",
-  "empty": "Bu kunga bronlar yo’q",
+  "overdueHint": "Vaqt oʻtdi — «Kelishmadi» deb belgilang yoki yakunlang",
+  "empty": "Bu kunga bronlar yoʻq",
   "toast": {
     "created": "Bron yaratildi",
-    "updated": "Bron o’zgartirildi",
+    "updated": "Bron oʻzgartirildi",
     "confirm": "Bron tasdiqlandi",
-    "seat": "Mehmonlar o’tqazildi",
+    "seat": "Mehmonlar oʻtqazildi",
     "complete": "Bron yakunlandi",
     "cancel": "Bron bekor qilindi",
     "no-show": "Belgilandi: mehmonlar kelishmadi",
-    "actionFailed": "Amalni bajarib bo’lmadi"
+    "actionFailed": "Amalni bajarib boʻlmadi"
   },
   "confirm": {
     "message": "Mehmon: {{name}}",
@@ -74,6 +74,6 @@
   },
   "validation": {
     "guestCount": "1 dan 200 gacha butun son",
-    "endAfterStart": "Tugash vaqti boshlanishdan keyin bo’lishi kerak"
+    "endAfterStart": "Tugash vaqti boshlanishdan keyin boʻlishi kerak"
   }
 }

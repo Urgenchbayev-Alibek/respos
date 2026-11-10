@@ -6,11 +6,11 @@
     "hint": "Ushbu qurilmada saqlanadi"
   },
   "password": {
-    "title": "Parolni o’zgartirish",
+    "title": "Parolni oʻzgartirish",
     "current": "Joriy parol",
     "new": "Yangi parol",
     "confirm": "Yangi parolni takrorlang",
-    "submit": "Parolni o’zgartirish",
-    "changed": "Parol o’zgartirildi"
+    "submit": "Parolni oʻzgartirish",
+    "changed": "Parol oʻzgartirildi"
   }
 }

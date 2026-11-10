@@ -120,6 +120,18 @@ describe('PaymentPanel', () => {
     await waitFor(() => expect(screen.getByTestId('cash-change').textContent?.replace(/\s/g, ' ')).toMatch(/58 500/));
   });
 
+  it('shows "Оплачено" instead of "0" once the order is fully paid', async () => {
+    server.use(
+      http.get(api('/orders/o1'), () => HttpResponse.json({ ...order, status: 'paid', paidAmount: 291500, remainingAmount: 0 })),
+      http.get(api('/cash-shifts/current'), () => HttpResponse.json(shift)),
+    );
+    renderWithProviders(<PaymentPanel orderId="o1" />, { auth });
+
+    const remaining = await screen.findByTestId('summary-remaining');
+    expect(remaining).toHaveTextContent('Оплачено');
+    expect(remaining.className).toMatch(/settled/);
+  });
+
   it('blocks payment when no shift is open', async () => {
     mockOrderAndShift(null);
     renderWithProviders(<PaymentPanel orderId="o1" />, { auth });

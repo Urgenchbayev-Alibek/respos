@@ -37,11 +37,11 @@
     "unblockTitle": "Xodimni blokdan chiqarasizmi?",
     "unblockMessage": "{{name}} yana tizimga kira oladi.",
     "deactivateTitle": "Xodimni faolsizlantirasizmi?",
-    "deactivateMessage": "{{name}} ruxsatni yo’qotadi. Amallar tarixi saqlanadi."
+    "deactivateMessage": "{{name}} ruxsatni yoʻqotadi. Amallar tarixi saqlanadi."
   },
   "toast": {
     "created": "Xodim yaratildi",
-    "updated": "O’zgarishlar saqlandi",
+    "updated": "Oʻzgarishlar saqlandi",
     "block": "Xodim bloklandi",
     "unblock": "Xodim blokdan chiqarildi",
     "deactivate": "Xodim faolsizlantirildi",
@@ -70,10 +70,10 @@
   },
   "invite": {
     "created": "Taklif yaratildi.",
-    "linkHint": "Email yuborish hali ulanmagan — havolani xodimga o’zingiz yuboring.",
+    "linkHint": "Email yuborish hali ulanmagan — havolani xodimga oʻzingiz yuboring.",
     "emailStub": "Email provayderi sinov rejimida",
     "copy": "Havolani nusxalash",
     "copied": "Havola nusxalandi",
-    "copyFailed": "Nusxalab bo’lmadi"
+    "copyFailed": "Nusxalab boʻlmadi"
   }
 }

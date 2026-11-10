@@ -11,6 +11,7 @@ let accessToken: string | null = null;
 let branchId: string | null = safeStorage.get(STORAGE_KEYS.branchId);
 let language: Language = DEFAULT_LANGUAGE;
 const sessionExpiredListeners = new Set<Listener>();
+const connectionListeners = new Set<(online: boolean) => void>();
 
 export const sessionStore = {
   getLanguage: (): Language => language,
@@ -36,5 +37,16 @@ export const sessionStore = {
   notifySessionExpired(): void {
     accessToken = null;
     sessionExpiredListeners.forEach((listener) => listener());
+  },
+  /** Session refresh hit 429/5xx/network and is retrying (false) or recovered (true). The session is kept. */
+  onConnectionChange(listener: (online: boolean) => void): () => void {
+    connectionListeners.add(listener);
+    return () => connectionListeners.delete(listener);
+  },
+  notifyConnectionLost(): void {
+    connectionListeners.forEach((listener) => listener(false));
+  },
+  notifyConnectionRestored(): void {
+    connectionListeners.forEach((listener) => listener(true));
   },
 };

@@ -1,6 +1,6 @@
 {
   "title": "Oshxona stansiyalari",
-  "subtitle": "Filial sexlari: taomlar stansiyaga yo’naltiriladi, chiptalar uning KDS ekranida ko’rinadi.",
+  "subtitle": "Filial sexlari: taomlar stansiyaga yoʻnaltiriladi, chiptalar uning KDS ekranida koʻrinadi.",
   "columns": {
     "name": "Nomi",
     "sortOrder": "Tartib",
@@ -10,7 +10,7 @@
   "fields": {
     "name": "Nomi",
     "sortOrder": "Tartib",
-    "sortOrderHint": "Tartib bo’yicha birinchi stansiya — stansiyasiz taomlar uchun standart stansiya.",
+    "sortOrderHint": "Tartib boʻyicha birinchi stansiya — stansiyasiz taomlar uchun standart stansiya.",
     "isActive": "Faol"
   },
   "form": {
@@ -18,24 +18,24 @@
     "editTitle": "Stansiyani tahrirlash"
   },
   "actions": {
-    "create": "Stansiya qo’shish",
+    "create": "Stansiya qoʻshish",
     "edit": "{{name}}ni tahrirlash",
-    "delete": "{{name}}ni o’chirish"
+    "delete": "{{name}}ni oʻchirish"
   },
   "confirm": {
-    "deleteTitle": "Stansiya o’chirilsinmi?",
-    "deleteMessage": "«{{name}}» stansiyasi o’chiriladi. Uning taomlari standart stansiyaga o’tadi."
+    "deleteTitle": "Stansiya oʻchirilsinmi?",
+    "deleteMessage": "«{{name}}» stansiyasi oʻchiriladi. Uning taomlari standart stansiyaga oʻtadi."
   },
   "toast": {
     "saved": "Stansiya saqlandi",
-    "deleted": "Stansiya o’chirildi",
-    "deleteFailed": "Stansiyani o’chirib bo’lmadi"
+    "deleted": "Stansiya oʻchirildi",
+    "deleteFailed": "Stansiyani oʻchirib boʻlmadi"
   },
   "active": "Faol",
   "inactive": "Nofaol",
-  "empty": "Hozircha stansiyalar yo’q",
+  "empty": "Hozircha stansiyalar yoʻq",
   "emptyHint": "Kamida bitta stansiya yarating (masalan, «Issiq sex» yoki «Bar»).",
   "validation": {
-    "sortOrder": "Manfiy bo’lmagan butun son"
+    "sortOrder": "Manfiy boʻlmagan butun son"
   }
 }

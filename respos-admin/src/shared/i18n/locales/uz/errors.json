@@ -1,7 +1,10 @@
 {
   "unknown": "Xatolik yuz berdi. Qayta urinib koʻring.",
   "network": {
-    "error": "Server bilan aloqa yoʻq. Internetni tekshirib, qayta urinib koʻring."
+    "error": "Server bilan aloqa yoʻq. Internetni tekshirib, qayta urinib koʻring.",
+    "offline": "Server bilan aloqa yoʻq",
+    "retrying": "Qayta urinilmoqda — sessiya saqlanadi.",
+    "restored": "Server bilan aloqa tiklandi"
   },
   "server": {
     "error": "Server xatosi. Muammoni oʻrganmoqdamiz."
