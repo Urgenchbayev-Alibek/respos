@@ -40,6 +40,7 @@ describe('CustomersPage', () => {
     const user = userEvent.setup();
 
     expect(await screen.findByText('Малика')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Малика' }), 'guest card must be reachable by keyboard').toHaveAttribute('href', '/admin/customers/c1');
     expect(screen.getByText('+998937654321')).toBeInTheDocument();
     expect(screen.getByText(/Скоро день рождения/)).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Добавить гостя' })).not.toBeInTheDocument();

@@ -56,7 +56,7 @@ public static class PermissionCatalog
         new(P.Inventory.Transfer, "inventory", "Перемещение товаров между филиалами"),
         new(P.Reports.Export, "reports", "Экспорт отчётов (CSV/XLSX/PDF)"),
         new(P.Customers.Read, "customers", "Просмотр гостей (CRM)"),
-        new(P.Customers.Manage, "customers", "Управление гостями и программой лояльности"),
+        new(P.Customers.Manage, "customers", "Управление гостями (карточки, привязка к заказу)"),
         new(P.Customers.LoyaltyRedeem, "loyalty", "Списание бонусов гостя"),
         new(P.Delivery.Read, "delivery", "Просмотр доставки"),
         new(P.Delivery.Manage, "delivery", "Управление доставкой и курьерами"),

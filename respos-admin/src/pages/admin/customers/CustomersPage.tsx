@@ -1,7 +1,7 @@
 import { Plus, Settings2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCustomers } from '@/entities/customer/customer.queries';
 import { CUSTOMER_SEGMENTS, type CustomerListItemDto, type CustomerSegment } from '@/entities/customer/customer.types';
 import { CustomerBadges } from '@/features/customers/ui/CustomerBadges';
@@ -45,7 +45,10 @@ export function CustomersPage() {
         sortField: 'name',
         cell: (row) => (
           <>
-            <strong>{row.name}</strong>{' '}
+            {/* A real link keeps the guest card reachable by keyboard (the row click is a mouse shortcut). */}
+            <Link to={buildPath(ROUTES.admin.customerDetail, { customerId: row.id })} onClick={(event) => event.stopPropagation()}>
+              <strong>{row.name}</strong>
+            </Link>{' '}
             <CustomerBadges isVip={row.isVip} isBirthdayToday={row.isBirthdayToday} isBirthdaySoon={row.isBirthdaySoon} />
           </>
         ),

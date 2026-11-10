@@ -49,7 +49,12 @@
     "reports": "Reports",
     "notifications": "Notifications",
     "settings": "Settings",
-    "audit": "Audit"
+    "audit": "Audit",
+    "customers": "Guests (CRM)",
+    "loyalty": "Loyalty",
+    "delivery": "Delivery",
+    "staff": "Staff",
+    "integrations": "Integrations"
   },
   "codes": {
     "users_read": "View users",
@@ -94,6 +99,17 @@
     "reports_read": "Reports & dashboard",
     "notifications_read": "Notifications",
     "settings_manage": "Organization settings",
-    "audit_read": "Audit log"
+    "audit_read": "Audit log",
+    "orders_split": "Split bills",
+    "inventory_transfer": "Transfers between branches",
+    "reports_export": "Export reports (CSV/XLSX/PDF)",
+    "customers_read": "View guests",
+    "customers_manage": "Manage guests",
+    "loyalty_redeem": "Redeem loyalty points",
+    "delivery_read": "View delivery",
+    "delivery_manage": "Manage delivery and couriers",
+    "staff_timeclock": "Clock in / out",
+    "staff_manage": "Staff schedule, timesheet and PINs",
+    "integrations_manage": "Configure integrations"
   }
 }

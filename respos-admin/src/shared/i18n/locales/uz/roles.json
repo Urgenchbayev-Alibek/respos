@@ -49,7 +49,12 @@
     "reports": "Hisobotlar",
     "notifications": "Bildirishnomalar",
     "settings": "Sozlamalar",
-    "audit": "Audit"
+    "audit": "Audit",
+    "customers": "Mehmonlar (CRM)",
+    "loyalty": "Sodiqlik dasturi",
+    "delivery": "Yetkazib berish",
+    "staff": "Xodimlar",
+    "integrations": "Integratsiyalar"
   },
   "codes": {
     "users_read": "Xodimlarni koʻrish",
@@ -94,6 +99,17 @@
     "reports_read": "Hisobotlar va bosh sahifa",
     "notifications_read": "Bildirishnomalar",
     "settings_manage": "Tashkilot sozlamalari",
-    "audit_read": "Audit jurnali"
+    "audit_read": "Audit jurnali",
+    "orders_split": "Hisobni boʻlish",
+    "inventory_transfer": "Filiallar oʻrtasida koʻchirish",
+    "reports_export": "Hisobotlarni eksport qilish (CSV/XLSX/PDF)",
+    "customers_read": "Mehmonlarni koʻrish",
+    "customers_manage": "Mehmonlarni boshqarish",
+    "loyalty_redeem": "Bonuslarni yechish",
+    "delivery_read": "Yetkazib berishni koʻrish",
+    "delivery_manage": "Yetkazib berish va kuryerlarni boshqarish",
+    "staff_timeclock": "Kelish/ketishni belgilash",
+    "staff_manage": "Xodimlar jadvali, tabel va PIN",
+    "integrations_manage": "Integratsiyalarni sozlash"
   }
 }

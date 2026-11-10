@@ -67,8 +67,11 @@ export function WorkspaceLayout({ workspace, nav = [], showBranch = true, showCo
         )}
         <span className={styles.spacer} />
         {showConnection && <ConnectionStatus />}
-        {topbarExtra}
-        <ShortcutsOverlay />
+        {/* Fullscreen / keyboard shortcuts are tablet & desktop affordances — hidden on phones to keep the bar in 390 px. */}
+        <span className={styles.wideOnly}>
+          {topbarExtra}
+          <ShortcutsOverlay />
+        </span>
         {showBranch && <TimeClockButton />}
         <SwitchUserButton />
         <LanguageSwitcher />

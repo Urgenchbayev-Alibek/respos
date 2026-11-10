@@ -49,7 +49,12 @@
     "reports": "Отчёты",
     "notifications": "Уведомления",
     "settings": "Настройки",
-    "audit": "Аудит"
+    "audit": "Аудит",
+    "customers": "Гости (CRM)",
+    "loyalty": "Лояльность",
+    "delivery": "Доставка",
+    "staff": "Персонал",
+    "integrations": "Интеграции"
   },
   "codes": {
     "users_read": "Просмотр сотрудников",
@@ -94,6 +99,17 @@
     "reports_read": "Отчёты и дашборд",
     "notifications_read": "Уведомления",
     "settings_manage": "Настройки организации",
-    "audit_read": "Журнал аудита"
+    "audit_read": "Журнал аудита",
+    "orders_split": "Разделение счёта",
+    "inventory_transfer": "Перемещения между филиалами",
+    "reports_export": "Экспорт отчётов (CSV/XLSX/PDF)",
+    "customers_read": "Просмотр гостей",
+    "customers_manage": "Управление гостями",
+    "loyalty_redeem": "Списание бонусов",
+    "delivery_read": "Просмотр доставки",
+    "delivery_manage": "Управление доставкой и курьерами",
+    "staff_timeclock": "Отметка прихода/ухода",
+    "staff_manage": "График, табель и PIN сотрудников",
+    "integrations_manage": "Настройка интеграций"
   }
 }
