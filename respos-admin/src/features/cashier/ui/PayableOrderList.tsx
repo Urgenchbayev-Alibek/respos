@@ -5,6 +5,7 @@ import { formatOrderNumber } from '@/features/payments/model/payment-labels';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { EmptyState, ErrorState, SearchInput, Skeleton, StatusBadge } from '@/shared/ui';
 import { filterPayableOrders } from '../model/filter-orders';
+import { orderPlaceLabel } from '../model/order-place';
 import styles from './PayableOrderList.module.css';
 
 interface PayableOrderListProps {
@@ -42,7 +43,7 @@ export function PayableOrderList({ selectedId, onSelect }: PayableOrderListProps
               >
                 <span className={styles.number}>
                   {formatOrderNumber(order.number)} ·{' '}
-                  {order.tableNumber ? t('orders.table', { number: order.tableNumber }) : t('orders.takeaway')}
+                  {orderPlaceLabel(order, t)}
                 </span>
                 <span className={styles.amount}>{format.money(order.remainingAmount)}</span>
                 <span className={styles.sub}>

@@ -17,6 +17,7 @@ export interface ReceiptDto
     | 'discountAmount'
     | 'serviceChargeAmount'
     | 'taxAmount'
+    | 'deliveryFee'
     | 'total'
     | 'paidAmount'
     | 'remainingAmount'

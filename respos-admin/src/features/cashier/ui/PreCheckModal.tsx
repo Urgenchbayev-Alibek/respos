@@ -4,6 +4,7 @@ import { useOrderReceipt } from '@/entities/order/order.queries';
 import type { ReceiptDto } from '@/entities/order/receipt.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { Button, ErrorState, Modal, PageLoader, PrintArea, printArea } from '@/shared/ui';
+import { orderPlaceLabel } from '../model/order-place';
 import { OrderSummary } from './OrderSummary';
 import styles from './PreCheckModal.module.css';
 
@@ -50,7 +51,7 @@ export function PreCheckModal({ orderId, onClose }: { orderId: string; onClose: 
 function ReceiptSheet({ receipt, testId }: { receipt: ReceiptDto; testId?: string }) {
   const { t } = useTranslation('cashier');
   const format = useFormatters();
-  const place = receipt.tableNumber ? t('orders.table', { number: receipt.tableNumber }) : t('orders.takeaway');
+  const place = orderPlaceLabel(receipt, t);
   const contacts = [receipt.branchAddress, receipt.branchPhone].filter(Boolean).join(' · ');
 
   return (

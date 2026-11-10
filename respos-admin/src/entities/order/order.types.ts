@@ -80,6 +80,8 @@ export interface OrderDto extends OrderSummaryDto {
   customer?: OrderCustomerDto | null;
   /** F1: part of `discountAmount` paid with loyalty points. */
   loyaltyDiscountAmount?: number;
+  /** F3: delivery fee snapshot (0 unless `type: "delivery"`); added to `total` after tax, never discounted. */
+  deliveryFee?: number;
   /** F2: true while split into bills (items/discount locked server-side). */
   isSplit?: boolean;
   /** F2: bills by number; empty when not split. */

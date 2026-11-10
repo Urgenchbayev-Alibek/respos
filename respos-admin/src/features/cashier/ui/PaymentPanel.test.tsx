@@ -49,6 +49,32 @@ describe('PaymentPanel', () => {
     expect((screen.getByLabelText(/Сумма платежа/) as HTMLInputElement).value.replace(/\s/g, ' ')).toBe('141 500');
   });
 
+  it('shows the delivery fee line and the «Доставка» place for a delivery order (rows add up to the total)', async () => {
+    const delivery = makeOrder({
+      type: 'delivery', tableId: null, tableNumber: null, status: 'served',
+      items: [makeOrderItem({ unitPrice: 12000, quantity: 2, status: 'served', lineTotal: 24000 })],
+      subtotal: 24000, deliveryFee: 10000, total: 34000, paidAmount: 0, remainingAmount: 34000,
+    });
+    server.use(
+      http.get(api('/orders/o1'), () => HttpResponse.json(delivery)),
+      http.get(api('/payments/providers'), () => HttpResponse.json([])),
+      http.get(api('/cash-shifts/current'), () => HttpResponse.json(shift)),
+    );
+    renderWithProviders(<PaymentPanel orderId="o1" />, { auth });
+
+    expect((await screen.findByTestId('summary-delivery')).textContent?.replace(/\s/g, ' ')).toMatch(/Доставка.*10 000/);
+    expect(screen.getByTestId('summary-total').textContent?.replace(/\s/g, ' ')).toMatch(/34 000/);
+    expect(screen.getByRole('heading', { name: /Доставка/ })).toBeInTheDocument();
+    expect(screen.queryByText(/С собой/)).not.toBeInTheDocument();
+  });
+
+  it('has no delivery line for dine-in orders', async () => {
+    mockOrderAndShift();
+    renderWithProviders(<PaymentPanel orderId="o1" />, { auth });
+    await screen.findByTestId('summary-total');
+    expect(screen.queryByTestId('summary-delivery')).not.toBeInTheDocument();
+  });
+
   it('reuses the Idempotency-Key when retrying after a network failure', async () => {
     mockOrderAndShift();
     const keys: (string | null)[] = [];

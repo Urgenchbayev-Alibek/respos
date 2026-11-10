@@ -7,7 +7,7 @@ import styles from './OrderTotals.module.css';
 export interface OrderTotalsProps {
   order: Pick<
     OrderDto,
-    'subtotal' | 'discountAmount' | 'serviceChargeAmount' | 'taxAmount' | 'total' | 'paidAmount' | 'remainingAmount'
+    'subtotal' | 'discountAmount' | 'serviceChargeAmount' | 'taxAmount' | 'deliveryFee' | 'total' | 'paidAmount' | 'remainingAmount'
   >;
   /** Hide zero discount / service / tax rows (compact waiter panel). */
   compact?: boolean;
@@ -27,6 +27,7 @@ export function OrderTotals({ order, compact }: OrderTotalsProps) {
       show: !compact || order.serviceChargeAmount !== 0,
     },
     { key: 'tax', label: t('totals.tax'), value: order.taxAmount, show: !compact || order.taxAmount !== 0 },
+    { key: 'delivery', label: t('totals.deliveryFee'), value: order.deliveryFee ?? 0, show: Boolean(order.deliveryFee) },
   ];
   return (
     <dl className={styles.totals}>

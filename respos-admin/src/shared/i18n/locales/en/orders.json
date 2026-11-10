@@ -8,6 +8,7 @@
     "discount": "Discount",
     "serviceCharge": "Service charge",
     "tax": "Tax",
+    "deliveryFee": "Delivery",
     "total": "Total",
     "paid": "Paid",
     "remaining": "Due",

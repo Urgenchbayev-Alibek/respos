@@ -13,6 +13,7 @@ import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
 import { Alert, Button, Card, EmptyState, ErrorState, PageLoader, StatusBadge } from '@/shared/ui';
+import { orderPlaceLabel } from '../model/order-place';
 import { BillPicker } from './BillPicker';
 import { OnlinePayPanel } from './OnlinePayPanel';
 import { OrderPaymentsList } from './OrderPaymentsList';
@@ -39,7 +40,7 @@ export function PaymentPanel({ orderId, onBack }: PaymentPanelProps) {
   if (query.isPending) return <PageLoader />;
   if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
   const order = query.data;
-  const place = order.tableNumber ? t('orders.table', { number: order.tableNumber }) : t('orders.takeaway');
+  const place = orderPlaceLabel(order, t);
 
   return (
     <div className={styles.panel}>

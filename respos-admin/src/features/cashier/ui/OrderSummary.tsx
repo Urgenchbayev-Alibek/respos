@@ -4,11 +4,19 @@ import type { OrderDto } from '@/entities/order/order.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import styles from './OrderSummary.module.css';
 
-/** Order lines and SERVER totals (subtotal, discount, service, tax, total, paid, remaining). */
+/** Order lines and SERVER totals (subtotal, discount, service, tax, delivery fee, total, paid, remaining). */
 /** Shared by the payment panel (OrderDto) and the pre-check (ReceiptDto). */
 export type OrderSummaryData = Pick<
   OrderDto,
-  'items' | 'subtotal' | 'discountAmount' | 'serviceChargeAmount' | 'taxAmount' | 'total' | 'paidAmount' | 'remainingAmount'
+  | 'items'
+  | 'subtotal'
+  | 'discountAmount'
+  | 'serviceChargeAmount'
+  | 'taxAmount'
+  | 'deliveryFee'
+  | 'total'
+  | 'paidAmount'
+  | 'remainingAmount'
 >;
 
 export function OrderSummary({ order }: { order: OrderSummaryData }) {
@@ -20,6 +28,8 @@ export function OrderSummary({ order }: { order: OrderSummaryData }) {
     { key: 'discount', label: t('summary.discount'), value: order.discountAmount },
     { key: 'service', label: t('summary.serviceCharge'), value: order.serviceChargeAmount },
     { key: 'tax', label: t('summary.tax'), value: order.taxAmount },
+    // Delivery orders only: without this line the rows above would not add up to the total.
+    ...(order.deliveryFee ? [{ key: 'delivery', label: t('summary.deliveryFee'), value: order.deliveryFee }] : []),
     { key: 'total', label: t('summary.total'), value: order.total, className: styles.grand },
     { key: 'paid', label: t('summary.paid'), value: order.paidAmount },
     { key: 'remaining', label: t('summary.remaining'), value: settled ? t('summary.settled') : order.remainingAmount, className: settled ? styles.settled : styles.remaining },
