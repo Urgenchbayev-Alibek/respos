@@ -42,8 +42,44 @@ F7 Telegram/SMS/SMTP/online booking, F8 PWA/dark theme/80 mm printing/shortcuts.
   (adapters + webhooks written and unit/integration-tested with fake keys only), Telegram, Eskiz SMS, SMTP. Uzum is a disabled
   skeleton. Fiscalization is not connected. UZ/EN texts of the new screens are machine-translated.
 - **Known open issue** (v1 behaviour): a page reload during a SignalR hub call logs the cancelled invocation at `ERR` (harmless noise).
-- **Not done**: `git push` and Vercel redeploy of v2 (local `main` is ahead of `origin/main`; the deployed sites still show the MVP);
-  load testing; a Release-build / staging run.
+- **Not done**: load testing; a Release-build / staging run.
 
-**Next steps for the owner:** review `User-Todo.md` section E (credentials, loyalty defaults, role rights) → push `main` →
-set `VITE_PUBLIC_BRANCH_SLUG` / `VITE_LANDING_URL` in Vercel and redeploy → choose backend hosting (T3) and apply `V2Features` there.
+**Next steps for the owner:** review `User-Todo.md` section E (credentials, loyalty defaults, role rights) →
+choose backend hosting (T3) and apply `V2Features` there.
+
+## v2 published (2026-11-10, ~23:00)
+
+- `main` pushed to GitHub (`origin/main` = v2, https://github.com/Urgenchbayev-Alibek/respos). Pre-push secret scan of the
+  33 new commits: clean (only `.env.example` files tracked; the single hit was a dummy password in a masking unit test).
+- Vercel production redeployed from the v2 code:
+  - https://respos-admin.vercel.app (build env `VITE_APP_ENV=production`, `VITE_LANDING_URL=https://respos-landing.vercel.app`)
+  - https://respos-landing.vercel.app (`VITE_ADMIN_APP_URL=https://respos-admin.vercel.app`, `VITE_PUBLIC_BRANCH_SLUG=demo`)
+  - Checked after deploy: `/`, `/admin/customers`, `/manifest.webmanifest`, landing `/`, `/booking`, `/menu/demo` → 200.
+  - Still true: login, QR menu data and online booking do NOT work on Vercel until the backend is hosted (T3) and
+    `VITE_API_BASE_URL` / `VITE_HUB_URL` are set there.
+- Local stack started for the owner (Development seed, DB contains demo data + E2E leftovers): API http://localhost:5080,
+  admin http://localhost:5173, landing http://localhost:5174. Verified: `/health/ready` 200, login as `admin@demo.respos.uz` 200.
+  Demo logins and PINs: root `README.md` (password `Demo123!`).
+
+## Desktop app (Windows exe) — IN PROGRESS (started 2026-11-10, ~23:00)
+
+Owner request: ship the web app as a Windows program. Decision: **Electron** (no Rust/MSVC toolchain on the machine for
+Tauri; Electron gives silent thermal printing). Design brief: `respos-desktop/DESIGN.md` (on the branch).
+
+- Work happens on branch **`v2/desktop`**, worktree `.claude/worktrees/desktop` (not yet merged into `main`).
+- Architecture: Electron shell + loopback gateway (127.0.0.1) that serves the built `respos-admin` SPA and reverse-proxies
+  `/api`, `/hubs` (WebSocket), `/files` to the server address entered on first run → cookies and SignalR work same-origin,
+  backend unchanged. Extras: connection/settings window (RU/UZ/EN), silent 80 mm receipt printing, kiosk mode, autostart.
+- Workflow `respos-desktop-electron` (run `wf_50ba0042-ee5`), 4 phases:
+  1. **Build** — Electron shell + `respos-admin` desktop integration (relative API URLs, no service worker in desktop
+     build, print bridge, file-URL helper) — *running when this note was written*.
+  2. **Package** — Playwright-Electron e2e, NSIS installer + portable exe into `respos-desktop/release/`.
+  3. **Review** — security / gateway correctness / packaging lenses, each finding adversarially verified.
+  4. **Fix** — fix confirmed findings, rebuild, commit.
+- **Planned next (owner asked for wide E2E with many agents):** a second workflow on the built exe — parallel agents,
+  each with its own backend + DB: first-run & settings; admin (menu photo upload, reports, XLSX export); waiter + kitchen
+  realtime across two app instances; cashier (shift, payment, split bill, tips, loyalty, receipt print); stock / delivery /
+  QR codes; resilience (server down/up, busy port, second instance, session persistence); installer (silent install →
+  launch → uninstall) and portable exe; language / dark theme / kiosk / shortcuts. Findings are verified, fixed and re-run.
+- After that: merge `v2/desktop` into `main`, add `respos-desktop` to `CLAUDE.md` layout and root `README.md`, push,
+  note in `User-Todo.md` that the exe is unsigned (code-signing certificate needed to avoid the SmartScreen warning).
