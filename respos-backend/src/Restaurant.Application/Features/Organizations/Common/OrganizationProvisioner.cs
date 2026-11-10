@@ -75,6 +75,7 @@ public sealed class OrganizationProvisioner(IApplicationDbContext db, IClock clo
     public RestaurantBranch CreateBranch(Guid organizationId, string name, string timezone = RestaurantBranch.DefaultTimezone)
     {
         var branch = new RestaurantBranch { OrganizationId = organizationId, Name = name, Timezone = timezone };
+        branch.Slug = BranchSlug.Generate(name, branch.Id);
         db.Branches.Add(branch);
         db.BranchSettings.Add(new BranchSettings { OrganizationId = organizationId, BranchId = branch.Id });
         return branch;

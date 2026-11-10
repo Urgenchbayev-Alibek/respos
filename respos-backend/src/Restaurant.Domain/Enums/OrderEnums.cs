@@ -1,6 +1,6 @@
 namespace Restaurant.Domain.Enums;
 
-public enum OrderType { DineIn, Takeaway }
+public enum OrderType { DineIn, Takeaway, Delivery }
 
 public enum OrderStatus { Draft, Submitted, InProgress, PartiallyReady, Ready, Served, Paid, Cancelled }
 

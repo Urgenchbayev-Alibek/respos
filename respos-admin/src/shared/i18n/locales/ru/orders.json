@@ -21,7 +21,8 @@
   },
   "type": {
     "dine_in": "В зале",
-    "takeaway": "Навынос"
+    "takeaway": "Навынос",
+    "delivery": "Доставка"
   },
   "tableLabel": "Стол {{number}}",
   "guests": "Гостей: {{guests}}",

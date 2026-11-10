@@ -1,0 +1,36 @@
+{
+  "sheet": {
+    "open": "Table QR codes",
+    "back": "Back to tables",
+    "title": "Table QR codes",
+    "subtitle": "Guests scan the code to open the menu, call a waiter or ask for the bill.",
+    "print": "Print ({{count}})",
+    "noSlug": "This branch has no public menu address yet.",
+    "openSettings": "Open branch settings",
+    "noTables": "No active tables",
+    "tables": "Tables",
+    "selectAll": "All",
+    "selectNone": "None",
+    "tableOption": "Table {{number}} · {{area}}",
+    "preview": "Print sheet",
+    "qrLabel": "QR code of table {{number}}",
+    "table": "Table {{number}}",
+    "scan": "Point your camera here to open the menu"
+  },
+  "calls": {
+    "nav": "Calls",
+    "title": "Guest calls",
+    "subtitle": "“Call waiter” and “Ask for the bill” buttons from the QR menu.",
+    "empty": "No active calls",
+    "table": "Table {{number}}",
+    "reason": {
+      "call": "Calling a waiter",
+      "bill": "Asking for the bill"
+    },
+    "acknowledge": "On my way",
+    "toast": {
+      "call": "Table {{number}}: calling a waiter",
+      "bill": "Table {{number}}: asking for the bill"
+    }
+  }
+}

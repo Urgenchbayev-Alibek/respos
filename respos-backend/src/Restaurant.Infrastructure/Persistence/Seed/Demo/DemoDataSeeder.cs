@@ -58,6 +58,7 @@ internal sealed class DemoDataSeeder(
         var orgId = provisioned.Organization.Id;
         provisioned.Branch.Address = "г. Ташкент, ул. Амира Темура, 1 (демо)";
         provisioned.Branch.Phone = "+998 71 200-00-00";
+        provisioned.Branch.Slug = Slug;
 
         var units = db.Units.Local.Where(u => u.OrganizationId == orgId).ToDictionary(u => u.Code, StringComparer.Ordinal);
         var context = new DemoContext(db, orgId, provisioned.Branch.Id, clock.UtcNow, units);

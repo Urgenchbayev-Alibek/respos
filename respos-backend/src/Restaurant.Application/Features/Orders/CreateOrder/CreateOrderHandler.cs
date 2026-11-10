@@ -1,5 +1,3 @@
-using System.Data.Common;
-using Microsoft.EntityFrameworkCore;
 using Restaurant.Application.Abstractions.Clock;
 using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
@@ -13,7 +11,7 @@ namespace Restaurant.Application.Features.Orders.CreateOrder;
 
 /// <summary>
 /// <c>POST /orders</c>: draft order with optional items; dine-in table → <c>occupied</c>. Number is sequential per
-/// branch per business date (branch timezone); the unique index (branch, date, number) + retry make it concurrency-safe.
+/// branch per business date (branch timezone); see <see cref="OrderWriter.SaveNewOrderAsync"/>.
 /// </summary>
 public sealed class CreateOrderHandler(
     IApplicationDbContext db,
@@ -24,9 +22,6 @@ public sealed class CreateOrderHandler(
     TableOccupancy tables)
     : IHandler<CreateOrderCommand, OrderDto>
 {
-    private const int MaxNumberAttempts = 5;
-    private const string UniqueViolation = "23505";
-
     public async Task<Result<OrderDto>> HandleAsync(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var branchId = tenant.RequireBranchId();
@@ -70,23 +65,7 @@ public sealed class CreateOrderHandler(
         }
 
         writer.NotifyOrderUpdated(order);
-        await SaveWithUniqueNumberAsync(order, businessDate, cancellationToken);
+        await writer.SaveNewOrderAsync(order, businessDate, cancellationToken);
         return await writer.ReadAsync(order.Id, cancellationToken);
-    }
-
-    private async Task SaveWithUniqueNumberAsync(Order order, DateOnly businessDate, CancellationToken ct)
-    {
-        for (var attempt = 1; ; attempt++)
-        {
-            try
-            {
-                await db.SaveChangesAsync(ct);
-                return;
-            }
-            catch (DbUpdateException ex) when (attempt < MaxNumberAttempts && ex.InnerException is DbException { SqlState: UniqueViolation })
-            {
-                order.Renumber(await writer.NextNumberAsync(businessDate, ct));
-            }
-        }
     }
 }

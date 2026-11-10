@@ -7,12 +7,14 @@ import { HomePage } from '@/pages/HomePage';
 import { PrivacyPage, TermsPage } from '@/pages/LegalPages';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PricingPage } from '@/pages/PricingPage';
+import { PublicMenuPage } from '@/pages/PublicMenuPage';
 import { ROUTES } from '@/shared/config/routes';
 import { Layout } from './Layout';
 
 export function AppRoutes() {
   return (
     <Routes>
+      <Route path={ROUTES.menu} element={<PublicMenuPage />} />
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path={ROUTES.features} element={<FeaturesPage />} />

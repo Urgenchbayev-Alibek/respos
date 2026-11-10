@@ -60,6 +60,7 @@
     "system_protected": "Tizim rollarini oʻzgartirib yoki oʻchirib boʻlmaydi."
   },
   "order": {
+    "invalid_delivery_fee": "Yetkazib berish narxi notoʻgʻri.",
     "invalid_status_transition": "Buyurtma holatini bunday oʻzgartirib boʻlmaydi.",
     "closed": "Buyurtma allaqachon yopilgan.",
     "has_payments": "Buyurtma boʻyicha toʻlovlar bor — avval qaytarishni rasmiylashtiring.",
@@ -139,6 +140,7 @@
     "not_found": "Oʻlchov birligi topilmadi."
   },
   "branch": {
+    "slug_taken": "Bu menyu manzili band.",
     "last_active": "Oxirgi faol filialni oʻchirib boʻlmaydi.",
     "not_found": "Filial topilmadi."
   },
@@ -225,5 +227,23 @@
     "not_found": "Stol topilmadi.",
     "number_taken": "Bunday raqamli stol allaqachon mavjud.",
     "unavailable": "Stol mavjud emas."
+  },
+  "delivery": {
+    "not_found": "Yetkazib berish buyurtmasi topilmadi.",
+    "closed": "Yetkazib berish yakunlangan yoki bekor qilingan.",
+    "courier_required": "Avval kuryer tayinlang.",
+    "cancel_reason_required": "Bekor qilish sababini koʻrsating.",
+    "items_required": "Kamida bitta taom qoʻshing.",
+    "invalid_status_transition": "Yetkazib berish holatini bunday oʻzgartirib boʻlmaydi."
+  },
+  "courier": {
+    "not_found": "Kuryer topilmadi.",
+    "inactive": "Kuryer faol emas."
+  },
+  "public_menu": {
+    "not_found": "Menyu topilmadi."
+  },
+  "waiter_call": {
+    "not_found": "Chaqiruv topilmadi."
   }
 }

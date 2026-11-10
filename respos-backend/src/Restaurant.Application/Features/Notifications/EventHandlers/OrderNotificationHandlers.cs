@@ -70,7 +70,7 @@ internal static class OrderLookup
     {
         if (order.TableId is not { } tableId)
         {
-            return "с собой";
+            return order.Type == OrderType.Delivery ? "доставка" : "с собой";
         }
 
         var number = db.DiningTables.Local.FirstOrDefault(t => t.Id == tableId)?.Number

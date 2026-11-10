@@ -4,6 +4,7 @@ import {
   Building2,
   Banknote,
   Bell,
+  Bike,
   BookOpenText,
   CalendarClock,
   ChefHat,
@@ -22,7 +23,7 @@ import { PERMISSIONS as P } from '@/shared/constants/permissions';
 import { ROUTES } from '@/shared/constants/routes';
 import type { NavItem } from './nav-types';
 
-/** Admin sidebar — the 18 sections of spec §5.1, in spec order. */
+/** Admin sidebar — the 18 sections of spec §5.1, in spec order, + v2 modules (F3 delivery). */
 export const ADMIN_NAV: readonly NavItem[] = [
   { id: 'dashboard', labelKey: 'nav:admin.dashboard', path: ROUTES.admin.dashboard, icon: LayoutDashboard, anyOf: [], end: true },
   { id: 'branches', labelKey: 'nav:admin.branches', path: ROUTES.admin.branches, icon: Building2, anyOf: [P.branches.read] },
@@ -32,6 +33,7 @@ export const ADMIN_NAV: readonly NavItem[] = [
   { id: 'menu', labelKey: 'nav:admin.menu', path: ROUTES.admin.menu, icon: BookOpenText, anyOf: [P.menu.read] },
   { id: 'kitchenStations', labelKey: 'nav:admin.kitchenStations', path: ROUTES.admin.kitchenStations, icon: ChefHat, anyOf: [P.kitchen.read] },
   { id: 'orders', labelKey: 'nav:admin.orders', path: ROUTES.admin.orders, icon: ClipboardList, anyOf: [P.orders.read] },
+  { id: 'delivery', labelKey: 'delivery:nav', path: ROUTES.admin.delivery, icon: Bike, anyOf: [P.delivery.read] },
   { id: 'inventory', labelKey: 'nav:admin.inventory', path: ROUTES.admin.inventory, icon: Boxes, anyOf: [P.inventory.read] },
   { id: 'recipes', labelKey: 'nav:admin.recipes', path: ROUTES.admin.recipes, icon: CookingPot, anyOf: [P.recipes.read] },
   { id: 'suppliers', labelKey: 'nav:admin.suppliers', path: ROUTES.admin.suppliers, icon: Truck, anyOf: [P.suppliers.read] },

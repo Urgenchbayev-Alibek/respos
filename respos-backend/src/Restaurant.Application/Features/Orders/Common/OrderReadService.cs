@@ -71,7 +71,10 @@ public sealed class OrderReadService(IApplicationDbContext db, ITenantContext te
         o.PaidAmount, o.RemainingAmount, o.Comment, o.CancelReason, o.OpenedAt, o.ClosedAt, payments,
         o.History.OrderBy(h => h.ChangedAt)
             .Select(h => new OrderHistoryDto(h.FromStatus, h.ToStatus, h.ChangedBy is { } by ? names.GetValueOrDefault(by) : null, h.ChangedAt, h.Reason))
-            .ToList());
+            .ToList())
+    {
+        DeliveryFee = o.DeliveryFee,
+    };
 
     public static OrderItemDto MapItem(OrderItem i) => new(
         i.Id, i.MenuItemId, i.VariantId, i.NameSnapshot, i.VariantNameSnapshot, i.UnitPrice, i.Quantity,

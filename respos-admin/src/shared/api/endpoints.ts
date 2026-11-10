@@ -19,6 +19,7 @@ export const ENDPOINTS = {
     one: (branchId: string) => `/branches/${id(branchId)}`,
     deactivate: (branchId: string) => `/branches/${id(branchId)}/deactivate`,
     settings: (branchId: string) => `/branches/${id(branchId)}/settings`,
+    deliverySettings: (branchId: string) => `/branches/${id(branchId)}/delivery-settings`,
   },
   users: {
     list: '/users',
@@ -64,6 +65,18 @@ export const ENDPOINTS = {
       `/orders/${id(orderId)}/items/${id(itemId)}/${action}`,
     action: (orderId: string, action: 'send-to-kitchen' | 'serve-all' | 'discount' | 'transfer' | 'cancel' | 'receipt') =>
       `/orders/${id(orderId)}/${action}`,
+  },
+  delivery: {
+    orders: '/delivery/orders',
+    order: (orderId: string) => `/delivery/orders/${id(orderId)}`,
+    status: (orderId: string) => `/delivery/orders/${id(orderId)}/status`,
+    courier: (orderId: string) => `/delivery/orders/${id(orderId)}/courier`,
+    couriers: '/delivery/couriers',
+    courierOne: (courierId: string) => `/delivery/couriers/${id(courierId)}`,
+  },
+  waiterCalls: {
+    list: '/waiter-calls',
+    acknowledge: (callId: string) => `/waiter-calls/${id(callId)}/acknowledge`,
   },
   kitchen: {
     tickets: '/kitchen/tickets',

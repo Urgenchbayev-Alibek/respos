@@ -51,7 +51,11 @@ public sealed record OrderDto(
     DateTime OpenedAt,
     DateTime? ClosedAt,
     IReadOnlyList<PaymentDto> Payments,
-    IReadOnlyList<OrderHistoryDto> History);
+    IReadOnlyList<OrderHistoryDto> History)
+{
+    /// <summary>Delivery fee included in <see cref="Total"/> (0 unless <c>type = delivery</c>).</summary>
+    public decimal DeliveryFee { get; init; }
+}
 
 /// <summary>Body item of <c>POST /orders</c> and <c>POST /orders/{id}/items</c>.</summary>
 public sealed record AddItemRequest(

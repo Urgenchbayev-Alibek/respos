@@ -7,8 +7,8 @@ import { buildRoutes } from './router';
 const routes = buildRoutes();
 
 describe('route registry', () => {
-  it('admin sidebar has the 18 sections of spec §5.1', () => {
-    expect(ADMIN_NAV).toHaveLength(18);
+  it('admin sidebar has the 18 sections of spec §5.1 + v2 delivery', () => {
+    expect(ADMIN_NAV).toHaveLength(19);
   });
 
   it.each([...ADMIN_NAV, ...WAITER_NAV, ...CASHIER_NAV, ...STOCK_NAV, ...PLATFORM_NAV].map((item) => [item.path]))(

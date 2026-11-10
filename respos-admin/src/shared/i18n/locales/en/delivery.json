@@ -1,0 +1,97 @@
+{
+  "nav": "Delivery",
+  "title": "Delivery",
+  "subtitle": "Delivery orders from acceptance to hand-over.",
+  "columns": {
+    "new": "New",
+    "accepted": "Accepted",
+    "cooking": "Cooking",
+    "ready": "Ready",
+    "on_the_way": "On the way",
+    "done": "Done"
+  },
+  "status": {
+    "new": "New",
+    "accepted": "Accepted",
+    "cooking": "Cooking",
+    "ready": "Ready",
+    "on_the_way": "On the way",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+  },
+  "actions": {
+    "accepted": "Accept",
+    "cooking": "Cooking",
+    "ready": "Ready",
+    "on_the_way": "Send out",
+    "delivered": "Delivered",
+    "cancelled": "Cancel"
+  },
+  "card": {
+    "label": "Delivery {{number}}",
+    "inStatus": "Time in current status",
+    "minutes": "{{count}} min",
+    "entrance": "entrance {{value}}",
+    "floor": "floor {{value}}",
+    "apartment": "apt. {{value}}",
+    "fee": "Delivery",
+    "total": "Total",
+    "remaining": "Due",
+    "paid": "Paid",
+    "cancelReason": "Cancel reason: {{reason}}"
+  },
+  "courier": {
+    "none": "No courier"
+  },
+  "fields": {
+    "customerName": "Customer name",
+    "customerPhone": "Phone",
+    "address": "Address",
+    "entrance": "Entrance",
+    "floor": "Floor",
+    "apartment": "Apartment",
+    "comment": "Comment",
+    "courier": "Courier"
+  },
+  "create": {
+    "title": "New delivery",
+    "submit": "Create order",
+    "cart": "Order items",
+    "cartEmpty": "Pick dishes from the menu on the right",
+    "preview": "Preliminary: {{amount}} + delivery (the server calculates the total)",
+    "increase": "More",
+    "decrease": "Less",
+    "remove": "Remove",
+    "itemsRequired": "Add at least one dish.",
+    "created": "Order {{number}} created"
+  },
+  "cancel": {
+    "title": "Cancel delivery {{number}}?",
+    "message": "The order and its kitchen items will be cancelled.",
+    "reason": "Cancel reason"
+  },
+  "couriers": {
+    "title": "Couriers",
+    "empty": "No couriers yet",
+    "inactive": "Inactive",
+    "edit": "Edit: {{name}}",
+    "editTitle": "Edit courier",
+    "add": "Add courier",
+    "name": "Name",
+    "phone": "Phone",
+    "active": "Active"
+  },
+  "settings": {
+    "title": "QR menu & delivery",
+    "slug": "Public menu address",
+    "slugHint": "Link: /menu/{{slug}} — latin letters, digits and hyphens",
+    "fee": "Delivery fee",
+    "feeHint": "Added to every new delivery order",
+    "openMenu": "Open public menu",
+    "saved": "Settings saved"
+  },
+  "empty": {
+    "title": "No delivery orders",
+    "description": "Create one with the “New delivery” button."
+  }
+}

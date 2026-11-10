@@ -14,6 +14,9 @@ public class RestaurantBranch : AuditableEntity, ITenantScoped
     public string Timezone { get; set; } = DefaultTimezone;
     public bool IsActive { get; set; } = true;
 
+    /// <summary>Globally unique public address of the QR menu (<c>/menu/{slug}</c>); see <see cref="BranchSlug"/>.</summary>
+    public string? Slug { get; set; }
+
     public Organization? Organization { get; set; }
     public BranchSettings? Settings { get; set; }
 }
@@ -28,6 +31,9 @@ public class BranchSettings : AuditableEntity, IBranchScoped
     public bool AllowNegativeStock { get; set; }
     public InventoryConsumptionTrigger InventoryConsumptionTrigger { get; set; } = InventoryConsumptionTrigger.OnPayment;
     public string? ReceiptFooter { get; set; }
+
+    /// <summary>Fee added to every new delivery order of the branch (snapshot on the order).</summary>
+    public decimal DeliveryFee { get; set; }
 
     public RestaurantBranch? Branch { get; set; }
 }

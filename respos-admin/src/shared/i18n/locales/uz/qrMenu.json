@@ -1,0 +1,36 @@
+{
+  "sheet": {
+    "open": "Stollar QR-kodlari",
+    "back": "Stollarga",
+    "title": "Stollar QR-kodlari",
+    "subtitle": "Mehmonlar kodni skanerlab menyuni ochadi, ofitsiantni chaqirishi yoki hisob soʻrashi mumkin.",
+    "print": "Chop etish ({{count}})",
+    "noSlug": "Filialda ochiq menyu manzili belgilanmagan.",
+    "openSettings": "Filial sozlamalarini ochish",
+    "noTables": "Faol stollar yoʻq",
+    "tables": "Stollar",
+    "selectAll": "Hammasi",
+    "selectNone": "Hech biri",
+    "tableOption": "{{number}}-stol · {{area}}",
+    "preview": "Chop etish varagʻi",
+    "qrLabel": "{{number}}-stol QR-kodi",
+    "table": "{{number}}-stol",
+    "scan": "Menyuni ochish uchun kamerani yoʻnaltiring"
+  },
+  "calls": {
+    "nav": "Chaqiruvlar",
+    "title": "Mehmonlar chaqiruvlari",
+    "subtitle": "QR-menyudagi «Ofitsiantni chaqirish» va «Hisobni soʻrash» tugmalari.",
+    "empty": "Faol chaqiruvlar yoʻq",
+    "table": "{{number}}-stol",
+    "reason": {
+      "call": "Ofitsiantni chaqirmoqda",
+      "bill": "Hisob soʻramoqda"
+    },
+    "acknowledge": "Boryapman",
+    "toast": {
+      "call": "{{number}}-stol: ofitsiantni chaqirmoqda",
+      "bill": "{{number}}-stol: hisob soʻramoqda"
+    }
+  }
+}

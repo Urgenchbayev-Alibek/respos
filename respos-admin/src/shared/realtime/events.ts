@@ -13,6 +13,9 @@ export interface RealtimeEventMap {
   PaymentRegistered: BaseEvent & { orderId: string; paymentId: string; amount: number };
   NotificationCreated: BaseEvent & { notificationId: string; type: string; title: string };
   StockLow: BaseEvent & { ingredientId: string; name: string; quantity: number; minQuantity: number };
+  DeliveryUpdated: BaseEvent & { orderId: string; status: string; courierId: string | null };
+  WaiterCalled: BaseEvent & { callId: string; tableId: string; tableNumber: string; reason: 'call' | 'bill' };
+  WaiterCallUpdated: BaseEvent & { callId: string; tableId: string; status: string };
 }
 
 export type RealtimeEventName = keyof RealtimeEventMap;
@@ -26,6 +29,9 @@ export const REALTIME_EVENTS = [
   'PaymentRegistered',
   'NotificationCreated',
   'StockLow',
+  'DeliveryUpdated',
+  'WaiterCalled',
+  'WaiterCallUpdated',
 ] as const satisfies readonly RealtimeEventName[];
 
 /** Client → server hub methods. */
