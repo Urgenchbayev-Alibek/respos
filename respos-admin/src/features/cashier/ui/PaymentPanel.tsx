@@ -5,6 +5,8 @@ import { useCurrentShift } from '@/entities/cash-shift/cash-shift.queries';
 import type { PayableOrderDto } from '@/entities/payment/payable-order.types';
 import { usePayableOrder } from '@/entities/payment/payment.queries';
 import type { PaymentDto } from '@/entities/payment/payment.types';
+import { OrderGuestBar } from '@/features/customers/ui/OrderGuestBar';
+import { RedeemPointsPanel } from '@/features/customers/ui/RedeemPointsPanel';
 import { formatOrderNumber } from '@/features/payments/model/payment-labels';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
@@ -55,6 +57,7 @@ export function PaymentPanel({ orderId, onBack }: PaymentPanelProps) {
           <StatusBadge domain="order" status={order.status} />{' '}
           {t('orders.meta', { waiter: order.waiterName ?? '—', guests: order.guestCount, time: format.time(order.openedAt) })}
         </p>
+        <OrderGuestBar order={order} />
         <OrderSummary order={order} />
         <h3 className={styles.section}>{t('orderPayments.title')}</h3>
         <OrderPaymentsList payments={order.payments} />
@@ -101,6 +104,7 @@ function PayArea({ order, lastPayment, onPaid }: PayAreaProps) {
   return (
     <div className={styles.success}>
       {success}
+      <RedeemPointsPanel order={order} />
       <PaymentForm order={order} onPaid={onPaid} />
     </div>
   );

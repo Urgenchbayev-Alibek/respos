@@ -87,6 +87,7 @@ public partial class Order
         {
             item.ForceCancel(reason);
         }
+        Raise(new OrderCancelledDomainEvent(Id, BranchId));
     }
 
     /// <summary>Registers a payment (any non-terminal status); marks the order paid when fully covered.</summary>
@@ -123,6 +124,7 @@ public partial class Order
         }
 
         PaidAmount -= amount;
+        Raise(new OrderRefundedDomainEvent(Id, BranchId, amount));
     }
 
     public void MarkPaid(Guid? changedBy, DateTime utcNow)

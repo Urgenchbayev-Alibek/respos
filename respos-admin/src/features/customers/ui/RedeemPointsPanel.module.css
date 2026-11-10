@@ -1,0 +1,40 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
+}
+
+.meta {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.field {
+  flex: 1 1 140px;
+  margin: 0;
+}

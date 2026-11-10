@@ -1,0 +1,12 @@
+.badges {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-1, 4px);
+  align-items: center;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+}

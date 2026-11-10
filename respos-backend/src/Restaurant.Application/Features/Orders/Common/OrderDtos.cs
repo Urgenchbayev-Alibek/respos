@@ -1,3 +1,4 @@
+using Restaurant.Application.Features.Customers.Common;
 using Restaurant.Application.Features.Payments.Common;
 using Restaurant.Domain.Enums;
 
@@ -51,7 +52,9 @@ public sealed record OrderDto(
     DateTime OpenedAt,
     DateTime? ClosedAt,
     IReadOnlyList<PaymentDto> Payments,
-    IReadOnlyList<OrderHistoryDto> History);
+    IReadOnlyList<OrderHistoryDto> History,
+    OrderCustomerDto? Customer,
+    decimal LoyaltyDiscountAmount);
 
 /// <summary>Body item of <c>POST /orders</c> and <c>POST /orders/{id}/items</c>.</summary>
 public sealed record AddItemRequest(
