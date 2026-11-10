@@ -52,6 +52,7 @@ the DB commit and the push).
 | 3 (warm) | 75 | 23 ms | 262 ms | 374 ms (`POST /auth/login`) | 0 | 46 ms | 64 ms |
 | 4 (final code, fresh DB, cold API, right after the test suite) | 76 | 59 ms | 565 ms | 1241 ms (`POST /auth/login`) | 0 | 720 ms | 72 ms |
 | 5 (final code, warm) | 75 | 28 ms | 284 ms | 531 ms (`POST /platform/organizations`) | 0 | 60 ms | 35 ms |
+| 6 (final regression 2026-11-10 05:18, fresh DB, cold API) | 76 | 40 ms | 364 ms | 986 ms (`POST /auth/login`) | 0 | 420 ms | 52 ms |
 
 Targets: typical API request ≤ 2 s — **met** (max 1.24 s cold, ≤ 0.53 s warm); KDS event delivery ≤ 2 s — **met**
 (≤ 0.72 s cold, ≤ 0.07 s warm). Slowest calls are password hashing (`/auth/login`, `POST /users`,
@@ -100,3 +101,23 @@ restaurant's tablets behind one NAT reloading together, got 429 and were logged 
 topbar overflowed a 390 px phone; reports period presets wrapped and the chart `<figure>` overflowed its card; platform
 system page showed a 40-char git SHA, `0h 16m`, raw `ok`; stock movement column "Остаток" for the change and English
 consumption reason "Order #N". Screenshots: `docs/design/assets/screenshots/`.
+
+## Final regression — 2026-11-10 05:14–05:40 (fresh DB)
+
+After the latest changes (refresh grace window + frontend refresh retry, housekeeping job, prod pipeline/security
+headers, demo floor seeded as grid cells, units/i18n polish). `docker compose … down -v` → `up -d postgres`, API
+`dotnet run` (Development: migrate + demo seed), admin :5173 and landing :5174 dev servers, `.auth/` cleared.
+
+| Suite | Result |
+|---|---|
+| `scripts/e2e/e2e-smoke.mjs` | **18/18 steps ✔** — 76 REST calls, p50 40 ms, p95 364 ms, max 986 ms, 0 > 2 s; KDS 420 ms, OrderItemReady 52 ms |
+| `scripts/ui-smoke` (Playwright) | **26/26 passed** (2.2 min); 42 screens crawled, no console errors / failed requests / leaked keys / horizontal scroll |
+| Backend `dotnet build` / `dotnet test` | 0 warnings, 0 errors; unit 150/150, integration 114/114 |
+| respos-admin lint + typecheck + test + build | ✔; 33 files, 180/180 tests |
+| respos-landing lint + typecheck + test + build | ✔; 4 files, 27/27 tests |
+| `scripts/check-file-length.mjs` | ✔ 1016 files ≤ 500 lines |
+
+Floor plan from the fresh seed: per-area views place tiles by `posX/posY` grid cells (main hall 4 + 2, terrace 4 in
+one row), "All areas" flows in list order (cells overlap across areas, by design); no horizontal scroll at 1440 px
+(admin, waiter) and 390 px (waiter, 2-column flow). No regressions found — no code changes. Screenshots in
+`docs/design/assets/screenshots/` refreshed by this run.

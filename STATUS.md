@@ -17,4 +17,4 @@
 - ~04:50 — Playwright UI smoke vs real API: 26/26 (all roles, realtime KDS, payment, stock); 6 UI/backend bugs fixed. Production hardening merged (housekeeping job, forwarded headers/HSTS/security headers, fail-fast config, hub error logging).
 - ~05:10 — Refresh-token grace window (multi-tab), frontend refresh retry without logout, localized units/entity types, uz apostrophes. Docker image verified in Production mode (after repairing a Docker layer corrupted by the full C: drive).
 - Totals at this point: backend 150 unit + 114 integration; admin 180; landing 27; all builds/lints green; 1028 files ≤ 500 lines.
-- 05:15 — Final regression on a fresh DB (E2E + UI smoke) in progress. See `HANDOFF.md`.
+- ~05:45 — Final regression on a fresh DB: E2E 18/18, UI smoke 26/26, backend 150+114, admin 180, landing 27, file-length OK. MVP code complete. See `HANDOFF.md`, `User-Todo.md`.
