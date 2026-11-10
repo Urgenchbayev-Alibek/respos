@@ -7,6 +7,7 @@ import { localizedName, type MenuItemDto } from '@/entities/menu/menu.types';
 import { useOrder, useServeAllItems, useServeOrderItem } from '@/entities/order/order.queries';
 import { formatOrderNumber, isOrderOpen, type OrderType } from '@/entities/order/order.types';
 import { useTables } from '@/entities/table/table.queries';
+import { OrderGuestBar } from '@/features/customers/ui/OrderGuestBar';
 import { OrderActions } from '@/features/order-actions/ui/OrderActions';
 import { cartQuantity, cartReducer } from '@/features/waiter-order/model/cart';
 import { useSubmitOrder, type NewOrderDraft } from '@/features/waiter-order/model/use-submit-order';
@@ -133,6 +134,7 @@ export function WaiterOrderPage() {
           </div>
         )}
       </header>
+      {data && <OrderGuestBar order={data} />}
       <div className={styles.mobileTabs}>
         <Tabs
           ariaLabel={t('order.panel')}

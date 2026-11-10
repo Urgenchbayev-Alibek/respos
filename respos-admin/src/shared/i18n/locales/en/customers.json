@@ -1,0 +1,151 @@
+{
+  "title": "Guests",
+  "subtitle": "Guest base, segments and loyalty program",
+  "search": "Search by name or phone",
+  "empty": "No guests yet",
+  "badges": {
+    "vip": "VIP",
+    "birthdayToday": "Birthday today",
+    "birthdaySoon": "Birthday soon",
+    "points": "{{points}} points"
+  },
+  "fields": {
+    "phone": "Phone",
+    "name": "Name",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "tags": "Tags",
+    "notes": "Notes",
+    "marketingConsent": "Marketing consent"
+  },
+  "gender": {
+    "male": "Male",
+    "female": "Female"
+  },
+  "form": {
+    "createTitle": "New guest",
+    "editTitle": "Edit guest",
+    "phoneHint": "Uzbekistan number, e.g. +998 90 123 45 67",
+    "genderUnknown": "Not specified",
+    "tagsHint": "Comma-separated, e.g.: vip, family"
+  },
+  "toast": {
+    "created": "Guest added",
+    "updated": "Guest saved",
+    "deleted": "Guest deleted",
+    "deleteFailed": "Could not delete the guest",
+    "detachFailed": "Could not detach the guest"
+  },
+  "attach": {
+    "title": "Order guest",
+    "description": "Find a guest by phone or name",
+    "searchPlaceholder": "Phone or name",
+    "typeMore": "Type at least {{count}} characters",
+    "notFound": "Nobody found",
+    "create": "New guest",
+    "pick": "Select",
+    "pickLabel": "Select guest {{name}}"
+  },
+  "guestBar": {
+    "label": "Guest",
+    "change": "Change",
+    "detach": "Detach guest",
+    "none": "No guest selected",
+    "attach": "Attach guest"
+  },
+  "redeem": {
+    "title": "Guest points",
+    "balance": "Balance: {{points}}",
+    "max": "up to {{points}} can be redeemed",
+    "applied": "Paid with points: {{amount}}",
+    "cancel": "Cancel redemption",
+    "points": "Points to redeem",
+    "useMax": "Maximum",
+    "apply": "Redeem",
+    "unavailable": "Points cannot be redeemed right now",
+    "willEarn": "{{points}} points will be earned after payment"
+  },
+  "columns": {
+    "visits": "Visits",
+    "totalSpent": "Spent",
+    "averageCheck": "Average check",
+    "lastVisit": "Last visit",
+    "points": "Points"
+  },
+  "actions": {
+    "loyaltySettings": "Loyalty program",
+    "create": "Add guest",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "segments": {
+    "label": "Guest segments",
+    "all": "All",
+    "new": "New",
+    "regular": "Regular",
+    "sleeping": "Sleeping (>30 days)",
+    "birthday": "Birthday this week",
+    "vip": "VIP"
+  },
+  "detail": {
+    "back": "Back to guests",
+    "lifetime": "Earned {{earned}} · redeemed {{redeemed}}",
+    "profile": "Profile",
+    "yes": "Yes",
+    "no": "No",
+    "historyLabel": "Guest history",
+    "orders": "Orders",
+    "ledger": "Points"
+  },
+  "confirm": {
+    "deleteTitle": "Delete guest?",
+    "deleteMessage": "“{{name}}” will be deleted. Guests with orders or points cannot be deleted."
+  },
+  "orders": {
+    "number": "Number",
+    "openedAt": "Opened",
+    "branch": "Branch",
+    "status": "Status",
+    "pointsUsed": "By points",
+    "total": "Total",
+    "empty": "No orders yet"
+  },
+  "ledger": {
+    "date": "Date",
+    "type": "Operation",
+    "reason": "Reason",
+    "order": "Order",
+    "points": "Points",
+    "balance": "Balance",
+    "expiresAt": "Expires",
+    "empty": "No points operations yet",
+    "types": {
+      "earn": "Earned",
+      "redeem": "Redeemed",
+      "expire": "Expired",
+      "reverse": "Reversal"
+    },
+    "reasons": {
+      "order_paid": "Order paid",
+      "order_redeemed": "Paid with points",
+      "redemption_cancelled": "Redemption cancelled",
+      "order_cancelled": "Order cancelled",
+      "refund": "Refund",
+      "reconcile": "Amount adjustment",
+      "expiry": "Expired"
+    }
+  },
+  "loyalty": {
+    "title": "Loyalty program",
+    "subtitle": "1 point = 1 currency unit. Settings apply to all branches",
+    "enabled": "Program enabled",
+    "earnPercent": "Earn, % of paid amount",
+    "earnHint": "Points are earned after the order is fully paid",
+    "maxRedeemPercent": "Max paid by points, % of bill",
+    "maxRedeemHint": "Of the order amount after manual discount",
+    "minOrderAmount": "Minimum order amount",
+    "expiryDays": "Points lifetime, days",
+    "expiryHint": "Empty — points never expire",
+    "saved": "Settings saved"
+  }
+}

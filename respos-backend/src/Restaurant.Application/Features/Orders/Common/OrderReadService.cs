@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurant.Application.Abstractions.Context;
 using Restaurant.Application.Abstractions.Persistence;
 using Restaurant.Application.Common.Handlers;
+using Restaurant.Application.Features.Customers.Common;
 using Restaurant.Application.Features.Payments.Common;
 using Restaurant.Domain.Entities.Orders;
 using Restaurant.Domain.Enums;
@@ -10,7 +11,7 @@ namespace Restaurant.Application.Features.Orders.Common;
 
 /// <summary>Builds <see cref="OrderDto"/>s (items, payments, history, table/waiter names) for the current branch.</summary>
 [ScopedService]
-public sealed class OrderReadService(IApplicationDbContext db, ITenantContext tenant, UserNameLookup users)
+public sealed class OrderReadService(IApplicationDbContext db, ITenantContext tenant, UserNameLookup users, CustomerReadService customers)
 {
     public static readonly OrderStatus[] ClosedStatuses = [OrderStatus.Paid, OrderStatus.Cancelled];
 
@@ -53,16 +54,21 @@ public sealed class OrderReadService(IApplicationDbContext db, ITenantContext te
                 .Concat(payments.Select(p => p.CreatedBy)),
             ct);
 
+        var guests = await customers.GetSummariesAsync(orders.Select(o => o.CustomerId), ct);
         var paymentsByOrder = payments.ToLookup(p => p.OrderId);
         var byId = orders.ToDictionary(o => o.Id);
         return orderIds
             .Where(byId.ContainsKey)
-            .Select(id => Map(byId[id], tables, names, paymentsByOrder[id].Select(p => PaymentDto.From(p, names, byId[id].Number)).ToList()))
+            .Select(id => Map(byId[id], tables, names, paymentsByOrder[id].Select(p => PaymentDto.From(p, names, byId[id].Number)).ToList(), guests))
             .ToList();
     }
 
     private static OrderDto Map(
-        Order o, IReadOnlyDictionary<Guid, string> tables, IReadOnlyDictionary<Guid, string> names, IReadOnlyList<PaymentDto> payments) => new(
+        Order o,
+        IReadOnlyDictionary<Guid, string> tables,
+        IReadOnlyDictionary<Guid, string> names,
+        IReadOnlyList<PaymentDto> payments,
+        IReadOnlyDictionary<Guid, OrderCustomerDto> guests) => new(
         o.Id, o.Number, o.BusinessDate, o.Type, o.Status, o.TableId,
         o.TableId is { } tableId ? tables.GetValueOrDefault(tableId) : null,
         o.WaiterId, names.GetValueOrDefault(o.WaiterId), o.GuestCount,
@@ -71,7 +77,9 @@ public sealed class OrderReadService(IApplicationDbContext db, ITenantContext te
         o.PaidAmount, o.RemainingAmount, o.Comment, o.CancelReason, o.OpenedAt, o.ClosedAt, payments,
         o.History.OrderBy(h => h.ChangedAt)
             .Select(h => new OrderHistoryDto(h.FromStatus, h.ToStatus, h.ChangedBy is { } by ? names.GetValueOrDefault(by) : null, h.ChangedAt, h.Reason))
-            .ToList());
+            .ToList(),
+        o.CustomerId is { } customerId ? guests.GetValueOrDefault(customerId) : null,
+        o.LoyaltyDiscountAmount);
 
     public static OrderItemDto MapItem(OrderItem i) => new(
         i.Id, i.MenuItemId, i.VariantId, i.NameSnapshot, i.VariantNameSnapshot, i.UnitPrice, i.Quantity,

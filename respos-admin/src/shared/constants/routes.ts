@@ -32,6 +32,9 @@ export const ROUTES = {
     notifications: '/admin/notifications',
     auditLogs: '/admin/audit-logs',
     settings: '/admin/settings',
+    customers: '/admin/customers',
+    customerDetail: '/admin/customers/:customerId',
+    loyalty: '/admin/customers/loyalty',
   },
   waiter: {
     root: '/waiter',

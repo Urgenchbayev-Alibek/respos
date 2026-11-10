@@ -225,5 +225,25 @@
     "not_found": "Table not found.",
     "number_taken": "A table with this number already exists.",
     "unavailable": "The table is unavailable."
+  },
+  "customer": {
+    "not_found": "Guest not found",
+    "invalid_phone": "Enter an Uzbekistan number: +998XXXXXXXXX",
+    "phone_taken": "A guest with this phone already exists",
+    "name_required": "Enter the guest name",
+    "invalid_tags": "Too many tags or a tag is too long",
+    "has_history": "The guest has orders or points history and cannot be deleted"
+  },
+  "loyalty": {
+    "invalid_settings": "Loyalty settings are invalid",
+    "disabled": "The loyalty program is disabled",
+    "no_customer": "Attach a guest to the order first",
+    "insufficient_points": "The guest does not have enough points",
+    "exceeds_limit": "Exceeds the share of the bill payable by points",
+    "below_min_order": "The order is below the loyalty minimum amount",
+    "invalid_points": "Points must be a positive whole number",
+    "already_redeemed": "Points are already redeemed — cancel the redemption first",
+    "redemption_active": "Cancel the points redemption to change the guest",
+    "nothing_redeemed": "No points were redeemed on this order"
   }
 }

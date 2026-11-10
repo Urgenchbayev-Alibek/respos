@@ -1,0 +1,33 @@
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.profile dt {
+  color: var(--color-text-muted);
+}
+
+.profile dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .profile {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .profile dd {
+    margin-bottom: var(--space-2);
+  }
+}

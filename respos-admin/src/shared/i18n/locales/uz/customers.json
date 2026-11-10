@@ -1,0 +1,151 @@
+{
+  "title": "Mehmonlar",
+  "subtitle": "Mehmonlar bazasi, segmentlar va sodiqlik dasturi",
+  "search": "Ism yoki telefon boʻyicha qidirish",
+  "empty": "Hozircha mehmonlar yoʻq",
+  "badges": {
+    "vip": "VIP",
+    "birthdayToday": "Bugun tugʻilgan kun",
+    "birthdaySoon": "Tez orada tugʻilgan kun",
+    "points": "{{points}} bonus"
+  },
+  "fields": {
+    "phone": "Telefon",
+    "name": "Ism",
+    "birthday": "Tugʻilgan kun",
+    "gender": "Jinsi",
+    "tags": "Teglar",
+    "notes": "Izohlar",
+    "marketingConsent": "Xabarnomalarga rozilik"
+  },
+  "gender": {
+    "male": "Erkak",
+    "female": "Ayol"
+  },
+  "form": {
+    "createTitle": "Yangi mehmon",
+    "editTitle": "Mehmonni tahrirlash",
+    "phoneHint": "Oʻzbekiston raqami, masalan +998 90 123 45 67",
+    "genderUnknown": "Koʻrsatilmagan",
+    "tagsHint": "Vergul bilan, masalan: vip, oila"
+  },
+  "toast": {
+    "created": "Mehmon qoʻshildi",
+    "updated": "Mehmon saqlandi",
+    "deleted": "Mehmon oʻchirildi",
+    "deleteFailed": "Mehmonni oʻchirib boʻlmadi",
+    "detachFailed": "Mehmonni ajratib boʻlmadi"
+  },
+  "attach": {
+    "title": "Buyurtma mehmoni",
+    "description": "Mehmonni telefon yoki ism boʻyicha toping",
+    "searchPlaceholder": "Telefon yoki ism",
+    "typeMore": "Kamida {{count}} ta belgi kiriting",
+    "notFound": "Hech kim topilmadi",
+    "create": "Yangi mehmon",
+    "pick": "Tanlash",
+    "pickLabel": "{{name}} mehmonini tanlash"
+  },
+  "guestBar": {
+    "label": "Mehmon",
+    "change": "Almashtirish",
+    "detach": "Mehmonni ajratish",
+    "none": "Mehmon tanlanmagan",
+    "attach": "Mehmonni biriktirish"
+  },
+  "redeem": {
+    "title": "Mehmon bonuslari",
+    "balance": "Balans: {{points}}",
+    "max": "{{points}} gacha yechish mumkin",
+    "applied": "Bonus bilan toʻlandi: {{amount}}",
+    "cancel": "Yechishni bekor qilish",
+    "points": "Yechiladigan bonus",
+    "useMax": "Maksimum",
+    "apply": "Yechish",
+    "unavailable": "Hozir bonus yechib boʻlmaydi",
+    "willEarn": "Toʻlovdan keyin {{points}} bonus qoʻshiladi"
+  },
+  "columns": {
+    "visits": "Tashriflar",
+    "totalSpent": "Sarflangan",
+    "averageCheck": "Oʻrtacha chek",
+    "lastVisit": "Oxirgi tashrif",
+    "points": "Bonuslar"
+  },
+  "actions": {
+    "loyaltySettings": "Sodiqlik dasturi",
+    "create": "Mehmon qoʻshish",
+    "edit": "Tahrirlash",
+    "delete": "Oʻchirish"
+  },
+  "segments": {
+    "label": "Mehmon segmentlari",
+    "all": "Barchasi",
+    "new": "Yangilar",
+    "regular": "Doimiylar",
+    "sleeping": "Uyquda (>30 kun)",
+    "birthday": "Shu hafta tugʻilgan kun",
+    "vip": "VIP"
+  },
+  "detail": {
+    "back": "Mehmonlar roʻyxatiga",
+    "lifetime": "Qoʻshilgan {{earned}} · yechilgan {{redeemed}}",
+    "profile": "Profil",
+    "yes": "Ha",
+    "no": "Yoʻq",
+    "historyLabel": "Mehmon tarixi",
+    "orders": "Buyurtmalar",
+    "ledger": "Bonuslar"
+  },
+  "confirm": {
+    "deleteTitle": "Mehmonni oʻchirasizmi?",
+    "deleteMessage": "«{{name}}» oʻchiriladi. Buyurtma yoki bonuslari bor mehmonni oʻchirib boʻlmaydi."
+  },
+  "orders": {
+    "number": "Raqam",
+    "openedAt": "Ochilgan",
+    "branch": "Filial",
+    "status": "Holat",
+    "pointsUsed": "Bonus bilan",
+    "total": "Summa",
+    "empty": "Hozircha buyurtmalar yoʻq"
+  },
+  "ledger": {
+    "date": "Sana",
+    "type": "Amal",
+    "reason": "Sabab",
+    "order": "Buyurtma",
+    "points": "Bonuslar",
+    "balance": "Balans",
+    "expiresAt": "Kuyadi",
+    "empty": "Hozircha bonus amallari yoʻq",
+    "types": {
+      "earn": "Qoʻshish",
+      "redeem": "Yechish",
+      "expire": "Kuyish",
+      "reverse": "Storno"
+    },
+    "reasons": {
+      "order_paid": "Buyurtma toʻlovi",
+      "order_redeemed": "Bonus bilan toʻlov",
+      "redemption_cancelled": "Yechish bekor qilindi",
+      "order_cancelled": "Buyurtma bekor qilindi",
+      "refund": "Qaytarish",
+      "reconcile": "Summa tuzatildi",
+      "expiry": "Muddati tugadi"
+    }
+  },
+  "loyalty": {
+    "title": "Sodiqlik dasturi",
+    "subtitle": "1 bonus = valyutaning 1 birligi. Sozlamalar barcha filiallarga amal qiladi",
+    "enabled": "Dastur yoqilgan",
+    "earnPercent": "Qoʻshish, toʻlangan summadan %",
+    "earnHint": "Bonuslar buyurtma toʻliq toʻlangandan keyin qoʻshiladi",
+    "maxRedeemPercent": "Bonus bilan toʻlash maksimumi, hisobdan %",
+    "maxRedeemHint": "Qoʻlda chegirmadan keyingi summadan",
+    "minOrderAmount": "Buyurtmaning minimal summasi",
+    "expiryDays": "Bonuslar muddati, kun",
+    "expiryHint": "Boʻsh — bonuslar kuymaydi",
+    "saved": "Sozlamalar saqlandi"
+  }
+}

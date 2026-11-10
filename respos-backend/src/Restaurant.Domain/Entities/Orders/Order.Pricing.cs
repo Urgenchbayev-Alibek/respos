@@ -45,7 +45,15 @@ public partial class Order
         }
     }
 
+    /// <summary>Manual discount + loyalty points discount (F1), ≤ subtotal. The points part is clamped to what is left.</summary>
     private decimal CalculateDiscount(decimal subtotal)
+    {
+        var manual = ManualDiscount(subtotal);
+        LoyaltyDiscountAmount = Math.Min(LoyaltyDiscountAmount, subtotal - manual);
+        return manual + LoyaltyDiscountAmount;
+    }
+
+    private decimal ManualDiscount(decimal subtotal)
     {
         var discount = DiscountType switch
         {

@@ -225,5 +225,25 @@
     "not_found": "Stol topilmadi.",
     "number_taken": "Bunday raqamli stol allaqachon mavjud.",
     "unavailable": "Stol mavjud emas."
+  },
+  "customer": {
+    "not_found": "Mehmon topilmadi",
+    "invalid_phone": "Oʻzbekiston raqamini kiriting: +998XXXXXXXXX",
+    "phone_taken": "Bu telefon raqamli mehmon allaqachon bor",
+    "name_required": "Mehmon ismini kiriting",
+    "invalid_tags": "Teglar juda koʻp yoki teg juda uzun",
+    "has_history": "Mehmonning buyurtmalari yoki bonuslari bor — oʻchirib boʻlmaydi"
+  },
+  "loyalty": {
+    "invalid_settings": "Sodiqlik dasturi sozlamalari notoʻgʻri",
+    "disabled": "Sodiqlik dasturi oʻchirilgan",
+    "no_customer": "Avval buyurtmaga mehmonni biriktiring",
+    "insufficient_points": "Mehmonda bonuslar yetarli emas",
+    "exceeds_limit": "Bonus bilan toʻlash mumkin boʻlgan ulush oshib ketdi",
+    "below_min_order": "Buyurtma summasi sodiqlik dasturi uchun minimaldan kam",
+    "invalid_points": "Bonuslar soni musbat butun son boʻlishi kerak",
+    "already_redeemed": "Bonuslar allaqachon yechilgan — avval bekor qiling",
+    "redemption_active": "Mehmonni almashtirish uchun bonus yechishni bekor qiling",
+    "nothing_redeemed": "Bu buyurtmada bonus yechilmagan"
   }
 }
