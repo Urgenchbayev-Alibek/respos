@@ -42,7 +42,8 @@
     "plans": "Тарифы",
     "featureFlags": "Feature flags",
     "system": "Система",
-    "demoRequests": "Заявки на демо"
+    "demoRequests": "Заявки на демо",
+    "integrationErrors": "Ошибки интеграций"
   },
   "workspaces": {
     "admin": "Админ-панель",

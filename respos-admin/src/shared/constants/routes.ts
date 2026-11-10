@@ -32,6 +32,8 @@ export const ROUTES = {
     notifications: '/admin/notifications',
     auditLogs: '/admin/audit-logs',
     settings: '/admin/settings',
+    integrations: '/admin/integrations',
+    integrationsOutbound: '/admin/integrations/outbound',
   },
   waiter: {
     root: '/waiter',
@@ -59,6 +61,7 @@ export const ROUTES = {
     featureFlags: '/platform/feature-flags',
     system: '/platform/system',
     demoRequests: '/platform/demo-requests',
+    integrationErrors: '/platform/integration-errors',
   },
 } as const;
 

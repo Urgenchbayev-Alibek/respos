@@ -10,6 +10,7 @@ using Restaurant.Application.Common.Handlers;
 using Restaurant.Application.Common.Options;
 using Restaurant.Application.Common.Saas;
 using Restaurant.Application.Features.Auth.Common;
+using Restaurant.Application.Features.Integrations.Email;
 using Restaurant.Application.Features.Organizations.Common;
 using Restaurant.Application.Features.Users.Common;
 using Restaurant.Domain.Common;
@@ -78,7 +79,8 @@ public sealed class InviteUserHandler(
         await db.SaveChangesAsync(cancellationToken);
 
         var link = $"{frontendOptions.Value.AppUrl.TrimEnd('/')}/accept-invitation?token={Uri.EscapeDataString(rawToken)}";
-        await email.SendAsync(new EmailMessage(normalized, "Приглашение в RestaurantOS", $"Accept the invitation: {link}", true), cancellationToken);
+        var organizationName = await db.Organizations.Where(o => o.Id == orgId).Select(o => o.Name).FirstOrDefaultAsync(cancellationToken) ?? string.Empty;
+        await email.SendAsync(EmailTemplates.Invitation(normalized, link, organizationName, user.PreferredLanguage), cancellationToken);
         return new InvitationCreatedDto(invitation.Id, link);
     }
 

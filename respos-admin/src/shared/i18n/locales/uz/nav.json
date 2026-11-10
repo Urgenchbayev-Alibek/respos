@@ -42,7 +42,8 @@
     "plans": "Tariflar",
     "featureFlags": "Feature flags",
     "system": "Tizim",
-    "demoRequests": "Demo arizalar"
+    "demoRequests": "Demo arizalar",
+    "integrationErrors": "Integratsiya xatolari"
   },
   "workspaces": {
     "admin": "Boshqaruv paneli",

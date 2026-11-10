@@ -10,6 +10,7 @@ using Restaurant.Application.Common.Handlers;
 using Restaurant.Application.Common.Options;
 using Restaurant.Application.Common.Validation;
 using Restaurant.Application.Features.Auth.Common;
+using Restaurant.Application.Features.Integrations.Email;
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Entities.Identity;
 using Restaurant.Domain.Enums;
@@ -55,8 +56,7 @@ public sealed class ForgotPasswordHandler(
         await db.SaveChangesAsync(cancellationToken);
 
         var link = $"{frontend.Value.AppUrl.TrimEnd('/')}/reset-password?token={Uri.EscapeDataString(raw)}";
-        await email.SendAsync(new EmailMessage(user.Email, "Восстановление пароля / Parolni tiklash",
-            $"Ссылка для сброса пароля: {link}", ContainsSecret: true), cancellationToken);
+        await email.SendAsync(EmailTemplates.PasswordReset(user.Email, link, user.PreferredLanguage), cancellationToken);
         return Unit.Value;
     }
 }

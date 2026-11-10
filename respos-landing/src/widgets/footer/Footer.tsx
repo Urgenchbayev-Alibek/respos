@@ -17,6 +17,7 @@ const COLUMNS: FooterColumn[] = [
       { to: ROUTES.features, labelKey: 'nav.features' },
       { to: ROUTES.pricing, labelKey: 'nav.pricing' },
       { to: ROUTES.demo, labelKey: 'nav.demo' },
+      { to: ROUTES.booking, labelKey: 'nav.booking' },
     ],
   },
   {

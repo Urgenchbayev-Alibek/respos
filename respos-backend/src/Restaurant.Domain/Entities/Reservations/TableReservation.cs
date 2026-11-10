@@ -1,5 +1,6 @@
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Enums;
+using Restaurant.Domain.Events;
 using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Domain.Entities.Reservations;
@@ -38,7 +39,11 @@ public class TableReservation : AuditableEntity, IBranchScoped
         }
     }
 
-    public void Confirm() => TransitionTo(ReservationStatus.Confirmed);
+    public void Confirm()
+    {
+        TransitionTo(ReservationStatus.Confirmed);
+        Raise(new ReservationConfirmedDomainEvent(Id, OrganizationId, BranchId));
+    }
 
     public void Seat()
     {

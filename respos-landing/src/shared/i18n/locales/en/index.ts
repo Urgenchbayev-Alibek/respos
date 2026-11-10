@@ -11,6 +11,7 @@ export const en = {
     faq: 'FAQ',
     contacts: 'Contacts',
     demo: 'Request a demo',
+    booking: 'Book a table',
     login: 'Sign in',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',

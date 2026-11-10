@@ -1,5 +1,6 @@
 using Restaurant.Domain.Common;
 using Restaurant.Domain.Enums;
+using Restaurant.Domain.Events;
 using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Domain.Entities.Payments;
@@ -46,5 +47,6 @@ public partial class CashShift
         ClosedAt = utcNow;
         Comment = comment;
         Status = CashShiftStatus.Closed;
+        Raise(new CashShiftClosedDomainEvent(Id, OrganizationId, BranchId, ExpectedCashAmount.Value, ActualCashAmount.Value, Difference.Value));
     }
 }
