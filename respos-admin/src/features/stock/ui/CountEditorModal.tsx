@@ -13,6 +13,7 @@ import { parseDecimal } from '@/shared/lib/quantity';
 import { V } from '@/shared/lib/validation';
 import { Alert, Button, ConfirmDialog, ErrorState, Input, Modal, PageLoader, StatusBadge, useToast } from '@/shared/ui';
 import styles from './stock.module.css';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 const countedSchema = z
   .string()
@@ -133,7 +134,7 @@ export function CountEditorModal({ countId, onClose }: { countId: string | null;
                     return (
                       <tr key={field.id}>
                         <td>{line.ingredientName}</td>
-                        <td className={styles.num}>{format.number(line.expectedQty)} {line.baseUnitCode}</td>
+                        <td className={styles.num}>{format.number(line.expectedQty)} {formatUnit(line.baseUnitCode)}</td>
                         <td>
                           <Input
                             className={styles.lineInput}

@@ -13,7 +13,7 @@
   },
   "states": {
     "loading": "Yuklanmoqda…",
-    "errorTitle": "Maʼlumotlarni yuklab boʻlmadi",
+    "errorTitle": "Ma’lumotlarni yuklab boʻlmadi",
     "correlationId": "Yordam uchun kod: {{id}}",
     "emptyTitle": "Hozircha boʻsh"
   },
@@ -36,5 +36,12 @@
     "ru": "Русский",
     "uz": "Oʻzbekcha",
     "en": "English"
+  },
+  "units": {
+    "kg": "kg",
+    "g": "g",
+    "l": "l",
+    "ml": "ml",
+    "pcs": "dona"
   }
 }

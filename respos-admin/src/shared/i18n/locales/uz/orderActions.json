@@ -11,20 +11,20 @@
     },
     "percent": "Foiz",
     "amount": "Summa",
-    "submit": "Qoʻllash",
-    "applied": "Chegirma qoʻllandi",
+    "submit": "Qo’llash",
+    "applied": "Chegirma qo’llandi",
     "removed": "Chegirma olib tashlandi"
   },
   "transfer": {
     "action": "Stolni almashtirish",
-    "title": "{{number}} buyurtmani koʻchirish",
-    "description": "Hozir {{number}}-stolda. Eski stol avtomatik boʻshatiladi.",
+    "title": "{{number}} buyurtmani ko’chirish",
+    "description": "Hozir {{number}}-stolda. Eski stol avtomatik bo’shatiladi.",
     "table": "Yangi stol",
     "placeholder": "Stolni tanlang…",
-    "option": "{{number}}-stol · {{area}} · {{capacity}} oʻrin",
-    "noTables": "Boʻsh stollar yoʻq",
-    "submit": "Koʻchirish",
-    "done": "Buyurtma {{number}}-stolga koʻchirildi"
+    "option": "{{number}}-stol · {{area}} · {{capacity}} o’rin",
+    "noTables": "Bo’sh stollar yo’q",
+    "submit": "Ko’chirish",
+    "done": "Buyurtma {{number}}-stolga ko’chirildi"
   },
   "cancelItem": {
     "action": "Pozitsiyani bekor qilish: {{name}}",
@@ -33,6 +33,6 @@
     "messageSent": "Pozitsiya oshxonada — uning cheki bekor qilinadi. Sababini kiriting, u audit jurnaliga yoziladi.",
     "confirm": "Pozitsiyani bekor qilish",
     "done": "Pozitsiya bekor qilindi",
-    "failed": "Pozitsiyani bekor qilib boʻlmadi"
+    "failed": "Pozitsiyani bekor qilib bo’lmadi"
   }
 }

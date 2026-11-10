@@ -21,6 +21,7 @@ import styles from '@/features/reports/ui/reports.module.css';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { StatusBadge, type DataTableColumn } from '@/shared/ui';
 import { TableReport } from './TableReport';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 type Props = { period: ReportPeriod };
 const num = (value: string) => <span className={styles.num}>{value}</span>;
@@ -70,8 +71,8 @@ function useStockColumns(): DataTableColumn<StockBalanceRowDto>[] {
   const format = useFormatters();
   return [
     { key: 'name', header: t('columns.ingredient'), cell: (row) => row.name },
-    { key: 'qty', header: t('columns.balance'), align: 'right', cell: (row) => num(`${format.number(row.quantity)} ${row.unitCode}`) },
-    { key: 'min', header: t('columns.minQuantity'), align: 'right', cell: (row) => num(`${format.number(row.minQuantity)} ${row.unitCode}`) },
+    { key: 'qty', header: t('columns.balance'), align: 'right', cell: (row) => num(`${format.number(row.quantity)} ${formatUnit(row.unitCode)}`) },
+    { key: 'min', header: t('columns.minQuantity'), align: 'right', cell: (row) => num(`${format.number(row.minQuantity)} ${formatUnit(row.unitCode)}`) },
     { key: 'value', header: t('columns.stockValue'), align: 'right', hideOnMobile: true, cell: (row) => num(format.money(row.stockValue)) },
     {
       key: 'status',
@@ -108,7 +109,7 @@ export function MovementTotalsReport({ period }: Props) {
   const columns: DataTableColumn<MovementTotalDto>[] = [
     { key: 'type', header: t('columns.type'), cell: (row) => t(`stock:movementType.${row.type}`, { defaultValue: row.type }) },
     { key: 'ingredient', header: t('columns.ingredient'), cell: (row) => row.ingredientName },
-    { key: 'qty', header: t('columns.quantity'), align: 'right', cell: (row) => num(`${format.number(row.quantity)} ${row.unitCode}`) },
+    { key: 'qty', header: t('columns.quantity'), align: 'right', cell: (row) => num(`${format.number(row.quantity)} ${formatUnit(row.unitCode)}`) },
     { key: 'count', header: t('columns.count'), align: 'right', hideOnMobile: true, cell: (row) => num(format.number(row.count, 0)) },
   ];
   return (

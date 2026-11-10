@@ -4,6 +4,7 @@ import { useSystemEvents, useSystemStatus } from '@/entities/platform/platform.q
 import type { SystemEventDto } from '@/entities/platform/platform.types';
 import styles from '@/features/platform/ui/platform.module.css';
 import { useFormatters } from '@/shared/hooks/use-formatters';
+import { formatEntityType } from '@/shared/lib/format-entity-type';
 import { DEFAULT_PAGE_SIZE } from '@/shared/types/pagination';
 import { Card, DataTable, ErrorState, PageHeader, StatCard, StatusBadge, type DataTableColumn } from '@/shared/ui';
 
@@ -44,7 +45,7 @@ export function SystemPage() {
     { key: 'action', header: t('columns.action'), cell: (row) => <span className={styles.mono}>{row.action}</span> },
     { key: 'org', header: t('columns.organization'), hideOnMobile: true, cell: (row) => <span className={styles.mono}>{row.organizationId?.slice(0, 8) ?? '—'}</span> },
     { key: 'user', header: t('columns.user'), hideOnMobile: true, cell: (row) => row.userName ?? '—' },
-    { key: 'entity', header: t('columns.entity'), hideOnMobile: true, cell: (row) => [row.entityType, row.entityId?.slice(0, 8)].filter(Boolean).join(' ') || '—' },
+    { key: 'entity', header: t('columns.entity'), hideOnMobile: true, cell: (row) => [formatEntityType(row.entityType), row.entityId?.slice(0, 8)].filter(Boolean).join(' ') || '—' },
     { key: 'correlation', header: t('columns.correlationId'), hideOnMobile: true, cell: (row) => <span className={styles.mono}>{row.correlationId?.slice(0, 8) ?? '—'}</span> },
   ];
 

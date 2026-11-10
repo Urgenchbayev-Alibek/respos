@@ -23,6 +23,7 @@ import {
   useToast,
   type DataTableColumn,
 } from '@/shared/ui';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 /** Purchase document: lines with received progress; submit / cancel / receive by status. */
 export function PurchaseDetailPage() {
@@ -74,14 +75,14 @@ export function PurchaseDetailPage() {
 
   const columns: DataTableColumn<PurchaseItemDto>[] = [
     { key: 'ingredient', header: t('columns.ingredient'), cell: (row) => row.ingredientName },
-    { key: 'ordered', header: t('columns.ordered'), align: 'right', cell: (row) => <span className={styles.num}>{format.number(row.quantity)} {row.unitCode}</span> },
+    { key: 'ordered', header: t('columns.ordered'), align: 'right', cell: (row) => <span className={styles.num}>{format.number(row.quantity)} {formatUnit(row.unitCode)}</span> },
     {
       key: 'received',
       header: t('columns.received'),
       align: 'right',
       cell: (row) => (
         <span className={row.receivedQuantity > 0 && row.receivedQuantity < row.quantity ? styles.low : styles.num}>
-          {format.number(row.receivedQuantity)} {row.unitCode}
+          {format.number(row.receivedQuantity)} {formatUnit(row.unitCode)}
         </span>
       ),
     },

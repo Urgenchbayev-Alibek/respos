@@ -10,7 +10,8 @@
     "tax": "Soliq",
     "total": "Jami",
     "paid": "Toʻlangan",
-    "remaining": "Toʻlanishi kerak"
+    "remaining": "Toʻlanishi kerak",
+    "settled": "Toʻlangan"
   },
   "noItems": "Hozircha pozitsiyalar yoʻq",
   "sentAt": "{{time}} da yuborilgan",

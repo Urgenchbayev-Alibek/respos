@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Restaurant.Application;
+using Restaurant.Application.Abstractions.Clock;
 using Testcontainers.PostgreSql;
 
 namespace Restaurant.IntegrationTests.Infrastructure;
@@ -22,6 +24,9 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         .WithUsername("respos")
         .WithPassword("respos_test")
         .Build();
+
+    /// <summary>The host's <see cref="IClock"/> (system time + adjustable offset).</summary>
+    public TestClock Clock { get; } = new();
 
     public async Task InitializeAsync()
     {
@@ -54,6 +59,8 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         {
             services.AddControllers().AddApplicationPart(typeof(ApiFactory).Assembly);
             services.AddDomainEventHandlersFromAssembly(typeof(ApiFactory).Assembly);
+            services.RemoveAll<IClock>();
+            services.AddSingleton<IClock>(Clock);
         });
     }
 }

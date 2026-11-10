@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Restaurant.Application.Abstractions.Audit;
 using Restaurant.Application.Abstractions.Clock;
 using Restaurant.Application.Abstractions.Persistence;
@@ -14,15 +15,22 @@ namespace Restaurant.Application.Features.Auth.Refresh;
 public sealed record RefreshCommand(string? RefreshToken);
 
 /// <summary>
-/// Rotates the refresh token. Presenting an already revoked token = reuse → the whole family is revoked (audited).
-/// The session is refused when the user or the membership is no longer active.
+/// Rotates the refresh token. Presenting an already revoked token = reuse → the whole family is revoked (audited),
+/// except inside the grace window (<see cref="AuthOptions.RefreshReuseGraceSeconds"/>, ADR-0003): a token rotated
+/// moments ago whose successor is still active is a benign race (two tabs / a retry) → the current chain tip is
+/// rotated instead. Rotation is atomic (conditional UPDATE … WHERE revoked_at IS NULL), so two simultaneous
+/// refreshes of one token never fork the family. The session is refused when the user or membership is inactive.
 /// </summary>
 public sealed class RefreshHandler(
     IApplicationDbContext db,
     SessionIssuer sessions,
     IAuditLogger audit,
-    IClock clock) : IHandler<RefreshCommand, AuthSession>
+    IClock clock,
+    IOptions<AuthOptions> options) : IHandler<RefreshCommand, AuthSession>
 {
+    /// <summary>Bound on grace hops / lost rotation races per request (N tabs refreshing at once).</summary>
+    private const int MaxAttempts = 5;
+
     public async Task<Result<AuthSession>> HandleAsync(RefreshCommand request, CancellationToken cancellationToken)
     {
         var now = clock.UtcNow;
@@ -32,35 +40,95 @@ public sealed class RefreshHandler(
             return AuthErrors.InvalidRefreshToken;
         }
 
-        if (token.IsRevoked)
+        for (var attempt = 0; attempt < MaxAttempts; attempt++)
         {
-            await sessions.RevokeFamilyAsync(token.FamilyId, cancellationToken);
-            audit.Log(new AuditEntry("auth.refresh_token_reused", nameof(RefreshToken), token.FamilyId.ToString())
+            if (token.IsRevoked)
             {
-                OrganizationId = token.OrganizationId,
-                UserId = token.UserId,
-            });
-            await db.SaveChangesAsync(cancellationToken);
-            return AuthErrors.RefreshTokenReused;
+                var successor = await FindGraceSuccessorAsync(token, now, cancellationToken);
+                if (successor is null)
+                {
+                    return await RevokeFamilyAsync(token, cancellationToken);
+                }
+
+                token = successor;
+                continue;
+            }
+
+            if (!token.IsActive(now))
+            {
+                return AuthErrors.SessionExpired;
+            }
+
+            var user = await db.Users.FirstAsync(u => u.Id == token.UserId, cancellationToken);
+            if (user.Status != UserStatus.Active || !await IsSessionOrganizationValidAsync(user, token, cancellationToken))
+            {
+                await RevokeIfActiveAsync(token.Id, null, now, cancellationToken);
+                return AuthErrors.InvalidRefreshToken;
+            }
+
+            var session = await TryRotateAsync(user, token, now, cancellationToken);
+            if (session is not null)
+            {
+                return session;
+            }
+
+            // Lost the race: a concurrent request rotated this token first → re-read it (now revoked, with a successor).
+            token = await db.RefreshTokens.AsNoTracking().FirstAsync(t => t.Id == token.Id, cancellationToken);
         }
 
-        if (!token.IsActive(now))
+        return AuthErrors.InvalidRefreshToken;
+    }
+
+    /// <summary>
+    /// Issues the replacement and claims <paramref name="token"/> in one transaction. The conditional UPDATE takes the
+    /// row lock; a concurrent claimer blocks, then matches 0 rows → returns null (the caller follows the successor).
+    /// </summary>
+    private Task<AuthSession?> TryRotateAsync(User user, RefreshToken token, DateTime now, CancellationToken cancellationToken) =>
+        db.ExecuteInTransactionAsync<AuthSession?>(async ct =>
         {
-            return AuthErrors.SessionExpired;
-        }
+            var (session, replacement) = await sessions.IssueWithTokenAsync(user, token.OrganizationId, token.FamilyId, ct);
+            if (await RevokeIfActiveAsync(token.Id, replacement.Id, now, ct) == 0)
+            {
+                db.RefreshTokens.Remove(replacement); // Added → Detached: nothing is inserted
+                return null;
+            }
 
-        var user = await db.Users.FirstAsync(u => u.Id == token.UserId, cancellationToken);
-        if (user.Status != UserStatus.Active || !await IsSessionOrganizationValidAsync(user, token, cancellationToken))
+            await db.SaveChangesAsync(ct);
+            return session;
+        }, cancellationToken);
+
+    private Task<int> RevokeIfActiveAsync(Guid tokenId, Guid? replacedBy, DateTime now, CancellationToken ct) =>
+        db.RefreshTokens
+            .Where(t => t.Id == tokenId && t.RevokedAt == null && t.ReplacedByTokenId == null)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(t => t.RevokedAt, now)
+                .SetProperty(t => t.ReplacedByTokenId, replacedBy), ct);
+
+    /// <summary>The successor of a token rotated less than the grace window ago, or null (→ treat as reuse).</summary>
+    private async Task<RefreshToken?> FindGraceSuccessorAsync(RefreshToken token, DateTime now, CancellationToken ct)
+    {
+        var grace = TimeSpan.FromSeconds(Math.Max(0, options.Value.RefreshReuseGraceSeconds));
+        if (token.ReplacedByTokenId is not { } successorId || token.RevokedAt is not { } rotatedAt || rotatedAt <= now - grace)
         {
-            token.Revoke(now);
-            await db.SaveChangesAsync(cancellationToken);
-            return AuthErrors.InvalidRefreshToken;
+            return null;
         }
 
-        var (session, replacement) = await sessions.IssueWithTokenAsync(user, token.OrganizationId, token.FamilyId, cancellationToken);
-        token.Revoke(now, replacement.Id);
-        await db.SaveChangesAsync(cancellationToken);
-        return session;
+        var successor = await db.RefreshTokens.AsNoTracking().FirstOrDefaultAsync(t => t.Id == successorId, ct);
+        return successor is not null && successor.FamilyId == token.FamilyId && successor.UserId == token.UserId
+            ? successor
+            : null;
+    }
+
+    private async Task<Result<AuthSession>> RevokeFamilyAsync(RefreshToken token, CancellationToken ct)
+    {
+        await sessions.RevokeFamilyAsync(token.FamilyId, ct);
+        audit.Log(new AuditEntry("auth.refresh_token_reused", nameof(RefreshToken), token.FamilyId.ToString())
+        {
+            OrganizationId = token.OrganizationId,
+            UserId = token.UserId,
+        });
+        await db.SaveChangesAsync(ct);
+        return AuthErrors.RefreshTokenReused;
     }
 
     private async Task<bool> IsSessionOrganizationValidAsync(User user, RefreshToken token, CancellationToken ct) =>

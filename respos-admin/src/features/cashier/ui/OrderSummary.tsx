@@ -14,14 +14,15 @@ export type OrderSummaryData = Pick<
 export function OrderSummary({ order }: { order: OrderSummaryData }) {
   const { t } = useTranslation('cashier');
   const format = useFormatters();
-  const rows: { key: string; label: string; value: number; className?: string }[] = [
+  const settled = order.remainingAmount <= 0;
+  const rows: { key: string; label: string; value: number | string; className?: string }[] = [
     { key: 'subtotal', label: t('summary.subtotal'), value: order.subtotal },
     { key: 'discount', label: t('summary.discount'), value: order.discountAmount },
     { key: 'service', label: t('summary.serviceCharge'), value: order.serviceChargeAmount },
     { key: 'tax', label: t('summary.tax'), value: order.taxAmount },
     { key: 'total', label: t('summary.total'), value: order.total, className: styles.grand },
     { key: 'paid', label: t('summary.paid'), value: order.paidAmount },
-    { key: 'remaining', label: t('summary.remaining'), value: order.remainingAmount, className: styles.remaining },
+    { key: 'remaining', label: t('summary.remaining'), value: settled ? t('summary.settled') : order.remainingAmount, className: settled ? styles.settled : styles.remaining },
   ];
 
   return (
@@ -44,7 +45,7 @@ export function OrderSummary({ order }: { order: OrderSummaryData }) {
         {rows.map((row) => (
           <div key={row.key} className={row.className} data-testid={`summary-${row.key}`}>
             <dt>{row.label}</dt>
-            <dd>{format.money(row.value)}</dd>
+            <dd>{typeof row.value === 'number' ? format.money(row.value) : row.value}</dd>
           </div>
         ))}
       </dl>

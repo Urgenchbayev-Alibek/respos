@@ -22,7 +22,8 @@
     "tax": "Налог",
     "total": "Итого",
     "paid": "Оплачено",
-    "remaining": "Осталось"
+    "remaining": "Осталось",
+    "settled": "Оплачено"
   },
   "orderPayments": {
     "title": "Платежи по заказу",

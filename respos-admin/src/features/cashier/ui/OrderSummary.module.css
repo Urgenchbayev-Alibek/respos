@@ -64,3 +64,10 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-strong);
 }
+
+.settled dt,
+.settled dd {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success);
+}

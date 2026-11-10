@@ -27,7 +27,7 @@
     "deactivateFailed": "Filialni faolsizlantirib boʻlmadi"
   },
   "confirmDeactivateTitle": "Filialni faolsizlantirasizmi?",
-  "confirmDeactivateMessage": "«{{name}}» filiali ish uchun mavjud boʻlmaydi. Maʼlumotlar saqlanadi.",
+  "confirmDeactivateMessage": "«{{name}}» filiali ish uchun mavjud boʻlmaydi. Ma’lumotlar saqlanadi.",
   "form": {
     "createTitle": "Yangi filial",
     "editTitle": "Filialni tahrirlash"

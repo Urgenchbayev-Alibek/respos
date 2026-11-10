@@ -43,28 +43,28 @@
   },
   "actions": {
     "menu": "Amallar: {{name}}",
-    "subscription": "Obunani o‘zgartirish",
-    "suspend": "To‘xtatish",
+    "subscription": "Obunani oʻzgartirish",
+    "suspend": "Toʻxtatish",
     "activate": "Faollashtirish",
     "access": "Ma’lumotlarga kirish (break-glass)"
   },
   "confirm": {
-    "suspendTitle": "«{{name}}» to‘xtatilsinmi?",
+    "suspendTitle": "«{{name}}» toʻxtatilsinmi?",
     "suspendMessage": "Tashkilot xodimlari faollashtirilguncha kira olmaydi. Ma’lumotlar saqlanadi.",
     "activateTitle": "«{{name}}» faollashtirilsinmi?",
     "activateMessage": "Xodimlar yana tizimga kira oladi."
   },
   "organizations": {
     "title": "Tashkilotlar",
-    "subtitle": "Platforma mijozlari — faqat umumiy ko‘rsatkichlar",
-    "search": "Nomi yoki slug bo‘yicha qidirish",
-    "empty": "Tashkilotlar yo‘q",
+    "subtitle": "Platforma mijozlari — faqat umumiy koʻrsatkichlar",
+    "search": "Nomi yoki slug boʻyicha qidirish",
+    "empty": "Tashkilotlar yoʻq",
     "create": "Tashkilot yaratish",
     "createTitle": "Yangi tashkilot",
     "created": "«{{name}}» tashkiloti yaratildi",
     "actionFailed": "Amal bajarilmadi",
     "done": {
-      "suspend": "«{{name}}» to‘xtatildi",
+      "suspend": "«{{name}}» toʻxtatildi",
       "activate": "«{{name}}» faollashtirildi"
     }
   },
@@ -74,9 +74,9 @@
   },
   "access": {
     "title": "«{{name}}» ma’lumotlariga kirish",
-    "warning": "Bu mijoz ma’lumotlariga favqulodda kirish. U faqat o‘qish uchun 30 daqiqaga beriladi, kirish va sabab audit jurnaliga yoziladi va tashkilot egasiga ko‘rinadi.",
+    "warning": "Bu mijoz ma’lumotlariga favqulodda kirish. U faqat oʻqish uchun 30 daqiqaga beriladi, kirish va sabab audit jurnaliga yoziladi va tashkilot egasiga koʻrinadi.",
     "reason": "Kirish sababi",
-    "reasonHint": "Masalan: qo‘llab-quvvatlash murojaati raqami va nimani tekshirish kerak",
+    "reasonHint": "Masalan: qoʻllab-quvvatlash murojaati raqami va nimani tekshirish kerak",
     "reasonTooShort": "Sababni batafsilroq yozing (kamida 10 belgi)",
     "submit": "Kirish olish (audit)"
   },
@@ -88,7 +88,7 @@
     "editTitle": "Tarifni tahrirlash",
     "edit": "«{{name}}»ni tahrirlash",
     "saved": "Tarif saqlandi",
-    "empty": "Tariflar yo‘q",
+    "empty": "Tariflar yoʻq",
     "active": "Mavjud",
     "inactive": "Yashirin",
     "featuresTitle": "Funksiyalar ma’lumotnomasi"
@@ -104,12 +104,12 @@
     "enabled": "Yoqilgan",
     "toggle": "«{{name}}»ni yoqish",
     "saved": "Bayroq saqlandi",
-    "saveFailed": "Bayroqni saqlab bo‘lmadi",
-    "empty": "Funksiyalar yo‘q"
+    "saveFailed": "Bayroqni saqlab boʻlmadi",
+    "empty": "Funksiyalar yoʻq"
   },
   "system": {
     "title": "Tizim holati",
-    "subtitle": "Versiya, ma’lumotlar bazasi, umumiy ko‘rsatkichlar va tizim hodisalari",
+    "subtitle": "Versiya, ma’lumotlar bazasi, umumiy koʻrsatkichlar va tizim hodisalari",
     "db": "Ma’lumotlar bazasi",
     "version": "Versiya",
     "uptime": "Ish vaqti",
@@ -117,22 +117,22 @@
     "users": "Foydalanuvchilar",
     "ordersToday": "Bugungi buyurtmalar",
     "events": "Tizim hodisalari",
-    "noEvents": "Hodisalar yo‘q",
+    "noEvents": "Hodisalar yoʻq",
     "dbHealthy": "Ishlayapti",
     "dbUnhealthy": "Mavjud emas: {{status}}",
     "uptimeDays": "{{days}} kun {{hours}} soat {{minutes}} daq",
     "uptimeHours": "{{hours}} soat {{minutes}} daq"
   },
   "demo": {
-    "title": "Demo so‘rovlari",
-    "subtitle": "Saytdan kelgan so‘rovlar",
-    "empty": "So‘rovlar yo‘q",
+    "title": "Demo soʻrovlari",
+    "subtitle": "Saytdan kelgan soʻrovlar",
+    "empty": "Soʻrovlar yoʻq",
     "restaurant": "Restoran",
     "contact": "Kontakt",
     "message": "Xabar",
-    "changeStatus": "Holatni o‘zgartirish",
-    "changeStatusFor": "«{{name}}» so‘rovi holati",
-    "statusSaved": "So‘rov holati yangilandi",
-    "statusFailed": "Holatni yangilab bo‘lmadi"
+    "changeStatus": "Holatni oʻzgartirish",
+    "changeStatusFor": "«{{name}}» soʻrovi holati",
+    "statusSaved": "Soʻrov holati yangilandi",
+    "statusFailed": "Holatni yangilab boʻlmadi"
   }
 }

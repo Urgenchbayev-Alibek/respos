@@ -10,7 +10,7 @@
   "moneyPrecision": "Verguldan keyin koʻpi bilan 2 ta raqam",
   "maxLength": "Qiymat juda uzun",
   "selectAtLeastOne": "Kamida bittasini tanlang",
-  "quantity": "Son kiriting (verguldan keyin ko‘pi bilan 3 ta raqam)",
-  "nonZero": "Qiymat nolga teng bo‘lishi mumkin emas",
+  "quantity": "Son kiriting (verguldan keyin koʻpi bilan 3 ta raqam)",
+  "nonZero": "Qiymat nolga teng boʻlishi mumkin emas",
   "slug": "Faqat kichik lotin harflari, raqamlar va chiziqcha"
 }

@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/api-client';
 import { ENDPOINTS } from '@/shared/api/endpoints';
 import type { UnitConversionDto, UnitConversionInput, UnitDto, UnitInput } from './unit.types';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 export const unitKeys = { all: ['units'] as const };
 
@@ -35,5 +36,5 @@ export function useCreateUnitConversion() {
 
 /** Options for unit selects: "kg — Килограмм". */
 export function unitOptions(units: UnitDto[] | undefined) {
-  return (units ?? []).map((unit) => ({ value: unit.id, label: `${unit.code} — ${unit.name}` }));
+  return (units ?? []).map((unit) => ({ value: unit.id, label: `${formatUnit(unit.code)} — ${unit.name}` }));
 }

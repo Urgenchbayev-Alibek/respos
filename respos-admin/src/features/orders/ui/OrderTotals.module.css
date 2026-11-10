@@ -33,3 +33,8 @@
 .remaining {
   font-weight: var(--font-weight-semibold);
 }
+
+.settled {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-success);
+}

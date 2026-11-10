@@ -36,5 +36,12 @@
     "ru": "Русский",
     "uz": "Oʻzbekcha",
     "en": "English"
+  },
+  "units": {
+    "kg": "kg",
+    "g": "g",
+    "l": "l",
+    "ml": "ml",
+    "pcs": "pcs"
   }
 }

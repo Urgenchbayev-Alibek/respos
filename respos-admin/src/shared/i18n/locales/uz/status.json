@@ -68,13 +68,13 @@
   "subscription": {
     "trial": "Sinov",
     "active": "Faol",
-    "past_due": "Muddati o‘tgan",
-    "suspended": "To‘xtatilgan",
+    "past_due": "Muddati oʻtgan",
+    "suspended": "Toʻxtatilgan",
     "cancelled": "Bekor qilingan"
   },
   "demoRequest": {
     "new": "Yangi",
-    "contacted": "Bog‘lanildi",
+    "contacted": "Bogʻlanildi",
     "closed": "Yopilgan"
   },
   "inventoryCount": {

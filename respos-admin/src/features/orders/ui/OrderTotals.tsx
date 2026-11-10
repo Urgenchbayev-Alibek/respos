@@ -48,9 +48,9 @@ export function OrderTotals({ order, compact }: OrderTotalsProps) {
             <dt>{t('totals.paid')}</dt>
             <dd>{format.money(order.paidAmount)}</dd>
           </div>
-          <div className={clsx(styles.row, styles.remaining)}>
+          <div className={clsx(styles.row, order.remainingAmount <= 0 ? styles.settled : styles.remaining)}>
             <dt>{t('totals.remaining')}</dt>
-            <dd>{format.money(order.remainingAmount)}</dd>
+            <dd>{order.remainingAmount <= 0 ? t('totals.settled') : format.money(order.remainingAmount)}</dd>
           </div>
         </>
       )}

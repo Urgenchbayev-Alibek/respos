@@ -20,7 +20,7 @@
   },
   "timer": {
     "label": "Kutish vaqti",
-    "normal": "Meʼyorda",
+    "normal": "Me’yorda",
     "warning": "10 daqiqadan koʻp",
     "danger": "20 daqiqadan koʻp"
   },
@@ -49,7 +49,7 @@
     "soundOff": "Ovoz oʻch."
   },
   "offline": {
-    "disconnected": "Aloqa yoʻq, maʼlumotlar eskirgan boʻlishi mumkin. Roʻyxat har 30 soniyada yangilanadi.",
+    "disconnected": "Aloqa yoʻq, ma’lumotlar eskirgan boʻlishi mumkin. Roʻyxat har 30 soniyada yangilanadi.",
     "reconnecting": "Aloqa uzildi. Qayta ulanmoqda… Tiklangach roʻyxat avtomatik yangilanadi."
   }
 }

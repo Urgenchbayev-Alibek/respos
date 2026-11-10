@@ -3,6 +3,7 @@ import { useRecipeHistory } from '@/entities/recipe/recipe.queries';
 import type { RecipeDto } from '@/entities/recipe/recipe.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { DataTable, Drawer, StatusBadge, type DataTableColumn } from '@/shared/ui';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 export interface RecipeHistoryDrawerProps {
   open: boolean;
@@ -26,7 +27,7 @@ export function RecipeHistoryDrawer({ open, menuItemId, variantId, onClose }: Re
       cell: (row) =>
         row.isActive ? <StatusBadge tone="success">{t('active')}</StatusBadge> : <StatusBadge tone="neutral">{t('inactive')}</StatusBadge>,
     },
-    { key: 'lines', header: t('columns.ingredients'), cell: (row) => row.ingredients.map((line) => `${line.ingredientName} ${format.number(line.quantity)} ${line.unitCode}`).join(', ') },
+    { key: 'lines', header: t('columns.ingredients'), cell: (row) => row.ingredients.map((line) => `${line.ingredientName} ${format.number(line.quantity)} ${formatUnit(line.unitCode)}`).join(', ') },
     { key: 'cost', header: t('estimatedCost'), align: 'right', cell: (row) => format.money(row.estimatedCost) },
   ];
 

@@ -14,6 +14,7 @@ import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
 import { DEFAULT_PAGE_SIZE, toSortParam, type SortState } from '@/shared/types/pagination';
 import { Button, Checkbox, DataTable, SearchInput, Select, Toolbar, type DataTableColumn } from '@/shared/ui';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 interface Filters {
   search: string;
@@ -71,7 +72,7 @@ export function IngredientsSection() {
         header: t('columns.minQuantity'),
         align: 'right',
         hideOnMobile: true,
-        cell: (row) => (row.minQuantity ? `${format.number(row.minQuantity)} ${row.baseUnitCode}` : '—'),
+        cell: (row) => (row.minQuantity ? `${format.number(row.minQuantity)} ${formatUnit(row.baseUnitCode)}` : '—'),
       },
       { key: 'cost', header: t('columns.costPrice'), align: 'right', hideOnMobile: true, cell: (row) => format.money(row.costPrice) },
       { key: 'status', header: t('columns.status'), cell: (row) => <IngredientStockBadge ingredient={row} /> },

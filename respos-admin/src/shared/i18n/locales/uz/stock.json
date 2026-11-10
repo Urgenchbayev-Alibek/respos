@@ -5,7 +5,7 @@
     "ingredients": "Qoldiqlar",
     "movements": "Harakatlar",
     "counts": "Inventarizatsiya",
-    "units": "O‘lchov birliklari",
+    "units": "Oʻlchov birliklari",
     "categories": "Toifalar"
   },
   "columns": {
@@ -68,10 +68,10 @@
     "minQuantity": "Minimal qoldiq",
     "edit": "Tahrirlash",
     "archive": "Arxivlash",
-    "addIngredient": "Ingredient qo‘shish",
+    "addIngredient": "Ingredient qoʻshish",
     "menu": "Amallar: {{name}}",
     "editNamed": "«{{name}}»ni tahrirlash",
-    "deleteNamed": "«{{name}}»ni o‘chirish"
+    "deleteNamed": "«{{name}}»ni oʻchirish"
   },
   "level": {
     "ok": "Me’yorda",
@@ -85,13 +85,13 @@
     "write_off": "Hisobdan chiqarish",
     "adjustment": "Tuzatish",
     "inventory_count": "Inventarizatsiya",
-    "transfer_in": "Ko‘chirish (kirim)",
-    "transfer_out": "Ko‘chirish (chiqim)"
+    "transfer_in": "Koʻchirish (kirim)",
+    "transfer_out": "Koʻchirish (chiqim)"
   },
   "sourceType": {
     "order": "Buyurtma",
     "purchase": "Xarid",
-    "manual": "Qo‘lda",
+    "manual": "Qoʻlda",
     "inventory_count": "Inventarizatsiya"
   },
   "unitKind": {
@@ -107,55 +107,55 @@
     },
     "currentBalance": "Joriy qoldiq",
     "adjustmentHint": "Musbat — ortiqcha, manfiy — kamomad",
-    "unitHint": "Serverda asosiy birlikka o‘tkaziladi",
+    "unitHint": "Serverda asosiy birlikka oʻtkaziladi",
     "baseUnit": "Asosiy ({{unit}})",
     "baseUnitShort": "Asosiy birlik",
     "reasonPlaceholder": "Masalan: yaroqlilik muddati tugagan",
     "saved": "Harakat saqlandi"
   },
   "movements": {
-    "empty": "Tanlangan davrda harakatlar yo‘q"
+    "empty": "Tanlangan davrda harakatlar yoʻq"
   },
   "ingredients": {
     "title": "Ingredientlar",
-    "search": "Nomi yoki SKU bo‘yicha qidirish",
-    "empty": "Hozircha ingredientlar yo‘q",
+    "search": "Nomi yoki SKU boʻyicha qidirish",
+    "empty": "Hozircha ingredientlar yoʻq",
     "emptyFiltered": "Hech narsa topilmadi",
     "createTitle": "Yangi ingredient",
     "editTitle": "Ingredientni tahrirlash",
     "created": "Ingredient yaratildi",
     "updated": "Ingredient saqlandi",
-    "baseUnitLocked": "Asosiy birlikni yaratilgandan keyin o‘zgartirib bo‘lmaydi",
+    "baseUnitLocked": "Asosiy birlikni yaratilgandan keyin oʻzgartirib boʻlmaydi",
     "minTitle": "Minimal qoldiq",
-    "minHint": "Joriy filial uchun. Minimumdan kam bo‘lsa — bildirishnoma.",
+    "minHint": "Joriy filial uchun. Minimumdan kam boʻlsa — bildirishnoma.",
     "minSaved": "Minimal qoldiq saqlandi",
     "archiveTitle": "Ingredient arxivlansinmi?",
-    "archiveMessage": "«{{name}}» tanlov ro‘yxatlaridan yo‘qoladi. Harakatlar tarixi saqlanadi.",
+    "archiveMessage": "«{{name}}» tanlov roʻyxatlaridan yoʻqoladi. Harakatlar tarixi saqlanadi.",
     "archived": "Ingredient arxivlandi",
-    "archiveFailed": "Arxivlab bo‘lmadi"
+    "archiveFailed": "Arxivlab boʻlmadi"
   },
   "counts": {
     "description": "Inventarizatsiya yarating — tizim kutilgan qoldiqlarni qayd etadi. Haqiqiy miqdorni kiriting va yakunlang.",
     "create": "Inventarizatsiyani boshlash",
-    "createFailed": "Inventarizatsiyani yaratib bo‘lmadi",
-    "empty": "Hali inventarizatsiya o‘tkazilmagan",
+    "createFailed": "Inventarizatsiyani yaratib boʻlmadi",
+    "empty": "Hali inventarizatsiya oʻtkazilmagan",
     "continue": "Davom etish",
     "view": "Ochish",
     "editorTitle": "Inventarizatsiya {{number}}",
-    "noLines": "Inventarizatsiyada qatorlar yo‘q",
+    "noLines": "Inventarizatsiyada qatorlar yoʻq",
     "countedFor": "Haqiqiy miqdor: {{name}}",
     "saveDraft": "Qoralamani saqlash",
     "saved": "Qoralama saqlandi",
     "complete": "Yakunlash",
     "completeTitle": "Inventarizatsiya yakunlansinmi?",
-    "completeMessage": "Farqli qatorlar bo‘yicha qoldiq tuzatishlari yaratiladi. Bu amalni bekor qilib bo‘lmaydi.",
+    "completeMessage": "Farqli qatorlar boʻyicha qoldiq tuzatishlari yaratiladi. Bu amalni bekor qilib boʻlmaydi.",
     "completed": "Inventarizatsiya yakunlandi"
   },
   "units": {
-    "description": "Tashkilot o‘lchov birliklari va konversiya koeffitsientlari",
-    "add": "Birlik qo‘shish",
-    "addConversion": "Konversiya qo‘shish",
-    "empty": "Hozircha birliklar yo‘q",
+    "description": "Tashkilot oʻlchov birliklari va konversiya koeffitsientlari",
+    "add": "Birlik qoʻshish",
+    "addConversion": "Konversiya qoʻshish",
+    "empty": "Hozircha birliklar yoʻq",
     "createTitle": "Yangi birlik",
     "created": "Birlik yaratildi",
     "conversionTitle": "Yangi konversiya",
@@ -165,14 +165,14 @@
   },
   "categories": {
     "description": "Ingredientlarni guruhlash uchun toifalar",
-    "add": "Toifa qo‘shish",
-    "empty": "Hozircha toifalar yo‘q",
+    "add": "Toifa qoʻshish",
+    "empty": "Hozircha toifalar yoʻq",
     "createTitle": "Yangi toifa",
-    "editTitle": "Toifa nomini o‘zgartirish",
+    "editTitle": "Toifa nomini oʻzgartirish",
     "saved": "Toifa saqlandi",
-    "deleteTitle": "Toifa o‘chirilsinmi?",
+    "deleteTitle": "Toifa oʻchirilsinmi?",
     "deleteMessage": "«{{name}}» toifasidagi ingredientlar toifasiz qoladi.",
-    "deleted": "Toifa o‘chirildi",
-    "deleteFailed": "Toifani o‘chirib bo‘lmadi"
+    "deleted": "Toifa oʻchirildi",
+    "deleteFailed": "Toifani oʻchirib boʻlmadi"
   }
 }

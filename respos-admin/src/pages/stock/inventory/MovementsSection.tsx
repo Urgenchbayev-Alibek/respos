@@ -8,6 +8,7 @@ import { useFormatters } from '@/shared/hooks/use-formatters';
 import { dateRangeToUtc } from '@/shared/lib/zoned-time';
 import { DEFAULT_PAGE_SIZE } from '@/shared/types/pagination';
 import { Button, DataTable, Input, Select, StatusBadge, Toolbar, type DataTableColumn } from '@/shared/ui';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 interface Filters {
   ingredientId: string;
@@ -63,7 +64,7 @@ export function MovementsSection() {
         cell: (row) => (
           <span className={row.quantity < 0 ? styles.negative : styles.num}>
             {row.quantity > 0 ? '+' : ''}
-            {format.number(row.quantity)} {row.baseUnitCode}
+            {format.number(row.quantity)} {formatUnit(row.baseUnitCode)}
           </span>
         ),
       },

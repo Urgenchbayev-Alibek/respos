@@ -3,6 +3,7 @@ import { formatAuditChanges } from '@/entities/audit-log/audit-log.queries';
 import type { AuditLogDto } from '@/entities/audit-log/audit-log.types';
 import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useFormatters } from '@/shared/hooks/use-formatters';
+import { formatEntityType } from '@/shared/lib/format-entity-type';
 import { Drawer } from '@/shared/ui';
 import styles from './audit.module.css';
 
@@ -19,7 +20,7 @@ export function AuditLogDrawer({ entry, onClose }: { entry: AuditLogDto | null; 
         [t('columns.user'), entry.userName ?? entry.userId],
         [t('columns.branch'), branchName],
         [t('columns.action'), entry.action],
-        [t('columns.entityType'), entry.entityType],
+        [t('columns.entityType'), formatEntityType(entry.entityType)],
         [t('columns.entityId'), entry.entityId],
         [t('columns.correlationId'), entry.correlationId],
         [t('columns.ip'), entry.ipAddress],

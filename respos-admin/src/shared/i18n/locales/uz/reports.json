@@ -1,13 +1,13 @@
 {
   "title": "Hisobotlar",
-  "subtitle": "Joriy filial bo‘yicha serverda, uning vaqt mintaqasida hisoblanadi",
-  "empty": "Ma’lumot yo‘q",
-  "emptyPeriod": "Davr uchun ma’lumot yo‘q",
+  "subtitle": "Joriy filial boʻyicha serverda, uning vaqt mintaqasida hisoblanadi",
+  "empty": "Ma’lumot yoʻq",
+  "emptyPeriod": "Davr uchun ma’lumot yoʻq",
   "tabs": {
     "sales": "Savdo",
     "items": "Taomlar",
     "categories": "Toifalar",
-    "payments": "To‘lov usullari",
+    "payments": "Toʻlov usullari",
     "stock": "Ombor",
     "movements": "Harakatlar",
     "shifts": "Smenalar"
@@ -20,18 +20,18 @@
     "custom": "Boshqa davr",
     "from": "Sanadan",
     "to": "Sanagacha",
-    "invalid": "To‘g‘ri davrni kiriting: boshlanish sanasi tugash sanasidan keyin bo‘lmasin."
+    "invalid": "Toʻgʻri davrni kiriting: boshlanish sanasi tugash sanasidan keyin boʻlmasin."
   },
   "sales": {
     "totalRevenue": "Tushum",
     "ordersCount": "Buyurtmalar",
-    "averageCheck": "O‘rtacha chek",
-    "byDay": "Kunlar bo‘yicha tushum",
+    "averageCheck": "Oʻrtacha chek",
+    "byDay": "Kunlar boʻyicha tushum",
     "chartLabel": "Kunlik tushum grafigi",
     "revenue": "Tushum",
     "orders": "Buyurtmalar",
-    "showTable": "Jadval ko‘rinishida",
-    "showChart": "Grafikni ko‘rsatish"
+    "showTable": "Jadval koʻrinishida",
+    "showChart": "Grafikni koʻrsatish"
   },
   "stock": {
     "lowTitle": "Minimumdan kam",
@@ -75,6 +75,6 @@
   },
   "export": {
     "csv": "CSV eksport",
-    "failed": "Hisobotni yuklab bo‘lmadi"
+    "failed": "Hisobotni yuklab boʻlmadi"
   }
 }

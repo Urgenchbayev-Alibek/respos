@@ -12,6 +12,7 @@ import { getErrorMessage } from '@/shared/lib/api-error-message';
 import { parseDecimal } from '@/shared/lib/quantity';
 import { V } from '@/shared/lib/validation';
 import { Alert, Button, Input, Modal, useToast } from '@/shared/ui';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 const lineSchema = z
   .string()
@@ -98,8 +99,8 @@ export function ReceivePurchaseModal({ purchase, onClose }: { purchase: Purchase
                 return (
                   <tr key={item.id}>
                     <td>{item.ingredientName}</td>
-                    <td className={styles.num}>{format.number(item.quantity)} {item.unitCode}</td>
-                    <td className={styles.num}>{format.number(item.receivedQuantity)} {item.unitCode}</td>
+                    <td className={styles.num}>{format.number(item.quantity)} {formatUnit(item.unitCode)}</td>
+                    <td className={styles.num}>{format.number(item.receivedQuantity)} {formatUnit(item.unitCode)}</td>
                     <td>
                       <Input
                         className={styles.lineInput}

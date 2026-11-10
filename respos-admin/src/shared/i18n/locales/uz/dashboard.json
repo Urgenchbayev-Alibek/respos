@@ -1,7 +1,7 @@
 {
   "title": "Bosh sahifa",
   "subtitle": "Bugun «{{branch}}» filialida",
-  "demoHint": "Namoyish maʼlumotlari koʻrsatilmoqda",
+  "demoHint": "Namoyish ma’lumotlari koʻrsatilmoqda",
   "noBranchTitle": "Filial tanlanmagan",
   "noBranchDescription": "Sizda hech bir filialga ruxsat yoʻq. Administratorga murojaat qiling.",
   "loadError": "Bosh sahifani yuklab boʻlmadi",

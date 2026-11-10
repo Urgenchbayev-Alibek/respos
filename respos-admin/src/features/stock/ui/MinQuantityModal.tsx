@@ -7,6 +7,7 @@ import type { IngredientDto } from '@/entities/ingredient/ingredient.types';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
 import { Alert, Button, FormField, FormGrid, Input, Modal, useToast } from '@/shared/ui';
 import { minQuantitySchema, type MinQuantityOutput } from '../model/stock-schemas';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 interface Values {
   minQuantity: string;
@@ -58,7 +59,7 @@ export function MinQuantityModal({ ingredient, onClose }: { ingredient: Ingredie
       <FormGrid id="min-quantity-form" onSubmit={onSubmit}>
         {serverError && <Alert>{serverError}</Alert>}
         <FormField
-          label={t('fields.minQuantityUnit', { unit: ingredient?.baseUnitCode ?? '' })}
+          label={t('fields.minQuantityUnit', { unit: formatUnit(ingredient?.baseUnitCode) })}
           error={formState.errors.minQuantity?.message}
           hint={t('ingredients.minHint')}
           required

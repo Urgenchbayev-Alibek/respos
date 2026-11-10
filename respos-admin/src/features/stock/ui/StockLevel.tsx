@@ -3,6 +3,7 @@ import type { IngredientDto } from '@/entities/ingredient/ingredient.types';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { StatusBadge } from '@/shared/ui';
 import styles from './stock.module.css';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 type Level = Pick<IngredientDto, 'quantity' | 'isLow' | 'isArchived' | 'baseUnitCode'>;
 
@@ -12,7 +13,7 @@ export function QuantityCell({ ingredient }: { ingredient: Level }) {
   const className = ingredient.quantity < 0 ? styles.negative : ingredient.isLow ? styles.low : styles.num;
   return (
     <span className={className}>
-      {format.number(ingredient.quantity)} {ingredient.baseUnitCode}
+      {format.number(ingredient.quantity)} {formatUnit(ingredient.baseUnitCode)}
     </span>
   );
 }

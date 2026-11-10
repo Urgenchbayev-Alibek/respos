@@ -1,8 +1,8 @@
 {
-  "title": "Toʻlovlar",
-  "subtitle": "Filial toʻlovlari tarixi va qaytarishlar.",
-  "empty": "Toʻlovlar topilmadi",
-  "manualProvider": "Qoʻlda belgilash (demo): haqiqiy toʻlov provayderi ulanmagan",
+  "title": "To’lovlar",
+  "subtitle": "Filial to’lovlari tarixi va qaytarishlar.",
+  "empty": "To’lovlar topilmadi",
+  "manualProvider": "Qo’lda belgilash (demo): haqiqiy to’lov provayderi ulanmagan",
   "columns": {
     "createdAt": "Sana",
     "order": "Buyurtma",
@@ -26,12 +26,12 @@
   },
   "refund": {
     "action": "Qaytarish",
-    "title": "Toʻlovni qaytarish",
-    "description": "Toʻlov {{amount}}, qaytarish mumkin {{refundable}}.",
+    "title": "To’lovni qaytarish",
+    "description": "To’lov {{amount}}, qaytarish mumkin {{refundable}}.",
     "amount": "Qaytarish summasi",
     "submit": "Qaytarishni rasmiylashtirish",
     "success": "Qaytarildi: {{amount}}",
-    "exceedsRefundable": "Summa qaytarish mumkin boʻlgandan katta"
+    "exceedsRefundable": "Summa qaytarish mumkin bo’lgandan katta"
   },
   "shifts": {
     "title": "Kassa smenalari",

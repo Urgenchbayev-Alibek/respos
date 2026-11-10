@@ -55,12 +55,20 @@ public sealed class AuthTests(ApiFactory factory) : ApiTestBase(factory)
         var second = RefreshCookieValue(rotated);
         second.Should().NotBe(first);
 
-        var reuse = await PostWithCookieAsync(client, RefreshUrl, first);
-        reuse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-        (await ReadErrorCodeAsync(reuse)).Should().Be("auth.refresh_token_reused");
+        Factory.Clock.Advance(TimeSpan.FromSeconds(16)); // past the reuse grace window (15 s, ADR-0003)
+        try
+        {
+            var reuse = await PostWithCookieAsync(client, RefreshUrl, first);
+            reuse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            (await ReadErrorCodeAsync(reuse)).Should().Be("auth.refresh_token_reused");
 
-        var afterReuse = await PostWithCookieAsync(client, RefreshUrl, second);
-        afterReuse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            var afterReuse = await PostWithCookieAsync(client, RefreshUrl, second);
+            afterReuse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+        finally
+        {
+            Factory.Clock.Reset();
+        }
     }
 
     [Fact]

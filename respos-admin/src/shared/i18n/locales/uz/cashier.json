@@ -22,7 +22,8 @@
     "tax": "Soliq",
     "total": "Jami",
     "paid": "Toʻlangan",
-    "remaining": "Qoldiq"
+    "remaining": "Qoldiq",
+    "settled": "Toʻlangan"
   },
   "orderPayments": {
     "title": "Buyurtma toʻlovlari",
@@ -40,10 +41,10 @@
     "amountHint": "Buyurtma qoldigʻidan oshmasin",
     "fullRemaining": "Butun qoldiq",
     "received": "Naqd olingan (qaytim hisobi uchun)",
-    "change": "Qaytim (maʼlumot uchun)",
+    "change": "Qaytim (ma’lumot uchun)",
     "notEnough": "Yetmaydi",
     "submit": "{{amount}} toʻlovni qabul qilish",
-    "disclaimer": "Fiskal chek emas. Toʻlovni qoʻlda belgilash onlayn-NKM va ekvayringni almashtirmaydi. Bank karta maʼlumotlari saqlanmaydi.",
+    "disclaimer": "Fiskal chek emas. Toʻlovni qoʻlda belgilash onlayn-NKM va ekvayringni almashtirmaydi. Bank karta ma’lumotlari saqlanmaydi.",
     "exceedsRemaining": "Summa buyurtma qoldigʻidan katta",
     "success": "Toʻlov qabul qilindi: {{amount}} ({{method}})",
     "fullyPaid": "Buyurtma toʻliq toʻlandi",

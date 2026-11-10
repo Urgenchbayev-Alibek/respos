@@ -1,9 +1,9 @@
 {
   "title": "Yetkazib beruvchilar",
   "subtitle": "Yetkazib beruvchilar va kontaktlar",
-  "search": "Nomi, telefon, STIR bo‘yicha qidirish",
-  "showArchived": "Arxivni ko‘rsatish",
-  "empty": "Hozircha yetkazib beruvchilar yo‘q",
+  "search": "Nomi, telefon, STIR boʻyicha qidirish",
+  "showArchived": "Arxivni koʻrsatish",
+  "empty": "Hozircha yetkazib beruvchilar yoʻq",
   "active": "Faol",
   "archived": "Arxiv",
   "columns": {
@@ -20,7 +20,7 @@
     "notes": "Izohlar"
   },
   "actions": {
-    "create": "Yetkazib beruvchi qo‘shish",
+    "create": "Yetkazib beruvchi qoʻshish",
     "edit": "«{{name}}»ni tahrirlash",
     "archive": "«{{name}}»ni arxivlash",
     "archiveShort": "Arxivlash"
@@ -31,12 +31,12 @@
   },
   "confirm": {
     "archiveTitle": "Yetkazib beruvchi arxivlansinmi?",
-    "archiveMessage": "«{{name}}»ni yangi xaridlarda tanlab bo‘lmaydi. Tarix saqlanadi."
+    "archiveMessage": "«{{name}}»ni yangi xaridlarda tanlab boʻlmaydi. Tarix saqlanadi."
   },
   "toast": {
-    "created": "Yetkazib beruvchi qo‘shildi",
+    "created": "Yetkazib beruvchi qoʻshildi",
     "updated": "Yetkazib beruvchi saqlandi",
     "archived": "Yetkazib beruvchi arxivlandi",
-    "archiveFailed": "Arxivlab bo‘lmadi"
+    "archiveFailed": "Arxivlab boʻlmadi"
   }
 }

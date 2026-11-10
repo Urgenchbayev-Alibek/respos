@@ -1,17 +1,17 @@
 {
   "title": "Xaridlar",
   "subtitle": "Yetkazib beruvchilarga buyurtmalar va filial omboriga qabul qilish",
-  "empty": "Hozircha xaridlar yo‘q",
-  "backToList": "Xaridlar ro‘yxatiga",
+  "empty": "Hozircha xaridlar yoʻq",
+  "backToList": "Xaridlar roʻyxatiga",
   "detailTitle": "Xarid {{number}} · {{supplier}}",
   "expectedOn": "Kutilmoqda: {{date}}",
   "linesCaption": "Xarid qatorlari",
-  "noLines": "Qatorlar yo‘q",
+  "noLines": "Qatorlar yoʻq",
   "total": "Jami",
   "selectSupplier": "Yetkazib beruvchini tanlang",
   "selectIngredient": "Ingredientni tanlang",
-  "addLine": "Qator qo‘shish",
-  "removeLine": "Qatorni o‘chirish",
+  "addLine": "Qator qoʻshish",
+  "removeLine": "Qatorni oʻchirish",
   "columns": {
     "number": "Raqam",
     "supplier": "Yetkazib beruvchi",
@@ -54,9 +54,9 @@
   },
   "confirm": {
     "submitTitle": "Xarid yuborilsinmi?",
-    "submitMessage": "Yuborilgandan keyin {{number}} xaridni tahrirlab bo‘lmaydi.",
+    "submitMessage": "Yuborilgandan keyin {{number}} xaridni tahrirlab boʻlmaydi.",
     "cancelTitle": "Xarid bekor qilinsinmi?",
-    "cancelMessage": "{{number}} xarid bekor qilinadi. Amalni qaytarib bo‘lmaydi."
+    "cancelMessage": "{{number}} xarid bekor qilinadi. Amalni qaytarib boʻlmaydi."
   },
   "toast": {
     "created": "Xarid qoralamasi yaratildi",
@@ -67,7 +67,7 @@
   },
   "receive": {
     "title": "Qabul qilish {{number}}",
-    "description": "Qatorlar bo‘yicha qabul qilingan miqdorni kiriting. Qoldiq va tannarx avtomatik yangilanadi.",
+    "description": "Qatorlar boʻyicha qabul qilingan miqdorni kiriting. Qoldiq va tannarx avtomatik yangilanadi.",
     "quantityFor": "Qabul qilish: {{name}}",
     "submit": "Omborga qabul qilish",
     "nothing": "Kamida bitta qator uchun miqdor kiriting",

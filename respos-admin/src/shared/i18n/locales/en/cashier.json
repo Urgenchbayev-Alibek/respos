@@ -22,7 +22,8 @@
     "tax": "Tax",
     "total": "Total",
     "paid": "Paid",
-    "remaining": "Remaining"
+    "remaining": "Remaining",
+    "settled": "Paid"
   },
   "orderPayments": {
     "title": "Order payments",

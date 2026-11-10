@@ -3,13 +3,13 @@
     "itemReady": "Berishga tayyor",
     "itemReadyTable": "{{table}}-stol — {{item}}",
     "sent": "Oshxonaga yuborildi",
-    "serveFailed": "Berilganini belgilab boʻlmadi",
-    "itemUpdateFailed": "Pozitsiyani oʻzgartirib boʻlmadi"
+    "serveFailed": "Berilganini belgilab bo’lmadi",
+    "itemUpdateFailed": "Pozitsiyani o’zgartirib bo’lmadi"
   },
   "options": {
     "errorMin": "Kamida {{min}} ta tanlang",
-    "errorMax": "Koʻpi bilan {{max}} ta tanlash mumkin",
-    "add": "Qoʻshish · {{price}}",
+    "errorMax": "Ko’pi bilan {{max}} ta tanlash mumkin",
+    "add": "Qo’shish · {{price}}",
     "variant": "Variant",
     "required": "Majburiy",
     "optional": "Ixtiyoriy",
@@ -20,7 +20,7 @@
   "cart": {
     "remove": "Olib tashlash: {{name}}",
     "decrease": "Kamaytirish: {{name}}",
-    "increase": "Koʻpaytirish: {{name}}",
+    "increase": "Ko’paytirish: {{name}}",
     "comment": "Izoh: {{name}}",
     "commentPlaceholder": "Masalan, piyozsiz",
     "title": "Yangi pozitsiyalar",
@@ -33,7 +33,7 @@
     "search": "Taomni qidirish…",
     "categories": "Toifalar",
     "notFound": "Hech narsa topilmadi",
-    "emptyCategory": "Toifada mavjud taomlar yoʻq",
+    "emptyCategory": "Toifada mavjud taomlar yo’q",
     "unavailable": "Mavjud emas"
   },
   "order": {
@@ -48,7 +48,7 @@
     "guests": "Mehmonlar: {{guests}}",
     "newOrder": "yangi buyurtma",
     "billTab": "Chek ({{n}})",
-    "readOnly": "Buyurtma yopilgan — pozitsiya qoʻshib boʻlmaydi."
+    "readOnly": "Buyurtma yopilgan — pozitsiya qo’shib bo’lmaydi."
   },
   "guests": {
     "question": "Stolda nechta mehmon?",
@@ -58,8 +58,8 @@
   "floor": {
     "title": "Zal",
     "unavailable": "{{number}}-stol mavjud emas",
-    "empty": "Stollar yoʻq",
-    "emptyHint": "Administratordan «Zallar va stollar» boʻlimida stollar qoʻshishni soʻrang.",
+    "empty": "Stollar yo’q",
+    "emptyHint": "Administratordan «Zallar va stollar» bo’limida stollar qo’shishni so’rang.",
     "takeaway": "Olib ketish",
     "readyBadge": "Berishga tayyor: {{n}}"
   },
@@ -67,7 +67,7 @@
     "title": "Faol buyurtmalar",
     "mine": "Meniki",
     "all": "Barchasi",
-    "empty": "Faol buyurtmalar yoʻq",
+    "empty": "Faol buyurtmalar yo’q",
     "emptyHint": "Zaldagi stolni bosib buyurtma oching.",
     "minutes": "{{n}} daq"
   }

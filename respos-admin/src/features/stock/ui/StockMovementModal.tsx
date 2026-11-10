@@ -13,6 +13,7 @@ import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-
 import { Alert, Button, FormField, FormGrid, Input, Modal, Select, Textarea, useToast } from '@/shared/ui';
 import { movementSchema, type MovementFormOutput, type MovementFormValues } from '../model/stock-schemas';
 import styles from './stock.module.css';
+import { formatUnit } from '@/shared/lib/format-unit';
 
 export interface StockMovementModalProps {
   open: boolean;
@@ -107,7 +108,7 @@ export function StockMovementModal({ open, onClose, ingredient, defaultType = 'w
           <div className={styles.hint}>
             <span>{t('movement.currentBalance')}</span>
             <strong>
-              {format.number(selected.quantity)} {selected.baseUnitCode}
+              {format.number(selected.quantity)} {formatUnit(selected.baseUnitCode)}
             </strong>
           </div>
         )}
@@ -127,7 +128,7 @@ export function StockMovementModal({ open, onClose, ingredient, defaultType = 'w
         </FormField>
         <FormField label={t('fields.unit')} error={errors.unitId?.message} hint={t('movement.unitHint')}>
           <Select
-            placeholder={selected ? t('movement.baseUnit', { unit: selected.baseUnitCode }) : t('movement.baseUnitShort')}
+            placeholder={selected ? t('movement.baseUnit', { unit: formatUnit(selected.baseUnitCode) }) : t('movement.baseUnitShort')}
             options={unitOptions(units.data)}
             {...register('unitId')}
           />

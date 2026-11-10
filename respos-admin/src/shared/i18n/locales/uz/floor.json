@@ -3,7 +3,7 @@
   "subtitle": "Zal hududlari, stollar va joriy holatlari bilan joylashuv rejasi.",
   "tabs": {
     "floor": "Zal rejasi",
-    "list": "Roʻyxat",
+    "list": "Ro’yxat",
     "areas": "Hududlar"
   },
   "areaFilter": "Zal hududlari",
@@ -13,24 +13,24 @@
     "allStatuses": "Barcha holatlar"
   },
   "actions": {
-    "addTable": "Stol qoʻshish",
-    "addArea": "Hudud qoʻshish",
+    "addTable": "Stol qo’shish",
+    "addArea": "Hudud qo’shish",
     "edit": "Tahrirlash",
     "archive": "Arxivga",
-    "makeAvailable": "Boʻsh qilish",
+    "makeAvailable": "Bo’sh qilish",
     "makeUnavailable": "Mavjud emas qilish",
     "menu": "Amallar: {{number}}-stol",
     "editArea": "{{name}} hududini tahrirlash",
     "archiveArea": "{{name}} hududini arxivlash",
-    "goToAreas": "Hududlarga oʻtish"
+    "goToAreas": "Hududlarga o’tish"
   },
   "tile": {
-    "label": "{{number}}-stol, {{status}}, oʻrinlar: {{seats}}"
+    "label": "{{number}}-stol, {{status}}, o’rinlar: {{seats}}"
   },
   "columns": {
     "number": "Stol",
     "area": "Hudud",
-    "capacity": "Oʻrin",
+    "capacity": "O’rin",
     "status": "Holat",
     "order": "Faol buyurtma",
     "reservation": "Eng yaqin bron",
@@ -41,7 +41,7 @@
   },
   "fields": {
     "number": "Stol raqami",
-    "capacity": "Oʻrinlar soni",
+    "capacity": "O’rinlar soni",
     "area": "Hudud",
     "areaPlaceholder": "Hududni tanlang",
     "posX": "Rejadagi ustun",
@@ -59,30 +59,30 @@
   },
   "empty": {
     "noAreas": "Hududlar hali yaratilmagan",
-    "noAreasHint": "Hudud yarating (masalan, «Asosiy zal» yoki «Terrasa»), soʻng stollar qoʻshing.",
-    "noTables": "Stollar yoʻq",
-    "noTablesHint": "Ofitsiantlar buyurtma ochishi uchun stollar qoʻshing."
+    "noAreasHint": "Hudud yarating (masalan, «Asosiy zal» yoki «Terrasa»), so’ng stollar qo’shing.",
+    "noTables": "Stollar yo’q",
+    "noTablesHint": "Ofitsiantlar buyurtma ochishi uchun stollar qo’shing."
   },
   "confirm": {
     "archiveTableTitle": "Stol arxivlansinmi?",
-    "archiveTableMessage": "{{number}}-stol zal rejasidan yoʻqoladi. Buyurtmalar tarixi saqlanadi.",
+    "archiveTableMessage": "{{number}}-stol zal rejasidan yo’qoladi. Buyurtmalar tarixi saqlanadi.",
     "archiveAreaTitle": "Hudud arxivlansinmi?",
     "archiveAreaMessage": "«{{name}}» hududi zal rejasidan yashiriladi."
   },
-  "hasActiveOrder": "Faol buyurtma bor — arxivlab boʻlmaydi",
+  "hasActiveOrder": "Faol buyurtma bor — arxivlab bo’lmaydi",
   "toast": {
     "tableSaved": "Stol saqlandi",
-    "tableArchived": "Stol arxivga koʻchirildi",
+    "tableArchived": "Stol arxivga ko’chirildi",
     "areaSaved": "Hudud saqlandi",
-    "areaArchived": "Hudud arxivga koʻchirildi",
-    "statusChanged": "Stol holati oʻzgartirildi",
-    "actionFailed": "Amalni bajarib boʻlmadi"
+    "areaArchived": "Hudud arxivga ko’chirildi",
+    "statusChanged": "Stol holati o’zgartirildi",
+    "actionFailed": "Amalni bajarib bo’lmadi"
   },
   "active": "Ha",
-  "inactive": "Yoʻq",
+  "inactive": "Yo’q",
   "validation": {
     "capacity": "1 dan 100 gacha butun son",
     "position": "0 dan 99 gacha butun son",
-    "sortOrder": "Manfiy boʻlmagan butun son"
+    "sortOrder": "Manfiy bo’lmagan butun son"
   }
 }

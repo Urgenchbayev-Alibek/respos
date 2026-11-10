@@ -10,6 +10,7 @@ import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useDebouncedValue } from '@/shared/hooks/use-debounced-value';
 import { useFormatters } from '@/shared/hooks/use-formatters';
+import { formatEntityType } from '@/shared/lib/format-entity-type';
 import { usePermissions } from '@/shared/hooks/use-permissions';
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '@/shared/types/pagination';
 import { Button, DataTable, IconButton, Input, PageHeader, Select, Toolbar, type DataTableColumn } from '@/shared/ui';
@@ -72,7 +73,7 @@ export function AuditLogsPage() {
       { key: 'time', header: t('columns.time'), cell: (row) => format.dateTime(row.createdAt) },
       { key: 'user', header: t('columns.user'), cell: (row) => row.userName ?? '—' },
       { key: 'action', header: t('columns.action'), cell: (row) => <span className={styles.mono}>{row.action}</span> },
-      { key: 'entity', header: t('columns.entityType'), hideOnMobile: true, cell: (row) => row.entityType },
+      { key: 'entity', header: t('columns.entityType'), hideOnMobile: true, cell: (row) => formatEntityType(row.entityType) },
       { key: 'entityId', header: t('columns.entityId'), hideOnMobile: true, cell: (row) => <span className={styles.mono}>{row.entityId?.slice(0, 8) ?? '—'}</span> },
       { key: 'correlation', header: t('columns.correlationId'), hideOnMobile: true, cell: (row) => <span className={styles.mono}>{row.correlationId?.slice(0, 8) ?? '—'}</span> },
       {
