@@ -64,6 +64,8 @@
     "language": "Interfeys tili",
     "profile": "Profil",
     "logout": "Chiqish",
+    "connectionSettings": "Ulanish sozlamalari",
+    "connectionSettingsFailed": "Ulanish sozlamalarini ochib boʻlmadi",
     "userMenu": "Foydalanuvchi menyusi",
     "workspace": "Ish joyi",
     "switchWorkspace": "Ish joyini almashtirish",

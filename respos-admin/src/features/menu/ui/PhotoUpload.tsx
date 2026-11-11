@@ -2,6 +2,7 @@ import { ImagePlus } from 'lucide-react';
 import { useEffect, useId, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MENU_PHOTO_MAX_BYTES, MENU_PHOTO_TYPES } from '@/entities/menu/menu-item.queries';
+import { resolveFileUrl } from '@/shared/api/file-url';
 import styles from './MenuForms.module.css';
 
 export interface PhotoUploadProps {
@@ -43,7 +44,7 @@ export function PhotoUpload({ photoUrl, file, onFileChange }: PhotoUploadProps) 
     onFileChange(next);
   };
 
-  const shown = preview ?? photoUrl ?? null;
+  const shown = preview ?? resolveFileUrl(photoUrl);
   return (
     <div className={styles.photo}>
       <div className={styles.photoPreview}>

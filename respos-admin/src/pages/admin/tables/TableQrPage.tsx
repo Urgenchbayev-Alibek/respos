@@ -12,7 +12,7 @@ import { env } from '@/shared/config/env';
 import { buildPath, ROUTES } from '@/shared/constants/routes';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
-import { Alert, Button, Card, Checkbox, EmptyState, ErrorState, PageHeader, PageLoader } from '@/shared/ui';
+import { Alert, Button, Card, Checkbox, EmptyState, ErrorState, PageHeader, PageLoader, printPage } from '@/shared/ui';
 
 /** Admin: pick tables → printable A4 sheet of QR cards linking to the public menu of the current branch. */
 export function TableQrPage() {
@@ -51,7 +51,7 @@ export function TableQrPage() {
         title={t('sheet.title')}
         description={t('sheet.subtitle')}
         actions={
-          <Button variant="primary" icon={<Printer />} disabled={!slug || printable.length === 0} onClick={() => window.print()}>
+          <Button variant="primary" icon={<Printer />} disabled={!slug || printable.length === 0} onClick={() => printPage('a4')}>
             {t('sheet.print', { count: printable.length })}
           </Button>
         }

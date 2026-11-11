@@ -9,6 +9,9 @@
   "server": {
     "error": "Server xatosi. Muammoni oʻrganmoqdamiz."
   },
+  "desktop": {
+    "server_unreachable": "Server javob bermayapti. Tarmoqni va ulanish sozlamalaridagi server manzilini tekshiring."
+  },
   "auth": {
     "unauthenticated": "Sessiya tugadi. Qaytadan kiring.",
     "forbidden": "Bu amal uchun huquqingiz yetarli emas.",

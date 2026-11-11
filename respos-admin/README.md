@@ -29,7 +29,27 @@ node ../scripts/check-file-length.mjs   # ≤ 500 lines per source file (CI)
 ```
 
 Config: copy `.env.example` → `.env.local`. Only public values in `VITE_*`. Validated in `src/shared/config/env.ts`.
+`VITE_API_BASE_URL` / `VITE_HUB_URL` are absolute URLs, or root-relative paths (`/api/v1`, `/hubs/restaurant`) when the
+API is served from the app's own origin — they are resolved against `window.location.origin` at startup.
 Deploy: `vercel.json` (SPA rewrite to `index.html`).
+
+### Desktop build (`respos-desktop`, Electron shell)
+
+```bash
+MSYS_NO_PATHCONV=1 VITE_DESKTOP=true VITE_API_BASE_URL=/api/v1 VITE_HUB_URL=/hubs/restaurant VITE_APP_ENV=production npm run build
+```
+
+`MSYS_NO_PATHCONV=1` matters only in Git Bash on Windows, which otherwise rewrites `/api/v1` into
+`C:/Program Files/Git/api/v1` (the build then stops with an explicit error). Not needed in PowerShell, cmd, npm
+scripts or CI on Linux.
+
+- `VITE_DESKTOP=true` — no service worker, no web manifest (the shell replaces the bundled files itself).
+- The shell serves `dist/` and proxies `/api`, `/hubs`, `/files` from one loopback origin, hence the relative URLs.
+- `window.resposDesktop` (typed in `src/shared/types/desktop.d.ts`, read through `shared/lib/desktop.ts`) exists only
+  inside the shell: printing goes through it (`shared/ui/PrintArea/print-controller.ts` — the single print entry
+  point: `printArea(id)` for 80 mm slips, `printPage()` for A4 sheets; falls back to `window.print()`), and the user
+  menu shows «Настройки подключения».
+- File URLs returned by the API (`/files/...`) are rendered through `resolveFileUrl` (`shared/api/file-url.ts`).
 
 ## Folder structure
 
@@ -41,7 +61,7 @@ src/
   features/     user-facing actions: forms, modals, row actions (e.g. features/users/ui/UserFormModal.tsx)
   entities/     API types + TanStack Query hooks per resource (e.g. entities/user/user.queries.ts)
   shared/
-    api/        api-client.ts (the ONE client), api-error.ts, endpoints.ts, idempotency.ts, query-client.ts, session-store.ts
+    api/        api-client.ts (the ONE client), api-error.ts, endpoints.ts, file-url.ts, idempotency.ts, query-client.ts, session-store.ts
     config/     env.ts
     constants/  routes.ts, permissions.ts (ONLY permission catalog), statuses.ts (status → tone), locale.ts
     hooks/      use-auth, use-permissions (hasPermission/hasAny), use-current-branch, use-formatters, use-media-query, use-debounced-value
