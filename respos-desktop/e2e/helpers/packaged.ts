@@ -40,6 +40,9 @@ function killTree(child: ChildProcess): void {
   else child.kill('SIGKILL');
 }
 
+/** An installed build ignores the test hooks and refuses remote debugging unless it is started with this switch. */
+const E2E_SWITCH_ARG = '--respos-e2e';
+
 export function packagedEnvironment(userDataDir: string, options: LaunchOptions = {}): Record<string, string> {
   const env: Record<string, string> = {};
   for (const [name, value] of Object.entries(process.env)) {
@@ -69,7 +72,7 @@ async function connect(endpoint: string, child: ChildProcess): Promise<Browser> 
 
 export async function launchPackagedApp(executable: string, userDataDir: string, options: LaunchOptions = {}): Promise<PackagedApp> {
   const debugPort = await freeGatewayPort();
-  const child = spawn(executable, [`--remote-debugging-port=${debugPort}`, ...(options.args ?? [])], {
+  const child = spawn(executable, [E2E_SWITCH_ARG, `--remote-debugging-port=${debugPort}`, ...(options.args ?? [])], {
     env: packagedEnvironment(userDataDir, options),
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -120,7 +123,7 @@ export async function launchPackagedApp(executable: string, userDataDir: string,
 /** Starts another copy of the packaged app on the same profile and resolves with its exit code. */
 export function runSecondPackagedInstance(executable: string, userDataDir: string, options: LaunchOptions = {}): Promise<number | null> {
   return new Promise((resolve, reject) => {
-    const child = spawn(executable, options.args ?? [], { env: packagedEnvironment(userDataDir, options), stdio: 'ignore' });
+    const child = spawn(executable, [E2E_SWITCH_ARG, ...(options.args ?? [])], { env: packagedEnvironment(userDataDir, options), stdio: 'ignore' });
     const timer = setTimeout(() => {
       killTree(child);
       reject(new Error('The second copy of the packaged app did not exit'));

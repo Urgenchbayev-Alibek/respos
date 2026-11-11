@@ -11,30 +11,9 @@ import { createPrintCapture } from './print-capture';
 import { installSecurityPolicy } from './security';
 import { SettingsStore } from './settings-store';
 import { handleShellProtocol, registerShellScheme } from './shell-protocol';
+import { E2E_SWITCH, remoteDebuggingRefused, resolveTestOverrides, type TestHookContext, type TestOverrides } from './test-hooks';
 
 const APP_USER_MODEL_ID = 'uz.respos.desktop';
-
-interface TestOverrides {
-  gatewayPort: number;
-  printCaptureFile: string | null;
-}
-
-/**
- * Test hooks (end-to-end runs only, never set for users):
- * - RESPOS_DESKTOP_USER_DATA — use this folder instead of %APPDATA%/RestaurantOS (settings, session, lock);
- * - RESPOS_DESKTOP_GATEWAY_PORT — gateway port to try first (`0` = any free port);
- * - RESPOS_DESKTOP_PRINT_CAPTURE — file that receives the print jobs instead of a printer (print-capture.ts).
- */
-function applyTestOverrides(): TestOverrides {
-  const userData = process.env.RESPOS_DESKTOP_USER_DATA;
-  if (userData) app.setPath('userData', path.resolve(userData));
-  const port = Number(process.env.RESPOS_DESKTOP_GATEWAY_PORT);
-  const hasPort = process.env.RESPOS_DESKTOP_GATEWAY_PORT !== undefined && Number.isInteger(port) && port >= 0 && port <= 65_535;
-  return {
-    gatewayPort: hasPort ? port : PREFERRED_GATEWAY_PORT,
-    printCaptureFile: process.env.RESPOS_DESKTOP_PRINT_CAPTURE || null,
-  };
-}
 
 async function run(overrides: TestOverrides): Promise<void> {
   await app.whenReady();
@@ -83,13 +62,18 @@ async function run(overrides: TestOverrides): Promise<void> {
   await desktop.start();
 }
 
-const overrides = applyTestOverrides();
+const hookContext: TestHookContext = { isPackaged: app.isPackaged, e2eSwitch: app.commandLine.hasSwitch(E2E_SWITCH) };
+const overrides = resolveTestOverrides(process.env, hookContext, PREFERRED_GATEWAY_PORT);
+if (overrides.userDataDir !== null) app.setPath('userData', path.resolve(overrides.userDataDir));
+const remoteDebugging = app.commandLine.hasSwitch('remote-debugging-port') || app.commandLine.hasSwitch('remote-debugging-pipe');
 app.setAppUserModelId(APP_USER_MODEL_ID);
 // Every renderer is sandboxed, whatever a window's own webPreferences say.
 app.enableSandbox();
 registerShellScheme();
 
-if (app.requestSingleInstanceLock()) {
+if (remoteDebuggingRefused(hookContext, remoteDebugging)) {
+  app.exit(1);
+} else if (app.requestSingleInstanceLock()) {
   run(overrides).catch((error: unknown) => {
     const message = error instanceof Error ? (error.stack ?? error.message) : String(error);
     console.error(message);
