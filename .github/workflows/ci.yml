@@ -24,6 +24,7 @@ jobs:
       backend: ${{ steps.filter.outputs.backend }}
       admin: ${{ steps.filter.outputs.admin }}
       landing: ${{ steps.filter.outputs.landing }}
+      desktop: ${{ steps.filter.outputs.desktop }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -40,6 +41,10 @@ jobs:
               - '.github/workflows/ci.yml'
             landing:
               - 'respos-landing/**'
+              - '.github/workflows/ci.yml'
+            desktop:
+              - 'respos-desktop/**'
+              - 'respos-admin/**'
               - '.github/workflows/ci.yml'
 
   file-length:
@@ -131,3 +136,35 @@ jobs:
       - run: npm run build
         env:
           VITE_API_BASE_URL: https://api.example.com/api/v1
+
+  desktop:
+    name: Desktop shell (Windows)
+    needs: changes
+    if: needs.changes.outputs.desktop == 'true' || github.event_name != 'pull_request'
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: respos-desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            respos-desktop/package-lock.json
+            respos-admin/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      # The shell bundles the admin app: build it the desktop way (same-origin API, no service worker).
+      - name: Build the web app for the shell (web-dist)
+        run: npm run build:web
+        env:
+          VITE_LANDING_URL: https://landing.example.com
+      # Unpacked app only (release/win-unpacked): proves the electron-builder config, asar and fuses.
+      # The unsigned installer and the portable exe are built locally with `npm run dist`.
+      - name: Package (electron-builder --dir)
+        run: npm run pack

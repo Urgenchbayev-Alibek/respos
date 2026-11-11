@@ -10,6 +10,9 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+# Desktop shell (respos-desktop): bundled web app copy and installers; its build output is dist/ (above)
+respos-desktop/web-dist/
+respos-desktop/release/
 # env / secrets
 .env
 .env.*
