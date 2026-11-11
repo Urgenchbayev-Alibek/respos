@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Banknote, Receipt, ShoppingBasket, Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -7,27 +8,44 @@ import { DeltaBadge } from '@/features/reports/ui/DeltaBadge';
 import { Sparkline } from '@/features/reports/ui/Sparkline';
 import { ROUTES } from '@/shared/constants/routes';
 import { useFormatters } from '@/shared/hooks/use-formatters';
-import { Card, EmptyState, StatCard, StatusBadge } from '@/shared/ui';
+import { Card, EmptyState, Skeleton, StatCard, StatusBadge } from '@/shared/ui';
 import { TopItemsList } from './TopItemsList';
 import styles from './DashboardPage.module.css';
 
 type Data = DashboardOverviewDto | undefined;
 
-/** Period KPIs with Δ % vs the previous equal period and a sparkline (revenue / orders). */
-export function OverviewKpis({ data, loading }: { data: Data; loading: boolean }) {
+/** Same block `TopItemsList` shows while loading, so a card body never collapses to nothing. */
+export function CardSkeleton() {
+  return (
+    <div className={styles.skeletonList}>
+      <Skeleton height={18} />
+      <Skeleton height={18} />
+      <Skeleton height={18} />
+    </div>
+  );
+}
+
+/**
+ * Period KPIs with Δ % vs the previous equal period and a sparkline (revenue / orders).
+ * The hint slot keeps its height before the data arrives; `stale` marks the previous period's numbers.
+ */
+export function OverviewKpis({ data, loading, stale }: { data: Data; loading: boolean; stale?: boolean }) {
   const { t } = useTranslation('analytics');
   const format = useFormatters();
   const revenue = data?.sparkline.map((point) => point.revenue) ?? [];
   const orders = data?.sparkline.map((point) => point.orders) ?? [];
-  const hint = (delta: number | null | undefined, values?: number[]) =>
-    data ? (
-      <span className={analytics.kpiHint}>
+  const hint = (delta: number | null | undefined, values?: number[]) => {
+    const slot = clsx(analytics.kpiHint, values ? analytics.kpiHintSpark : analytics.kpiHintPlain);
+    if (!data) return <span className={slot} />;
+    return (
+      <span className={slot}>
         <DeltaBadge value={delta} />
         {values && <Sparkline values={values} />}
       </span>
-    ) : undefined;
+    );
+  };
   return (
-    <div className={styles.stats}>
+    <div className={styles.stats} aria-busy={stale || undefined}>
       <StatCard label={t('kpi.revenue')} value={format.money(data?.current.revenue)} icon={<Banknote />} hint={hint(data?.deltas.revenue, revenue)} loading={loading} />
       <StatCard
         label={t('kpi.orders')}
@@ -72,7 +90,9 @@ export function FoodCostAlertCard({ data, loading }: { data: Data; loading: bool
       title={t('dashboard.foodCostTitle')}
       actions={alerts && alerts.aboveThresholdCount > 0 ? <StatusBadge tone="danger">{alerts.aboveThresholdCount}</StatusBadge> : undefined}
     >
-      {loading || !alerts ? null : alerts.items.length === 0 ? (
+      {loading || !alerts ? (
+        <CardSkeleton />
+      ) : alerts.items.length === 0 ? (
         <EmptyState compact title={t('dashboard.foodCostOk', { threshold: alerts.thresholdPercent })} />
       ) : (
         <div className={analytics.alertList}>

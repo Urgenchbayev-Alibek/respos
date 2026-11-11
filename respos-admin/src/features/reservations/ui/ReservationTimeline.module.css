@@ -19,7 +19,12 @@
   border-bottom: 0;
 }
 
+/* The table column stays in view while the day scrolls sideways (`.conflict` blocks keep z-index 1). */
 .label {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--color-surface);
   display: flex;
   align-items: center;
   padding: var(--space-2) var(--space-3);
@@ -67,8 +72,7 @@
 }
 
 .block:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline-offset: -2px;
 }
 
 .blockName {

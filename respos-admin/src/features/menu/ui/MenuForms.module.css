@@ -99,9 +99,14 @@
   cursor: pointer;
 }
 
-.photoButton:focus-within,
-.photoButton:hover {
+.photoButton:focus-within {
   border-color: var(--color-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .photoButton:hover {
+    border-color: var(--color-primary);
+  }
 }
 
 .optionRow {

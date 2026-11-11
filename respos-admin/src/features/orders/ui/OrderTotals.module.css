@@ -24,6 +24,9 @@
   padding-top: var(--space-2);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.017em;
+  font-variant-numeric: tabular-nums;
 }
 
 .grand dt {

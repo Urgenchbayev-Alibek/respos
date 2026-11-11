@@ -43,6 +43,7 @@
 .linesTable {
   width: 100%;
   border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
 }
 
 .linesTable th,
@@ -73,4 +74,5 @@
   gap: var(--space-3);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
 }
