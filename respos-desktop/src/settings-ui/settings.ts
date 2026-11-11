@@ -1,4 +1,4 @@
-import type { ConnectionTestResult, PrinterInfo, ResposSettingsApi, SettingsState } from '../shared/ipc';
+import type { ConnectionTestError, ConnectionTestResult, PrinterInfo, ResposSettingsApi, SettingsState } from '../shared/ipc';
 import { type EditableSettings, type EditableSettingsError, type Language, LANGUAGES } from '../shared/settings-schema';
 import { isPlainStringKey, settingsStrings } from './i18n';
 
@@ -13,7 +13,7 @@ declare global {
 const AUTO_RETRY_MS = 5_000;
 
 type TestView = { kind: 'idle' } | { kind: 'testing' } | { kind: 'done'; result: ConnectionTestResult };
-type FormError = { kind: 'none' } | { kind: 'load' } | { kind: 'save'; error: EditableSettingsError | null };
+type FormError = { kind: 'none' } | { kind: 'load' } | { kind: 'save'; error: EditableSettingsError | ConnectionTestError | null };
 
 function byId<T extends HTMLElement>(id: string, type: new () => T): T {
   const found = document.getElementById(id);

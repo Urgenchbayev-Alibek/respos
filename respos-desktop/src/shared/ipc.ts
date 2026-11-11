@@ -71,7 +71,8 @@ export type ConnectionTestResult =
   | { ok: true; serverUrl: string }
   | { ok: false; error: ConnectionTestError; status?: number };
 
-export type SaveSettingsResult = { ok: true } | { ok: false; error: EditableSettingsError };
+/** Save also fails when a NEW server address does not answer: a typo must not sign the user out. */
+export type SaveSettingsResult = { ok: true } | { ok: false; error: EditableSettingsError | ConnectionTestError };
 
 /** `window.resposSettings` — exposed ONLY to the bundled connection window by its own preload. */
 export interface ResposSettingsApi {

@@ -151,14 +151,15 @@ export class DesktopApp implements SecurityPolicy {
     if (!validated.ok) return { ok: false, error: validated.error };
 
     const previous = this.deps.store.get();
+    const wanted = validated.value.serverUrl;
+    if (wanted !== null && wanted !== previous.serverUrl) {
+      // A new address is stored only once it answers: saving a typo would sign the user out of a working server.
+      const health = await checkServerHealth(wanted);
+      if (!health.ok) return { ok: false, error: health.error };
+    }
     const next = await this.deps.store.update(validated.value);
     const serverChanged = previous.serverUrl !== next.serverUrl;
-    if (serverChanged) {
-      this.deps.gateway.setTarget(next.serverUrl);
-      this.deps.log('info', `server address set to ${next.serverUrl ?? '<none>'}`);
-      // Session cookie, device token and cached ids belong to the previous server.
-      if (previous.serverUrl !== null) await session.defaultSession.clearStorageData();
-    }
+    if (serverChanged) await this.retarget(previous.serverUrl, next.serverUrl);
     if (previous.autoStart !== next.autoStart) applyAutoStart(next.autoStart, this.deps.log);
     if (previous.kiosk !== next.kiosk) this.kioskSuspended = false;
     this.refreshMenu();
@@ -175,6 +176,26 @@ export class DesktopApp implements SecurityPolicy {
 
   print(contents: WebContents, options: PrintOptions): Promise<PrintResult> {
     return printPage(contents, options, this.deps.store.get(), this.deps.log, this.deps.printSink);
+  }
+
+  /**
+   * The page of the previous server still holds its access token and refresh cookie, and it reconnects at once.
+   * It is unloaded and the session is cleared BEFORE the gateway points at the new address, so nothing that
+   * belongs to the old server is ever proxied to the new one.
+   */
+  private async retarget(previous: string | null, next: string | null): Promise<void> {
+    if (previous !== null) {
+      this.deps.gateway.setTarget(null);
+      if (this.mainWindow && !this.mainWindow.isDestroyed()) {
+        await this.mainWindow.loadURL('about:blank').catch((error: unknown) => {
+          this.deps.log('warn', `previous page did not unload cleanly: ${String(error)}`);
+        });
+      }
+      // Session cookie, device token and cached ids belong to the previous server.
+      await session.defaultSession.clearStorageData();
+    }
+    this.deps.gateway.setTarget(next);
+    this.deps.log('info', `server address set to ${next ?? '<none>'}`);
   }
 
   private get kioskWanted(): boolean {
