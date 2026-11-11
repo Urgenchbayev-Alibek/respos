@@ -105,3 +105,20 @@ Order of the remaining steps:
 4. Regroup commits **by topic** (owner request), push, redeploy Vercel, restart the local stack.
 5. Publish the before/after design gallery for the owner; update `README.md`, `CLAUDE.md` layout, `User-Todo.md`
    (unsigned exe → code-signing certificate; backend hosting still needed).
+
+## Redesign merged (2026-11-11, ~06:40)
+
+The night run hit a network outage (agents failed with "Request timed out"; the machine did not sleep). Both
+workflows were resumed with shortened stages.
+
+- **UI redesign (`v2/design`) merged into `main`** (`95634f9`) and pushed. Spec: `docs/design/MOTION_AND_POLISH.md`
+  (built from 6 surface audits, 150 items). Topic commits: shared UI kit, app shell, waiter/kitchen/cashier,
+  admin/stock, landing/QR/booking, docs, a modifier-price fix, after captures.
+  - Results (run by the finalize agent): admin lint/typecheck/build ✔, **316 tests**; landing ✔, **35 tests**;
+    1436 files ≤ 500 lines; UI smoke 32/32 across two runs (30/32 under load = timeouts, both specs 8/8 on rerun).
+  - Before/after: 41 screenshot pairs + 12 clip pairs, `docs/design/assets/redesign/pairs.json`; owner gallery:
+    https://claude.ai/artifact/3ETyqtyUi6Lb7jGeyLrTd3 (private).
+  - Known gaps: section 10 of the spec (real-device checks, two landing success animations, instant modal exits).
+- **Desktop (`v2/desktop`)**: shell committed by topic (`6c6dbda` admin desktop build, `ae1c95f` shell, `a7a2ac3`
+  e2e, `1caddcb` builder/CI/docs). E2E scenario matrix (8 scenarios + sanity, each with its own API + DB) has run;
+  the fix stage was still running at 06:40. **Not merged into `main` yet.**
