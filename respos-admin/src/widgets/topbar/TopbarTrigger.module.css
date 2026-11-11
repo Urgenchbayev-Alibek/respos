@@ -10,18 +10,26 @@
   background: var(--color-surface);
   color: var(--color-text);
   font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
-}
-
-.trigger:hover {
-  background: var(--color-surface-muted);
+  transition: transform var(--duration-press) var(--ease-out);
 }
 
 .trigger svg {
-  width: 16px;
-  height: 16px;
+  width: 1.15em;
+  height: 1.15em;
   flex-shrink: 0;
   color: var(--color-text-muted);
+}
+
+.trigger[aria-expanded='true'] {
+  background: var(--color-surface-muted);
+  border-color: var(--color-border-strong);
+}
+
+.trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .label {
@@ -30,12 +38,29 @@
   white-space: nowrap;
 }
 
+/* A label, not a control: no border, no fill, no press state. */
 .static {
   cursor: default;
+  border-color: transparent;
+  background: transparent;
+  padding-inline: var(--space-1);
 }
 
-.static:hover {
-  background: var(--color-surface);
+@media (hover: hover) and (pointer: fine) {
+  .trigger:hover {
+    background: var(--color-surface-muted);
+  }
+
+  .static:hover {
+    background: transparent;
+  }
+}
+
+/* Press-in is instant; the release eases back over --duration-press. */
+.trigger:active:not(:disabled):not(.static) {
+  background: var(--color-pressed);
+  transform: scale(var(--press-scale));
+  transition-duration: 0ms;
 }
 
 .avatar {
@@ -64,11 +89,13 @@
   white-space: nowrap;
 }
 
+/* Realtime state is carried by shape as well as hue: filled = connected, pulsing = (re)connecting, hollow = offline. */
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--color-text-subtle);
+  transition: background-color var(--duration-base) ease;
 }
 
 .connected {
@@ -78,24 +105,79 @@
 .reconnecting,
 .connecting {
   background: var(--color-warning);
+  animation: status-pulse 800ms var(--ease-in-out) infinite alternate;
 }
 
 .disconnected {
-  background: var(--color-danger);
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--color-danger);
 }
 
-@media (max-width: 767px) {
+@keyframes status-pulse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reconnecting,
+  .connecting {
+    animation: none;
+  }
+
+  .trigger {
+    transition: none;
+  }
+
+  .trigger:active:not(:disabled):not(.static) {
+    transform: none;
+  }
+}
+
+@media (max-width: 1023px) {
   .hideOnMobile {
     display: none;
   }
+}
 
+@media (max-width: 767px) {
   .trigger {
     flex-shrink: 1;
     min-width: 0;
     max-width: 160px;
+    padding: 0 var(--space-2);
+    gap: var(--space-1);
   }
 
-  /* Phones: the coloured dot stays, the text is kept for screen readers only (topbar must fit 360px). */
+  /* Branch and organisation names give up width first, so the action buttons stay readable at 390px. */
+  .absorb {
+    flex-shrink: 100;
+  }
+
+  .iconOnlyMobile {
+    position: relative;
+    flex-shrink: 0;
+    min-width: var(--touch-target);
+    justify-content: center;
+  }
+
+  /* Phones: the icon stays, the text is kept for screen readers only. */
+  .labelWideOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Phones: the dot stays, the text is kept for screen readers only (topbar must fit 360px). */
   .statusLabel {
     position: absolute;
     width: 1px;

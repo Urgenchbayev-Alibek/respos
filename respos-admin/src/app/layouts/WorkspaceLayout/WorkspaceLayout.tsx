@@ -13,6 +13,7 @@ import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { SkipLink } from '../parts/SkipLink';
+import { useBodyScope } from '../parts/use-body-scope';
 import { useVisibleNav } from '../parts/use-visible-nav';
 import { WorkspaceSwitcher } from '../parts/WorkspaceSwitcher';
 import styles from './WorkspaceLayout.module.css';
@@ -35,6 +36,7 @@ export interface WorkspaceLayoutProps {
 export function WorkspaceLayout({ workspace, nav = [], showBranch = true, showConnection = false, topbarExtra }: WorkspaceLayoutProps) {
   const { t } = useTranslation();
   const items = useVisibleNav(nav);
+  useBodyScope(workspace);
   const navLabel = t('nav:sectionNav');
 
   const renderLinks = (variant: 'tabs' | 'bottom') =>

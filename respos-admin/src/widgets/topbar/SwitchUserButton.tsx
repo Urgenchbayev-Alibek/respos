@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +20,11 @@ export function SwitchUserButton() {
   return (
     <button
       type="button"
-      className={styles.trigger}
+      className={clsx(styles.trigger, styles.iconOnlyMobile)}
       onClick={() => void logout().then(() => navigate(ROUTES.device, { replace: true }))}
     >
       <Users aria-hidden="true" />
-      <span className={styles.label}>{t('lock.switchUser')}</span>
+      <span className={clsx(styles.label, styles.labelWideOnly)}>{t('lock.switchUser')}</span>
     </button>
   );
 }

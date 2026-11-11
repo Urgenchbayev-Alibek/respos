@@ -5,6 +5,7 @@
   color: var(--color-text);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-lg);
+  letter-spacing: -0.011em;
   white-space: nowrap;
   text-decoration: none;
 }

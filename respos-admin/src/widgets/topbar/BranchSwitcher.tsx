@@ -13,7 +13,7 @@ export function BranchSwitcher() {
 
   if (branches.length <= 1) {
     return (
-      <span className={clsx(styles.trigger, styles.static)} title={t('nav:topbar.branch')}>
+      <span className={clsx(styles.trigger, styles.static, styles.absorb)} title={t('nav:topbar.branch')}>
         <Store aria-hidden="true" />
         <span className={styles.label}>{branch.name}</span>
       </span>
@@ -31,7 +31,7 @@ export function BranchSwitcher() {
         onSelect: () => setBranch(item.id),
       }))}
       trigger={(props) => (
-        <button type="button" className={styles.trigger} aria-label={t('nav:topbar.switchBranch')} {...props}>
+        <button type="button" className={clsx(styles.trigger, styles.absorb)} aria-label={t('nav:topbar.switchBranch')} {...props}>
           <Store aria-hidden="true" />
           <span className={styles.label}>{branch.name}</span>
           <ChevronDown aria-hidden="true" />

@@ -9,6 +9,7 @@ import { SwitchUserButton } from '@/widgets/topbar/SwitchUserButton';
 import { TimeClockButton } from '@/widgets/topbar/TimeClockButton';
 import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
+import { useBodyScope } from '../parts/use-body-scope';
 import { WorkspaceSwitcher } from '../parts/WorkspaceSwitcher';
 import styles from './KitchenLayout.module.css';
 
@@ -28,6 +29,7 @@ export function KitchenLayout() {
   const { t } = useTranslation();
   const format = useFormatters();
   const now = useClock();
+  useBodyScope('kitchen', 'kds');
 
   return (
     <div className={styles.shell} data-theme="kds" data-workspace="kitchen">

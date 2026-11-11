@@ -11,6 +11,7 @@
   list-style: none;
 }
 
+/* Navigation is high-frequency: colour changes at 0ms, nothing moves. */
 .link {
   display: flex;
   align-items: center;
@@ -24,16 +25,34 @@
   text-decoration: none;
 }
 
-.link:hover {
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    background: var(--color-surface-muted);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+}
+
+.link:active {
   background: var(--color-surface-muted);
   color: var(--color-text);
-  text-decoration: none;
 }
 
 .active,
 .active:hover {
   background: var(--color-primary-subtle);
   color: var(--color-primary-strong);
+}
+
+.active:active {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-strong);
+}
+
+@media (pointer: coarse) {
+  .link {
+    min-height: 44px;
+  }
 }
 
 .icon {

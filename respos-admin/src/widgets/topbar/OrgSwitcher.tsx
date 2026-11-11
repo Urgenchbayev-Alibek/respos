@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Building2, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +44,12 @@ export function OrgSwitcher() {
         onSelect: () => void onSelect(org.id),
       }))}
       trigger={(props) => (
-        <button type="button" className={styles.trigger} aria-label={t('nav:topbar.switchOrganization')} {...props}>
+        <button
+          type="button"
+          className={clsx(styles.trigger, styles.absorb)}
+          aria-label={t('nav:topbar.switchOrganization')}
+          {...props}
+        >
           <Building2 aria-hidden="true" />
           <span className={styles.label}>{current?.name ?? t('nav:topbar.organization')}</span>
           <ChevronDown aria-hidden="true" />

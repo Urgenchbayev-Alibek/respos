@@ -35,6 +35,10 @@ export function resolveTheme(preference: ThemePreference): ResolvedTheme {
 export function applyTheme(preference: ThemePreference = getThemePreference()): ResolvedTheme {
   const resolved = resolveTheme(preference);
   document.documentElement.dataset.theme = resolved;
+  // Browser / installed-app chrome follows the topbar surface; the always-dark KDS keeps its own colour.
+  if (document.body?.dataset.theme !== 'kds') {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', resolved === 'dark' ? '#162032' : '#ffffff');
+  }
   return resolved;
 }
 
