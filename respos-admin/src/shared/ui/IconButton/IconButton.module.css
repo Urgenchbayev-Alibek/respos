@@ -8,12 +8,24 @@
   background: transparent;
   color: var(--color-text-muted);
   cursor: pointer;
-  transition: background var(--transition), color var(--transition);
+  transition:
+    transform var(--duration-press) var(--ease-out),
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
 }
 
-.iconButton:hover:not(:disabled) {
-  background: var(--color-surface-muted);
+@media (hover: hover) and (pointer: fine) {
+  .iconButton:hover:not(:disabled) {
+    background: var(--color-surface-muted);
+    color: var(--color-text);
+  }
+}
+
+.iconButton:active:not(:disabled) {
+  transform: scale(var(--press-scale-icon));
+  background: var(--color-pressed);
   color: var(--color-text);
+  transition-duration: 0ms;
 }
 
 .iconButton:disabled {
@@ -27,8 +39,8 @@
 }
 
 .sm {
-  width: 30px;
-  height: 30px;
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
 }
 
 .md {

@@ -6,6 +6,12 @@
   min-height: 24px;
 }
 
+@media (pointer: coarse) {
+  .wrapper {
+    padding-block: 10px;
+  }
+}
+
 .disabled {
   cursor: not-allowed;
   opacity: 0.6;

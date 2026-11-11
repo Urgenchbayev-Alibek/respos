@@ -1,16 +1,40 @@
+/* Shown only after 200ms so fast loads never flash it. The sweep is a transform (compositor only). */
 .skeleton {
+  position: relative;
+  overflow: hidden;
   display: block;
   border-radius: var(--radius-sm);
-  background: linear-gradient(90deg, var(--color-surface-muted) 25%, var(--color-border) 37%, var(--color-surface-muted) 63%);
-  background-size: 400% 100%;
-  animation: shimmer 1.4s ease infinite;
+  background: var(--color-surface-muted);
+  animation: skeleton-in 1ms linear 200ms both;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 1.2s linear 200ms infinite;
+}
+
+@keyframes skeleton-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: 100% 50%;
+  to {
+    transform: translateX(100%);
   }
-  100% {
-    background-position: 0 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none !important;
   }
 }

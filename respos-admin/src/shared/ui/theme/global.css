@@ -8,8 +8,15 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
   color-scheme: light;
   background: var(--color-bg);
+}
+
+/* No pull-to-refresh or page rubber-band: a reload would wipe an unsent cart. */
+html,
+body {
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -37,13 +44,55 @@ p {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* Operational workspaces: digits keep their width so totals, timers and counters never shimmy. */
+[data-workspace='waiter'],
+[data-workspace='cashier'],
+[data-workspace='kitchen'],
+[data-workspace='stock'] {
+  font-variant-numeric: tabular-nums;
+}
+
 a {
   color: var(--color-primary-strong);
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Touch baseline: no double-tap zoom delay on repeated taps, no label selection or callout on long press. */
+a,
+button,
+summary,
+label,
+select,
+input[type='checkbox'],
+[role='button'],
+[role='tab'],
+[role='switch'],
+[role='menuitem'] {
+  touch-action: manipulation;
+}
+
+button,
+[role='button'],
+[role='tab'],
+[role='switch'],
+[role='menuitem'] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 button,
@@ -54,9 +103,14 @@ textarea {
   color: inherit;
 }
 
+/* One focus indicator everywhere. An outline survives forced-colors and selected-state shadows; never animated. */
 :focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[data-theme='kds'] :focus-visible {
+  outline-width: 3px;
 }
 
 .visually-hidden {
@@ -76,6 +130,8 @@ textarea {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
