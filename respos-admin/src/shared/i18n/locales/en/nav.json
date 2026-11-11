@@ -64,6 +64,8 @@
     "language": "Interface language",
     "profile": "Profile",
     "logout": "Log out",
+    "connectionSettings": "Connection settings",
+    "connectionSettingsFailed": "Could not open connection settings",
     "userMenu": "User menu",
     "workspace": "Workspace",
     "switchWorkspace": "Switch workspace",

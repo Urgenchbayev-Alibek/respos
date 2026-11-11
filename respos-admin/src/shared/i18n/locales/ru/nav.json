@@ -64,6 +64,8 @@
     "language": "Язык интерфейса",
     "profile": "Профиль",
     "logout": "Выйти",
+    "connectionSettings": "Настройки подключения",
+    "connectionSettingsFailed": "Не удалось открыть настройки подключения",
     "userMenu": "Меню пользователя",
     "workspace": "Рабочее место",
     "switchWorkspace": "Сменить рабочее место",

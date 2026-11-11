@@ -1,0 +1,83 @@
+# Packaging of the RestaurantOS desktop shell (run through `npm run dist`; output in release/, gitignored).
+appId: uz.respos.desktop
+productName: RestaurantOS
+copyright: Copyright © 2026 RestaurantOS
+
+directories:
+  output: release
+
+# The app is three esbuild bundles + assets; there are no runtime node_modules.
+files:
+  - dist/**
+  - "!dist/**/*.map"
+  - assets/**
+  - package.json
+asar: true
+npmRebuild: false
+publish: null
+
+# The built web app stays outside the asar: the gateway serves it from resources/web-dist.
+extraResources:
+  - from: web-dist
+    to: web-dist
+
+# The winCodeSign pitfall: the legacy signing toolset (winCodeSign-2.6.0.7z) contains macOS symlinks, and
+# Windows refuses to create symlinks without the "Create symbolic links" privilege (admin shell or Developer
+# Mode), so its extraction fails with "Cannot create symbolic link". Two independent guards:
+#  1. win.signExecutable: false (below) — nothing is signed, so no signing toolset is downloaded at all; the
+#     icon and version resources are written by electron-builder's built-in resource editor (resedit, pure JS);
+#  2. toolsets.winCodeSign 1.1.0 — once a certificate is configured and signing is switched on, signtool
+#     comes from the new toolset, which is published as plain zip archives without symlinks.
+# See README.md, «Сборка установщика».
+toolsets:
+  winCodeSign: "1.1.0"
+
+# Chromium UI strings (form validation messages, native dialogs). Chromium has no Uzbek locale: an Uzbek
+# Windows gets the English strings; the web app and the connection window have their own RU / UZ / EN texts.
+electronLanguages:
+  - ru
+  - en-US
+
+# Electron fuses, flipped in the packaged binary only (a development run is unaffected).
+electronFuses:
+  runAsNode: false
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+  enableCookieEncryption: true
+  grantFileProtocolExtraPrivileges: false
+
+win:
+  # Multi-size icon generated from the web app's 512 px icon: npm run icon (scripts/make-icon.mjs).
+  icon: assets/icon.ico
+  # No code-signing certificate yet (owner TODO): the exe is unsigned and SmartScreen will warn.
+  # Icon and version metadata are still written; only signing is skipped.
+  signExecutable: false
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+
+# Per-user install into %LOCALAPPDATA%\Programs — no administrator rights, no UAC prompt.
+nsis:
+  artifactName: RestaurantOS-Setup-${version}.${ext}
+  oneClick: true
+  perMachine: false
+  allowElevation: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: RestaurantOS
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+
+portable:
+  artifactName: RestaurantOS-${version}-portable.${ext}
+  # The portable exe unpacks the app into the temp folder on every start. By default that is ONE folder per
+  # build, wiped at the start and at the end of each launch — so a second double click on the exe deleted the
+  # files of the copy that was already running (blank pages, "ICU data" crash). `true` makes every launch
+  # unpack into its own folder ($PLUGINSDIR\app). Note: the option's documentation says `false` does this,
+  # but electron-builder 26.18 treats `false` like "not set" — check templates/nsis/portable.nsi when upgrading
+  # (e2e/packaged.e2e.ts starts a second copy and fails if this regresses).
+  unpackDirName: true

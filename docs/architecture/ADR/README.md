@@ -20,3 +20,4 @@
 | [0013](0013-idempotency-replay-store-and-db-keys.md) | Idempotency: HTTP replay store + DB unique keys | Accepted |
 | [0014](0014-pin-quick-login-shared-devices.md) | PIN quick login только на зарегистрированных общих устройствах | Accepted |
 | [0015](0015-report-exports-xlsx-closedxml-pdf-browser-print.md) | Экспорт отчётов: XLSX (ClosedXML, MIT), PDF через печать браузера (не QuestPDF) | Accepted |
+| [0016](0016-desktop-electron-loopback-gateway.md) | Desktop для Windows: Electron (не Tauri) + loopback-шлюз (SPA и API — один origin) | Accepted |

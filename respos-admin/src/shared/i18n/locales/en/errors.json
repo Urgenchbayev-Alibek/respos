@@ -9,6 +9,9 @@
   "server": {
     "error": "Server error. We are looking into it."
   },
+  "desktop": {
+    "server_unreachable": "The server is unreachable. Check the network and the server address in the connection settings."
+  },
   "auth": {
     "unauthenticated": "Your session has expired. Please sign in again.",
     "forbidden": "You do not have permission for this action.",

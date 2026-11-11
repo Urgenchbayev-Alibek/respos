@@ -1,0 +1,270 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --border: #d8dee8;
+  --text: #0f172a;
+  --muted: #55627a;
+  --accent: #c2410c;
+  --accent-hover: #9a3412;
+  --accent-text: #ffffff;
+  --ok: #15803d;
+  --danger: #b91c1c;
+  --banner-bg: #fff3e8;
+  --banner-border: #f6c79f;
+  --focus: #1d4ed8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --surface: #1b2538;
+    --border: #334155;
+    --text: #e8edf5;
+    --muted: #a3b1c6;
+    --accent: #ea6a2f;
+    --accent-hover: #f08048;
+    --accent-text: #1a0d05;
+    --ok: #4ade80;
+    --danger: #fca5a5;
+    --banner-bg: #3a2415;
+    --banner-border: #7c4a22;
+    --focus: #93c5fd;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  margin: 0;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  margin: 2px 0 0;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.languages {
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.language {
+  padding: 6px 10px;
+  border: 0;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.language + .language {
+  border-left: 1px solid var(--border);
+}
+
+.language[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.banner {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--banner-border);
+  border-radius: 8px;
+  background: var(--banner-bg);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 12px 14px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.label {
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.hint,
+.version {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.status[data-kind='ok'] {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.status[data-kind='error'],
+.error {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.error {
+  margin: 0;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.check input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.button {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.button.primary:hover:not(:disabled) {
+  border-color: var(--accent-hover);
+  background: var(--accent-hover);
+}
+
+.button:disabled,
+.check input:disabled,
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .header,
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}

@@ -15,6 +15,7 @@
 | `respos-backend/` | ASP.NET Core API + SignalR, модульный монолит, Clean Architecture (`src/Restaurant.Api`, `.Application`, `.Domain`, `.Infrastructure`, `tests/`); руководство — [respos-backend/README.md](respos-backend/README.md) | `backend/` |
 | `respos-admin/` | Одно React-приложение с рабочими местами: Admin Panel, Waiter, KDS, Cashier, Stock, Platform Super Admin | `frontend/` |
 | `respos-landing/` | Публичный сайт и форма заявки на демо | часть §2.3 |
+| `respos-desktop/` | Программа для Windows (Electron): то же `respos-admin` в окне, тихая печать чеков, киоск, автозапуск; установщик и portable-exe — [respos-desktop/README.md](respos-desktop/README.md), [ADR-0016](docs/architecture/ADR/0016-desktop-electron-loopback-gateway.md) | — |
 | `respos-contracts/` | Контракт API и доменная модель (CONVENTIONS, PERMISSIONS, DOMAIN_MODEL, ENDPOINTS v1.2, REALTIME, DECISIONS_v1_1, CHANGELOG). Обязателен для всех | — |
 | `docs/` | Требования, архитектура и ADR, дизайн, ERD, тесты, деплой | `docs/` |
 | `infra/docker/` | docker-compose (PostgreSQL; API — профиль `full`) | `infra/docker/` |
@@ -126,6 +127,7 @@ cd respos-landing && npm install && npm run dev
 cd respos-backend && dotnet build && dotnet test      # 252 unit + 201 integration; интеграционным нужен Docker (Testcontainers)
 cd respos-admin   && npm run lint && npm run typecheck && npm run test && npm run build   # 314 тестов (Vitest)
 cd respos-landing && npm run lint && npm run typecheck && npm run test && npm run build   # 35 тестов
+cd respos-desktop && npm run lint && npm run typecheck && npm run test                    # оболочка Windows; e2e и сборка exe — в её README
 node scripts/check-file-length.mjs                     # правило: файл не длиннее 500 строк
 ```
 

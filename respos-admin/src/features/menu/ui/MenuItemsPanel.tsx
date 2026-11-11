@@ -6,6 +6,7 @@ import { BranchOverridesModal } from '@/features/branch-menu/ui/BranchOverridesM
 import { useArchiveMenuItem, useMenuItems, useSetMenuItemAvailability } from '@/entities/menu/menu-item.queries';
 import { useMenuCategories } from '@/entities/menu/menu.queries';
 import type { MenuItemDto } from '@/entities/menu/menu.types';
+import { resolveFileUrl } from '@/shared/api/file-url';
 import { useDebouncedValue } from '@/shared/hooks/use-debounced-value';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { getErrorMessage } from '@/shared/lib/api-error-message';
@@ -78,11 +79,10 @@ export function MenuItemsPanel({ canManage }: { canManage: boolean }) {
       header: <span className="visually-hidden">{t('columns.photo')}</span>,
       width: '60px',
       hideOnMobile: true,
-      cell: (item) => (
-        <span className={styles.thumb}>
-          {item.photoUrl ? <img src={item.photoUrl} alt="" /> : <ImageOff aria-hidden="true" />}
-        </span>
-      ),
+      cell: (item) => {
+        const photo = resolveFileUrl(item.photoUrl);
+        return <span className={styles.thumb}>{photo ? <img src={photo} alt="" /> : <ImageOff aria-hidden="true" />}</span>;
+      },
     },
     {
       key: 'name',

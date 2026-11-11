@@ -7,8 +7,8 @@ import styles from './pwa.module.css';
 const UPDATE_CHECK_MS = 60 * 60 * 1000;
 
 /**
- * Registers the service worker (production build only) and asks before activating a new version,
- * so a cashier is never reloaded in the middle of a payment.
+ * Registers the service worker (production web build only, never the desktop shell build — see `App.tsx`)
+ * and asks before activating a new version, so a cashier is never reloaded in the middle of a payment.
  */
 export function PwaUpdatePrompt() {
   const { t } = useTranslation('ux');

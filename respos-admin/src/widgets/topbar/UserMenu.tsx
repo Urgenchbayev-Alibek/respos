@@ -1,12 +1,13 @@
-import { LogOut, Monitor, Moon, Sun, UserRound } from 'lucide-react';
+import { LogOut, Monitor, Moon, ServerCog, Sun, UserRound } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/shared/constants/routes';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { useTheme } from '@/shared/hooks/use-theme';
+import { getDesktopApi } from '@/shared/lib/desktop';
 import { THEME_PREFERENCES, type ThemePreference } from '@/shared/lib/theme';
-import { DropdownMenu } from '@/shared/ui';
+import { DropdownMenu, useToast, type DropdownMenuItem } from '@/shared/ui';
 import styles from './TopbarTrigger.module.css';
 
 function initials(fullName: string): string {
@@ -20,13 +21,33 @@ function initials(fullName: string): string {
 
 const THEME_ICONS: Record<ThemePreference, ReactNode> = { system: <Monitor />, light: <Sun />, dark: <Moon /> };
 
-/** User menu: profile, colour theme (per device; hidden on KDS which is always dark), logout. */
+/**
+ * User menu: profile, colour theme (per device; hidden on KDS which is always dark), connection settings
+ * (desktop shell only), logout.
+ */
 export function UserMenu({ showTheme = true }: { showTheme?: boolean }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const toast = useToast();
   const { user, logout } = useAuth();
   const theme = useTheme();
   if (!user) return null;
+  const desktop = getDesktopApi();
+  const desktopItems: DropdownMenuItem[] = desktop
+    ? [
+        {
+          id: 'connection-settings',
+          label: t('nav:topbar.connectionSettings'),
+          icon: <ServerCog />,
+          onSelect: () => {
+            desktop.openConnectionSettings().catch((error: unknown) => {
+              console.error('[desktop] could not open the connection settings', error);
+              toast.error(t('nav:topbar.connectionSettingsFailed'));
+            });
+          },
+        },
+      ]
+    : [];
   const themeItems = showTheme
     ? THEME_PREFERENCES.map((preference) => ({
         id: `theme-${preference}`,
@@ -49,6 +70,7 @@ export function UserMenu({ showTheme = true }: { showTheme?: boolean }) {
       items={[
         { id: 'profile', label: t('nav:topbar.profile'), icon: <UserRound />, onSelect: () => navigate(ROUTES.profile) },
         ...themeItems,
+        ...desktopItems,
         {
           id: 'logout',
           label: t('nav:topbar.logout'),

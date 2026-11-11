@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RestaurantOS</title>
+    <link rel="stylesheet" href="settings.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <div>
+          <p class="brand">RestaurantOS</p>
+          <h1 data-i18n="title"></h1>
+        </div>
+        <div class="languages" role="group" data-i18n-aria-label="languageLabel">
+          <button type="button" class="language" data-language="ru" lang="ru" aria-pressed="false">Русский</button>
+          <button type="button" class="language" data-language="uz" lang="uz" aria-pressed="false">O‘zbekcha</button>
+          <button type="button" class="language" data-language="en" lang="en" aria-pressed="false">English</button>
+        </div>
+      </header>
+
+      <p id="reason" class="banner" role="status" hidden></p>
+
+      <form id="settings-form" novalidate>
+        <fieldset class="card" id="fields" disabled>
+          <legend data-i18n="serverSection"></legend>
+          <label class="label" for="server-url" data-i18n="serverLabel"></label>
+          <input
+            id="server-url"
+            class="input"
+            type="text"
+            inputmode="url"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            maxlength="2048"
+            placeholder="http://192.168.1.10:5080"
+            aria-describedby="server-hint test-status"
+          />
+          <p id="server-hint" class="hint" data-i18n="serverHint"></p>
+          <div class="row">
+            <button type="button" id="test-button" class="button" data-i18n="testButton"></button>
+            <p id="test-status" class="status" role="status" aria-live="polite"></p>
+          </div>
+        </fieldset>
+
+        <fieldset class="card" id="print-fields" disabled>
+          <legend data-i18n="printSection"></legend>
+          <label class="label" for="printer" data-i18n="printerLabel"></label>
+          <div class="row">
+            <select id="printer" class="input"></select>
+            <button type="button" id="refresh-printers" class="button" data-i18n="refreshPrinters"></button>
+          </div>
+          <label class="check">
+            <input type="checkbox" id="silent-print" aria-describedby="silent-hint" />
+            <span data-i18n="silentPrintLabel"></span>
+          </label>
+          <p id="silent-hint" class="hint" data-i18n="silentPrintHint"></p>
+        </fieldset>
+
+        <fieldset class="card" id="mode-fields" disabled>
+          <legend data-i18n="modeSection"></legend>
+          <label class="check">
+            <input type="checkbox" id="kiosk" aria-describedby="kiosk-hint" />
+            <span data-i18n="kioskLabel"></span>
+          </label>
+          <p id="kiosk-hint" class="hint" data-i18n="kioskHint"></p>
+          <p id="kiosk-flag" class="hint" data-i18n="kioskFlagNote" hidden></p>
+          <label class="check">
+            <input type="checkbox" id="auto-start" />
+            <span data-i18n="autoStartLabel"></span>
+          </label>
+        </fieldset>
+
+        <p id="form-error" class="error" role="alert" hidden></p>
+
+        <footer class="footer">
+          <p class="version"><span data-i18n="version"></span> <span id="app-version"></span></p>
+          <div class="actions">
+            <button type="button" id="cancel-button" class="button" data-i18n="cancel"></button>
+            <button type="submit" id="save-button" class="button primary" data-i18n="save" disabled></button>
+          </div>
+        </footer>
+      </form>
+    </main>
+    <script src="settings.js"></script>
+  </body>
+</html>

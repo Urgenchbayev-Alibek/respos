@@ -15,6 +15,10 @@ const SCAN_ROOTS = [
   'respos-backend/tests',
   'respos-admin/src',
   'respos-landing/src',
+  'respos-desktop/src',
+  'respos-desktop/tests',
+  'respos-desktop/e2e',
+  'respos-desktop/scripts',
   'scripts',
 ];
 const EXTENSIONS = new Set(['.cs', '.ts', '.tsx', '.js', '.mjs', '.jsx', '.css', '.scss', '.sql']);

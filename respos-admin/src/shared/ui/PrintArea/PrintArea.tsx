@@ -1,12 +1,12 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { createPortal, flushSync } from 'react-dom';
-import { clearPrintRequest, PRINT_BODY_ATTRIBUTE, requestedPrintId } from './print-controller';
+import { PRINT_BODY_ATTRIBUTE, requestedPrintId, subscribePrintLayout } from './print-controller';
 import styles from './PrintArea.module.css';
 
 export interface PrintAreaProps {
   /** Unique id; print it with `printArea(id)`. */
   id: string;
-  /** Also print this area on a plain browser print (Ctrl+P) while it is mounted (e.g. an open pre-check). */
+  /** Also print this area on a plain page print (Ctrl+P, `printPage()`) while it is mounted (e.g. an open pre-check). */
   defaultForPrint?: boolean;
   children: ReactNode;
 }
@@ -19,24 +19,25 @@ export function PrintArea({ id, defaultForPrint = false, children }: PrintAreaPr
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    const onBeforePrint = () => {
-      const requested = requestedPrintId();
-      if (requested !== id && !(requested === null && defaultForPrint)) return;
-      document.body.setAttribute(PRINT_BODY_ATTRIBUTE, id);
-      // The browser snapshots the page right after `beforeprint`: render synchronously.
-      flushSync(() => setActive(true));
-    };
-    const onAfterPrint = () => {
-      setActive(false);
+    const releaseBody = () => {
       if (document.body.getAttribute(PRINT_BODY_ATTRIBUTE) === id) document.body.removeAttribute(PRINT_BODY_ATTRIBUTE);
-      clearPrintRequest();
     };
-    window.addEventListener('beforeprint', onBeforePrint);
-    window.addEventListener('afterprint', onAfterPrint);
+    const unsubscribe = subscribePrintLayout({
+      onBegin: () => {
+        const requested = requestedPrintId();
+        if (requested !== id && !(requested === null && defaultForPrint)) return;
+        document.body.setAttribute(PRINT_BODY_ATTRIBUTE, id);
+        // The page is captured right after the job starts: render synchronously.
+        flushSync(() => setActive(true));
+      },
+      onEnd: () => {
+        setActive(false);
+        releaseBody();
+      },
+    });
     return () => {
-      window.removeEventListener('beforeprint', onBeforePrint);
-      window.removeEventListener('afterprint', onAfterPrint);
-      if (document.body.getAttribute(PRINT_BODY_ATTRIBUTE) === id) document.body.removeAttribute(PRINT_BODY_ATTRIBUTE);
+      unsubscribe();
+      releaseBody();
     };
   }, [id, defaultForPrint]);
 
