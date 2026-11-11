@@ -27,6 +27,7 @@
     "src/shared",
     "tests",
     "vitest.config.mts",
-    "vitest.e2e.config.mts"
+    "vitest.e2e.config.mts",
+    "vitest.scenarios.config.mts"
   ]
 }
