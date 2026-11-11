@@ -34,8 +34,16 @@ const env = {
   VITE_HUB_URL: '/hubs/restaurant',
   VITE_APP_ENV: 'production',
 };
-if (!env.VITE_LANDING_URL) {
-  console.warn('VITE_LANDING_URL is not set: QR-menu links in this build will use the web app default.');
+// The landing address is baked into the table QR codes: a build without it would print cards that open
+// http://localhost:5174 on a guest's phone. RESPOS_DESKTOP_ALLOW_DEV_LANDING=1 is the opt-out for local test builds.
+const landing = env.VITE_LANDING_URL ?? '';
+const devLanding = landing === '' || /^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/i.test(landing);
+if (devLanding && env.RESPOS_DESKTOP_ALLOW_DEV_LANDING !== '1') {
+  console.error(
+    'VITE_LANDING_URL must be the public address of the QR-menu site (for example https://respos-landing.vercel.app).\n' +
+      'For a local test build set RESPOS_DESKTOP_ALLOW_DEV_LANDING=1.',
+  );
+  process.exit(1);
 }
 
 if (!existsSync(path.join(adminDir, 'node_modules'))) run('npm ci', process.env);
