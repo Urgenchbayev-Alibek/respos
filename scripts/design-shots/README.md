@@ -30,6 +30,7 @@ Uses the Playwright installed in `scripts/ui-smoke` (run `npm install` there onc
 node scripts/design-shots/capture.mjs before                       # everything
 node scripts/design-shots/capture.mjs after --only admin-dashboard,toast   # some ids (manifest is merged)
 node scripts/design-shots/capture.mjs after --screens              # or --clips; --headed shows the browser
+node scripts/design-shots/pairs.mjs                                 # before/after pairs -> redesign/pairs.json
 ```
 
 Output: `docs/design/assets/redesign/<label>/` — `<id>--<theme>.png`, `<id>.webm` and `manifest.json`

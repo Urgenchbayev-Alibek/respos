@@ -1,0 +1,744 @@
+[
+  {
+    "id": "login",
+    "title": "Login",
+    "group": "auth",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/login--dark.png",
+    "after": "docs/design/assets/redesign/after/login--dark.png"
+  },
+  {
+    "id": "login",
+    "title": "Login",
+    "group": "auth",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/login--light.png",
+    "after": "docs/design/assets/redesign/after/login--light.png"
+  },
+  {
+    "id": "admin-dashboard",
+    "title": "Admin dashboard",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/admin-dashboard--dark.png",
+    "after": "docs/design/assets/redesign/after/admin-dashboard--dark.png"
+  },
+  {
+    "id": "admin-dashboard",
+    "title": "Admin dashboard",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-dashboard--light.png",
+    "after": "docs/design/assets/redesign/after/admin-dashboard--light.png"
+  },
+  {
+    "id": "admin-menu",
+    "title": "Menu list",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-menu--light.png",
+    "after": "docs/design/assets/redesign/after/admin-menu--light.png"
+  },
+  {
+    "id": "admin-menu-item-modal",
+    "title": "Menu item form (modal)",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-menu-item-modal--light.png",
+    "after": "docs/design/assets/redesign/after/admin-menu-item-modal--light.png"
+  },
+  {
+    "id": "admin-orders-drawer",
+    "title": "Orders list with the order drawer",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/admin-orders-drawer--dark.png",
+    "after": "docs/design/assets/redesign/after/admin-orders-drawer--dark.png"
+  },
+  {
+    "id": "admin-orders-drawer",
+    "title": "Orders list with the order drawer",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-orders-drawer--light.png",
+    "after": "docs/design/assets/redesign/after/admin-orders-drawer--light.png"
+  },
+  {
+    "id": "admin-tables-floor",
+    "title": "Tables floor plan",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-tables-floor--light.png",
+    "after": "docs/design/assets/redesign/after/admin-tables-floor--light.png"
+  },
+  {
+    "id": "admin-reservations",
+    "title": "Reservations",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-reservations--light.png",
+    "after": "docs/design/assets/redesign/after/admin-reservations--light.png"
+  },
+  {
+    "id": "admin-guests",
+    "title": "Guests list",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-guests--light.png",
+    "after": "docs/design/assets/redesign/after/admin-guests--light.png"
+  },
+  {
+    "id": "admin-guest-card",
+    "title": "Guest card",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-guest-card--light.png",
+    "after": "docs/design/assets/redesign/after/admin-guest-card--light.png"
+  },
+  {
+    "id": "admin-inventory",
+    "title": "Inventory",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-inventory--light.png",
+    "after": "docs/design/assets/redesign/after/admin-inventory--light.png"
+  },
+  {
+    "id": "admin-reports-sales",
+    "title": "Reports: sales chart",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-reports-sales--light.png",
+    "after": "docs/design/assets/redesign/after/admin-reports-sales--light.png"
+  },
+  {
+    "id": "admin-reports-abc",
+    "title": "Reports: ABC analysis",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-reports-abc--light.png",
+    "after": "docs/design/assets/redesign/after/admin-reports-abc--light.png"
+  },
+  {
+    "id": "admin-reports-heatmap",
+    "title": "Reports: heatmap",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-reports-heatmap--light.png",
+    "after": "docs/design/assets/redesign/after/admin-reports-heatmap--light.png"
+  },
+  {
+    "id": "admin-staff-schedule",
+    "title": "Staff schedule",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-staff-schedule--light.png",
+    "after": "docs/design/assets/redesign/after/admin-staff-schedule--light.png"
+  },
+  {
+    "id": "admin-delivery-board",
+    "title": "Delivery board",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-delivery-board--light.png",
+    "after": "docs/design/assets/redesign/after/admin-delivery-board--light.png"
+  },
+  {
+    "id": "admin-users",
+    "title": "Users",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-users--light.png",
+    "after": "docs/design/assets/redesign/after/admin-users--light.png"
+  },
+  {
+    "id": "admin-role-editor",
+    "title": "Role editor",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-role-editor--light.png",
+    "after": "docs/design/assets/redesign/after/admin-role-editor--light.png"
+  },
+  {
+    "id": "admin-settings",
+    "title": "Settings",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-settings--light.png",
+    "after": "docs/design/assets/redesign/after/admin-settings--light.png"
+  },
+  {
+    "id": "admin-integrations",
+    "title": "Integrations",
+    "group": "admin",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/admin-integrations--light.png",
+    "after": "docs/design/assets/redesign/after/admin-integrations--light.png"
+  },
+  {
+    "id": "waiter-floor-tablet",
+    "title": "Waiter floor (tablet)",
+    "group": "waiter",
+    "kind": "image",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/waiter-floor-tablet--light.png",
+    "after": "docs/design/assets/redesign/after/waiter-floor-tablet--light.png"
+  },
+  {
+    "id": "waiter-order-sheet-tablet",
+    "title": "Waiter order with the modifier sheet (tablet)",
+    "group": "waiter",
+    "kind": "image",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/waiter-order-sheet-tablet--dark.png",
+    "after": "docs/design/assets/redesign/after/waiter-order-sheet-tablet--dark.png"
+  },
+  {
+    "id": "waiter-order-sheet-tablet",
+    "title": "Waiter order with the modifier sheet (tablet)",
+    "group": "waiter",
+    "kind": "image",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/waiter-order-sheet-tablet--light.png",
+    "after": "docs/design/assets/redesign/after/waiter-order-sheet-tablet--light.png"
+  },
+  {
+    "id": "waiter-floor-phone",
+    "title": "Waiter floor (phone)",
+    "group": "waiter",
+    "kind": "image",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/waiter-floor-phone--light.png",
+    "after": "docs/design/assets/redesign/after/waiter-floor-phone--light.png"
+  },
+  {
+    "id": "waiter-order-sheet-phone",
+    "title": "Waiter order with the modifier sheet (phone)",
+    "group": "waiter",
+    "kind": "image",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/waiter-order-sheet-phone--dark.png",
+    "after": "docs/design/assets/redesign/after/waiter-order-sheet-phone--dark.png"
+  },
+  {
+    "id": "waiter-order-sheet-phone",
+    "title": "Waiter order with the modifier sheet (phone)",
+    "group": "waiter",
+    "kind": "image",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/waiter-order-sheet-phone--light.png",
+    "after": "docs/design/assets/redesign/after/waiter-order-sheet-phone--light.png"
+  },
+  {
+    "id": "cashier-payment",
+    "title": "Cashier payment",
+    "group": "cashier",
+    "kind": "image",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/cashier-payment--light.png",
+    "after": "docs/design/assets/redesign/after/cashier-payment--light.png"
+  },
+  {
+    "id": "cashier-split-dialog",
+    "title": "Cashier split bill dialog",
+    "group": "cashier",
+    "kind": "image",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/cashier-split-dialog--light.png",
+    "after": "docs/design/assets/redesign/after/cashier-split-dialog--light.png"
+  },
+  {
+    "id": "kds-board",
+    "title": "KDS board",
+    "group": "kitchen",
+    "kind": "image",
+    "viewport": {
+      "name": "kds",
+      "width": 1920,
+      "height": 1080
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/kds-board--dark.png",
+    "after": "docs/design/assets/redesign/after/kds-board--dark.png"
+  },
+  {
+    "id": "device-lock",
+    "title": "Shared-device lock screen",
+    "group": "device",
+    "kind": "image",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/device-lock--light.png",
+    "after": "docs/design/assets/redesign/after/device-lock--light.png"
+  },
+  {
+    "id": "platform-organizations",
+    "title": "Platform: organizations",
+    "group": "platform",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/platform-organizations--light.png",
+    "after": "docs/design/assets/redesign/after/platform-organizations--light.png"
+  },
+  {
+    "id": "landing-home",
+    "title": "Landing home",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-home--light.png",
+    "after": "docs/design/assets/redesign/after/landing-home--light.png"
+  },
+  {
+    "id": "landing-features",
+    "title": "Landing features",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-features--light.png",
+    "after": "docs/design/assets/redesign/after/landing-features--light.png"
+  },
+  {
+    "id": "landing-pricing",
+    "title": "Landing pricing",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-pricing--light.png",
+    "after": "docs/design/assets/redesign/after/landing-pricing--light.png"
+  },
+  {
+    "id": "landing-demo",
+    "title": "Landing demo request form",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-demo--light.png",
+    "after": "docs/design/assets/redesign/after/landing-demo--light.png"
+  },
+  {
+    "id": "landing-booking",
+    "title": "Landing booking",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-booking--light.png",
+    "after": "docs/design/assets/redesign/after/landing-booking--light.png"
+  },
+  {
+    "id": "landing-home-phone",
+    "title": "Landing home (phone)",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-home-phone--light.png",
+    "after": "docs/design/assets/redesign/after/landing-home-phone--light.png"
+  },
+  {
+    "id": "landing-booking-phone",
+    "title": "Landing booking (phone)",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-booking-phone--light.png",
+    "after": "docs/design/assets/redesign/after/landing-booking-phone--light.png"
+  },
+  {
+    "id": "qr-menu-phone",
+    "title": "Public QR menu (phone)",
+    "group": "landing",
+    "kind": "image",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/qr-menu-phone--light.png",
+    "after": "docs/design/assets/redesign/after/qr-menu-phone--light.png"
+  },
+  {
+    "id": "modal-open-close",
+    "title": "Modal opens and closes (menu item form)",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/modal-open-close.webm",
+    "after": "docs/design/assets/redesign/after/modal-open-close.webm"
+  },
+  {
+    "id": "drawer-open-close",
+    "title": "Drawer opens and closes (order details)",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/drawer-open-close.webm",
+    "after": "docs/design/assets/redesign/after/drawer-open-close.webm"
+  },
+  {
+    "id": "user-dropdown",
+    "title": "User dropdown menu",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/user-dropdown.webm",
+    "after": "docs/design/assets/redesign/after/user-dropdown.webm"
+  },
+  {
+    "id": "toast",
+    "title": "Toast appears after saving settings",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/toast.webm",
+    "after": "docs/design/assets/redesign/after/toast.webm"
+  },
+  {
+    "id": "tab-switch",
+    "title": "Tab switch (reports)",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/tab-switch.webm",
+    "after": "docs/design/assets/redesign/after/tab-switch.webm"
+  },
+  {
+    "id": "sidebar-collapse",
+    "title": "Sidebar collapses and expands",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/sidebar-collapse.webm",
+    "after": "docs/design/assets/redesign/after/sidebar-collapse.webm"
+  },
+  {
+    "id": "theme-toggle",
+    "title": "Theme toggle (light → dark → light)",
+    "group": "admin",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/theme-toggle.webm",
+    "after": "docs/design/assets/redesign/after/theme-toggle.webm"
+  },
+  {
+    "id": "waiter-add-item",
+    "title": "Waiter adds items to the cart",
+    "group": "waiter",
+    "kind": "clip",
+    "viewport": {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/waiter-add-item.webm",
+    "after": "docs/design/assets/redesign/after/waiter-add-item.webm"
+  },
+  {
+    "id": "kds-ticket-status",
+    "title": "KDS ticket status change (new → in progress)",
+    "group": "kitchen",
+    "kind": "clip",
+    "viewport": {
+      "name": "kds",
+      "width": 1920,
+      "height": 1080
+    },
+    "theme": "dark",
+    "before": "docs/design/assets/redesign/before/kds-ticket-status.webm",
+    "after": "docs/design/assets/redesign/after/kds-ticket-status.webm"
+  },
+  {
+    "id": "landing-home-scroll",
+    "title": "Landing home loads and scrolls",
+    "group": "landing",
+    "kind": "clip",
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-home-scroll.webm",
+    "after": "docs/design/assets/redesign/after/landing-home-scroll.webm"
+  },
+  {
+    "id": "landing-mobile-menu",
+    "title": "Landing mobile menu opens and closes",
+    "group": "landing",
+    "kind": "clip",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/landing-mobile-menu.webm",
+    "after": "docs/design/assets/redesign/after/landing-mobile-menu.webm"
+  },
+  {
+    "id": "qr-menu-category",
+    "title": "QR menu category switch",
+    "group": "landing",
+    "kind": "clip",
+    "viewport": {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "before": "docs/design/assets/redesign/before/qr-menu-category.webm",
+    "after": "docs/design/assets/redesign/after/qr-menu-category.webm"
+  }
+]
