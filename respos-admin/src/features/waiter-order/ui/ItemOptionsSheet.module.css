@@ -36,7 +36,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-2);
+  /* A price that does not fit beside the name drops under it instead of leaving the tile. */
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
   min-height: 52px;
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border-strong);
