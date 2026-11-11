@@ -200,7 +200,7 @@ RESPOS_E2E_SERVER_URL=http://localhost:5081 npm run e2e:packaged   # упако�
 | Portable-версия долго не появляется после двойного щелчка | Она распаковывается при каждом запуске (20–40 секунд). Подождите и не запускайте её повторно; для ежедневной работы используйте установщик. |
 | Нужно начать с чистого листа | Закройте программу и удалите папку `%APPDATA%\RestaurantOS` (настройки, сессия, журнал). |
 | При сборке: `Cannot create symbolic link` (winCodeSign) | См. «Сборка установщика». |
-| e2e: `Vitest failed to find the runner` / `reading 'config'` | Папка открыта с маленькой буквой диска (`d:...`). Запускайте из `D:...` (Vitest на Windows загружает себя дважды при разном регистре буквы диска). |
+| e2e: `Vitest failed to find the runner` / `reading 'config'` | Папка открыта с маленькой буквой диска (`d:\Projects\...`). Запускайте из `D:\Projects\...` (Vitest на Windows загружает себя дважды при разном регистре буквы диска). |
 | При сборке: `npm run dev` ничего не открывает | В окружении задана `ELECTRON_RUN_AS_NODE` — запускайте через `npm run dev` / `npm start`, а не `electron .`. |
 
 Для обращения в поддержку приложите `%APPDATA%\RestaurantOS\logs\main.log` (токенов, cookie и содержимого
