@@ -18,6 +18,7 @@ export function ItemCommentModal({ item, saving, onSave, onClose }: ItemCommentM
   return (
     <Modal
       open
+      motion="instant"
       size="sm"
       onClose={onClose}
       dismissible={!saving}

@@ -12,12 +12,18 @@
   cursor: pointer;
 }
 
-.item:hover {
-  background: var(--color-bg);
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    background: var(--color-bg);
+  }
+}
+
+.item:active {
+  background: var(--color-surface-muted);
 }
 
 .item:focus-visible {
-  outline: 2px solid var(--color-info);
+  outline: 2px solid var(--color-focus);
   outline-offset: -2px;
 }
 
@@ -91,23 +97,44 @@
   color: var(--color-on-danger);
   font-size: 11px;
   font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
   line-height: 18px;
   text-align: center;
   pointer-events: none;
+  box-shadow: 0 0 0 2px var(--color-surface);
 }
 
+/* Opened a few times per shift: a 150ms entrance from the bell's corner ties the panel to its trigger. */
 .panel {
   position: absolute;
   right: 0;
   top: calc(100% + 6px);
-  z-index: 50;
+  z-index: var(--z-dropdown);
   width: min(380px, calc(100vw - 24px));
   max-height: 70vh;
+  max-height: 70dvh;
   overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
-  box-shadow: 0 12px 32px rgb(15 23 42 / 0.18);
+  box-shadow: var(--shadow-md);
+  transform-origin: top right;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+@starting-style {
+  .panel {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+/* Keyboard-opened: no entrance, same as DropdownMenu. */
+.panel[data-instant] {
+  transition: none;
 }
 
 .panelHeader,
@@ -126,4 +153,29 @@
 .panelHeader h2 {
   margin: 0;
   font-size: var(--font-size-md);
+}
+
+/* Phones: the panel spans the viewport under the topbar instead of hanging off the left edge. */
+@media (max-width: 767px) {
+  .panel {
+    position: fixed;
+    top: calc(var(--topbar-height) + var(--space-1));
+    right: var(--space-2);
+    left: var(--space-2);
+    width: auto;
+    max-height: calc(100dvh - var(--topbar-height) - var(--space-4));
+    transform-origin: top center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel:not([data-instant]) {
+    transition: opacity 150ms ease !important;
+  }
+
+  @starting-style {
+    .panel {
+      transform: none;
+    }
+  }
 }

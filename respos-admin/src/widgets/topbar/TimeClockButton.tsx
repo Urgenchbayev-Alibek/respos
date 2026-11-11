@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Clock } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -58,9 +59,14 @@ function TimeClockControl() {
 
   if (!open) {
     return (
-      <button type="button" className={styles.trigger} onClick={() => void doClockIn()} disabled={clockIn.isPending}>
+      <button
+        type="button"
+        className={clsx(styles.trigger, styles.iconOnlyMobile)}
+        onClick={() => void doClockIn()}
+        disabled={clockIn.isPending}
+      >
         <Clock aria-hidden="true" />
-        <span className={styles.label}>{t('clock.clockIn')}</span>
+        <span className={clsx(styles.label, styles.labelWideOnly)}>{t('clock.clockIn')}</span>
       </button>
     );
   }
@@ -69,13 +75,13 @@ function TimeClockControl() {
     <>
       <button
         type="button"
-        className={styles.trigger}
+        className={clsx(styles.trigger, styles.iconOnlyMobile)}
         onClick={() => setConfirmOut(true)}
         disabled={elsewhere}
         title={elsewhere ? t('clock.otherBranch') : undefined}
       >
         <Clock aria-hidden="true" />
-        <span className={styles.label}>
+        <span className={clsx(styles.label, styles.labelWideOnly)}>
           {t('clock.onShift', { time: format.time(open.clockInAt), worked: formatMinutes(open.workedMinutes) })}
         </span>
       </button>

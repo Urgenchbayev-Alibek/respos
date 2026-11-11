@@ -14,14 +14,16 @@
   white-space: nowrap;
   cursor: pointer;
   transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.15s ease;
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease,
+    transform var(--duration-press) var(--ease-out);
 }
 
-.button:focus-visible {
-  border-radius: var(--radius-md);
+/* Press lands on finger-down with no ramp; the release eases back. */
+.button:active:not(:disabled) {
+  transform: scale(var(--press-scale));
+  transition-duration: 0ms;
 }
 
 .button:disabled {
@@ -45,12 +47,16 @@
   width: 100%;
 }
 
+.block:active:not(:disabled) {
+  transform: scale(var(--press-scale-wide));
+}
+
 .primary {
   background: var(--color-primary-strong);
   color: #fff;
 }
 
-.primary:hover:not(:disabled) {
+.primary:active:not(:disabled) {
   background: var(--color-primary-strong-hover);
 }
 
@@ -60,18 +66,14 @@
   color: var(--color-text);
 }
 
-.secondary:hover:not(:disabled) {
-  border-color: #cbd5e1;
-  background: var(--color-bg);
-}
-
 .ghost {
   background: transparent;
   color: var(--color-text);
 }
 
-.ghost:hover:not(:disabled) {
-  background: var(--color-bg);
+.secondary:active:not(:disabled),
+.ghost:active:not(:disabled) {
+  background: var(--color-pressed);
 }
 
 .inverse {
@@ -79,6 +81,26 @@
   color: var(--color-text);
 }
 
-.inverse:hover:not(:disabled) {
+.inverse:active:not(:disabled) {
   background: var(--color-primary-subtle);
+}
+
+/* Touch keeps :hover after a tap, so hover colours are for real pointers only. */
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover:not(:disabled) {
+    background: var(--color-primary-strong-hover);
+  }
+
+  .secondary:hover:not(:disabled) {
+    border-color: #cbd5e1;
+    background: var(--color-bg);
+  }
+
+  .ghost:hover:not(:disabled) {
+    background: var(--color-bg);
+  }
+
+  .inverse:hover:not(:disabled) {
+    background: var(--color-primary-subtle);
+  }
 }

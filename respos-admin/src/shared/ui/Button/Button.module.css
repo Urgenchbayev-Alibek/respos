@@ -10,7 +10,17 @@
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
   cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  transition:
+    transform var(--duration-press) var(--ease-out),
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+/* Press-in is instant so a 60ms tap shows it; only the release eases. */
+.button:active:not(:disabled) {
+  transform: scale(var(--press-scale));
+  transition-duration: 0ms;
 }
 
 .button:disabled {
@@ -29,7 +39,13 @@
   color: var(--color-on-primary);
 }
 
-.primary:hover:not(:disabled) {
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover:not(:disabled) {
+    background: var(--color-primary-strong-hover);
+  }
+}
+
+.primary:active:not(:disabled) {
   background: var(--color-primary-strong-hover);
 }
 
@@ -39,8 +55,10 @@
   color: var(--color-text);
 }
 
-.secondary:hover:not(:disabled) {
-  background: var(--color-surface-muted);
+@media (hover: hover) and (pointer: fine) {
+  .secondary:hover:not(:disabled) {
+    background: var(--color-surface-muted);
+  }
 }
 
 .ghost {
@@ -48,8 +66,15 @@
   color: var(--color-text);
 }
 
-.ghost:hover:not(:disabled) {
-  background: var(--color-surface-muted);
+@media (hover: hover) and (pointer: fine) {
+  .ghost:hover:not(:disabled) {
+    background: var(--color-surface-muted);
+  }
+}
+
+.secondary:active:not(:disabled),
+.ghost:active:not(:disabled) {
+  background: var(--color-pressed);
 }
 
 .danger {
@@ -57,12 +82,18 @@
   color: var(--color-on-danger);
 }
 
-.danger:hover:not(:disabled) {
+@media (hover: hover) and (pointer: fine) {
+  .danger:hover:not(:disabled) {
+    background: var(--color-danger-hover);
+  }
+}
+
+.danger:active:not(:disabled) {
   background: var(--color-danger-hover);
 }
 
 .sm {
-  min-height: 30px;
+  min-height: var(--control-height-sm);
   padding: 0 var(--space-3);
   font-size: var(--font-size-sm);
 }
@@ -75,4 +106,9 @@
 
 .fullWidth {
   width: 100%;
+}
+
+.lg:active:not(:disabled),
+.fullWidth:active:not(:disabled) {
+  transform: scale(var(--press-scale-wide));
 }

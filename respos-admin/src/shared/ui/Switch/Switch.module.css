@@ -11,10 +11,17 @@
   padding: 0;
   border: none;
   border-radius: var(--radius-full);
-  background: var(--color-border-strong);
+  background: var(--color-text-subtle);
   cursor: pointer;
-  transition: background var(--transition);
+  transition: background-color var(--duration-fast) ease;
   flex-shrink: 0;
+}
+
+/* Invisible 44 x 44px hit area around the 40 x 22px track. */
+.track::after {
+  content: '';
+  position: absolute;
+  inset: -11px -2px;
 }
 
 .track:disabled {
@@ -31,7 +38,7 @@
   border-radius: 50%;
   background: #fff;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--transition);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 
 .on {

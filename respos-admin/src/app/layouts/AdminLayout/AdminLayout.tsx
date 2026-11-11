@@ -17,12 +17,14 @@ import { UserMenu } from '@/widgets/topbar/UserMenu';
 import { Brand } from '../parts/Brand';
 import { SideNav } from '../parts/SideNav';
 import { SkipLink } from '../parts/SkipLink';
+import { useBodyScope } from '../parts/use-body-scope';
 import { WorkspaceSwitcher } from '../parts/WorkspaceSwitcher';
 import styles from './AdminLayout.module.css';
 
 /** Restaurant Admin Panel: collapsible sidebar (drawer on tablet/mobile) + topbar. */
 export function AdminLayout() {
   const { t } = useTranslation();
+  useBodyScope('admin');
   const isNarrow = useMediaQuery(BREAKPOINTS.tabletDown);
   const [collapsed, setCollapsed] = useState(() => safeStorage.get(STORAGE_KEYS.sidebarCollapsed) === '1');
   const [drawerOpen, setDrawerOpen] = useState(false);

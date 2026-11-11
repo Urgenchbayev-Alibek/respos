@@ -11,12 +11,14 @@ export interface PinPadProps {
   onChange: (value: string) => void;
   onSubmit: () => void;
   disabled?: boolean;
+  /** The last PIN was rejected: the dots shake once (the page keeps its Alert for the message). */
+  invalid?: boolean;
 }
 
 const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] as const;
 
 /** Large-touch numeric keypad (also accepts the physical keyboard: digits, Backspace, Enter). */
-export function PinPad({ value, onChange, onSubmit, disabled }: PinPadProps) {
+export function PinPad({ value, onChange, onSubmit, disabled, invalid }: PinPadProps) {
   const { t } = useTranslation('staff');
   const press = (digit: string) => {
     if (!disabled && value.length < PIN_MAX_LENGTH) onChange(value + digit);
@@ -41,7 +43,12 @@ export function PinPad({ value, onChange, onSubmit, disabled }: PinPadProps) {
 
   return (
     <div className={styles.pad}>
-      <div className={styles.dots} role="status" aria-label={t('lock.pinEntered', { count: value.length })}>
+      <div
+        className={styles.dots}
+        role="status"
+        aria-label={t('lock.pinEntered', { count: value.length })}
+        data-invalid={invalid || undefined}
+      >
         {Array.from({ length: PIN_MAX_LENGTH }, (_, index) => (
           <span key={index} className={index < value.length ? styles.dotFilled : styles.dot} aria-hidden="true" />
         ))}

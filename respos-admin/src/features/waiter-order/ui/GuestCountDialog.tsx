@@ -21,6 +21,7 @@ export function GuestCountDialog({ title, initial, onConfirm, onClose }: GuestCo
   return (
     <Modal
       open
+      motion="instant"
       size="sm"
       onClose={onClose}
       title={title}

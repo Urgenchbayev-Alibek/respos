@@ -72,7 +72,38 @@ StatusBadge, ConfirmDialog, Toast …). Токены — CSS custom properties, 
 ### Иконки и движение
 
 Иконки — одна библиотека (outline, 20px, stroke 1.75), например `lucide-react`. Длительность переходов
-120–200ms, `ease-out`; при `prefers-reduced-motion` — без анимаций.
+100–250ms, кривые и длительности — только из токенов движения (см. ниже).
+
+### Motion and polish
+
+Полная спецификация движения, нажатий, фокуса и мобильных правил — [`MOTION_AND_POLISH.md`](MOTION_AND_POLISH.md).
+Токены одинаковы в `respos-admin/src/shared/ui/theme/tokens.css` и `respos-landing/src/app/styles/global.css`:
+
+| Токен | Значение | Где используется |
+|---|---|---|
+| `--ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | появление, отпускание нажатия, всё, что вызвал пользователь |
+| `--ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | движение по экрану, пульсации |
+| `--ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | drawer, нижний лист |
+| `--duration-press` | `100ms` | отпускание нажатия (само нажатие — всегда 0ms) |
+| `--duration-fast` | `150ms` | hover-цвет, dropdown, popover, tooltip, переключатель |
+| `--duration-base` | `200ms` | modal, toast, затемнение, аккордеон |
+| `--duration-slow` | `250ms` | drawer, нижний лист |
+| `--duration-exit` | `150ms` | анимированные выходы (toast, мобильное меню лендинга, закрытие FAQ) |
+| `--duration-reveal` | `600ms` | только лендинг: hero и появление блоков при прокрутке |
+| `--press-scale` / `-wide` / `-icon` | `0.97` / `0.985` / `0.95` | кнопки / широкие кнопки / иконки |
+| `--stagger-step` | `40ms` (лендинг `80ms`) | шаг каскада |
+| `--color-pressed` | 12% текста поверх поверхности | фон нажатого элемента |
+| `--color-focus` | `#2563eb` / `#93c5fd` (dark) / `#ffffff` (KDS) | outline фокуса 2px (KDS 3px), offset 2px |
+
+Правила:
+
+- Частые действия (плитки блюд, количество, статусы KDS, клавиши оплаты, столики, горячие клавиши, поиск) —
+  без анимации, только мгновенный отклик на нажатие. Модальные окна, drawer, toast, dropdown, вкладки —
+  короткое стандартное движение. Открытие с клавиатуры — без анимации.
+- Никогда `transition: all`, `ease-in`, `scale(0)`; движение — только `transform` и `opacity`.
+- Hover-эффекты — под `@media (hover: hover) and (pointer: fine)`.
+- `prefers-reduced-motion`: движение заменяется коротким затуханием, обратная связь остаётся.
+- Фокус — `outline` (переживает forced-colors), не `box-shadow`; не анимируется.
 
 ## 2. Компоненты
 

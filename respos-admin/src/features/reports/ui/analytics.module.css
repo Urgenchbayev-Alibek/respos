@@ -44,6 +44,14 @@
   width: 100%;
   max-width: 160px;
   height: 32px;
+  margin-block: 2px;
+  overflow: visible;
+}
+
+.sparkline polyline {
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
 
 .kpiHint {
@@ -52,6 +60,16 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
+}
+
+/* Reserved hint height, so the KPI row does not grow when the numbers arrive. */
+.kpiHintPlain {
+  min-height: 18px;
+}
+
+/* Delta badge 18px + 8px gap + sparkline 32px with its 2px block margins. */
+.kpiHintSpark {
+  min-height: 62px;
 }
 
 .classBadge {

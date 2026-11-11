@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--space-6) var(--space-4);
   background:
     radial-gradient(circle at 15% 10%, var(--color-primary-subtle) 0, transparent 40%),
@@ -54,11 +55,15 @@
 .title {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.017em;
+  text-wrap: balance;
 }
 
 .subtitle {
   margin-top: var(--space-1);
   color: var(--color-text-muted);
+  text-wrap: pretty;
 }
 
 .body {

@@ -71,6 +71,8 @@ export function NotificationsBell() {
   const { hasPermission } = usePermissions();
   const allowed = hasPermission(PERMISSIONS.notifications.read);
   const [open, setOpen] = useState(false);
+  /** Opened from the keyboard (click with detail 0): the panel appears without its entrance. */
+  const [instant, setInstant] = useState(false);
   const rootRef = useRef<HTMLSpanElement>(null);
   const panelId = useId();
   const unread = useUnreadNotificationCount(allowed);
@@ -101,14 +103,23 @@ export function NotificationsBell() {
 
   return (
     <span ref={rootRef} className={styles.root}>
-      <IconButton label={label} icon={<Bell />} aria-expanded={open} aria-controls={panelId} onClick={() => setOpen((value) => !value)} />
+      <IconButton
+        label={label}
+        icon={<Bell />}
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={(event) => {
+          setInstant(event.detail === 0);
+          setOpen((value) => !value);
+        }}
+      />
       {count > 0 && (
         <span className={styles.badge} aria-hidden="true" data-testid="notifications-unread-badge">
           {count > MAX_BADGE ? `${MAX_BADGE}+` : count}
         </span>
       )}
       {open && (
-        <div id={panelId} role="dialog" aria-label={t('title')} className={styles.panel}>
+        <div id={panelId} role="dialog" aria-label={t('title')} className={styles.panel} data-instant={instant || undefined}>
           <BellPanel onClose={() => setOpen(false)} />
         </div>
       )}

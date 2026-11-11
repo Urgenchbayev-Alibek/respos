@@ -5,6 +5,8 @@
 .title {
   margin-top: 16px;
   font-size: clamp(28px, 5vw, 40px);
+  letter-spacing: -0.026em;
+  line-height: 1.12;
 }
 
 .note {

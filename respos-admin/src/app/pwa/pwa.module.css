@@ -57,6 +57,15 @@
   flex-shrink: 0;
 }
 
+/* Phones: stay clear of the fixed bottom navigation and the home indicator. */
+@media (max-width: 767px) {
+  .prompt {
+    right: var(--space-4);
+    width: auto;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @media print {
   .prompt,
   .offline {

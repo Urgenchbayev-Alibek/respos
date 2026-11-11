@@ -13,7 +13,7 @@ import { useCurrentBranch } from '@/shared/hooks/use-current-branch';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { useRealtimeEvent } from '@/shared/realtime';
 import { Card, DemoBadge, EmptyState, ErrorState, PageHeader, StatCard, StatusBadge } from '@/shared/ui';
-import { DishesCards, FoodCostAlertCard, OverviewKpis } from './DashboardOverviewCards';
+import { CardSkeleton, DishesCards, FoodCostAlertCard, OverviewKpis } from './DashboardOverviewCards';
 import styles from './DashboardPage.module.css';
 
 const PERIODS: DashboardPeriod[] = ['today', '7d', '30d'];
@@ -87,7 +87,7 @@ export function DashboardPage() {
       {overview.error && !overview.data ? (
         <ErrorState error={overview.error} onRetry={() => void overview.refetch()} />
       ) : (
-        <OverviewKpis data={overview.data} loading={overviewLoading} />
+        <OverviewKpis data={overview.data} loading={overviewLoading} stale={overview.isPlaceholderData} />
       )}
       <div className={styles.stats}>
         <StatCard label={t('activeOrders')} value={data?.activeOrders ?? 0} icon={<ClipboardList />} loading={loading} />
@@ -110,7 +110,9 @@ export function DashboardPage() {
         <DishesCards data={overview.data} loading={overviewLoading} />
         <FoodCostAlertCard data={overview.data} loading={overviewLoading} />
         <Card title={t('shift')}>
-          {loading ? null : data.currentShift ? (
+          {loading ? (
+            <CardSkeleton />
+          ) : data.currentShift ? (
             <div className={styles.shift}>
               <StatusBadge domain="cashShift" status="open" size="lg" />
               <p>{t('shiftOpened', { name: data.currentShift.openedByName ?? '—', time: format.dateTime(data.currentShift.openedAt) })}</p>

@@ -27,6 +27,7 @@
 .moreTitle {
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 /* Contacts */
@@ -47,6 +48,8 @@
 }
 
 .contactPrimary {
+  /* White focus outline on the saturated card. */
+  --color-focus: #ffffff;
   background: linear-gradient(135deg, var(--color-primary-strong), #9a3412);
   color: #fff;
 }

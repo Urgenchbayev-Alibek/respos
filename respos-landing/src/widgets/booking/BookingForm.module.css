@@ -44,12 +44,26 @@
   border: 0;
 }
 
-.slotGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
-  gap: 8px;
+.slots > legend {
+  padding: 0;
+  margin-bottom: 6px;
 }
 
+/* The grid fades in when a day's slots arrive; single slots never animate. */
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+  gap: 8px;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+@starting-style {
+  .slotGrid {
+    opacity: 0;
+  }
+}
+
+/* Tapped repeatedly: an instant colour swap on press, no transition and no transform. */
 .slot {
   position: relative;
   display: flex;
@@ -60,7 +74,10 @@
   border-radius: var(--radius-sm);
   background: var(--color-surface);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .slot input {
@@ -75,14 +92,23 @@
   box-shadow: var(--focus-ring);
 }
 
-.slot:hover {
-  border-color: var(--color-primary);
+.slot:active:not(.disabled) {
+  background: var(--color-bg);
 }
 
-.selected {
+/* The inset edge marks the chosen time by more than hue alone. */
+.selected,
+.selected:active {
   border-color: var(--color-primary-strong);
   background: var(--color-primary-subtle);
   color: var(--color-primary-text);
+  box-shadow: inset 0 0 0 1px var(--color-primary-strong);
+}
+
+.selected:has(input:focus-visible) {
+  box-shadow:
+    inset 0 0 0 1px var(--color-primary-strong),
+    var(--focus-ring);
 }
 
 .disabled {
@@ -92,8 +118,18 @@
   opacity: 0.6;
 }
 
-.disabled:hover {
-  border-color: var(--color-border);
+@media (hover: hover) and (pointer: fine) {
+  .slot:hover {
+    border-color: var(--color-primary);
+  }
+
+  .selected:hover {
+    border-color: var(--color-primary-strong);
+  }
+
+  .disabled:hover {
+    border-color: var(--color-border);
+  }
 }
 
 .muted {
@@ -125,7 +161,7 @@
 .spin {
   width: 18px;
   height: 18px;
-  animation: spin 0.9s linear infinite;
+  animation: spin 0.6s linear infinite;
 }
 
 @keyframes spin {
@@ -134,18 +170,38 @@
   }
 }
 
+/* Confirmation is seen once per booking: a short rise bridges the form-to-result swap. */
 .success {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
   padding: 8px 0;
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
 }
 
 .successIcon {
   width: 48px;
   height: 48px;
   color: var(--color-success);
+  transform-origin: 50% 50%;
+  transition:
+    opacity 300ms var(--ease-out) 60ms,
+    transform 300ms var(--ease-out) 60ms;
+}
+
+@starting-style {
+  .success {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .successIcon {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 }
 
 .successTitle {

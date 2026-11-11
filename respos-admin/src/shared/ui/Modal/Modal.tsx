@@ -18,9 +18,21 @@ export interface ModalProps {
   size?: 'sm' | 'md' | 'lg';
   /** Prevent closing by overlay click (e.g. while a request is running). */
   dismissible?: boolean;
+  /** Skip the entrance for dialogs inside a high-frequency loop (e.g. the waiter add-item dialog). */
+  motion?: 'instant';
 }
 
-export function Modal({ open, onClose, title, description, children, footer, size = 'md', dismissible = true }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  title,
+  description,
+  children,
+  footer,
+  size = 'md',
+  dismissible = true,
+  motion,
+}: ModalProps) {
   const { t } = useTranslation();
   const titleId = useId();
   const descriptionId = useId();
@@ -32,7 +44,7 @@ export function Modal({ open, onClose, title, description, children, footer, siz
 
   if (!open) return null;
   return createPortal(
-    <div className={styles.overlay} onMouseDown={(event) => event.target === event.currentTarget && close()}>
+    <div className={styles.overlay} data-motion={motion} onMouseDown={(event) => event.target === event.currentTarget && close()}>
       <div
         ref={panelRef}
         role="dialog"

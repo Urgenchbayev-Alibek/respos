@@ -21,6 +21,10 @@
   --color-surface: #ffffff;
   --color-surface-muted: #f1f5f9;
   --color-overlay: rgb(15 23 42 / 0.5);
+  /* Instant pressed fill for neutral controls (secondary / ghost buttons, rows, menu items). */
+  --color-pressed: color-mix(in srgb, var(--color-text) 12%, var(--color-surface));
+  /* Focus indicator: 5.2:1 on white. Dark and KDS override it below. */
+  --color-focus: #2563eb;
 
   /* Semantic */
   --color-success: #16a34a;
@@ -52,13 +56,7 @@
   /* Typography */
   --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-size-base: 14px;
-  --font-size-xs: 0.786em;
-  --font-size-sm: 0.857em;
-  --font-size-md: 1em;
-  --font-size-lg: 1.143em;
-  --font-size-xl: 1.429em;
-  --font-size-2xl: 1.714em;
-  --font-size-3xl: 2.286em;
+  /* The --font-size-* scale is derived from the base at the end of this file. */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -83,10 +81,12 @@
   --radius-full: 999px;
   --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.08);
   --shadow-md: 0 4px 12px rgb(15 23 42 / 0.1), 0 2px 4px rgb(15 23 42 / 0.06);
-  --focus-ring: 0 0 0 3px rgb(232 93 42 / 0.35);
+  --shadow-lg: 0 24px 48px -12px rgb(15 23 42 / 0.25), 0 8px 16px -8px rgb(15 23 42 / 0.12);
+  --focus-ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
 
   /* Sizing */
   --control-height: 36px;
+  --control-height-sm: 30px;
   --touch-target: 44px;
   --sidebar-width: 248px;
   --sidebar-collapsed-width: 64px;
@@ -96,6 +96,28 @@
   --z-modal: 50;
   --z-toast: 60;
   --transition: 150ms ease;
+
+  /* Motion (docs/design/MOTION_AND_POLISH.md, section 2) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-press: 100ms;
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+  --duration-exit: 150ms;
+  --press-scale: 0.97;
+  --press-scale-wide: 0.985;
+  --press-scale-icon: 0.95;
+  --stagger-step: 40ms;
+}
+
+/* Touch devices: every control is at least a 44px target, whatever the workspace. */
+@media (pointer: coarse) {
+  :root {
+    --control-height: var(--touch-target);
+    --control-height-sm: var(--touch-target);
+  }
 }
 
 /* Admin dark theme (html[data-theme='dark'], set by shared/lib/theme.ts). All text pairs ≥ 4.5:1 (WCAG AA). */
@@ -145,7 +167,8 @@
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 12px rgb(0 0 0 / 0.5), 0 2px 4px rgb(0 0 0 / 0.3);
-  --focus-ring: 0 0 0 3px rgb(251 146 60 / 0.55);
+  --shadow-lg: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.6);
+  --color-focus: #93c5fd;
   color-scheme: dark;
 }
 
@@ -155,12 +178,17 @@
 [data-workspace='stock'] {
   --font-size-base: 16px;
   --control-height: var(--touch-target);
+  --control-height-sm: var(--touch-target);
 }
 
 /* KDS: dark theme, huge type, touch targets. */
 [data-theme='kds'] {
   --font-size-base: 20px;
   --control-height: 52px;
+  --control-height-sm: 44px;
+  --color-focus: #ffffff;
+  --focus-ring: 0 0 0 2px var(--color-bg), 0 0 0 5px var(--color-focus);
+  --shadow-lg: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.6);
   --color-bg: #0b1220;
   --color-surface: #111a2e;
   --color-surface-muted: #18233b;
@@ -182,4 +210,18 @@
   --tone-primary-fg: #fdba74;
   --tone-primary-bg: #7c2d12;
   color-scheme: dark;
+}
+
+/* Type scale. Derived from the base at every scope that sets the base, so sizes never compound when a sized
+   component sits inside a sized element (11 / 12 / 14 / 16 / 20 / 24 / 32px at a 14px base). */
+:root,
+[data-workspace],
+[data-theme='kds'] {
+  --font-size-xs: calc(var(--font-size-base) * 0.786);
+  --font-size-sm: calc(var(--font-size-base) * 0.857);
+  --font-size-md: var(--font-size-base);
+  --font-size-lg: calc(var(--font-size-base) * 1.143);
+  --font-size-xl: calc(var(--font-size-base) * 1.429);
+  --font-size-2xl: calc(var(--font-size-base) * 1.714);
+  --font-size-3xl: calc(var(--font-size-base) * 2.286);
 }

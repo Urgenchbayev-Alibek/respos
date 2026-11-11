@@ -1,4 +1,6 @@
 .footer {
+  /* A blue outline is about 3:1 on the dark surface; white is clearly visible. */
+  --color-focus: #ffffff;
   padding-block: 48px 28px;
   background: var(--color-surface-dark);
   color: #cbd5e1;
@@ -45,11 +47,30 @@
   color: #cbd5e1;
   font-size: 15px;
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
-.link:hover {
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+.link:active {
   color: #fff;
-  text-decoration: underline;
+}
+
+@media (pointer: coarse) {
+  .links {
+    gap: 0;
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
 
 .bottom {

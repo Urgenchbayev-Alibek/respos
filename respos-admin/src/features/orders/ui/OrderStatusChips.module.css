@@ -18,9 +18,8 @@
   cursor: pointer;
 }
 
-.chip:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+.chip:active {
+  background: var(--color-surface-muted);
 }
 
 .on {

@@ -24,9 +24,15 @@
   color: var(--color-text);
 }
 
-.link:hover {
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    background: var(--color-surface-muted);
+    text-decoration: none;
+  }
+}
+
+.link:active {
   background: var(--color-surface-muted);
-  text-decoration: none;
 }
 
 .link span {

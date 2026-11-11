@@ -7,11 +7,37 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
+  interpolate-size: allow-keywords;
+  transition:
+    border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
 }
 
 .item[open] {
   border-color: #f6b597;
   box-shadow: var(--shadow-sm);
+}
+
+/* Progressive enhancement: the answer opens on the same clock as the chevron.
+   Engines without ::details-content keep the instant toggle. */
+.item::details-content {
+  block-size: 0;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    block-size var(--duration-exit) var(--ease-out),
+    opacity var(--duration-exit) var(--ease-out),
+    content-visibility var(--duration-exit) allow-discrete;
+}
+
+/* Opening takes the full beat; closing (the rule above) is shorter. */
+.item[open]::details-content {
+  transition-duration: var(--duration-base);
+}
+
+.item[open]::details-content {
+  block-size: auto;
+  opacity: 1;
 }
 
 .question {
@@ -20,8 +46,10 @@
   justify-content: space-between;
   gap: 16px;
   padding: 18px 20px;
+  border-radius: var(--radius-lg);
   font-size: 17px;
   font-weight: 600;
+  line-height: 1.35;
   list-style: none;
   cursor: pointer;
 }
@@ -30,20 +58,29 @@
   display: none;
 }
 
-.question:focus-visible {
-  border-radius: var(--radius-lg);
-}
-
 .chevron {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
   color: var(--color-muted);
-  transition: transform 0.2s ease;
+  transition:
+    transform var(--duration-exit) var(--ease-out),
+    color var(--duration-fast) ease;
 }
 
 .item[open] .chevron {
   transform: rotate(180deg);
+  transition-duration: var(--duration-base), var(--duration-fast);
+}
+
+.question:active .chevron {
+  color: var(--color-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .question:hover .chevron {
+    color: var(--color-text);
+  }
 }
 
 .answer {

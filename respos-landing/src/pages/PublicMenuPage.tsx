@@ -73,7 +73,9 @@ export function PublicMenuPage() {
             <h1 className="visually-hidden">{t('qrMenu.title')}</h1>
             <label className={styles.search}>
               <Search size={18} aria-hidden="true" />
-              <input type="search" value={search} placeholder={t('qrMenu.search')} aria-label={t('qrMenu.search')} onChange={(event) => setSearch(event.target.value)} />
+              <input type="search" value={search} placeholder={t('qrMenu.search')} aria-label={t('qrMenu.search')}
+                enterKeyHint="search" autoCapitalize="none" autoCorrect="off" spellCheck={false}
+                onChange={(event) => setSearch(event.target.value)} />
             </label>
             {!query && menu.categories.length > 1 && (
               <nav className={styles.chips} aria-label={t('qrMenu.categories')}>

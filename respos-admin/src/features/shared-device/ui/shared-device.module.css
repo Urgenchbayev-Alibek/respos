@@ -1,12 +1,20 @@
 .screen {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-6);
   padding: var(--space-6) var(--space-4);
+  padding-top: clamp(24px, 10vh, 96px);
   background: var(--color-bg);
   color: var(--color-text);
+}
+
+/* A wrong-PIN alert renders under the keypad, so the keys never move between taps. */
+.screen > [role='alert'] {
+  order: 1;
+  width: min(100%, 360px);
 }
 
 .header {
@@ -16,6 +24,8 @@
 .title {
   margin: 0;
   font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -28,13 +38,19 @@
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 148px));
+  justify-content: center;
   gap: var(--space-4);
   width: min(100%, 760px);
 }
 
+.grid > li {
+  display: flex;
+}
+
 .avatar {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,7 +86,9 @@
 
 .name {
   font-size: 1rem;
+  line-height: 1.25;
   text-align: center;
+  text-wrap: balance;
   overflow-wrap: anywhere;
 }
 
@@ -94,6 +112,37 @@
   justify-content: center;
   gap: 12px;
   min-height: 20px;
+}
+
+/* Rejection registers where the eye is; fires only on an error, never on a correct PIN. */
+.dots[data-invalid] {
+  animation: pin-shake 300ms var(--ease-out);
+}
+
+@keyframes pin-shake {
+  25% {
+    transform: translateX(-8px);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+}
+
+@keyframes pin-reject {
+  from {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots[data-invalid] {
+    animation: pin-reject 200ms ease !important;
+  }
 }
 
 .dot,
@@ -129,12 +178,43 @@
   place-items: center;
 }
 
+.key {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
 .keyPrimary {
   font-size: 1.1rem;
   font-weight: 600;
   background: var(--color-primary-strong);
   border-color: var(--color-primary-strong);
   color: var(--color-on-primary);
+}
+
+/* PIN entry is a burst of taps: colour lights at 0ms and fades on release; nothing moves. */
+.key,
+.keyPrimary,
+.avatar {
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.key:active:not(:disabled),
+.avatar:active {
+  background: var(--color-pressed);
+  transition-duration: 0ms;
+}
+
+.keyPrimary:active:not(:disabled) {
+  background: var(--color-primary-strong-hover);
+  border-color: var(--color-primary-strong-hover);
+  transition-duration: 0ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .key:hover:not(:disabled),
+  .avatar:hover {
+    border-color: var(--color-border-strong);
+  }
 }
 
 .key:disabled,
@@ -144,8 +224,15 @@
 }
 
 .links {
+  order: 2;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots[data-invalid] {
+    animation: none;
+  }
 }

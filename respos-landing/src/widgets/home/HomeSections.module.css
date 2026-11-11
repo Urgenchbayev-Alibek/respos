@@ -60,6 +60,39 @@
   color: #fff;
   font-size: 18px;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scroll reveal (useReveal): JS sets data-reveal="pending" only when it can also reveal the block,
+   so without JS and with reduced motion the content is simply there. Hiding is instant; only the reveal moves. */
+.showcaseItem[data-reveal='in'],
+.step[data-reveal='in'] {
+  transition:
+    opacity var(--duration-reveal) var(--ease-out),
+    translate var(--duration-reveal) var(--ease-out);
+}
+
+.showcaseItem[data-reveal='pending'],
+.step[data-reveal='pending'] {
+  opacity: 0;
+  translate: 0 16px;
+}
+
+/* Paper never scrolls, so nothing would reveal the blocks. */
+@media print {
+  .showcaseItem[data-reveal='pending'],
+  .step[data-reveal='pending'] {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* Stagger only where the items sit side by side. */
+@media (min-width: 1024px) {
+  .showcaseItem[data-reveal='in'],
+  .step[data-reveal='in'] {
+    transition-delay: calc(var(--i, 0) * var(--stagger-step));
+  }
 }
 
 .showcase {

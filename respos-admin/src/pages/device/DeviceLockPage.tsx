@@ -63,7 +63,7 @@ export function DeviceLockPage() {
       {error && <Alert>{error}</Alert>}
       {selected ? (
         <div className={styles.panel}>
-          <PinPad value={pin} onChange={setPin} onSubmit={() => void submit()} disabled={pending} />
+          <PinPad value={pin} onChange={setPin} onSubmit={() => void submit()} disabled={pending} invalid={Boolean(error)} />
           <Button variant="ghost" onClick={() => choose(null)}>
             {t('lock.back')}
           </Button>

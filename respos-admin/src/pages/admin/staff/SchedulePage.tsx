@@ -45,7 +45,7 @@ export function SchedulePage() {
         }
       />
       <StaffTabs />
-      <Toolbar>
+      <Toolbar className={styles.weekBar}>
         <IconButton label={t('schedule.prevWeek')} icon={<ChevronLeft />} onClick={() => setStart(addDaysToDateString(start, -7))} />
         <strong>
           {format.date(`${range.from}T12:00:00Z`)} – {format.date(`${range.to}T12:00:00Z`)}

@@ -12,17 +12,22 @@
   --color-text: #0f172a;
   --color-muted: #475569;
   --color-border: #e2e8f0;
+  --color-border-strong: #7c8ba1;
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
   --color-surface-dark: #0f172a;
+  --color-pressed: #f1f5f9;
+  --color-focus: #2563eb;
 
   --color-success: #16a34a;
   --color-success-subtle: #dcfce7;
+  --color-success-text: #166534;
   --color-warning: #d97706;
   --color-warning-subtle: #fef3c7;
   --color-warning-text: #92400e;
   --color-danger: #dc2626;
   --color-danger-subtle: #fee2e2;
+  --color-danger-text: #b91c1c;
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -32,11 +37,26 @@
   --shadow-md: 0 4px 12px rgb(15 23 42 / 0.08);
   --shadow-lg: 0 20px 40px -12px rgb(15 23 42 / 0.18);
 
+  /* Motion — same names and values as the admin app (docs/design/MOTION_AND_POLISH.md). */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-press: 100ms;
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+  --duration-exit: 150ms;
+  --duration-reveal: 600ms;
+  --press-scale: 0.97;
+  --press-scale-wide: 0.985;
+  --press-scale-icon: 0.95;
+  --stagger-step: 80ms;
+
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --container: 1160px;
   --gutter: 16px;
   --header-height: 64px;
-  --focus-ring: 0 0 0 3px rgb(232 93 42 / 0.45);
+  --focus-ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
 
   color-scheme: light;
 }
@@ -56,6 +76,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
   scroll-padding-top: calc(var(--header-height) + 16px);
 }
 
@@ -69,6 +90,7 @@ body {
   background: var(--color-surface);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1,
@@ -76,13 +98,21 @@ h2,
 h3,
 h4 {
   margin: 0;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.014em;
   font-weight: 700;
+  text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 p {
   margin: 0;
+}
+
+p,
+li,
+summary {
+  text-wrap: pretty;
 }
 
 ul,
@@ -109,10 +139,25 @@ select {
   color: inherit;
 }
 
+/* No double-tap zoom wait on controls; control labels are not selectable text. */
+a,
+button,
+label,
+select,
+summary,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+button,
+[role='button'] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 :focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-  border-radius: var(--radius-sm);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .visually-hidden {
@@ -132,8 +177,10 @@ select {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 }

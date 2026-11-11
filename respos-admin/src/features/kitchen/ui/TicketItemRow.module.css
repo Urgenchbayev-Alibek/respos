@@ -8,7 +8,7 @@
 .qty {
   min-width: 2.2em;
   font-size: 1.15em;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
 }
 
 .name {
@@ -43,17 +43,24 @@
 }
 
 .itemBtn {
-  min-width: 96px;
-  min-height: 48px;
+  min-width: 112px;
+  min-height: 56px;
   padding: 0 var(--space-3);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   background: var(--color-surface-muted);
   color: var(--color-text);
   font: inherit;
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: 700;
   cursor: pointer;
+  transition: transform var(--duration-press) var(--ease-out);
+}
+
+.itemBtn:active:not(:disabled) {
+  transform: scale(var(--press-scale));
+  background: var(--color-pressed);
+  transition-duration: 0ms;
 }
 
 .itemBtn:disabled {

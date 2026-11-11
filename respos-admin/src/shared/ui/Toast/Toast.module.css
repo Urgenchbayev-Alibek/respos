@@ -22,7 +22,24 @@
   color: var(--color-text);
   box-shadow: var(--shadow-md);
   pointer-events: auto;
-  animation: enter 160ms ease;
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+/* Enters and leaves along the edge its stack lives on. Transitions retarget when toasts arrive in bursts. */
+@starting-style {
+  .toast {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.toast[data-closing] {
+  opacity: 0;
+  transform: translateY(100%);
+  transition-duration: var(--duration-exit);
+  pointer-events: none;
 }
 
 .success {
@@ -78,6 +95,7 @@
 }
 
 .close {
+  position: relative;
   border: none;
   background: transparent;
   color: var(--color-text-muted);
@@ -86,14 +104,52 @@
   border-radius: var(--radius-sm);
 }
 
+/* Invisible 44px hit area around the 20px glyph button. */
+.close::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+}
+
 .close svg {
   width: 16px;
   height: 16px;
 }
 
-@keyframes enter {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
+/* Phones: the stack lives at the top so it never covers the bottom navigation or the send button. */
+@media (max-width: 767px) {
+  .region {
+    top: calc(var(--space-2) + env(safe-area-inset-top, 0px));
+    bottom: auto;
+    left: var(--space-3);
+    right: var(--space-3);
+    width: auto;
+    flex-direction: column-reverse;
+  }
+
+  @starting-style {
+    .toast {
+      transform: translateY(-100%);
+    }
+  }
+
+  .toast[data-closing] {
+    transform: translateY(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: opacity 150ms ease !important;
+  }
+
+  @starting-style {
+    .toast {
+      transform: none;
+    }
+  }
+
+  .toast[data-closing] {
+    transform: none;
   }
 }

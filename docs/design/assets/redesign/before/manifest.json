@@ -1,0 +1,712 @@
+{
+  "label": "before",
+  "capturedAt": "2026-11-10T19:44:25.105Z",
+  "urls": {
+    "admin": "http://localhost:5183",
+    "landing": "http://localhost:5184",
+    "api": "http://localhost:5082/api/v1"
+  },
+  "items": [
+    {
+      "id": "login",
+      "title": "Login",
+      "group": "auth",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "dark",
+      "file": "login--dark.png"
+    },
+    {
+      "id": "login",
+      "title": "Login",
+      "group": "auth",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "login--light.png"
+    },
+    {
+      "id": "admin-dashboard",
+      "title": "Admin dashboard",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "dark",
+      "file": "admin-dashboard--dark.png"
+    },
+    {
+      "id": "admin-dashboard",
+      "title": "Admin dashboard",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-dashboard--light.png"
+    },
+    {
+      "id": "admin-menu",
+      "title": "Menu list",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-menu--light.png"
+    },
+    {
+      "id": "admin-menu-item-modal",
+      "title": "Menu item form (modal)",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-menu-item-modal--light.png"
+    },
+    {
+      "id": "admin-orders-drawer",
+      "title": "Orders list with the order drawer",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "dark",
+      "file": "admin-orders-drawer--dark.png"
+    },
+    {
+      "id": "admin-orders-drawer",
+      "title": "Orders list with the order drawer",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-orders-drawer--light.png"
+    },
+    {
+      "id": "admin-tables-floor",
+      "title": "Tables floor plan",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-tables-floor--light.png"
+    },
+    {
+      "id": "admin-reservations",
+      "title": "Reservations",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-reservations--light.png"
+    },
+    {
+      "id": "admin-guests",
+      "title": "Guests list",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-guests--light.png"
+    },
+    {
+      "id": "admin-guest-card",
+      "title": "Guest card",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-guest-card--light.png"
+    },
+    {
+      "id": "admin-inventory",
+      "title": "Inventory",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-inventory--light.png"
+    },
+    {
+      "id": "admin-reports-sales",
+      "title": "Reports: sales chart",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-reports-sales--light.png"
+    },
+    {
+      "id": "admin-reports-abc",
+      "title": "Reports: ABC analysis",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-reports-abc--light.png"
+    },
+    {
+      "id": "admin-reports-heatmap",
+      "title": "Reports: heatmap",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-reports-heatmap--light.png"
+    },
+    {
+      "id": "admin-staff-schedule",
+      "title": "Staff schedule",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-staff-schedule--light.png"
+    },
+    {
+      "id": "admin-delivery-board",
+      "title": "Delivery board",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-delivery-board--light.png"
+    },
+    {
+      "id": "admin-users",
+      "title": "Users",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-users--light.png"
+    },
+    {
+      "id": "admin-role-editor",
+      "title": "Role editor",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-role-editor--light.png"
+    },
+    {
+      "id": "admin-settings",
+      "title": "Settings",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-settings--light.png"
+    },
+    {
+      "id": "admin-integrations",
+      "title": "Integrations",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "admin-integrations--light.png"
+    },
+    {
+      "id": "waiter-floor-tablet",
+      "title": "Waiter floor (tablet)",
+      "group": "waiter",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "waiter-floor-tablet--light.png"
+    },
+    {
+      "id": "waiter-order-sheet-tablet",
+      "title": "Waiter order with the modifier sheet (tablet)",
+      "group": "waiter",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "screenshot",
+      "theme": "dark",
+      "file": "waiter-order-sheet-tablet--dark.png"
+    },
+    {
+      "id": "waiter-order-sheet-tablet",
+      "title": "Waiter order with the modifier sheet (tablet)",
+      "group": "waiter",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "waiter-order-sheet-tablet--light.png"
+    },
+    {
+      "id": "waiter-floor-phone",
+      "title": "Waiter floor (phone)",
+      "group": "waiter",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "waiter-floor-phone--light.png"
+    },
+    {
+      "id": "waiter-order-sheet-phone",
+      "title": "Waiter order with the modifier sheet (phone)",
+      "group": "waiter",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "screenshot",
+      "theme": "dark",
+      "file": "waiter-order-sheet-phone--dark.png"
+    },
+    {
+      "id": "waiter-order-sheet-phone",
+      "title": "Waiter order with the modifier sheet (phone)",
+      "group": "waiter",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "waiter-order-sheet-phone--light.png"
+    },
+    {
+      "id": "cashier-payment",
+      "title": "Cashier payment",
+      "group": "cashier",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "cashier-payment--light.png"
+    },
+    {
+      "id": "cashier-split-dialog",
+      "title": "Cashier split bill dialog",
+      "group": "cashier",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "cashier-split-dialog--light.png"
+    },
+    {
+      "id": "kds-board",
+      "title": "KDS board",
+      "group": "kitchen",
+      "viewport": {
+        "name": "kds",
+        "width": 1920,
+        "height": 1080
+      },
+      "kind": "screenshot",
+      "theme": "dark",
+      "file": "kds-board--dark.png"
+    },
+    {
+      "id": "device-lock",
+      "title": "Shared-device lock screen",
+      "group": "device",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "device-lock--light.png"
+    },
+    {
+      "id": "platform-organizations",
+      "title": "Platform: organizations",
+      "group": "platform",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "platform-organizations--light.png"
+    },
+    {
+      "id": "landing-home",
+      "title": "Landing home",
+      "group": "landing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-home--light.png"
+    },
+    {
+      "id": "landing-features",
+      "title": "Landing features",
+      "group": "landing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-features--light.png"
+    },
+    {
+      "id": "landing-pricing",
+      "title": "Landing pricing",
+      "group": "landing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-pricing--light.png"
+    },
+    {
+      "id": "landing-demo",
+      "title": "Landing demo request form",
+      "group": "landing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-demo--light.png"
+    },
+    {
+      "id": "landing-booking",
+      "title": "Landing booking",
+      "group": "landing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-booking--light.png"
+    },
+    {
+      "id": "landing-home-phone",
+      "title": "Landing home (phone)",
+      "group": "landing",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-home-phone--light.png"
+    },
+    {
+      "id": "landing-booking-phone",
+      "title": "Landing booking (phone)",
+      "group": "landing",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "landing-booking-phone--light.png"
+    },
+    {
+      "id": "qr-menu-phone",
+      "title": "Public QR menu (phone)",
+      "group": "landing",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "screenshot",
+      "theme": "light",
+      "file": "qr-menu-phone--light.png"
+    },
+    {
+      "id": "modal-open-close",
+      "title": "Modal opens and closes (menu item form)",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "modal-open-close.webm",
+      "seconds": 3
+    },
+    {
+      "id": "drawer-open-close",
+      "title": "Drawer opens and closes (order details)",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "drawer-open-close.webm",
+      "seconds": 4.6
+    },
+    {
+      "id": "user-dropdown",
+      "title": "User dropdown menu",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "user-dropdown.webm",
+      "seconds": 3.7
+    },
+    {
+      "id": "toast",
+      "title": "Toast appears after saving settings",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "toast.webm",
+      "seconds": 3.3
+    },
+    {
+      "id": "tab-switch",
+      "title": "Tab switch (reports)",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "tab-switch.webm",
+      "seconds": 5.4
+    },
+    {
+      "id": "sidebar-collapse",
+      "title": "Sidebar collapses and expands",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "sidebar-collapse.webm",
+      "seconds": 4.5
+    },
+    {
+      "id": "theme-toggle",
+      "title": "Theme toggle (light → dark → light)",
+      "group": "admin",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "theme-toggle.webm",
+      "seconds": 4.7
+    },
+    {
+      "id": "waiter-add-item",
+      "title": "Waiter adds items to the cart",
+      "group": "waiter",
+      "viewport": {
+        "name": "tablet",
+        "width": 1024,
+        "height": 768
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "waiter-add-item.webm",
+      "seconds": 4.9
+    },
+    {
+      "id": "kds-ticket-status",
+      "title": "KDS ticket status change (new → in progress)",
+      "group": "kitchen",
+      "viewport": {
+        "name": "kds",
+        "width": 1920,
+        "height": 1080
+      },
+      "kind": "clip",
+      "theme": "dark",
+      "file": "kds-ticket-status.webm",
+      "seconds": 4.4
+    },
+    {
+      "id": "landing-home-scroll",
+      "title": "Landing home loads and scrolls",
+      "group": "landing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "landing-home-scroll.webm",
+      "seconds": 5.9
+    },
+    {
+      "id": "landing-mobile-menu",
+      "title": "Landing mobile menu opens and closes",
+      "group": "landing",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "landing-mobile-menu.webm",
+      "seconds": 3.6
+    },
+    {
+      "id": "qr-menu-category",
+      "title": "QR menu category switch",
+      "group": "landing",
+      "viewport": {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      "kind": "clip",
+      "theme": "light",
+      "file": "qr-menu-category.webm",
+      "seconds": 5.4
+    }
+  ]
+}

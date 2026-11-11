@@ -34,11 +34,14 @@
 .title {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-lg);
+  letter-spacing: -0.011em;
+  text-wrap: balance;
 }
 
 .description {
   max-width: 460px;
   color: var(--color-text-muted);
+  text-wrap: pretty;
 }
 
 .meta {

@@ -1,5 +1,13 @@
 import clsx from 'clsx';
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type ReactNode,
+} from 'react';
 import styles from './DropdownMenu.module.css';
 
 export interface DropdownMenuItem {
@@ -19,7 +27,7 @@ export interface DropdownMenuProps {
     'aria-haspopup': 'menu';
     'aria-expanded': boolean;
     'aria-controls': string;
-    onClick: () => void;
+    onClick: (event?: ReactMouseEvent<HTMLElement>) => void;
     onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   }) => ReactNode;
   items: DropdownMenuItem[];
@@ -30,6 +38,8 @@ export interface DropdownMenuProps {
 /** Accessible menu button: Enter/Space/ArrowDown open, arrows move, Escape closes, click outside closes. */
 export function DropdownMenu({ trigger, items, align = 'end', header }: DropdownMenuProps) {
   const [open, setOpen] = useState(false);
+  /** Opened from the keyboard (Enter / Space click has detail 0, ArrowDown): skip the entrance transition. */
+  const [instant, setInstant] = useState(false);
   const menuId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -67,16 +77,27 @@ export function DropdownMenu({ trigger, items, align = 'end', header }: Dropdown
         'aria-haspopup': 'menu',
         'aria-expanded': open,
         'aria-controls': menuId,
-        onClick: () => setOpen((value) => !value),
+        onClick: (event) => {
+          setInstant(event?.detail === 0);
+          setOpen((value) => !value);
+        },
         onKeyDown: (event) => {
           if (event.key === 'ArrowDown') {
             event.preventDefault();
+            setInstant(true);
             setOpen(true);
           }
         },
       })}
       {open && (
-        <div ref={menuRef} id={menuId} role="menu" className={clsx(styles.menu, styles[align])} onKeyDown={onMenuKeyDown}>
+        <div
+          ref={menuRef}
+          id={menuId}
+          role="menu"
+          className={clsx(styles.menu, styles[align])}
+          data-instant={instant || undefined}
+          onKeyDown={onMenuKeyDown}
+        >
           {header && <div className={styles.header}>{header}</div>}
           {items.map((item) => (
             <button

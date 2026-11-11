@@ -13,12 +13,17 @@
   font-size: 64px;
   font-weight: var(--font-weight-bold);
   line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
   color: var(--color-primary);
 }
 
 .title {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.019em;
+  text-wrap: balance;
 }
 
 .description {

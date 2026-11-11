@@ -1,6 +1,7 @@
 .shell {
   display: flex;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .sidebar {
@@ -10,10 +11,10 @@
   flex-direction: column;
   width: var(--sidebar-width);
   height: 100vh;
+  height: 100dvh;
   flex-shrink: 0;
   border-right: 1px solid var(--color-border);
   background: var(--color-surface);
-  transition: width var(--transition);
 }
 
 .collapsed {
@@ -33,9 +34,16 @@
   padding: 0;
 }
 
+/* The 24px fade at the bottom shows that the section list continues. */
 .sidebarScroll {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+  padding-bottom: var(--space-4);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
 }
 
 .sidebarFooter {
@@ -65,6 +73,7 @@
   gap: var(--space-2);
   height: var(--topbar-height);
   padding: 0 var(--space-4);
+  padding-inline: max(var(--space-4), env(safe-area-inset-left, 0px)) max(var(--space-4), env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
 }
@@ -85,6 +94,7 @@
   .topbar {
     gap: var(--space-1);
     padding: 0 var(--space-2);
+    padding-inline: max(var(--space-2), env(safe-area-inset-left, 0px)) max(var(--space-2), env(safe-area-inset-right, 0px));
   }
 
   .content {
