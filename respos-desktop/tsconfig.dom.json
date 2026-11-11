@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ]
+  },
+  "include": [
+    "src/preload",
+    "src/settings-ui",
+    "src/shared",
+    "e2e",
+    "tests/helpers"
+  ]
+}

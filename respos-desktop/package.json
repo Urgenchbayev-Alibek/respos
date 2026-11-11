@@ -1,0 +1,45 @@
+{
+  "name": "respos-desktop",
+  "productName": "RestaurantOS",
+  "private": true,
+  "version": "0.1.0",
+  "description": "RestaurantOS desktop shell (Electron) for the respos-admin web app",
+  "author": "RestaurantOS",
+  "main": "dist/main/main.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:web": "node scripts/build-web.mjs",
+    "dev": "node scripts/build.mjs && node scripts/start.mjs",
+    "start": "node scripts/start.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.dom.json --noEmit",
+    "test": "vitest run",
+    "smoke": "node scripts/build.mjs && vitest run --config vitest.e2e.config.mts e2e/smoke.e2e.ts",
+    "e2e": "node scripts/build.mjs && vitest run --config vitest.e2e.config.mts",
+    "e2e:packaged": "node scripts/e2e-packaged.mjs",
+    "scenario": "node scripts/scenario-run.mjs",
+    "scenario:all": "node scripts/scenario-run.mjs --all",
+    "icon": "node scripts/make-icon.mjs",
+    "pack": "npm run build && electron-builder --win --x64 --dir --publish never",
+    "dist": "npm run build:web && npm run build && electron-builder --win --x64 --publish never"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "@types/ws": "8.18.2",
+    "electron": "45.2.3",
+    "electron-builder": "26.18.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.14.0",
+    "globals": "17.14.0",
+    "playwright": "1.65.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2",
+    "vite": "8.3.7",
+    "vitest": "5.1.0",
+    "ws": "8.22.2"
+  }
+}
