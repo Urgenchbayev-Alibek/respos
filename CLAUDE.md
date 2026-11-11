@@ -11,6 +11,7 @@ Open questions / assumptions for the owner: `User-Todo.md`. Progress log: `STATU
 | `respos-backend/` | API + SignalR, modular monolith, Clean Architecture | .NET 8 LTS, ASP.NET Core, EF Core 8 + Npgsql, FluentValidation, Serilog, xUnit, Testcontainers |
 | `respos-admin/` | One React app: Admin Panel, Waiter, KDS, Cashier, Stock, Platform Super Admin (routes + layouts per workspace) | React 18, TS, Vite, React Router, TanStack Query, RHF + Zod, i18next, @microsoft/signalr, Vitest + RTL |
 | `respos-landing/` | Public marketing site + demo request form | React + TS + Vite (static, Vercel) |
+| `respos-desktop/` | Windows desktop app (exe): Electron shell + loopback gateway serving the built `respos-admin` | Electron, TS, esbuild, electron-builder (NSIS + portable), Vitest, Playwright `_electron` |
 | `respos-contracts/` | API contract docs shared by all | Markdown |
 | `docs/` | requirements, architecture + ADR, design, database (ERD), testing, deployment | Markdown |
 | `infra/docker/` | docker-compose (Postgres, API), Dockerfiles | |
