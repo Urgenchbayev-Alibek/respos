@@ -49,7 +49,7 @@
 }
 
 .spin {
-  animation: spin 0.9s linear infinite;
+  animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin {
@@ -58,18 +58,45 @@
   }
 }
 
+/* Sent once per visitor: the fade bridges the collapse of the tall form, the tick draws itself. */
 .success {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
   padding: 8px 0;
+  animation: successFade var(--duration-base) var(--ease-out) both;
 }
 
 .successIcon {
   width: 48px;
   height: 48px;
   color: var(--color-success);
+  animation: successPop 400ms var(--ease-out) both;
+}
+
+.successIcon path {
+  stroke-dasharray: 12;
+  animation: successDraw 350ms var(--ease-out) 150ms both;
+}
+
+@keyframes successFade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes successPop {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+@keyframes successDraw {
+  from {
+    stroke-dashoffset: -12;
+  }
 }
 
 .successTitle {

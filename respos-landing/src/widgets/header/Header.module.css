@@ -2,8 +2,38 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  background: transparent;
+  border-bottom: 1px solid rgb(15 23 42 / 0.08);
+}
+
+/* The frosted layer sits on a pseudo-element: a backdrop-filter on .header itself would turn it
+   into the containing block of the fixed mobile panel and collapse the menu into the bar. */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(255 255 255 / 0.82);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+}
+
+.header:has(.mobilePanel:not([hidden]))::before {
   background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header::before {
+    background: var(--color-surface);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .header::before {
+    background: var(--color-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 .bar {
@@ -21,7 +51,7 @@
 
 .desktopNav {
   display: none;
-  margin-left: 16px;
+  margin-left: 8px;
 }
 
 .navList {
@@ -40,16 +70,29 @@
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--duration-fast) ease,
+    background-color var(--duration-fast) ease;
 }
 
-.navLink:hover {
+@media (hover: hover) and (pointer: fine) {
+  .navLink:hover {
+    color: var(--color-text);
+    background: var(--color-bg);
+  }
+}
+
+.navLink:active {
+  background: var(--color-pressed);
   color: var(--color-text);
-  background: var(--color-bg);
 }
 
+/* Same weight as its neighbours: a route change must not nudge the other links. */
 .navActive {
-  color: var(--color-text);
-  font-weight: 600;
+  color: var(--color-primary-text);
+  background: var(--color-primary-subtle);
+  font-weight: 500;
 }
 
 .actions {
@@ -77,18 +120,44 @@
   border-radius: var(--radius-md);
   background: var(--color-surface);
   cursor: pointer;
+  transition:
+    transform var(--duration-press) var(--ease-out),
+    background-color var(--duration-fast) ease;
+}
+
+.burger:active {
+  transform: scale(var(--press-scale-icon));
+  background: var(--color-pressed);
+  transition-duration: 0ms;
 }
 
 .mobilePanel {
   position: fixed;
   inset: var(--header-height) 0 0;
   overflow-y: auto;
-  padding-block: 16px 32px;
+  overscroll-behavior: contain;
+  padding-block: 16px calc(32px + env(safe-area-inset-bottom, 0px));
   background: var(--color-surface);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete;
+}
+
+@starting-style {
+  .mobilePanel:not([hidden]) {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 .mobilePanel[hidden] {
   display: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition-duration: var(--duration-exit);
 }
 
 .mobileList {
@@ -103,6 +172,15 @@
   border-radius: 0;
   font-size: 17px;
   color: var(--color-text);
+}
+
+.mobileList .navActive {
+  color: var(--color-primary-text);
+  background: transparent;
+}
+
+.mobileList .navLink:active {
+  background: var(--color-pressed);
 }
 
 .mobileActions {
@@ -123,7 +201,8 @@
   }
 }
 
-@media (min-width: 1024px) {
+/* The desktop bar needs about 1150px of content, so it switches on later than the page grids. */
+@media (min-width: 1200px) {
   .desktopNav,
   .desktopOnly {
     display: flex;
@@ -133,8 +212,31 @@
     display: inline-flex;
   }
 
+  .navList .navLink {
+    padding-inline: 10px;
+  }
+
   .burger,
   .mobilePanel {
     display: none;
+  }
+}
+
+/* Reduced motion: the panel only cross-fades, it does not travel. */
+@media (prefers-reduced-motion: reduce) {
+  .mobilePanel {
+    transition:
+      opacity 150ms ease,
+      display 150ms allow-discrete !important;
+  }
+
+  .mobilePanel[hidden] {
+    transform: none;
+  }
+
+  @starting-style {
+    .mobilePanel:not([hidden]) {
+      transform: none;
+    }
   }
 }

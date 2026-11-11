@@ -18,38 +18,61 @@
 
 .control {
   width: 100%;
-  min-height: 46px;
+  min-height: 48px;
   padding: 10px 14px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   background: var(--color-surface);
   font-size: 16px; /* prevents zoom on iOS */
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+  line-height: 1.25;
+  transition: border-color var(--duration-fast) ease;
 }
 
 .control::placeholder {
   color: #64748b;
 }
 
-.control:hover {
-  border-color: #94a3b8;
+@media (hover: hover) and (pointer: fine) {
+  .control:hover {
+    border-color: #64748b;
+  }
 }
 
 .control:focus-visible {
-  border-color: var(--color-primary);
-  border-radius: var(--radius-md);
+  border-color: var(--color-focus);
+}
+
+/* Date, select and text inputs share one height in a row. */
+select.control,
+.control[type='date'] {
+  height: 48px;
+}
+
+.control[type='date'] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  text-align: start;
+  font-variant-numeric: tabular-nums;
+}
+
+.control[type='date']::-webkit-date-and-time-value {
+  text-align: start;
+}
+
+select.control {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px 16px;
 }
 
 .textarea {
   min-height: 120px;
   resize: vertical;
-}
-
-.invalid,
-.invalid:hover {
-  border-color: var(--color-danger);
 }
 
 .hint {
@@ -61,4 +84,10 @@
   font-size: 13px;
   font-weight: 500;
   color: #b91c1c;
+}
+
+/* Keep last: the error border wins over hover and focus. */
+.invalid,
+.invalid:hover {
+  border-color: var(--color-danger);
 }

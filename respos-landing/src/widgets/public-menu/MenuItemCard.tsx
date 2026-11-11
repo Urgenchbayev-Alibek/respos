@@ -5,6 +5,9 @@ import { formatMoney } from '@/shared/lib/formatMoney';
 import { localized } from './localized';
 import styles from './PublicMenu.module.css';
 
+/** NBSP + em dash + NBSP: a price never wraps away from its portion name. */
+const PAIR_DASH = '\u00A0\u2014\u00A0';
+
 export function MenuItemCard({ item, currency }: { item: PublicMenuItem; currency: string }) {
   const { t, i18n } = useTranslation();
   const photo = resolvePhotoUrl(item.photoUrl);
@@ -28,7 +31,7 @@ export function MenuItemCard({ item, currency }: { item: PublicMenuItem; currenc
         {item.description && <p className={styles.description}>{item.description}</p>}
         {item.variants.length > 1 && (
           <p className={styles.variants}>
-            {item.variants.map((variant) => `${variant.name} — ${money(variant.price)}`).join(' · ')}
+            {item.variants.map((variant) => [variant.name, money(variant.price)].join(PAIR_DASH)).join(' · ')}
           </p>
         )}
         <p className={styles.price}>{price}</p>

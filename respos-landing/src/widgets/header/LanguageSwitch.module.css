@@ -6,6 +6,7 @@
   background: var(--color-bg);
 }
 
+/* Switching the language is instant: no sliding thumb, no transition. */
 .option {
   min-width: 40px;
   min-height: 34px;
@@ -17,10 +18,25 @@
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.option:hover {
+@media (hover: hover) and (pointer: fine) {
+  .option:hover {
+    color: var(--color-text);
+  }
+}
+
+.option:active {
   color: var(--color-text);
+}
+
+@media (pointer: coarse) {
+  .option {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 .active {

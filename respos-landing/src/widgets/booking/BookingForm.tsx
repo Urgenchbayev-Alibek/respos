@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CalendarCheck, CircleAlert, CircleCheck, LoaderCircle } from 'lucide-react';
 import { Button } from '@/shared/ui/Button';
@@ -17,9 +17,33 @@ export function BookingForm({ branchSlug }: { branchSlug: string }) {
   const { values, errors, formError, submitting, created, availability, availabilityState } = booking;
   const successRef = useRef<HTMLHeadingElement>(null);
 
+  const formRef = useRef<HTMLFormElement>(null);
+  const focusPending = useRef(false);
+  const [attempt, setAttempt] = useState(0);
+
   useEffect(() => {
     if (created) successRef.current?.focus();
   }, [created]);
+
+  // After a failed submit, move focus to the first control with an error (date → time → the rest),
+  // so the browser scrolls it into view instead of leaving the visitor on the button.
+  useEffect(() => {
+    const form = formRef.current;
+    if (!focusPending.current || !form) return;
+    const wantsTime = Boolean(errors.time) || formError === 'booking.errors.slotTaken';
+    if (wantsTime && availabilityState === 'loading') return; // the slots are reloading: wait for them
+    focusPending.current = false;
+    const invalid = Array.from(form.querySelectorAll<HTMLElement>('[aria-invalid="true"]'));
+    const date = invalid.find((element) => element.getAttribute('name') === 'date');
+    const time = wantsTime ? form.querySelector<HTMLElement>('input[name="time"]:not(:disabled)') : null;
+    (date ?? time ?? invalid[0])?.focus();
+  }, [attempt, availabilityState, errors.time, formError]);
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    await booking.onSubmit(event);
+    focusPending.current = true;
+    setAttempt((n) => n + 1);
+  };
 
   const errorText = (field: BookingField): string | undefined => {
     const error = errors[field];
@@ -43,7 +67,7 @@ export function BookingForm({ branchSlug }: { branchSlug: string }) {
   const maxGuests = Math.min(availability?.maxGuests ?? GUEST_OPTIONS.length, GUEST_OPTIONS.length);
 
   return (
-    <form className={styles.form} onSubmit={(e) => void booking.onSubmit(e)} noValidate aria-busy={submitting}>
+    <form ref={formRef} className={styles.form} onSubmit={(e) => void onSubmit(e)} noValidate aria-busy={submitting}>
       {formError && (
         <div className={styles.alert} role="alert">
           <CircleAlert aria-hidden="true" />
@@ -86,9 +110,9 @@ export function BookingForm({ branchSlug }: { branchSlug: string }) {
       </fieldset>
 
       <div className={styles.row}>
-        <TextField label={t('booking.fields.name')} name="name" autoComplete="name" required maxLength={100}
+        <TextField label={t('booking.fields.name')} name="name" autoComplete="name" autoCapitalize="words" enterKeyHint="next" required maxLength={100}
           value={values.name} onChange={booking.onChange} error={errorText('name')} />
-        <TextField label={t('booking.fields.phone')} name="phone" type="tel" inputMode="tel" autoComplete="tel"
+        <TextField label={t('booking.fields.phone')} name="phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next"
           placeholder="+998 90 123-45-67" required value={values.phone} onChange={booking.onChange}
           hint={t('booking.fields.phoneHint')} error={errorText('phone')} />
       </div>

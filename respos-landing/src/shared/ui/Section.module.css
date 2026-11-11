@@ -49,14 +49,19 @@
 
 .title {
   font-size: clamp(26px, 4vw, 36px);
+  letter-spacing: -0.024em;
+  line-height: 1.15;
 }
 
 .pageTitle {
   font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: -0.028em;
+  line-height: 1.1;
 }
 
 .lead {
   margin-top: 14px;
   color: var(--color-muted);
   font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.5;
 }
