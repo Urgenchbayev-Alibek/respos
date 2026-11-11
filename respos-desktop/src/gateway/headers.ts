@@ -108,3 +108,8 @@ export function isAllowedOrigin(originHeader: string | undefined, port: number):
   const origin = originHeader.trim().toLowerCase();
   return origin === `http://127.0.0.1:${port}` || origin === `http://localhost:${port}`;
 }
+
+/** What a log line may say about a request: the path only. The query can carry tokens (`access_token` of the hub). */
+export function pathForLog(url: string | undefined): string {
+  return (url ?? '').split(/[?#]/, 1)[0] ?? '';
+}

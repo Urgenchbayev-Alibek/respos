@@ -55,7 +55,7 @@ describe('gateway: static web app', () => {
   });
 
   it('falls back to index.html for application routes (SPA fallback)', async () => {
-    for (const route of ['/kitchen', '/admin/menu/items/42?tab=prices', '/login#x', '/index.html']) {
+    for (const route of ['/kitchen', '/admin/menu/items/42?tab=prices', '/login#x', '/index.html', '/INDEX.HTML', '/Index.html']) {
       const response = await request(port, { path: route });
       expect(response.status, route).toBe(200);
       expect(response.text, route).toBe(INDEX_HTML);

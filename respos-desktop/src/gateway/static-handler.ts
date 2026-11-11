@@ -100,7 +100,8 @@ export function resolveStaticPath(rootDir: string, pathname: string): Resolution
   // Backslashes, drive letters, UNC prefixes and NTFS stream names never address a bundled file.
   if (decoded.includes('\\') || decoded.includes(':')) return { kind: 'none' };
   const normalized = path.posix.normalize(decoded.startsWith('/') ? decoded : `/${decoded}`);
-  if (normalized === '/' || normalized === '/index.html') return { kind: 'index' };
+  // NTFS ignores letter case: every spelling of the document must get the document's headers (CSP).
+  if (normalized === '/' || normalized.toLowerCase() === '/index.html') return { kind: 'index' };
   // Windows ignores trailing dots and spaces in names: refuse them so a file has exactly one URL.
   if (normalized.split('/').some((segment) => segment === '..' || /[. ]$/.test(segment))) return { kind: 'none' };
 

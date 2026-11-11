@@ -1,7 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import { Socket } from 'node:net';
 import type { Duplex } from 'node:stream';
-import { buildDownstreamHeaders, buildUpstreamHeaders } from './headers';
+import { buildDownstreamHeaders, buildUpstreamHeaders, pathForLog } from './headers';
 import { SERVER_UNREACHABLE, writeRawProblem } from './problem';
 import type { GatewayLogger } from './proxy-handler';
 import { type UpstreamTarget, upstreamRequest } from './target';
@@ -99,7 +99,7 @@ export function tunnelUpgrade(
       return;
     }
     settled = true;
-    log('warn', `websocket ${req.url ?? ''} failed: ${error.message}`);
+    log('warn', `websocket ${pathForLog(req.url)} failed: ${error.message}`);
     writeRawProblem(client, SERVER_UNREACHABLE);
   });
 

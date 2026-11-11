@@ -1,5 +1,5 @@
 import type { ClientRequest, IncomingMessage, ServerResponse } from 'node:http';
-import { buildDownstreamHeaders, buildUpstreamHeaders } from './headers';
+import { buildDownstreamHeaders, buildUpstreamHeaders, pathForLog } from './headers';
 import { SERVER_UNREACHABLE, sendProblem } from './problem';
 import { type UpstreamTarget, upstreamRequest } from './target';
 
@@ -58,7 +58,7 @@ export function proxyHttp(
       res.destroy();
       return;
     }
-    log('warn', `proxy ${req.method ?? 'GET'} ${req.url ?? ''} failed: ${errorCode(error)}`);
+    log('warn', `proxy ${req.method ?? 'GET'} ${pathForLog(req.url)} failed: ${errorCode(error)}`);
     // Let the rest of an upload drain so the renderer receives the 502 instead of a reset connection.
     if (active) req.unpipe(active);
     req.resume();
