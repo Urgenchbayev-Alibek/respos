@@ -122,3 +122,22 @@ workflows were resumed with shortened stages.
 - **Desktop (`v2/desktop`)**: shell committed by topic (`6c6dbda` admin desktop build, `ae1c95f` shell, `a7a2ac3`
   e2e, `1caddcb` builder/CI/docs). E2E scenario matrix (8 scenarios + sanity, each with its own API + DB) has run;
   the fix stage was still running at 06:40. **Not merged into `main` yet.**
+
+## Night run finished (2026-11-11, ~07:15)
+
+- **`v2/desktop` merged into `main`** (`d813a05`; conflicts in README.md and vite.config.ts resolved — desktop build
+  flag kept, redesign theme colour kept). Merged code: admin typecheck/lint ✔, **357 tests**; desktop lint/typecheck ✔,
+  **98 unit tests**; packaged-exe smoke 1 passed / 1 skipped (needs a server).
+- **Exe rebuilt from `main` with the redesigned UI** (`respos-desktop/release/`): `RestaurantOS-Setup-0.1.0.exe`
+  (114 MB, per-user installer) and `RestaurantOS-0.1.0-portable.exe` (104 MB). Unsigned (User-Todo T10).
+- **E2E scenario matrix** (each scenario with its own API + database, `npm run scenario <key>`), last runs:
+  sanity 1/0, first-run 11/0, cashier 12/0, admin 5/0 (+2 skipped: photo upload, XLSX export), realtime 6/0,
+  stock-delivery 6/0, ui-modes 9 (+1 expected fail); resilience (5/4) and installer (3/3) were fixed but not re-run.
+- Fixed from the matrix and the code review: tokens removed from gateway logs; packaged builds ignore test hooks and
+  refuse remote debugging; a new server address is checked before saving and the old session is dropped first;
+  the web build refuses a localhost landing URL; CSP for every index.html spelling; close-shift result step + Z-report
+  print for the cashier.
+- Open: XLSX export and photo upload inside the exe, admin connection indicator (User-Todo D1–D3); re-run the
+  resilience and installer scenarios.
+- Vercel redeployed with the redesign (admin + landing Ready). Local stack running on the final code: API :5080,
+  admin :5173, landing :5174.
