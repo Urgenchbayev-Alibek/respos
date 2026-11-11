@@ -3,6 +3,7 @@ import { Lock, Unlock } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCurrentShift } from '@/entities/cash-shift/cash-shift.queries';
+import type { CashShiftDto } from '@/entities/cash-shift/cash-shift.types';
 import { PERMISSIONS } from '@/shared/constants/permissions';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { usePermissions } from '@/shared/hooks/use-permissions';
@@ -17,7 +18,10 @@ export function ShiftBanner() {
   const format = useFormatters();
   const { hasPermission } = usePermissions();
   const shiftQuery = useCurrentShift();
-  const [modal, setModal] = useState<'open' | 'close' | null>(null);
+  const [opening, setOpening] = useState(false);
+  // The shift being closed is kept here: closing empties the current-shift query, and the modal still has to
+  // show its result step (final difference, Z-report) afterwards.
+  const [closing, setClosing] = useState<CashShiftDto | null>(null);
   const shift = shiftQuery.data;
 
   if (shiftQuery.isPending) return <Skeleton height={56} />;
@@ -45,17 +49,17 @@ export function ShiftBanner() {
       )}
       <span className={styles.spacer} />
       {!shift && hasPermission(PERMISSIONS.cashShifts.open) && (
-        <Button variant="primary" icon={<Unlock />} onClick={() => setModal('open')}>
+        <Button variant="primary" icon={<Unlock />} onClick={() => setOpening(true)}>
           {t('shift.open')}
         </Button>
       )}
       {shift && hasPermission(PERMISSIONS.cashShifts.close) && (
-        <Button icon={<Lock />} onClick={() => setModal('close')}>
+        <Button icon={<Lock />} onClick={() => setClosing(shift)}>
           {t('shift.close')}
         </Button>
       )}
-      {modal === 'open' && <OpenShiftModal onClose={() => setModal(null)} />}
-      {modal === 'close' && shift && <CloseShiftModal shift={shift} onClose={() => setModal(null)} />}
+      {opening && <OpenShiftModal onClose={() => setOpening(false)} />}
+      {closing && <CloseShiftModal shift={closing} onClose={() => setClosing(null)} />}
     </section>
   );
 }

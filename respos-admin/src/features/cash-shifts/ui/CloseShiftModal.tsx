@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Printer } from 'lucide-react';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -9,9 +10,10 @@ import { moneyField } from '@/features/payments/model/money-field';
 import { useFormatters } from '@/shared/hooks/use-formatters';
 import { applyServerFieldErrors, getErrorMessage } from '@/shared/lib/api-error-message';
 import { optionalString } from '@/shared/lib/validation';
-import { Alert, Button, FormField, FormGrid, Modal, MoneyInput, Textarea, useToast } from '@/shared/ui';
+import { Alert, Button, FormField, FormGrid, Modal, MoneyInput, printArea, Textarea, useToast } from '@/shared/ui';
 import { differenceTone, formatSignedMoney } from '../model/shift-format';
 import { ShiftAmounts, type AmountRow } from './ShiftAmounts';
+import { Z_REPORT_PRINT_ID, ZReportPrint } from './ZReportPrint';
 
 const closeSchema = z.object({ actualCashAmount: moneyField(), comment: optionalString(500) });
 type CloseValues = z.input<typeof closeSchema>;
@@ -66,9 +68,14 @@ export function CloseShiftModal({ shift, onClose }: { shift: CashShiftDto; onClo
 
   const footer =
     step === 'done' ? (
-      <Button variant="primary" onClick={onClose}>
-        {t('shift.done')}
-      </Button>
+      <>
+        <Button icon={<Printer />} onClick={() => printArea(Z_REPORT_PRINT_ID)}>
+          {t('ux:print.zReport')}
+        </Button>
+        <Button variant="primary" onClick={onClose}>
+          {t('shift.done')}
+        </Button>
+      </>
     ) : step === 'confirm' ? (
       <>
         <Button onClick={() => setStep('form')} disabled={close.isPending}>
@@ -117,7 +124,10 @@ export function CloseShiftModal({ shift, onClose }: { shift: CashShiftDto; onClo
       )}
       {step === 'confirm' && <ShiftAmounts rows={rows(expected, actual, preview, false)} />}
       {step === 'done' && result && (
-        <ShiftAmounts rows={rows(result.expectedCashAmount, result.actualCashAmount, result.difference, true)} />
+        <>
+          <ShiftAmounts rows={rows(result.expectedCashAmount, result.actualCashAmount, result.difference, true)} />
+          <ZReportPrint shift={result} />
+        </>
       )}
     </Modal>
   );

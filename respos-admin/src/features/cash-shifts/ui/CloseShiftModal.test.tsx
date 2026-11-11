@@ -49,6 +49,8 @@ describe('CloseShiftModal', () => {
     expect(text('shift-difference')).toMatch(/^Расхождение/);
     expect(text('shift-difference')).toMatch(/20 000/);
     expect(screen.getByTestId('shift-difference').className).toMatch(/negative/);
+    // The cashier's only way to the Z report of the shift they closed.
+    expect(screen.getByRole('button', { name: 'Печать Z-отчёта' })).toBeInTheDocument();
   });
 
   it('requires the counted amount', async () => {
