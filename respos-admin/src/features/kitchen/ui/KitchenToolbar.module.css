@@ -10,8 +10,17 @@
   display: flex;
   gap: var(--space-2);
   min-width: 0;
+  padding-right: 32px;
+  padding-bottom: 0;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+}
+
+.group::-webkit-scrollbar {
+  display: none;
 }
 
 .stations {
@@ -27,6 +36,7 @@
   color: var(--color-text);
   font: inherit;
   font-size: 0.9em;
+  font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -35,12 +45,21 @@
   border-color: var(--color-primary-strong);
   background: var(--color-primary-strong);
   color: #fff;
-  font-weight: 700;
 }
 
+.toggle:active {
+  background: var(--color-pressed);
+}
+
+.toggle[aria-pressed='true']:active {
+  border-color: var(--color-primary-strong-hover);
+  background: var(--color-primary-strong-hover);
+}
+
+/* The scroll strip clips anything outside the toggle, so the focus ring is drawn inside it. */
 .toggle:focus-visible {
   outline: 3px solid #fff;
-  outline-offset: 2px;
+  outline-offset: -3px;
 }
 
 .sound {

@@ -13,6 +13,7 @@
   min-height: 120px;
   padding: var(--space-1) var(--space-4);
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .cart {
@@ -70,6 +71,10 @@
   cursor: pointer;
 }
 
+.commentButton:active {
+  background: var(--color-pressed);
+}
+
 .commentButton svg {
   width: 18px;
   height: 18px;
@@ -105,4 +110,21 @@
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: 0 -8px 12px -10px rgb(15 23 42 / 0.25);
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+  }
 }

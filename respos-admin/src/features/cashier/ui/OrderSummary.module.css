@@ -71,3 +71,11 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-success);
 }
+
+.remaining dt,
+.remaining dd,
+.settled dt,
+.settled dd {
+  line-height: 1.2;
+  letter-spacing: -0.017em;
+}

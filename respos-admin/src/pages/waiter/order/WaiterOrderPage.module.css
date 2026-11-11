@@ -59,6 +59,7 @@
   top: calc(var(--topbar-height) + var(--space-3));
   display: flex;
   max-height: calc(100vh - var(--topbar-height) - 120px);
+  max-height: calc(100dvh - var(--topbar-height) - 120px);
 }
 
 .billCol > * {

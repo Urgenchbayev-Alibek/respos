@@ -15,8 +15,13 @@
   border-radius: 8px;
   background: var(--color-surface);
   color: var(--color-text);
+  font-variant-numeric: tabular-nums;
   text-align: left;
   cursor: pointer;
+}
+
+.bill:active:not(:disabled) {
+  background: var(--color-pressed);
 }
 
 .bill[aria-pressed='true'] {

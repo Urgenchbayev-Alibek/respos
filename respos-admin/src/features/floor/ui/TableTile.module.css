@@ -29,9 +29,8 @@ button.body {
   cursor: pointer;
 }
 
-button.body:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+button.body:active {
+  background: var(--color-pressed);
 }
 
 .lg .body {
@@ -50,7 +49,9 @@ button.body:focus-visible {
 .number {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
   line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .seats {

@@ -21,18 +21,22 @@
   text-decoration: none;
 }
 
-.card:hover {
-  border-color: var(--color-primary);
-  text-decoration: none;
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: var(--color-primary);
+    text-decoration: none;
+  }
 }
 
-.card:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+.card:active {
+  background: var(--color-pressed);
 }
 
 .ready {
-  border: 2px solid var(--color-success);
+  border-color: var(--color-success);
+  box-shadow:
+    inset 0 0 0 1px var(--color-success),
+    var(--shadow-sm);
 }
 
 .top,

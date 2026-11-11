@@ -16,14 +16,14 @@
   cursor: pointer;
 }
 
-.option:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+.option:active {
+  background: var(--color-pressed);
 }
 
 .selected {
-  border: 2px solid var(--color-primary);
+  border-color: var(--color-primary);
   background: var(--color-primary-subtle);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
   color: var(--color-primary-strong);
 }
 

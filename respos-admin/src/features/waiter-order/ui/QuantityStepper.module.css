@@ -19,14 +19,25 @@
   cursor: pointer;
 }
 
+.button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.button:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.button:active:not(:disabled) {
+  background: var(--color-pressed);
+}
+
 .button:disabled {
   color: var(--color-text-subtle);
   cursor: not-allowed;
 }
 
 .button:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline-offset: -2px;
 }
 
 .button svg {

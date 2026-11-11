@@ -34,6 +34,15 @@
   color: var(--color-on-primary);
 }
 
+.method:active:not(:disabled) {
+  background: var(--color-pressed);
+}
+
+.method[aria-pressed='true']:active:not(:disabled) {
+  border-color: var(--color-primary-strong-hover);
+  background: var(--color-primary-strong-hover);
+}
+
 .method:disabled {
   opacity: 0.6;
   cursor: not-allowed;

@@ -74,6 +74,7 @@ export function ItemOptionsSheet({ item, onAdd, onClose }: ItemOptionsSheetProps
   return (
     <Modal
       open
+      motion="instant"
       onClose={onClose}
       title={name}
       description={item.description ?? undefined}

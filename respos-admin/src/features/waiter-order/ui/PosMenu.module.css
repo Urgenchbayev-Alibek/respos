@@ -13,9 +13,17 @@
 .categories {
   display: flex;
   gap: var(--space-2);
-  padding-bottom: var(--space-1);
+  padding-right: 32px;
+  padding-bottom: 0;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
 }
 
 .category {
@@ -27,15 +35,24 @@
   background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
+  font-weight: var(--font-weight-medium);
   white-space: nowrap;
   cursor: pointer;
+}
+
+.category:active {
+  background: var(--color-pressed);
+}
+
+/* The scroll strip clips anything outside the chip, so the focus ring is drawn inside it. */
+.category:focus-visible {
+  outline-offset: -2px;
 }
 
 .activeCategory {
   border-color: var(--color-primary);
   background: var(--color-primary-subtle);
   color: var(--color-primary-strong);
-  font-weight: var(--font-weight-semibold);
 }
 
 .items {
@@ -62,13 +79,21 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
 }
 
-.item:active,
+.item:active:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
+  transition-duration: 0ms;
+}
+
 .item:focus-visible {
   border-color: var(--color-primary);
-  outline: none;
-  box-shadow: var(--focus-ring);
+  transition-duration: 0ms;
+  outline-offset: -2px;
 }
 
 .name {
